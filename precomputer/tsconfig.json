@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "outDir": "./dist",
+    "lib": ["ESNext", "DOM"]
+  },
+  "include": ["./src/**/*.ts"],
+  "exclude": ["node_modules", "**/*.test.ts"]
+}

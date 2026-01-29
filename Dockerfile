@@ -5,8 +5,8 @@ RUN mkdir -p /app && \
     chown node:node /app
 WORKDIR /app
 
-COPY ./.output ./
-# COPY .data/content/contents.sqlite ./server/
+COPY website/.output ./
+COPY website/.data/content/contents.sqlite ./server/
 
 USER node:node
 CMD ["node", "server/index.mjs"]

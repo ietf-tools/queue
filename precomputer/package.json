@@ -1,0 +1,28 @@
+{
+  "name": "precomputer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/test.ts",
+  "scripts": {
+    "job": "node src/job.ts",
+    "format": "npx prettier --config ./prettier.config.cjs src --write",
+    "test": "TZ=UTC npm run test:unittests && npm run test:types",
+    "test:types": "vue-tsc -b --noEmit",
+    "test:unittests": "TZ=UTC vitest run",
+    "test:unittests:watch": "TZ=UTC vitest run --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ietf-tools/queue.git"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "3.842.0",
+    "zod": "3.25.30"
+  },
+  "devDependencies": {
+    "@types/node": "24.0.10",
+    "typescript": "5.8.3",
+    "vitest": "3.2.4"
+  }
+}
