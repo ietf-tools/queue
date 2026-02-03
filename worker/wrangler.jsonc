@@ -1,0 +1,36 @@
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "queue-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-01-28",
+	"account_id": "57b7b70cdced62fd97661d0dc4ed1239",
+  "workers_dev": false,
+	"observability": {
+		"logs": {
+      "enabled": true
+    },
+    "traces": {
+      "enabled": true,
+      "destinations": ["heimdall-otlp"]
+    }
+	},
+	"routes": [
+		{ "pattern": "queue.staging.rfc-editor.org/rfc/*", "zone_name": "rfc-editor.org" },
+	],
+	"r2_buckets": [
+    {
+      "binding": "RFC_BUCKET",
+      "bucket_name": "rfc",
+      "preview_bucket_name": "rfc"
+    },
+    {
+      "binding": "QUEUE_BUCKET",
+      "bucket_name": "queue",
+      "preview_bucket_name": "queue"
+    }
+  ]
+}
