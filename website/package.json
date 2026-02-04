@@ -4,6 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "cleanup": "nuxt cleanup",
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
@@ -11,9 +12,11 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt/content": "^3.7.1",
     "@nuxt/eslint": "1.9.0",
     "@tailwindcss/vite": "^4.1.18",
     "@vueuse/core": "^14.2.0",
+    "better-sqlite3": "^12.2.0",
     "eslint": "9.36.0",
     "lodash-es": "^4.17.23",
     "nuxt": "^4.3.0",

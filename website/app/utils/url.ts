@@ -2,6 +2,7 @@ import { kebabCase } from 'lodash-es'
 
 export const IETF_URL_ORIGIN = 'https://www.ietf.org'
 export const RFC_EDITOR_SITE_URL_ORIGIN = 'https://www.rfc-editor.org'
+export const QUEUE_RFC_EDITOR_SITE_URL_ORIGIN = 'https://queue.rfc-editor.org'
 export const DATATRACKER_URL_ORIGIN = 'https://datatracker.ietf.org'
 
 const httpRegex = /^https?:\/\//

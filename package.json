@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@nuxt/content": "^3.11.0"
+  }
+}
