@@ -7,7 +7,7 @@ RUN mkdir -p /app/website/generated
 
 WORKDIR /app
 
-COPY website/app/utilities/validators.ts ./website/app/utilities/validators.ts
+COPY website/app/utils/validators.ts ./website/app/utils/validators.ts
 COPY website/package.json ./website/package.json
 COPY website/package-lock.json ./website/package-lock.json
 COPY precomputer/ ./precomputer
