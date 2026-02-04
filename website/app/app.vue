@@ -1,3 +1,7 @@
 <template>
-  <div>Queue Website</div>
+  <NuxtLoadingIndicator />
+  <NuxtRouteAnnouncer />
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>

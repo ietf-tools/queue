@@ -1,0 +1,277 @@
+@import 'tailwindcss';
+
+@config '../../../tailwind.config.js';
+
+@theme {
+  --text-5xl: 2.75rem;
+  --text-2xl: 1.375rem;
+
+  --animate-wiggle: wiggle 1s ease-in-out infinite;
+  --animate-scaleIn: scaleIn 200ms ease;
+  --animate-scaleOut: scaleOut 200ms ease;
+  --animate-fadeIn: fadeIn 200ms ease;
+  --animate-fadeOut: fadeOut 200ms ease;
+  --animate-enterFromLeft: enterFromLeft 250ms ease;
+  --animate-enterFromRight: enterFromRight 250ms ease;
+  --animate-enterFromBottom: enterFromBottom 250ms ease;
+  --animate-exitToLeft: exitToLeft 250ms ease;
+  --animate-exitToRight: exitToRight 250ms ease;
+  --animate-exitToBottom: exitToBottom 250ms ease;
+  --animate-overlayShow: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-contentShow: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slideDown: slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1);
+  --animate-slideUp: slideUp 300ms cubic-bezier(0.87, 0, 0.13, 1);
+  --animate-slideDownAndFade: slideDownAndFade 400ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slideLeftAndFade: slideLeftAndFade 400ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slideUpAndFade: slideUpAndFade 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slideRightAndFade: slideRightAndFade 200ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+
+  @keyframes enterFromRight {
+    0% {
+      opacity: 0;
+      transform: translateX(200px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  @keyframes enterFromLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-200px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  @keyframes enterFromBottom {
+    0% {
+      opacity: 0;
+      transform: translateY(200px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes exitToRight {
+    0% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(200px);
+    }
+  }
+  @keyframes exitToLeft {
+    0% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(-200px);
+    }
+  }
+  @keyframes exitToBottom {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(200px);
+    }
+  }
+  @keyframes scaleIn {
+    0% {
+      opacity: 0;
+      transform: rotateX(-10deg) scale(0.9);
+    }
+    100% {
+      opacity: 1;
+      transform: rotateX(0deg) scale(1);
+    }
+  }
+  @keyframes scaleOut {
+    0% {
+      opacity: 1;
+      transform: rotateX(0deg) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: rotateX(-10deg) scale(0.95);
+    }
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes overlayShow {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes contentShow {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -48%) scale(0.96);
+    }
+    ,
+    100% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+  @keyframes slideDown {
+    0% {
+      height: 0;
+    }
+    ,
+    100% {
+      height: var(--reka-accordion-content-height);
+    }
+  }
+  @keyframes slideUp {
+    0% {
+      height: var(--reka-accordion-content-height);
+    }
+    ,
+    100% {
+      height: 0;
+    }
+  }
+  @keyframes slideDownAndFade {
+    0% {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes slideLeftAndFade {
+    0% {
+      opacity: 0;
+      transform: translateX(5px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  @keyframes slideUpAndFade {
+    0% {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes slideRightAndFade {
+    0% {
+      opacity: 0;
+      transform: translateX(-5px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+}
+
+@layer base {
+  body,
+  #__nuxt {
+    min-height: 100vh;
+  }
+
+  a {
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+
+    abbr {
+      text-decoration: underline;
+    }
+  }
+}
+
+html {
+  background: var(--color-gray-100);
+  color: var(--color-black);
+}
+
+html.dark {
+  background: var(--color-black);
+  color: var(--color-white);
+}
+
+.print-with-background {
+  /*
+  To be used sparingly.
+  See also https://stackoverflow.com/questions/3893986/css-media-print-issues-with-background-color
+  */
+  -webkit-print-color-adjust: exact !important;
+}
+
+.text-shadow-bold {
+  /*
+    AKA fake bold.
+
+    This is an alternative to real bold that doesn't cause reflow,
+    so that elements can be toggled bold without distracting reflow.
+
+    Arguably this causes poor text rendering, but is considered less
+    worse than the alternatives, which are:
+    1) toggling bold can cause line wrapping, bumping following TOC items further
+       down the page when bold which creates a lot of distracting movement;
+    2) preallocating layout space for bold like
+       https://css-tricks.com/bold-on-hover-without-the-layout-shift/ 
+       succesfully prevents one TOC item from affecting the layout of the next,
+       but that only works for particular layouts (eg horizontal) where
+       preallocating an extra empty line of text for the bold version wouldn't
+       look odd, but in a vertical list of TOC items then having some have extra
+       whitespace between them does look odd.
+    3) using monospaced font, which isn't per the design
+    4) using `-webkit-text-stroke`
+
+    So this is the least worst approach until a better one comes along.
+   */
+  text-shadow: -0.5px 0px 0.5px currentColor;
+}
+
+.text-fake-bold {
+  -webkit-text-stroke: 0.5px bold;
+}
+
+.wrap-anywhere {
+  overflow-wrap: anywhere;
+}
+
+.wrap-normal {
+  overflow-wrap: normal;
+}
