@@ -23,14 +23,14 @@
 	],
 	"r2_buckets": [
     {
-      "binding": "RFC_BUCKET",
-      "bucket_name": "rfc",
-      "preview_bucket_name": "rfc"
-    },
-    {
       "binding": "QUEUE_BUCKET",
       "bucket_name": "queue",
       "preview_bucket_name": "queue"
+    },
+    {
+      "binding": "QUEUE_STAGING_BUCKET",
+      "bucket_name": "queue-staging",
+      "preview_bucket_name": "queue-staging"
     }
   ]
 }

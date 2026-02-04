@@ -3,7 +3,7 @@ export async function blobs(request: Request, env: Env) {
   const normalizedPath = decodeURIComponent(url.pathname.endsWith('/') ? url.pathname.slice(0, -1) : url.pathname)
 
 	/**
-   * RFC bucket usage (note env.RFC_BUCKET)
+   * Queue bucket usage (note env.QUEUE_STAGING_BUCKET)
    */
   const RFC_PREFIX = '/rfc/'
   if (normalizedPath.startsWith(RFC_PREFIX)) {
@@ -11,7 +11,7 @@ export async function blobs(request: Request, env: Env) {
 
     // -> Fetch R2 object
     if (objectPath.endsWith('.html') || objectPath.endsWith('.txt') || objectPath.endsWith('.pdf')) {
-      const object = await env.RFC_BUCKET.get(objectPath)
+      const object = await env.QUEUE_STAGING_BUCKET.get(objectPath)
       if (object) {
         const headers = new Headers()
         object.writeHttpMetadata(headers)
