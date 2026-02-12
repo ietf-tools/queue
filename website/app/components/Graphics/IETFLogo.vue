@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import ietfLogo from '../assets/ietf-nor-dense-inverted-duotone.svg'
+import ietfLogo from 'assets/ietf-nor-dense-inverted-duotone.svg'
 import type { VueStyleClass } from '~/utils/vue'
 
 type Props = {

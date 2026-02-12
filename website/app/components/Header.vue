@@ -3,9 +3,10 @@
     <a id="top"></a>
     <HeaderSkipToContent />
     <nav class="container pl-5 pr-3 mx-auto flex justify-between py-4 w-full">
-      Queue
+      <GraphicsHeaderLogos />
       <div class="flex flex-1 flex-row justify-end content-end">
-        RIGHT MENU
+        <HeaderNavMobile />
+        <HeaderNavDesktop />
       </div>
     </nav>
     <!-- slot used to extend the header eg for the homepage -->

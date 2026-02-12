@@ -50,3 +50,10 @@ export type VueStyleClass =
   | string
   | (string | Record<string, boolean | undefined>)[]
   | Record<string, boolean | undefined>
+
+
+
+/**
+ * https://stackoverflow.com/questions/55140448/what-is-the-type-for-an-event-in-vue-typescript-project
+ */
+export type VueClick = (event: Event) => void
