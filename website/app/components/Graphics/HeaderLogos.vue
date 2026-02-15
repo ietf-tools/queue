@@ -7,14 +7,14 @@
       :src="LogoMobile"
       class="lg:hidden"
       alt="RFC Editor: Queue - Upcoming RFCs Queue"
-      width="196"
+      width="188"
       height="24"
     />
     <img
       :src="LogoDesktop"
       class="hidden lg:block"
       alt="RFC Editor: Queue - Upcoming RFCs Queue"
-      width="264"
+      width="256"
       height="37"
     />
   </Anchor>

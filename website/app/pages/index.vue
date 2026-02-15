@@ -5,7 +5,7 @@
                 <IndexSubheader />
             </template>
 
-            <div class="mx-auto container text-right mt-2">
+            <div class="mx-auto container text-right py-2">
                 <p class="text-sm md:text-base text-grey-800 pr-3">
                     Looking for published RFCs? Go to
                     <Anchor :href="RFC_EDITOR_SITE_URL_ORIGIN" class="text-blue-300 dark:text-blue-100">
