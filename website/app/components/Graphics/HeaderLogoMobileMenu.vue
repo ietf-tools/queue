@@ -2,7 +2,7 @@
   <img
     :src="LogoMenuMobile"
     alt="RFC Editor - Official home of RFCs"
-    width="131"
+    width="187"
     height="24"
   />
 </template>

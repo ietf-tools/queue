@@ -16,4 +16,12 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  app: {
+    head: {
+      link: [
+        { rel: 'preconnect', href: 'https://static.ietf.org' },
+        { rel: 'stylesheet', href: 'https://static.ietf.org/fonts/inter/import.css' }
+      ]
+    }
+  },
 })
