@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <RpcTable>
       <RpcThead>
         <tr v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
@@ -32,13 +31,10 @@
       </RpcTfoot>
     </RpcTable>
   </div>
-
-
 </template>
 
 <script setup lang="ts">
-import { Anchor, Icon } from '#components'
-import { DateTime } from 'luxon'
+import { Anchor } from '#components'
 import {
   FlexRender,
   getCoreRowModel,
@@ -78,11 +74,6 @@ const columnHelper = createColumnHelper<SomeQueueType>()
 const sorting = ref<SortingState>([])
 
 const columns = [
-  columnHelper.display({
-    id: 'icon',
-    header: '',
-    cell: () => h(Icon, { name: "uil:file-alt", size: "1.25em", class: "text-gray-400 dark:text-neutral-500 mr-2" })
-  }),
   columnHelper.accessor('name', {
     header: 'Document',
     cell: data => {

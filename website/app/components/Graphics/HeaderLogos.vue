@@ -1,7 +1,6 @@
 <template>
   <Anchor
     href="/"
-    :class="[props.class, 'pl-0']"
   >
     <img
       :src="LogoMobile"

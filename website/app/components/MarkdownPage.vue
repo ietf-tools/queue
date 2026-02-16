@@ -1,5 +1,5 @@
 <template>
-    <div class="container mx-auto my-6 pl-3 wrap-anywhere leading-[1.75]">
+    <div class="container mx-auto my-6 wrap-anywhere leading-[1.75]">
         <ContentRenderer v-if="page" :value="page" />
     </div>
 </template>

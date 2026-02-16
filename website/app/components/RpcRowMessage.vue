@@ -1,5 +1,5 @@
 <template>
-  <tr v-if="statusArr.every(status => status === 'pending')">
+  <tr v-if="statusArr.some(status => status === 'pending')">
     <RpcTdMessage :colspan="props.columnCount">
       Loading...
     </RpcTdMessage>
