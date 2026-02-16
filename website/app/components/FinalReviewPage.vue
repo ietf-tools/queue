@@ -1,6 +1,6 @@
 <template>
-    <div class="container mx-auto my-6 wrap-anywhere leading-[1.75]">
-        <ContentRenderer v-if="page" :value="page" />
+    <div class="container mx-auto my-6">
+        <Heading level="1">Queue {{ canonicalPath }}</Heading>
     </div>
 </template>
 
@@ -11,21 +11,19 @@ const slug = route.path
 
 const normalizedSlug = slug.replace(/^\//, '').replace(/\/$/, '')
 
-const markdownPath = `/${normalizedSlug}`
+const canonicalPath = `/${normalizedSlug}/`
 
-const { error, data: page } = await useAsyncData(markdownPath, () =>
-    queryCollection('content').path(markdownPath).first()
-)
+const { error, data, status } = await useAsyncData(canonicalPath, async () => {
+    return []
+})
 
-if (error.value || page.value === null) {
+if (status.value === 'success' && data.value === null) {
     throw createError({
         statusCode: 404,
         statusMessage: 'Not Found',
         fatal: true
     })
 }
-
-const canonicalPath = `/${normalizedSlug}/`
 
 if (route.fullPath !== canonicalPath) {
     await navigateTo({

@@ -24,4 +24,12 @@ export default defineNuxtConfig({
       ]
     }
   },
+  routeRules: {
+    "/queue": {
+      redirect: "/",
+    },
+    "/cluster": {
+      redirect: "/clusters/",
+    },
+  },
 })
