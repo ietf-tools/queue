@@ -36,7 +36,22 @@ export const useMenuData = (mode: Mode) => {
     const menuData = computed(() => {
         const data: MenuItem[] = [
             {
-                label: 'Queue Menu 1',
+                  label: 'Queue',
+                  href: "/",
+                  hideLabelDesktop: false,
+            },
+            {
+                  label: 'Clusters',
+                  href: "/clusters/",
+                  hideLabelDesktop: false,
+            },
+            {
+                  label: 'Final Review',
+                  href: "/final-review/",
+                  hideLabelDesktop: false,
+            },
+            {
+                label: 'Docs',
                 children: [
                     {
                         label: 'About',

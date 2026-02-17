@@ -1,6 +1,6 @@
 <template>
     <div class="container mx-auto my-6">
-        <Heading level="1">Queue {{ canonicalPath }}</Heading>
+        <Heading level="1">Final Review for {{ canonicalPath }} (formerly authors)</Heading>
     </div>
 </template>
 

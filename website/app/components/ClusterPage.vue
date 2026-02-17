@@ -1,0 +1,3 @@
+<template>
+    cluster page
+</template>

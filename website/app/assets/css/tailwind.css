@@ -275,3 +275,8 @@ html.dark {
 .wrap-normal {
   overflow-wrap: normal;
 }
+
+html.dark::selection {
+  color: white;
+  background: var(--color-blue-600);
+}

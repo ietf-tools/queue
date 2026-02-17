@@ -13,7 +13,7 @@
           v-if="menuItem.href && !menuItem.children"
           :href="menuItem.href"
           :aria-label="menuItem.label"
-          class="cursor-pointer hover:bg-blue-400 group flex select-none items-center justify-between gap-[2px] rounded-md px-4 py-3 text-[15px] leading-none outline-none focus:shadow-[0_0_0_2px]"
+          class="cursor-pointer no-underline hover:bg-blue-400 group flex select-none items-center justify-between gap-[2px] rounded-md px-4 py-3 text-[15px] leading-none outline-none focus:shadow-[0_0_0_2px]"
           as-child
           @click="menuItem.click"
         >
@@ -22,6 +22,9 @@
               v-if="menuItem.icon"
               :name="menuItem.icon"
             />
+            <span v-else-if="!menuItem.hideLabelDesktop">
+              {{ menuItem.label }}
+            </span>
           </Anchor>
         </NavigationMenuLink>
 
