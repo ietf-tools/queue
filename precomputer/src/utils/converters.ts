@@ -4,8 +4,8 @@ import { assertNever } from "./typescript.ts";
 
 export const parseDisposition = (disposition: string): QueueCommonItem["disposition"] => {
   switch (disposition) {
-    case 'hello':
-    case 'heelo':
+    case 'created':
+    case 'in_progress':
       return disposition
   }
 
@@ -16,13 +16,16 @@ export const parseIanaStatus = (ianaStatus: QueueItem["ianaStatus"]): QueueCommo
   if (!ianaStatus) {
     return undefined
   }
+  if (!ianaStatus.used) {
+    return undefined
+  }
 
   switch (ianaStatus.slug) {
-    case 'true':
-    case 'false':
+    case 'reconciled':
       return {
         slug: ianaStatus.slug,
         name: ianaStatus.name,
+        description: ianaStatus.desc
       }
   }
 
@@ -68,11 +71,13 @@ export const parseLabels = (labels: QueueItem["labels"]): QueueCommonItem["label
     return undefined
   }
 
-  return labels.filter(label => label.used).map((label): LabelsCommon[number] => {
-    const { slug, color } = label
-    return {
-      slug,
-      themeColor: parseColor(color)
-    }
-  })
+  return labels
+    .filter(label => label.used)
+    .map((label): LabelsCommon[number] => {
+      const { slug, color } = label
+      return {
+        slug,
+        themeColor: parseColor(color)
+      }
+    })
 }

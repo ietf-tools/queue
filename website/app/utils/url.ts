@@ -5,6 +5,8 @@ export const RFC_EDITOR_SITE_URL_ORIGIN = 'https://www.rfc-editor.org'
 export const QUEUE_RFC_EDITOR_SITE_URL_ORIGIN = 'https://queue.rfc-editor.org'
 export const DATATRACKER_URL_ORIGIN = 'https://datatracker.ietf.org'
 
+export const API_QUEUE_PATH = '/api/v1/queue.json'
+
 const httpRegex = /^https?:\/\//
 export const isExternalLink = (href?: string): boolean => {
   if (

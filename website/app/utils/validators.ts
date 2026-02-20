@@ -26,8 +26,8 @@ export const ThemeColorCommonSchema = z.union([
 ])
 
 const DispositionCommonSchema = z.union([
-  z.literal('hello'),
-  z.literal('heelo'),
+  z.literal('created'),
+  z.literal('in_progress')
 ])
 
 const LabelCommonSchema = z.object({
@@ -35,9 +35,12 @@ const LabelCommonSchema = z.object({
   themeColor: ThemeColorCommonSchema,
 })
 
+const IanaStatusSlugCommonSchema = z.union([z.literal('reconciled'), z.literal('reconciled')])
+
 const IanaStatusCommonSchema = z.object({
-  slug: z.union([z.literal('true'), z.literal('false')]),
+  slug: IanaStatusSlugCommonSchema,
   name: z.string(),
+  description: z.string()
 })
 
 export const QueueCommonItemSchema = z.object({

@@ -8,7 +8,7 @@ type Props = {
 }
 
 export const getQueueCommon = async ({ api }: Props): Promise<QueueCommon> => {
-  const list = await api.queueList()
+  const list = await api.apiPubqQueueList()
 
   const queueCommon: QueueCommon = {
     items: list.map((queueItem): QueueCommonItem => {
@@ -26,9 +26,7 @@ export const getQueueCommon = async ({ api }: Props): Promise<QueueCommon> => {
       } = queueItem
       assertIsString(name)
       assertIsString(title)
-      assertIsNumber(pages)
       const clusterNumber: number | undefined = cluster?.number ?? undefined
-      assertIsNumber(cluster)
 
       return {
         name,

@@ -53,23 +53,15 @@ const {
   error,
 } = await useAsyncData(
   'queue',
-  async () => [],
+  getQueue,
   {
     server: false,
     lazy: true,
-    default: () => [],
+    default: () => ({ items: [] } as QueueCommon),
   }
 )
 
-type SomeQueueType = {
-  id: string
-  rfcNumber?: number
-  labels?: string[]
-  name: string
-  clusters?: number[]
-}
-
-const columnHelper = createColumnHelper<SomeQueueType>()
+const columnHelper = createColumnHelper<QueueCommonItem>()
 
 const sorting = ref<SortingState>([])
 
@@ -99,12 +91,11 @@ const columns = [
     },
     enableSorting: false,
   }),
-
 ]
 
 const table = useVueTable({
   get data() {
-    return data.value
+    return data.value.items
   },
   columns,
   state: {
