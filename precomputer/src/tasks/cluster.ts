@@ -1,7 +1,7 @@
 
 import { uniq } from "es-toolkit";
 import { PurpleApi } from "../../generated/purple_client/index.ts";
-import { type ClusterCommon, type ClusterRfcToBeCommon, type ClusterDocumentReferenceCommon, ClusterCommonSchema } from '../../../website/app/utils/validators.ts'
+import { type ClusterCommon, type ClusterRfcToBeCommon, ClusterCommonSchema } from '../../../website/app/utils/validators.ts'
 import { assertIsString } from "../utils/typescript.ts";
 import { clusterMemberToClusterDocumentCommon, parseDisposition } from "../utils/converters.ts";
 
@@ -48,12 +48,10 @@ export const getCluster = async ({ api, clusterNumber }: Props): Promise<Cluster
     rfcToBes: rfcToBes.map((rfcToBe): ClusterRfcToBeCommon => {
       const {
         name,
-        title,
         disposition,
         rfcNumber,
       } = rfcToBe
       assertIsString(name)
-      assertIsString(title)
 
       return {
         name,
