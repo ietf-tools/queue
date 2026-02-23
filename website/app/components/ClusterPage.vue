@@ -5,34 +5,36 @@
   <div v-else-if="status === 'error'">
     {{ error }}
   </div>
-  <div v-else-if="status === 'success' && cluster">
-    <DocumentDependenciesGraph :cluster="cluster" />
+  <div v-else-if="status === 'success' && clusterRoot">
+    <DocumentDependenciesGraph :cluster="clusterRoot.cluster" :rfc-to-bes="clusterRoot.rfcToBes" />
   </div>
   <div v-else>
+    <!-- 404 or unknown state -->
     Unknown cluster
   </div>
 </template>
 
 <script setup lang="ts">
-const route = useRoute()
+type Props = {
+  clusterNumber: number
+}
 
-// Only allow numbers as route parameter, rejecting leading zeros or 'C' prefix
-definePageMeta({ validate: route => /^[1-9]\d*$/.test(route.params.number?.toString() ?? '') })
+const props = defineProps<Props>()
 
-const clusterNumber = computed(() => route.params.number ? parseInt(route.params.number.toString(), 10) : undefined)
-
-const { data: cluster, error, status, refresh } = await useAsyncData(
-  () => `cluster-${clusterNumber.value}`,
-  async () => {
-    if (clusterNumber.value === undefined) {
-      return null
-    }
-    return api.clustersRetrieve({ number: clusterNumber.value })
-  }
+const { data: clusterRoot, error, status } = await useAsyncData(
+  () => `cluster-${props.clusterNumber}`,
+  () => getCluster(props.clusterNumber)
 )
 
+if (status.value === 'success' && clusterRoot === undefined) {
+  throw createError({
+    status: 404,
+    statusText: 'Page Not Found',
+  })
+}
+
 useHead({
-  title: `Cluster ${clusterNumber.value}`
+  title: `Cluster ${props.clusterNumber}`
 })
 
 </script>

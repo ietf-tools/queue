@@ -14,20 +14,31 @@ fastify.get('/api/v1/queue.json', async () => {
   return queueCommon
 })
 
-fastify.get('/api/v1/clusters/:clusterNumber.json', async (request, reply) => {
-  if (request.params && typeof request.params === 'object' && 'clusterNumber' in request.params) {
-    const { clusterNumber } = request.params
-    const clusterNumbery = parseFloat(String(clusterNumber))
-    if (!Number.isNaN(clusterNumbery)) {
+fastify.get('/api/v1/clusters/:number.json', async (request, reply) => {
+  console.log("WHAT TEST", request.params)
+  if (request.params && typeof request.params === 'object' && 'number' in request.params) {
+    const { number } = request.params
+    const clusterNumber = parseFloat(String(number))
+    console.log("FOUND CLUSTER NUMBER", clusterNumber)
+
+    if (!Number.isNaN(clusterNumber)) {
       const api = getApiClient()
-      const cluster = await getCluster({ api, clusterNumber: clusterNumbery })
-      if (cluster === null) {
-        reply.status(404).send()
-        return
+      console.log("Get cluster", clusterNumber)
+      try {
+        const cluster = await getCluster({ api, clusterNumber })
+        if (cluster === null) {
+          reply.status(404).send()
+          return
+        }
+        return cluster
+      } catch (e) {
+        console.error(clusterNumber, e)
+        reply.status(500).send()
       }
-      return cluster
     }
   }
+
+  return { test: 234 }
   console.log('bad params?', request.params)
   throw Error(`bad param? ${JSON.stringify(request.params)}`)
 })
@@ -35,7 +46,6 @@ fastify.get('/api/v1/clusters/:clusterNumber.json', async (request, reply) => {
 fastify.get('/api/v1/clusters/index.json', async (request) => {
   const api = getApiClient()
   return getClusterIndex({ api })
-
 })
 
 fastify.listen({

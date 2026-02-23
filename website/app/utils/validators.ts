@@ -29,7 +29,9 @@ export type ThemeColorCommon = z.infer<typeof ThemeColorCommonSchema>
 
 const DispositionCommonSchema = z.union([
   z.literal('created'),
-  z.literal('in_progress')
+  z.literal('in_progress'),
+  z.literal('published'),
+  z.literal('withdrawn')
 ])
 
 const LabelCommonSchema = z.object({

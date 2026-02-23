@@ -20,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-
 type UseAsyncDataReturn = Awaited<ReturnType<typeof useAsyncData>>
 type Status = UseAsyncDataReturn['status']['value']
 type Error = UseAsyncDataReturn['error']['value']

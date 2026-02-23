@@ -1,6 +1,6 @@
 
 import { PurpleApi } from "../../generated/purple_client/index.ts";
-import { type ClusterIndexCommon, ClusterIndexCommonSchema, ClusterItemCommon } from '../../../website/app/utils/validators.ts'
+import { type ClusterIndexCommon, type ClusterItemCommon, ClusterIndexCommonSchema } from '../../../website/app/utils/validators.ts'
 import { clusterMemberToClusterDocumentCommon } from "../utils/converters.ts";
 
 type Props = {

@@ -1,14 +1,15 @@
-import { Cluster, type QueueItem } from "../../generated/purple_client/index.ts";
-import { ClusterDocumentCommon, ClusterDocumentReferenceCommon, type QueueCommonItem } from "../../../website/app/utils/validators.ts";
+import { type Cluster, type QueueItem } from "../../generated/purple_client/index.ts";
+import { type ClusterDocumentCommon, type ClusterDocumentReferenceCommon, type QueueCommonItem } from "../../../website/app/utils/validators.ts";
 import { assertIsString, assertNever } from "./typescript.ts";
 
 export const parseDisposition = (disposition: string): QueueCommonItem["disposition"] => {
   switch (disposition) {
     case 'created':
     case 'in_progress':
+    case 'published':
+    case 'withdrawn':
       return disposition
   }
-
   throw Error(`Unable to parse disposition ${JSON.stringify(disposition)}`)
 }
 

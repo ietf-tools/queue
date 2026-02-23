@@ -28,9 +28,17 @@ export const getCluster = async ({ api, clusterNumber }: Props): Promise<Cluster
 
   const uniqueNames = uniq(names)
 
-  const rfcToBes = await Promise.all(uniqueNames.map((draftName) =>
-    api.documentsRetrieve({ draftName })
-  ))
+  const rfcToBeOrNulls = await Promise.all(uniqueNames.map(async (draftName) => {
+    try {
+      const rfcToBe = await api.documentsRetrieve({ draftName })
+      return rfcToBe
+    } catch (e) {
+      console.error(`Cannot access draft ${JSON.stringify(draftName)}`)
+      return null
+    }
+  }))
+
+  const rfcToBes = rfcToBeOrNulls.filter(val => val !== null)
 
   const clusterCommon: ClusterCommon = {
     cluster: {

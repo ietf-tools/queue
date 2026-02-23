@@ -91,7 +91,7 @@ const columns = [
     cell: data => {
       const labels = data.getValue()
       if (!labels) return undefined
-      return h('span', { class: 'inline-flex gap-2' }, labels.map(label => {
+      return h('span', { class: 'inline-flex flex-wrap gap-2' }, labels.map(label => {
         return h(Label, { label })
       }))
     },
