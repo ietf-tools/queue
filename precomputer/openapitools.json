@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "spaces": 2,
+  "generator-cli": {
+    "version": "7.20.0",
+    "generators": {
+      "purple": {
+        "generatorName": "typescript-fetch",
+        "inputSpec": "#{cwd}/purple_api.yaml",
+        "output": "#{cwd}/generated/purple_client",
+        "additionalProperties": {
+          "packageName": "purple_client",
+          "disallowAdditionalPropertiesIfNotPresent": false,
+          "importFileExtension": ".ts"
+        }
+      }
+    }
+  }
+}

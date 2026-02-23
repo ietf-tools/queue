@@ -13,7 +13,7 @@
         </tr>
       </RpcThead>
       <RpcTbody>
-        <RpcRowMessage :status="[status]" :column-count="table.getAllColumns().length"
+        <RpcRowMessage :status="status" :error="error" :column-count="table.getAllColumns().length"
           :row-count="table.getRowModel().rows.length" />
         <tr v-for="row in table.getRowModel().rows" :key="row.id">
           <RpcTd v-for="cell in row.getVisibleCells()" :key="cell.id">
@@ -34,7 +34,8 @@
 </template>
 
 <script setup lang="ts">
-import { Anchor } from '#components'
+import type { SortingState } from '@tanstack/vue-table'
+import { Anchor, ClustersIndexItem } from '#components'
 import {
   FlexRender,
   getCoreRowModel,
@@ -43,94 +44,59 @@ import {
   getFilteredRowModel,
   getSortedRowModel,
 } from '@tanstack/vue-table'
-import type { SortingState } from '@tanstack/vue-table'
 
 const {
   data,
   status,
-  pending,
-  refresh,
   error,
 } = await useAsyncData(
   'queue',
-  async () => [],
+  getClusterIndex,
   {
     server: false,
     lazy: true,
-    default: () => [],
   }
 )
 
-type SomeQueueType = {
-  id: string
-  rfcNumber?: number
-  labels?: string[]
-  name: string
-  clusters?: number[]
-}
-
-const columnHelper = createColumnHelper<SomeQueueType>()
+const columnHelper = createColumnHelper<ClusterItemCommon>()
 
 const sorting = ref<SortingState>([])
 
 const columns = [
-  columnHelper.accessor('name', {
-    header: 'Document',
+  columnHelper.accessor('number', {
+    header: 'Cluster number',
     cell: data => {
-      return h(Anchor, { href: `/docs/${data.row.original.name}`, 'class': ANCHOR_TAILWIND_STYLE }, () => [
+      return h(Anchor, {
+        href: `/cluster/${data.row.original.number}`,
+        'class': [ANCHOR_TAILWIND_STYLE, 'font-bold text-md whitespace-nowrap'] 
+      }, () => [
         data.getValue(),
       ])
     },
     sortingFn: 'alphanumeric',
   }),
-  columnHelper.accessor('rfcNumber', {
-    header: 'RFC Number',
-    cell: data => data.getValue(),
-    sortingFn: 'alphanumeric',
-    sortUndefined: 'last',
-  }),
-  columnHelper.accessor(
-    'labels', {
-    header: 'Labels',
+  columnHelper.accessor('documents', {
+    header: 'Members',
     cell: data => {
-      const labels = data.getValue()
-      if (!labels) return undefined
-      return 'test'
+      const docs = data.getValue()
+      return h('span', { class: 'inline-flex flex-wrap gap-2' }, docs.map(document => {
+        return h(ClustersIndexItem, { document })
+      }))
     },
     enableSorting: false,
   }),
-
 ]
 
 const table = useVueTable({
   get data() {
-    return data.value
+    console.log("rows", data.value?.list ?? [])
+    return data.value?.list ?? []
   },
   columns,
   state: {
-    get globalFilter() {
-      return JSON.stringify([
-        searchQuery.value
-      ])
-    },
     get sorting() {
       return sorting.value
     },
-  },
-  globalFilterFn: (row) => {
-    const d = row.original
-
-    // Search filter
-    if (searchQuery.value && searchQuery.value.trim()) {
-      const searchTerm = searchQuery.value.trim().toLowerCase()
-      const nameMatch = d.name?.toLowerCase().includes(searchTerm)
-      const rfcMatch = d.rfcNumber?.toString().toLowerCase().includes(searchTerm)
-      if (!nameMatch && !rfcMatch) {
-        return false
-      }
-    }
-
-    return true
   },
   getCoreRowModel: getCoreRowModel(),
   getFilteredRowModel: getFilteredRowModel(),
@@ -143,17 +109,7 @@ const table = useVueTable({
   },
 })
 
-const searchQuery = ref('')
-
-const route = useRoute()
-
-onMounted(() => {
-  if (route.query.search && route.query.search !== searchQuery.value) {
-    searchQuery.value = route.query.search as string
-  }
-})
-
 useHead({
-  title: 'RPC Queue Clusters'
+  title: 'Clusters'
 })
 </script>

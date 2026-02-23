@@ -9,21 +9,36 @@
       No rows found
     </RpcTdMessage>
   </tr>
+  <tr v-else-if="errorArr.some(error => Boolean(error))">
+    <RpcTdMessage :colspan="props.columnCount" class="bg-red-300">
+      Error:
+      <BaseBadge v-for="error in errorArr" color="red" class="mr-2">
+        {{ error }}
+      </BaseBadge>
+    </RpcTdMessage>
+  </tr>
 </template>
 
 <script setup lang="ts">
-
-type Status = Awaited<ReturnType<typeof useAsyncData>>['status']['value']
+type UseAsyncDataReturn = Awaited<ReturnType<typeof useAsyncData>>
+type Status = UseAsyncDataReturn['status']['value']
+type Error = UseAsyncDataReturn['error']['value']
 
 type Props = {
   rowCount: number
   columnCount: number
   status: Status | Status[]
+  error: Error | Error[]
 }
 
-const statusArr = computed(()=> {
+const statusArr = computed(() => {
   const { status } = props
   return Array.isArray(status) ? status : [status]
+})
+
+const errorArr = computed(() => {
+  const { error } = props
+  return Array.isArray(error) ? error : [error]
 })
 
 const props = defineProps<Props>()

@@ -13,7 +13,7 @@
         </tr>
       </RpcThead>
       <RpcTbody>
-        <RpcRowMessage :status="[status]" :column-count="table.getAllColumns().length"
+        <RpcRowMessage :status="status" :error="error" :column-count="table.getAllColumns().length"
           :row-count="table.getRowModel().rows.length" />
         <tr v-for="row in table.getRowModel().rows" :key="row.id">
           <RpcTd v-for="cell in row.getVisibleCells()" :key="cell.id">
@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { Anchor } from '#components'
+import { Anchor, Icon } from '#components'
 import {
   FlexRender,
   getCoreRowModel,
@@ -44,32 +44,23 @@ import {
   getSortedRowModel,
 } from '@tanstack/vue-table'
 import type { SortingState } from '@tanstack/vue-table'
+import Label from './Label.vue'
 
 const {
   data,
   status,
-  pending,
-  refresh,
   error,
 } = await useAsyncData(
   'queue',
-  async () => [],
+  getQueue,
   {
     server: false,
     lazy: true,
-    default: () => [],
+    default: () => ({ items: [] } as QueueCommon),
   }
 )
 
-type SomeQueueType = {
-  id: string
-  rfcNumber?: number
-  labels?: string[]
-  name: string
-  clusters?: number[]
-}
-
-const columnHelper = createColumnHelper<SomeQueueType>()
+const columnHelper = createColumnHelper<QueueCommonItem>()
 
 const sorting = ref<SortingState>([])
 
@@ -78,6 +69,7 @@ const columns = [
     header: 'Document',
     cell: data => {
       return h(Anchor, { href: `/docs/${data.row.original.name}`, 'class': ANCHOR_TAILWIND_STYLE }, () => [
+        h(Icon, { name: "uil:file-alt", size: "1.25em", class: "text-gray-400 dark:text-neutral-500 mr-2 align-middle" }),
         data.getValue(),
       ])
     },
@@ -86,7 +78,11 @@ const columns = [
   columnHelper.accessor('rfcNumber', {
     header: 'RFC Number',
     cell: data => data.getValue(),
-    sortingFn: 'alphanumeric',
+    sortingFn: (rowA, rowB, columnId) => {
+      const a = Number(rowA.getValue(columnId))
+      const b = Number(rowB.getValue(columnId))
+      return a - b
+    },
     sortUndefined: 'last',
   }),
   columnHelper.accessor(
@@ -95,16 +91,45 @@ const columns = [
     cell: data => {
       const labels = data.getValue()
       if (!labels) return undefined
-      return 'test'
+      return h('span', { class: 'inline-flex flex-wrap gap-2' }, labels.map(label => {
+        return h(Label, { label })
+      }))
     },
     enableSorting: false,
   }),
-
+  columnHelper.accessor(
+    'clusters', {
+    header: 'Cluster',
+    cell: data => {
+      const clusters = data.getValue()
+      if (!clusters) return undefined
+      return h('span', clusters.map(cluster => {
+        return h(Anchor, { href: `/clusters/${cluster}` }, () => [
+          h(Icon, { name: 'pajamas:group', class: 'h-5 w-5 inline-block mr-1' }),
+          String(cluster)
+        ])
+      }))
+    },
+    sortingFn: (rowA, rowB, columnId) => {
+      const clustersA = rowA.getValue(columnId)
+      const clustersB = rowB.getValue(columnId)
+      const a = Array.isArray(clustersA) && clustersA.length > 0 ? clustersA[0] : undefined
+      const b = Array.isArray(clustersB) && clustersB.length > 0 ? clustersB[0] : undefined
+      if(a === undefined && b === undefined) {
+        return 1
+      } else if(a === undefined) {
+        return 1
+      } else if(b === undefined) {
+        return 1
+      }
+      return a - b
+    },
+  }),
 ]
 
 const table = useVueTable({
   get data() {
-    return data.value
+    return data.value.items
   },
   columns,
   state: {
