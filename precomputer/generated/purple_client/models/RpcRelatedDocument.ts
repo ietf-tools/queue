@@ -55,6 +55,12 @@ export interface RpcRelatedDocument {
      * @memberof RpcRelatedDocument
      */
     readonly sourceRfcNumber?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RpcRelatedDocument
+     */
+    readonly targetDisposition?: string;
 }
 
 /**
@@ -81,6 +87,7 @@ export function RpcRelatedDocumentFromJSONTyped(json: any, ignoreDiscriminator: 
         'targetDraftName': json['target_draft_name'] == null ? undefined : json['target_draft_name'],
         'targetRfcNumber': json['target_rfc_number'] == null ? undefined : json['target_rfc_number'],
         'sourceRfcNumber': json['source_rfc_number'] == null ? undefined : json['source_rfc_number'],
+        'targetDisposition': json['target_disposition'] == null ? undefined : json['target_disposition'],
     };
 }
 
@@ -88,7 +95,7 @@ export function RpcRelatedDocumentToJSON(json: any): RpcRelatedDocument {
     return RpcRelatedDocumentToJSONTyped(json, false);
 }
 
-export function RpcRelatedDocumentToJSONTyped(value?: Omit<RpcRelatedDocument, 'id'|'draft_name'|'target_draft_name'|'target_rfc_number'|'source_rfc_number'> | null, ignoreDiscriminator: boolean = false): any {
+export function RpcRelatedDocumentToJSONTyped(value?: Omit<RpcRelatedDocument, 'id'|'draft_name'|'target_draft_name'|'target_rfc_number'|'source_rfc_number'|'target_disposition'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

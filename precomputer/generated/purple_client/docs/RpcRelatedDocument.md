@@ -13,6 +13,7 @@ Name | Type
 `targetDraftName` | string
 `targetRfcNumber` | number
 `sourceRfcNumber` | number
+`targetDisposition` | string
 
 ## Example
 
@@ -27,6 +28,7 @@ const example = {
   "targetDraftName": null,
   "targetRfcNumber": null,
   "sourceRfcNumber": null,
+  "targetDisposition": null,
 } satisfies RpcRelatedDocument
 
 console.log(example)
