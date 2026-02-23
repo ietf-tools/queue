@@ -1,6 +1,6 @@
-import { type QueueItem } from "../../generated/purple_client/index.ts";
-import { type QueueCommonItem } from "../../../website/app/utils/validators.ts";
-import { assertNever } from "./typescript.ts";
+import { Cluster, type QueueItem } from "../../generated/purple_client/index.ts";
+import { ClusterDocumentCommon, ClusterDocumentReferenceCommon, type QueueCommonItem } from "../../../website/app/utils/validators.ts";
+import { assertIsString, assertNever } from "./typescript.ts";
 
 export const parseDisposition = (disposition: string): QueueCommonItem["disposition"] => {
   switch (disposition) {
@@ -74,10 +74,56 @@ export const parseLabels = (labels: QueueItem["labels"]): QueueCommonItem["label
   return labels
     .filter(label => label.used)
     .map((label): LabelsCommon[number] => {
-      const { slug, color } = label
+      const { slug, color, isException, isComplexity } = label
       return {
         slug,
-        themeColor: parseColor(color)
+        themeColor: parseColor(color),
+        isException: Boolean(isException),
+        isComplexity: Boolean(isComplexity),
       }
     })
+}
+
+export const parseRelationship = (relationship: string) => {
+  switch (relationship) {
+    case 'refqueue':
+    case 'not-received':
+    case 'not-received-2g':
+    case 'not-received-3g':
+      return relationship
+  }
+  throw Error(`Unable to parse relationship ${JSON.stringify(relationship)}`)
+}
+
+type ClusterDocuments = NonNullable<Cluster["documents"]>
+type ClusterMember = ClusterDocuments[number]
+
+export const clusterMemberToClusterDocumentCommon = (cluster: ClusterMember): ClusterDocumentCommon => {
+  const { name, rfcNumber, disposition, references, isReceived } = cluster
+  return {
+    name,
+    disposition: disposition ? parseDisposition(disposition) : undefined,
+    isReceived: Boolean(isReceived),
+    rfcNumber: rfcNumber ?? undefined,
+    references: references?.map((reference): ClusterDocumentReferenceCommon => {
+      const {
+        relationship,
+        draftName,
+        targetDraftName,
+        targetRfcNumber,
+        sourceRfcNumber,
+      } = reference
+
+      assertIsString(draftName)
+      assertIsString(targetDraftName)
+
+      return {
+        relationship: parseRelationship(relationship),
+        draftName,
+        targetDraftName,
+        targetRfcNumber,
+        sourceRfcNumber,
+      }
+    }) ?? []
+  }
 }
