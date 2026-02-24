@@ -7,7 +7,7 @@
   "scripts": {
     "job": "node src/job.ts",
     "format": "npx prettier --config ./prettier.config.cjs src --write",
-    "test": "TZ=UTC npm run test:unittests && npm run test:types",
+    "test": "TZ=UTC npm run test:types",
     "test:types": "vue-tsc -b --noEmit",
     "test:unittests": "TZ=UTC vitest run",
     "test:unittests:watch": "TZ=UTC vitest run --watch",

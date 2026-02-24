@@ -1,4 +1,4 @@
-import { PurpleApi, type ApiPubqQueueListRequest } from "../../generated/purple_client/index.ts";
+import { PurpleApi } from "../../generated/purple_client/index.ts";
 import { type QueueCommon } from '../../../website/app/utils/validators.ts'
 import { getQueueCommon } from "../utils/queue.ts";
 

@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand, paginateListObjectsV2 } from '@aws-sdk/client-s3'
+import { S3Client, PutObjectCommand, paginateListObjectsV2, DeleteObjectCommand } from '@aws-sdk/client-s3'
 import { assertIsString } from './typescript.ts'
 
 let s3Ref: undefined | { s3Client: S3Client, bucket: string } = undefined
@@ -39,10 +39,10 @@ type StreamingBlobPayloadInputTypes = ConstructorParameters<
   typeof PutObjectCommand
 >[0]['Body']
 
-export async function saveToS3(
+export const saveToS3 = async (
   key: string,
   contents: StreamingBlobPayloadInputTypes
-): Promise<void> {
+): Promise<void> => {
   const { s3Client, bucket } = getS3Singleton()
 
   await s3Client.send(
@@ -54,13 +54,26 @@ export async function saveToS3(
   )
 }
 
+export const deleteFromS3 = async (
+  key: string,
+): Promise<void> => {
+  const { s3Client, bucket } = getS3Singleton()
+
+  await s3Client.send(
+    new DeleteObjectCommand({
+      Bucket: bucket,
+      Key: key
+    })
+  )
+}
+
 export const listS3Files = async () => {
   const { s3Client, bucket } = getS3Singleton()
-  const totalFiles = [];
+  const keys = [];
   for await (const data of paginateListObjectsV2({ client: s3Client }, { Bucket: bucket })) {
-    totalFiles.push(...(data.Contents ?? []));
+    keys.push(...(data.Contents ?? []));
   }
-  return totalFiles;
+  return keys;
 };
 
 export const QUEUE_INDEX_PATH = 'queue/index.json'

@@ -115,12 +115,12 @@ const ClusterRfcToBeCommonSchema = z.object({
 
 export type ClusterRfcToBeCommon = z.infer<typeof ClusterRfcToBeCommonSchema>
 
-export const ClusterCommonSchema = z.object({
+export const ClusterPackageCommonSchema = z.object({
   cluster: ClusterItemCommonSchema,
   rfcToBes: ClusterRfcToBeCommonSchema.array()
 })
 
-export type ClusterCommon = z.infer<typeof ClusterCommonSchema>
+export type ClusterPackageCommon = z.infer<typeof ClusterPackageCommonSchema>
 
 export const ClusterIndexCommonSchema = z.object({
   list: ClusterItemCommonSchema.array()

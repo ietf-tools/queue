@@ -1,7 +1,7 @@
 
 import { uniq } from "es-toolkit";
 import { PurpleApi } from "../../generated/purple_client/index.ts";
-import { type ClusterCommon, type ClusterRfcToBeCommon, ClusterCommonSchema } from '../../../website/app/utils/validators.ts'
+import { type ClusterPackageCommon, type ClusterRfcToBeCommon, ClusterPackageCommonSchema } from '../../../website/app/utils/validators.ts'
 import { assertIsString } from "../utils/typescript.ts";
 import { clusterMemberToClusterDocumentCommon, parseDisposition } from "../utils/converters.ts";
 
@@ -10,7 +10,7 @@ type Props = {
   clusterNumber: number
 }
 
-export const getCluster = async ({ api, clusterNumber }: Props): Promise<ClusterCommon | null> => {
+export const getCluster = async ({ api, clusterNumber }: Props): Promise<ClusterPackageCommon | null> => {
   const cluster = await api.apiPubqClustersRetrieve({ number: clusterNumber })
 
   if (!cluster.isActive) {
@@ -40,7 +40,7 @@ export const getCluster = async ({ api, clusterNumber }: Props): Promise<Cluster
 
   const rfcToBes = rfcToBeOrNulls.filter(val => val !== null)
 
-  const clusterCommon: ClusterCommon = {
+  const clusterCommon: ClusterPackageCommon = {
     cluster: {
       number: cluster.number,
       documents: cluster.documents?.map(clusterMemberToClusterDocumentCommon) ?? []
@@ -62,7 +62,7 @@ export const getCluster = async ({ api, clusterNumber }: Props): Promise<Cluster
   }
 
   // This will throw on invalid, and it will remove additional props
-  const verifiedClusterCommon = ClusterCommonSchema.parse(clusterCommon)
+  const verifiedClusterCommon = ClusterPackageCommonSchema.parse(clusterCommon)
 
   return verifiedClusterCommon
 }
