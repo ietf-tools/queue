@@ -9,10 +9,11 @@ export const assertNever = (value: never) => {
 }
 
 export function assertIsString (
-  val: unknown
+  val: unknown,
+  errorMessage?: string
 ): asserts val is string {
   if (typeof val !== 'string') {
-    throw new Error(`Not a string typeof=${typeof val}.`)
+    throw new Error(`Not a string typeof=${typeof val}. ${errorMessage ?? ''}`)
   }
 }
 

@@ -1,8 +1,9 @@
 import Fastify from 'fastify'
 import { getApiClient } from './api.ts'
-import { getQueueCommon } from '../tasks/queue.ts'
+import { getQueue } from '../tasks/queue.ts'
 import { getCluster } from '../tasks/cluster.ts'
 import { getClusterIndex } from '../tasks/cluster-index.ts'
+import { getFinalReviewIndex } from '../tasks/final-review-index.ts'
 
 const fastify = Fastify({
   logger: true
@@ -10,7 +11,7 @@ const fastify = Fastify({
 
 fastify.get('/api/v1/queue.json', async () => {
   const api = getApiClient()
-  const queueCommon = await getQueueCommon({ api })
+  const queueCommon = await getQueue({ api })
   return queueCommon
 })
 
@@ -37,8 +38,6 @@ fastify.get('/api/v1/clusters/:number.json', async (request, reply) => {
       }
     }
   }
-
-  return { test: 234 }
   console.log('bad params?', request.params)
   throw Error(`bad param? ${JSON.stringify(request.params)}`)
 })
@@ -46,6 +45,11 @@ fastify.get('/api/v1/clusters/:number.json', async (request, reply) => {
 fastify.get('/api/v1/clusters/index.json', async (request) => {
   const api = getApiClient()
   return getClusterIndex({ api })
+})
+
+fastify.get('/api/v1/final-review/index.json', async (request) => {
+  const api = getApiClient()
+  return getFinalReviewIndex({ api })
 })
 
 fastify.listen({

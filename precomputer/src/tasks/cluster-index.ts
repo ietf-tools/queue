@@ -20,7 +20,7 @@ export const getClusterIndex = async ({ api }: Props): Promise<ClusterIndexCommo
     })
   }
 
-  // This will throw on invalid, and it will remove additional props
+  // This will throw on invalid, and it will remove additional props (ie deleting props unknown to schema)
   const verifiedClusterIndexCommon = ClusterIndexCommonSchema.parse(clusterIndexCommon)
 
   return verifiedClusterIndexCommon
