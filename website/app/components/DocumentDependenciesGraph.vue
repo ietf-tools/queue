@@ -4,12 +4,15 @@
     <Icon name="ei:spinner-3" size="1.3rem" class="animate-spin" />
   </div>
 
-  <div v-show="tooltip.text" class="absolute transition-all" :style="{
+  <div v-if="tooltip.text" class="absolute transition-all" :style="{
     left: `${tooltip.position[0]}px`,
     top: `${tooltip.position[1]}px`,
   }">
     <div
-      class="absolute transition-all bottom-0 text-xs text-center bg-white dark:bg-black text-black dark:text-white border border-gray-400 rounded-md shadow-xl p-2 w-[15em]">
+      class="absolute transition-all bottom-0 text-xs text-center bg-white dark:bg-black text-black dark:text-white border border-gray-400 rounded-md shadow-xl p-2 w-[15em]"
+      aria-atomic="true"
+      aria-live="polite"
+      >
       <p v-for="line in tooltip.text">{{ line }}</p>
     </div>
   </div>
@@ -25,11 +28,10 @@
 import { uniqBy } from 'es-toolkit';
 import { drawGraph, type DrawGraphParameters, type SetTooltip } from '~/utils/document_relations';
 import { legendData, type DataParam, type LinkParam, type NodeParam } from '~/utils/document_relations-utils'
-import { type ClusterRfcToBeCommon } from '../utils/validators'
+import { type ClusterPackageCommon } from '../utils/validators'
 
 type Props = {
-  cluster: ClusterCommon["cluster"],
-  rfcToBes: ClusterCommon['rfcToBes'],
+  cluster: ClusterPackageCommon["cluster"],
 }
 
 const props = defineProps<Props>()
@@ -54,23 +56,8 @@ const showLegend = ref(false)
 
 const hasMounted = ref(false)
 
-const rfcsByDraftName = computed(() => {
-  const result: Record<string, ClusterRfcToBeCommon> = {}
-  if (props.rfcToBes) {
-    for (const rfcToBe of props.rfcToBes) {
-      if (rfcToBe.name) {
-        result[rfcToBe.name] = rfcToBe
-      }
-    }
-  }
-  return result
-})
-
 const clusterGraphData = computed(() => {
   // delay building graph until this is available
-  if (!rfcsByDraftName.value) {
-    return { links: [], nodes: [] }
-  }
 
   const newClusterGraphData: DataParam = {
     links: [],
@@ -89,48 +76,45 @@ const clusterGraphData = computed(() => {
     return Boolean((data && typeof data === 'object' && 'source' in data && 'target' in data && 'rel' in data))
   }
 
-  const rfcToBeToNodeParam = (rfcToBe: ClusterRfcToBeCommon): NodeParam | undefined => {
-    const { name, disposition } = rfcToBe
-    if (!name) {
-      console.warn("rfcToBe had no name?", rfcToBe)
-      return
-    }
-
-    return {
-      id: name,
-      rfcNumber: rfcToBe.rfcNumber ?? undefined,
-      url: `/docs/${name}`,
-      disposition,
-      isReceived: true,
-    }
-  }
-
   let referenceNodes: NodeParam[] = []
 
   newClusterGraphData.nodes.push(
     ...(clusterToUse.value.documents ?? []).flatMap((clusterMember): NodeParam[] | null => {
       const { name, rfcNumber, disposition, references, isReceived } = clusterMember
-      const doc = name ? rfcsByDraftName.value[name] : undefined
-
-      const resolvedRfcNumber = doc ? doc.rfcNumber ?? undefined : rfcNumber ?? undefined
 
       referenceNodes.push(...(references ?? []).flatMap(reference => {
-        const { draftName, targetDraftName } = reference
-        const draft = draftName ? rfcsByDraftName.value[draftName] : undefined
-        const target = targetDraftName ? rfcsByDraftName.value[targetDraftName] : undefined
+        const {
+          draftName,
+          targetDraftName,
+          sourceRfcNumber,
+          targetRfcNumber,
+          targetDisposition,
+        } = reference
 
         return [
-          draft ? rfcToBeToNodeParam(draft) : draftName ? { id: draftName, url: `/docs/${draftName}` } : undefined,
-          target ? rfcToBeToNodeParam(target) : targetDraftName ? { id: targetDraftName, url: `/docs/${targetDraftName}` } : undefined,
-        ].filter(isNodeParam)
+          {
+            id: draftName,
+            rfcNumber: sourceRfcNumber,
+            url: `/docs/${draftName}`,
+            disposition,
+            isReceived,
+          },
+          {
+            id: targetDraftName,
+            rfcNumber: targetRfcNumber,
+            url: `/docs/${targetDraftName}`,
+            disposition: targetDisposition,
+            isReceived: undefined,
+          }
+        ]
       }))
 
       return [{
         id: name,
         url: `/docs/${name}`,
-        rfcNumber: resolvedRfcNumber,
-        isReceived: Boolean(isReceived),
-        disposition: parseDisposition(disposition),
+        rfcNumber,
+        isReceived,
+        disposition,
       }]
     }).filter(isNodeParam)
   )
@@ -148,20 +132,14 @@ const clusterGraphData = computed(() => {
       return references ? references.map((reference): LinkParam | null => {
         const { draftName, targetDraftName, relationship } = reference
 
-        if (draftName === undefined || targetDraftName === undefined) {
-          console.warn("Graph: cluster reference", reference, " has undefined name(s)")
-          return null
-        }
-
         return {
           source: draftName,
           target: targetDraftName,
-          rel: parseRelationship(relationship),
+          rel: relationship,
         }
       }).filter(isLinkParam) : null
     }).filter(isLinkParam)
   )
-
 
   newClusterGraphData.nodes = uniqBy(newClusterGraphData.nodes, (node) => node.id)
   newClusterGraphData.links = uniqBy(newClusterGraphData.links, (link) => JSON.stringify([link.source, link.target, link.rel]))
@@ -210,14 +188,12 @@ const attemptToRenderGraph = () => {
 
   if (leg_sim instanceof SVGSVGElement) {
     console.error(
-    'Expected `leg_sim` to be D3 Simulation Node not SVGSVGElement.',  
-    { leg_sim })
+      'Expected `leg_sim` to be D3 Simulation Node not SVGSVGElement.',
+      { leg_sim })
     return
   } else {
     leg_sim.restart();
   }
-
-  
 }
 
 const colorMode = useColorMode()

@@ -13,7 +13,7 @@
         </tr>
       </RpcThead>
       <RpcTbody>
-        <RpcRowMessage :status="[status]" :column-count="table.getAllColumns().length"
+        <RpcRowMessage :status="status" :error="error" :column-count="table.getAllColumns().length"
           :row-count="table.getRowModel().rows.length" />
         <tr v-for="row in table.getRowModel().rows" :key="row.id">
           <RpcTd v-for="cell in row.getVisibleCells()" :key="cell.id">
@@ -48,8 +48,6 @@ import type { SortingState } from '@tanstack/vue-table'
 const {
   data,
   status,
-  pending,
-  refresh,
   error,
 } = await useAsyncData(
   'queue',

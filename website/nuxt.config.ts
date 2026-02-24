@@ -14,7 +14,13 @@ export default defineNuxtConfig({
   ],
   css: ['~/assets/css/tailwind.css'],
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [
+      // TS error
+      // Possibly related to https://github.com/tailwindlabs/tailwindcss/issues/18802
+      // possibly related to waiting for Nuxt/tailwincss to use Vite 6?
+      // @ts-expect-error
+      tailwindcss()
+    ],
   },
   app: {
     head: {
@@ -32,7 +38,7 @@ export default defineNuxtConfig({
       redirect: "/clusters/",
     },
   },
-   $development: {
+  $development: {
     routeRules: {
       /**
        * In development mode (`npm run dev`) the website fetches API data from either a local dev api or some

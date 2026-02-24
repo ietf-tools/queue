@@ -31,6 +31,8 @@ type Props = {
   error: Error | Error[]
 }
 
+const props = defineProps<Props>()
+
 const statusArr = computed(() => {
   const { status } = props
   return Array.isArray(status) ? status : [status]
@@ -40,6 +42,4 @@ const errorArr = computed(() => {
   const { error } = props
   return Array.isArray(error) ? error : [error]
 })
-
-const props = defineProps<Props>()
 </script>

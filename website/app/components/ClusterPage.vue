@@ -6,7 +6,7 @@
     {{ error }}
   </div>
   <div v-else-if="status === 'success' && clusterRoot">
-    <DocumentDependenciesGraph :cluster="clusterRoot.cluster" :rfc-to-bes="clusterRoot.rfcToBes" />
+    <DocumentDependenciesGraph :cluster="clusterRoot.cluster" />
   </div>
   <div v-else>
     <!-- 404 or unknown state -->
