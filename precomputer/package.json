@@ -24,7 +24,6 @@
     "@supercharge/promise-pool": "3.2.0",
     "es-toolkit": "1.44.0",
     "fastify": "5.7.4",
-    "ts-node": "10.9.2",
     "zod": "4.3.6"
   },
   "devDependencies": {
