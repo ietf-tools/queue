@@ -10,7 +10,7 @@ const fastify = Fastify({
 })
 
 fastify.get('/api/v1/queue.json', async () => {
-  const api = getApiClient()
+  const api = getApiClient('dev')
   const queueCommon = await getQueue({ api })
   return queueCommon
 })
@@ -23,7 +23,7 @@ fastify.get('/api/v1/clusters/:number.json', async (request, reply) => {
     console.log("FOUND CLUSTER NUMBER", clusterNumber)
 
     if (!Number.isNaN(clusterNumber)) {
-      const api = getApiClient()
+      const api = getApiClient('dev')
       console.log("Get cluster", clusterNumber)
       try {
         const cluster = await getCluster({ api, clusterNumber })
@@ -43,12 +43,12 @@ fastify.get('/api/v1/clusters/:number.json', async (request, reply) => {
 })
 
 fastify.get('/api/v1/clusters/index.json', async (request) => {
-  const api = getApiClient()
+  const api = getApiClient('dev')
   return getClusterIndex({ api })
 })
 
 fastify.get('/api/v1/final-review/index.json', async (request) => {
-  const api = getApiClient()
+  const api = getApiClient('dev')
   return getFinalReviewIndex({ api })
 })
 

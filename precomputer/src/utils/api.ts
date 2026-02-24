@@ -1,16 +1,28 @@
 import { Configuration, PurpleApi } from '../../generated/purple_client/index.ts'
 
-export const getApiClient = () => {
+type ApiMode = 'prod' | 'dev'
+
+export const getApiClient = (mode?: ApiMode) => {
   const configuration = new Configuration({
-    basePath: 'http://localhost:8088',
+    basePath: mode === 'dev' ? 'http://localhost:8088' : undefined,
     fetchApi: (input: RequestInfo | URL, init?: RequestInit) => {
-      console.log("DEBUG", { input, init })
+      console.log("fetchApi debug", { input, init })
       return fetch(input, init).then(resp => {
-        console.log(resp.ok, resp.status )
+        console.log("fetch response:", resp.ok, resp.status)
         return resp
-      }).catch(e => {
-        console.log('fetch error', e)
-        return e
+      }).catch(error => {
+        if (
+          error instanceof TypeError &&
+          error.cause instanceof AggregateError
+        ) {
+          console.log('fetch error aggregate error',
+            error.cause.errors.map(
+              (subError) => `${subError.code} ${subError}`
+            ))
+        } else {
+          console.log('fetch error', error)
+        }
+        return error
       })
     },
     middleware: [{
