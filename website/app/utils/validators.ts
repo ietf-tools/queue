@@ -85,7 +85,8 @@ const ClusterDocumentReferenceCommonSchema = z.object({
     draftName: z.string(),
     sourceRfcNumber: z.number().optional(),
     targetDraftName: z.string(),
-    targetRfcNumber: z.number().optional()
+    targetRfcNumber: z.number().optional(),
+    targetDisposition: DispositionCommonSchema.optional(),
 })
 
 export type ClusterDocumentReferenceCommon = z.infer<typeof ClusterDocumentReferenceCommonSchema>
@@ -116,8 +117,7 @@ const ClusterRfcToBeCommonSchema = z.object({
 export type ClusterRfcToBeCommon = z.infer<typeof ClusterRfcToBeCommonSchema>
 
 export const ClusterPackageCommonSchema = z.object({
-  cluster: ClusterItemCommonSchema,
-  rfcToBes: ClusterRfcToBeCommonSchema.array()
+  cluster: ClusterItemCommonSchema
 })
 
 export type ClusterPackageCommon = z.infer<typeof ClusterPackageCommonSchema>

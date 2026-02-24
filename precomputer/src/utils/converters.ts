@@ -113,6 +113,7 @@ export const clusterMemberToClusterDocumentCommon = (cluster: ClusterMember): Cl
         targetDraftName,
         targetRfcNumber,
         sourceRfcNumber,
+        targetDisposition,
       } = reference
 
       assertIsString(draftName)
@@ -124,6 +125,7 @@ export const clusterMemberToClusterDocumentCommon = (cluster: ClusterMember): Cl
         targetDraftName,
         targetRfcNumber,
         sourceRfcNumber,
+        targetDisposition: targetDisposition ? parseDisposition(targetDisposition) : undefined
       }
     }) ?? []
   }
