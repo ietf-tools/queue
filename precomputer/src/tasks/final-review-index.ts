@@ -4,6 +4,13 @@ import { getQueueCommon } from "../utils/queue.ts";
 
 type Props = {
   api: PurpleApi
+  params?: ApiPubqQueueListRequest
 }
 
-export const getQueue = async (props: Props): Promise<QueueCommon> => getQueueCommon(props)
+export const getFinalReviewIndex = async ({ api, params }: Props): Promise<QueueCommon> => getQueueCommon({
+  api,
+  params: {
+    ...params,
+    pendingFinalApproval: true
+  }
+})
