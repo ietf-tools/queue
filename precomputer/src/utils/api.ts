@@ -3,15 +3,41 @@ import { Configuration, PurpleApi } from '../../generated/purple_client/index.ts
 type ApiMode = 'prod' | 'dev'
 
 const localDevToken = 'pubq-token' // FIXME: hardcoded extremely secure token
+const XApiKeyPropName = 'X-Api-Key'
+const REDACTED_SYMBOL = '░░░░░░░░░░░░░░░░░░░░'
+
+/**
+ * Redact passwords in specific headers.
+ * Useful to print debug without revealing secrets.
+ */
+const redactRequestInit = (init: RequestInit | undefined): RequestInit | undefined => {
+  if (!init) {
+    return init
+  }
+  const newRequestInit = structuredClone(init)
+  // @ts-ignore
+  newRequestInit.headers[XApiKeyPropName] = REDACTED_SYMBOL
+  return newRequestInit
+}
 
 export const getApiClient = (mode?: ApiMode) => {
   const PURPLE_PUBQ_API_BASE = process.env.PURPLE_PUBQ_API_BASE
+  const basePath = mode === 'dev' ? 'http://localhost:8088' : PURPLE_PUBQ_API_BASE ?? undefined
+
+  if (PURPLE_PUBQ_API_BASE) {
+    console.log('[api client] custom base env', { PURPLE_PUBQ_API_BASE, basePath })
+  }
+
   const PURPLE_PUBQ_API_TOKEN = process.env.PURPLE_PUBQ_API_TOKEN
-  
+  const XApiKey = PURPLE_PUBQ_API_TOKEN ?? localDevToken
+  if (PURPLE_PUBQ_API_TOKEN) {
+    console.log('[api client] custom token env')
+  }
+
   const configuration = new Configuration({
-    basePath: mode === 'dev' ? 'http://localhost:8088' : PURPLE_PUBQ_API_BASE ?? undefined,
+    basePath,
     fetchApi: (input: RequestInfo | URL, init?: RequestInit) => {
-      console.log("fetchApi debug", { input, init })
+      console.log("fetchApi debug", { input, init: redactRequestInit(init) })
       return fetch(input, init).then(resp => {
         console.log("fetch response:", resp.ok, resp.status)
         return resp
@@ -41,9 +67,10 @@ export const getApiClient = (mode?: ApiMode) => {
         // @ts-ignore
         headers['Accept'] = 'application/json, text/plain, */*'
         // @ts-ignore
-        headers['X-Api-Key'] = PURPLE_PUBQ_API_TOKEN ?? localDevToken
+        headers[XApiKeyPropName] = XApiKey
       }
     }]
   })
+
   return new PurpleApi(configuration)
 }
