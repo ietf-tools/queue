@@ -8,7 +8,7 @@ export const getQueue = async () => {
     const unverifiedData = await response.json()
     const { data, error } = QueueCommonSchema.safeParse(unverifiedData)
     if (error || !data) {
-        console.error('fetch succeeded but data failed validation', API_QUEUE_PATH, unverifiedData, error)
+        console.error('Queue fetch succeeded but data failed validation', path, unverifiedData, error)
         throw Error('Queue fetch failed. Try again later.')
     }
     return data
@@ -24,8 +24,8 @@ export const getClusterIndex = async () => {
     const unverifiedData = await response.json()
     const { data, error } = ClusterIndexCommonSchema.safeParse(unverifiedData)
     if (error || !data) {
-        console.error('fetch succeeded but data failed validation', API_QUEUE_PATH, unverifiedData, error)
-        throw Error('Queue fetch failed. Try again later.')
+        console.error('Cluster index fetch succeeded but data failed validation', path, unverifiedData, error)
+        throw Error('Cluster index fetch failed. Try again later.')
     }
     return data
 }
@@ -40,8 +40,8 @@ export const getCluster = async (clusterNumber: number) => {
     const unverifiedData = await response.json()
     const { data, error } = ClusterCommonSchema.safeParse(unverifiedData)
     if (error || !data) {
-        console.error('fetch succeeded but data failed validation', API_QUEUE_PATH, unverifiedData, error)
-        throw Error('Cluster fetch failed. Try again later.')
+        console.error('Cluster number fetch succeeded but data failed validation', path, unverifiedData, error)
+        throw Error('Cluster number fetch failed. Try again later.')
     }
     return data
 }

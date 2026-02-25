@@ -56,7 +56,6 @@ const {
   {
     server: false,
     lazy: true,
-    default: () => ({ items: [] } as QueueCommon),
   }
 )
 
@@ -129,7 +128,7 @@ const columns = [
 
 const table = useVueTable({
   get data() {
-    return data.value.items
+    return data.value?.items ?? []
   },
   columns,
   state: {

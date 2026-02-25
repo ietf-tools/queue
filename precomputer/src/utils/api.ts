@@ -2,9 +2,14 @@ import { Configuration, PurpleApi } from '../../generated/purple_client/index.ts
 
 type ApiMode = 'prod' | 'dev'
 
+const localDevToken = 'pubq-token' // FIXME: hardcoded extremely secure token
+
 export const getApiClient = (mode?: ApiMode) => {
+  const PURPLE_PUBQ_API_BASE = process.env.PURPLE_PUBQ_API_BASE
+  const PURPLE_PUBQ_API_TOKEN = process.env.PURPLE_PUBQ_API_TOKEN
+  
   const configuration = new Configuration({
-    basePath: mode === 'dev' ? 'http://localhost:8088' : undefined,
+    basePath: mode === 'dev' ? 'http://localhost:8088' : PURPLE_PUBQ_API_BASE ?? undefined,
     fetchApi: (input: RequestInfo | URL, init?: RequestInit) => {
       console.log("fetchApi debug", { input, init })
       return fetch(input, init).then(resp => {
@@ -36,7 +41,7 @@ export const getApiClient = (mode?: ApiMode) => {
         // @ts-ignore
         headers['Accept'] = 'application/json, text/plain, */*'
         // @ts-ignore
-        headers['X-Api-Key'] = 'pubq-token' // FIXME: hardcoded extremely secure token
+        headers['X-Api-Key'] = PURPLE_PUBQ_API_TOKEN ?? localDevToken
       }
     }]
   })
