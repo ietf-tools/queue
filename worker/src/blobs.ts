@@ -5,12 +5,12 @@ export async function blobs(request: Request, env: Env) {
 	/**
    * Queue bucket usage (note env.QUEUE_STAGING_BUCKET)
    */
-  const RFC_PREFIX = '/rfc/'
-  if (normalizedPath.startsWith(RFC_PREFIX)) {
-    const objectPath = normalizedPath.substring(RFC_PREFIX.length)
+  const API_V1_PREFIX = '/api/v1/'
+  if (normalizedPath.startsWith(API_V1_PREFIX)) {
+    const objectPath = normalizedPath.substring(API_V1_PREFIX.length)
 
     // -> Fetch R2 object
-    if (objectPath.endsWith('.html') || objectPath.endsWith('.txt') || objectPath.endsWith('.pdf')) {
+    if (objectPath.endsWith('.json')) {
       const object = await env.QUEUE_STAGING_BUCKET.get(objectPath)
       if (object) {
         const headers = new Headers()
