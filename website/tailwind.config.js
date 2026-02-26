@@ -5,10 +5,6 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
-      screens: {
-        print: { raw: 'print' },
-        screen: { raw: 'screen' }
-      },
       fontFamily: {
         sans: '"Inter", sans-serif'
       },
