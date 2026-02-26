@@ -1,6 +1,6 @@
 import { PromisePool } from '@supercharge/promise-pool'
 import { getClusterIndex } from './tasks/cluster-index.ts'
-import { getCluster } from './tasks/cluster.ts'
+import { getClusterPackage } from './tasks/cluster.ts'
 import { getFinalReviewIndex } from './tasks/final-review-index.ts'
 import { getQueue } from './tasks/queue.ts'
 import { getApiClient } from './utils/api.ts'
@@ -25,33 +25,35 @@ const main = async (): Promise<void> => {
     getFinalReviewIndex({ api })
   ])
 
-  console.log(`Fetching cluster API data for ${clusterIndex.list.length} item(s) using ${NUMBER_OF_CONCURRENT_API_USAGES} concurrent processes`)
+  console.log(`[Clusters] Fetching cluster API data for ${clusterIndex.list.length} item(s) using ${NUMBER_OF_CONCURRENT_API_USAGES} concurrent processes`)
 
   const { results: maybeClusterPackages, errors: apiErrors } = await PromisePool.for(clusterIndex.list)
     .withConcurrency(NUMBER_OF_CONCURRENT_API_USAGES)
     .process(async (cluster): Promise<ClusterPackageCommon | null> => {
       console.log(`[Cluster ${cluster.number}] fetching API data`)
-      return getCluster({ api, clusterNumber: cluster.number })
+      const clusterPackage = await getClusterPackage({ api, clusterNumber: cluster.number })
+      console.log(`[Cluster ${cluster.number}] succeeded fetching API data`)
+      return clusterPackage
     })
 
   if (apiErrors.length) {
-    console.error("Errors occured during fetching cluster API data", apiErrors)
-    console.error("Cannot continue. Returning...")
+    console.error("[Clusters] Errors occured during fetching cluster API data", apiErrors)
+    console.error("Cannot continue. Exiting...")
     return
   }
 
-  console.log("Successfully fetched cluster API data.")
-
-  const clusters = maybeClusterPackages.filter(
+  const clusterPackages = maybeClusterPackages.filter(
     // `null` is a valid response if a cluster is !isActive but we don't care about uploading that
     maybeClusterPackage => maybeClusterPackage !== null
   )
+
+  console.log(`[Clusters] Successfully fetched ALL cluster API data for ${clusterPackages.length} cluster(s).`)
 
   const uploadTasks: S3UploadTask[] = [
     { key: QUEUE_INDEX_PATH, contents: JSON.stringify(queueCommon) },
     { key: CLUSTER_INDEX_PATH, contents: JSON.stringify(clusterIndex) },
     { key: FINAL_REVIEW_INDEX_PATH, contents: JSON.stringify(finalReviewIndex) },
-    ...clusters.map((clusterPackage): S3UploadTask => {
+    ...clusterPackages.map((clusterPackage): S3UploadTask => {
       return {
         key: clusterPathBuilder(clusterPackage.cluster.number),
         contents: JSON.stringify(clusterPackage)
@@ -59,23 +61,25 @@ const main = async (): Promise<void> => {
     })
   ]
 
+  console.log(`[Uploads] Uploading ${uploadTasks.length} files`)
+
   const { errors: uploadErrors } = await PromisePool.for(uploadTasks)
     .withConcurrency(NUMBER_OF_CONCURRENT_S3_USAGES)
     .process(async (uploadTask) => {
       try {
         await saveToS3(uploadTask.key, uploadTask.contents)
-        console.log(`[${uploadTask.key}] upload succeeded`)
+        console.log(`[Upload ${uploadTask.key}] upload succeeded`)
       } catch (err) {
         console.warn(
-          `[${uploadTask.key}] threw exception: ${(err as Error).message}`
+          `[Upload ${uploadTask.key}] threw exception: ${(err as Error).message}`
         )
         throw err
       }
     })
 
   if (uploadErrors.length) {
-    console.error("Errors occured during upload tasks", uploadErrors)
-    console.error("Cannot continue. Returning...")
+    console.error("[Uploads] Errors occured during upload tasks", uploadErrors)
+    console.error("Cannot continue. Exiting...")
     return
   }
 
@@ -84,35 +88,32 @@ const main = async (): Promise<void> => {
     assertIsString(obj.Key, `Bucket object ${JSON.stringify(obj)} has no key.`)
     return obj.Key
   })
-
   const validBucketKeys = uploadTasks.map(uploadTask => uploadTask.key)
-
   const keysToPurge = difference(existingBucketKeys, validBucketKeys)
-
   if (keysToPurge.length > 0) {
-    console.log(`File storage purge of ${keysToPurge.length} object(s)`)
+    console.log(`[Cleanup] File storage purge of ${keysToPurge.length} object(s)`)
     const { errors: purgeErrors } = await PromisePool.for(keysToPurge)
       .withConcurrency(NUMBER_OF_CONCURRENT_S3_USAGES)
       .process(async (keyToPurge) => {
         try {
           await deleteFromS3(keyToPurge)
-          console.log(`[${keyToPurge}] deleted sucessfully`)
+          console.log(`[Cleanup ${keyToPurge}] deleted sucessfully`)
         } catch (err) {
           console.warn(
-            `[${keyToPurge}] threw exception: ${(err as Error).message}`
+            `[Cleanup ${keyToPurge}] threw exception: ${(err as Error).message}`
           )
           throw err
         }
       })
     if (purgeErrors.length) {
-      console.error("There were errors purging files.", purgeErrors)
-      console.error('Bucket retains files that it shouldn\'t. This is bad.')
-      console.error("Cannot continue. Returning...")
+      console.error("[Cleanup] There were errors purging files.", purgeErrors)
+      console.error('[Cleanup] Bucket retains files that it shouldn\'t. This is bad.')
+      console.error("Cannot continue. Exiting...")
     }
   } else {
-    console.log("No need to purge any files from S3.")
+    console.log("[Cleanup] No need to purge any files from S3.")
   }
-  console.log("Done.")
+  console.log("Done!")
 }
 
 main()

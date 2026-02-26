@@ -24,22 +24,22 @@ export const getApiClient = (mode?: ApiMode) => {
   const PURPLE_PUBQ_API_BASE = process.env.PURPLE_PUBQ_API_BASE
   const basePath = mode === 'dev' ? 'http://localhost:8088' : PURPLE_PUBQ_API_BASE ?? undefined
 
-  if (PURPLE_PUBQ_API_BASE) {
-    console.log('[api client] custom base env', { PURPLE_PUBQ_API_BASE, basePath })
+  if (basePath) {
+    console.log('[api client] custom base env', basePath)
   }
 
   const PURPLE_PUBQ_API_TOKEN = process.env.PURPLE_PUBQ_API_TOKEN
   const XApiKey = PURPLE_PUBQ_API_TOKEN ?? localDevToken
   if (PURPLE_PUBQ_API_TOKEN) {
-    console.log('[api client] custom token env')
+    console.log(`[api client] custom ${XApiKeyPropName} value`)
   }
 
   const configuration = new Configuration({
     basePath,
     fetchApi: (input: RequestInfo | URL, init?: RequestInit) => {
-      console.log("fetchApi debug", { input, init: redactRequestInit(init) })
+      // console.log("fetchApi debug", { input, init: redactRequestInit(init) })
       return fetch(input, init).then(resp => {
-        console.log("fetch response:", resp.ok, resp.status)
+        // console.log("fetch response:", resp.ok, resp.status)
         return resp
       }).catch(error => {
         if (

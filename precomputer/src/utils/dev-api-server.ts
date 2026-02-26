@@ -1,7 +1,7 @@
 import Fastify from 'fastify'
 import { getApiClient } from './api.ts'
 import { getQueue } from '../tasks/queue.ts'
-import { getCluster } from '../tasks/cluster.ts'
+import { getClusterPackage } from '../tasks/cluster.ts'
 import { getClusterIndex } from '../tasks/cluster-index.ts'
 import { getFinalReviewIndex } from '../tasks/final-review-index.ts'
 
@@ -26,7 +26,7 @@ fastify.get('/api/v1/clusters/:number.json', async (request, reply) => {
       const api = getApiClient('dev')
       console.log("Get cluster", clusterNumber)
       try {
-        const cluster = await getCluster({ api, clusterNumber })
+        const cluster = await getClusterPackage({ api, clusterNumber })
         if (cluster === null) {
           reply.status(404).send()
           return
