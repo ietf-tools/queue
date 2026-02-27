@@ -90,10 +90,10 @@ const columns = [
 
 const emptyArray: ClusterItemCommon[] = []
 
+const tableData = computed(() => data.value?.list ?? emptyArray)
+
 const table = useVueTable({
-  get data() {
-    return data.value?.list ?? emptyArray
-  },
+  data: tableData,
   columns,
   state: {
     get sorting() {

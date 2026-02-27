@@ -90,15 +90,14 @@ const columns = [
     },
     enableSorting: false,
   }),
-
 ]
 
 const emptyArray: QueueCommonItem[] = []
 
+const tableData = computed(() => data.value?.items ?? emptyArray)
+
 const table = useVueTable({
-  get data() {
-    return data.value?.items ?? emptyArray
-  },
+  data: tableData,
   columns,
   state: {
     get globalFilter() {
