@@ -78,7 +78,7 @@ export const listS3Files = async () => {
 
 export const QUEUE_INDEX_PATH = 'queue/index.json'
 
-export const CLUSTER_INDEX_PATH = 'cluster/index.json'
+export const CLUSTER_INDEX_PATH = 'clusters/index.json'
 
 export const FINAL_REVIEW_INDEX_PATH = 'final-review/index.json'
 
