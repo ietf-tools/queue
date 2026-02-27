@@ -93,9 +93,11 @@ const columns = [
 
 ]
 
+const emptyArray: QueueCommonItem[] = []
+
 const table = useVueTable({
   get data() {
-    return data.value
+    return data.value?.items ?? emptyArray
   },
   columns,
   state: {
