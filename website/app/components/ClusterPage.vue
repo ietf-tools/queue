@@ -23,7 +23,7 @@ const props = defineProps<Props>()
 
 const { data: clusterRoot, error, status } = await useAsyncData(
   () => `cluster-${props.clusterNumber}`,
-  () => getCluster(props.clusterNumber)
+  () => getClusterPackage(props.clusterNumber)
 )
 
 if (status.value === 'success' && clusterRoot === undefined) {

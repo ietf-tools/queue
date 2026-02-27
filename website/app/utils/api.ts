@@ -1,8 +1,11 @@
-export const getQueue = async () => {
-    const path = API_QUEUE_PATH
+import { API_QUEUE_INDEX_PATH, API_CLUSTER_INDEX_PATH, clusterNumberPathBuilder } from './url'
+import { ClusterPackageCommonSchema } from './validators'
+
+export const getQueueIndex = async () => {
+    const path = API_QUEUE_INDEX_PATH
     const response = await fetch(path)
     if (!response.ok) {
-        console.error('Queue fetch failed', path, response.status, response.statusText, response)        
+        console.error('Queue fetch failed', path, response.status, response.statusText, response)
         throw Error(`Queue fetch failed ${response.status}: ${response.statusText}`)
     }
     const unverifiedData = await response.json()
@@ -30,7 +33,7 @@ export const getClusterIndex = async () => {
     return data
 }
 
-export const getCluster = async (clusterNumber: number) => {
+export const getClusterPackage = async (clusterNumber: number) => {
     const path = clusterNumberPathBuilder(clusterNumber)
     const response = await fetch(path)
     if (!response.ok) {
@@ -38,7 +41,7 @@ export const getCluster = async (clusterNumber: number) => {
         throw Error(`Cluster number fetch failed ${response.status}: ${response.statusText}`)
     }
     const unverifiedData = await response.json()
-    const { data, error } = ClusterCommonSchema.safeParse(unverifiedData)
+    const { data, error } = ClusterPackageCommonSchema.safeParse(unverifiedData)
     if (error || !data) {
         console.error('Cluster number fetch succeeded but data failed validation', path, unverifiedData, error)
         throw Error('Cluster number fetch failed. Try again later.')

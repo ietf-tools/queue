@@ -13,14 +13,14 @@
         <Heading level="1" style-level="3" class="w-full mx-2 mb-2 md:mb-3 text-gray-600 font-semibold text-balance">
           Upcoming RFCs Queue
         </Heading>
-        <QueueTable />
+        <QueueIndexTable />
       </div>
     </NuxtLayout>
   </div>
 </template>
 
 <script setup lang="ts">
-import { RFC_EDITOR_SITE_URL_ORIGIN, } from '~/utils/url'
+import { RFC_EDITOR_SITE_URL_ORIGIN } from '~/utils/url'
 
 definePageMeta({
   layout: false

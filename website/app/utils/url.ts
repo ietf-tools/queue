@@ -5,7 +5,7 @@ export const RFC_EDITOR_SITE_URL_ORIGIN = 'https://www.rfc-editor.org'
 export const QUEUE_RFC_EDITOR_SITE_URL_ORIGIN = 'https://queue.rfc-editor.org'
 export const DATATRACKER_URL_ORIGIN = 'https://datatracker.ietf.org'
 
-export const API_QUEUE_PATH = '/api/v1/queue.json'
+export const API_QUEUE_INDEX_PATH = '/api/v1/queue/index.json'
 export const API_CLUSTER_INDEX_PATH = '/api/v1/clusters/index.json'
 
 export const clusterNumberPathBuilder = (clusterNumber: number) => {

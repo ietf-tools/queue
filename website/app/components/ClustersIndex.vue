@@ -44,6 +44,7 @@ import {
   getFilteredRowModel,
   getSortedRowModel,
 } from '@tanstack/vue-table'
+import { getVNodeText } from '../utils/vue'
 
 const {
   data,
@@ -68,7 +69,7 @@ const columns = [
     cell: data => {
       return h(Anchor, {
         href: `/cluster/${data.row.original.number}`,
-        'class': [ANCHOR_TAILWIND_STYLE, 'font-bold text-md whitespace-nowrap'] 
+        'class': [ANCHOR_TAILWIND_STYLE, 'font-bold text-md whitespace-nowrap']
       }, () => [
         data.getValue(),
       ])

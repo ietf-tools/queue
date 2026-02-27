@@ -44,6 +44,7 @@ import {
   getSortedRowModel,
 } from '@tanstack/vue-table'
 import type { SortingState } from '@tanstack/vue-table'
+import { getVNodeText } from '../utils/vue'
 
 const {
   data,

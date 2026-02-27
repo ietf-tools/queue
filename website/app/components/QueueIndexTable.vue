@@ -45,6 +45,7 @@ import {
 } from '@tanstack/vue-table'
 import type { SortingState } from '@tanstack/vue-table'
 import Label from './Label.vue'
+import { getVNodeText } from '../utils/vue'
 
 const {
   data,
@@ -52,7 +53,7 @@ const {
   error,
 } = await useAsyncData(
   'queue',
-  getQueue,
+  getQueueIndex,
   {
     server: false,
     lazy: true,

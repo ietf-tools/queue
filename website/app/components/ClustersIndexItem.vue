@@ -28,6 +28,7 @@
 
 <script setup lang="ts">
 import { Anchor } from '#components'
+import { NBSP, SPACE } from '../utils/strings'
 
 type Props = {
   document: ClusterDocumentCommon
