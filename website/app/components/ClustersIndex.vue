@@ -46,6 +46,8 @@ import {
 } from '@tanstack/vue-table'
 import { getVNodeText } from '../utils/vue'
 
+const emptyArray: ClusterItemCommon[] = []
+
 const {
   data,
   status,
@@ -56,6 +58,7 @@ const {
   {
     server: false,
     lazy: true,
+    default: () => emptyArray
   }
 )
 
@@ -88,12 +91,8 @@ const columns = [
   }),
 ]
 
-const emptyArray: ClusterItemCommon[] = []
-
-const tableData = computed(() => data.value?.list ?? emptyArray)
-
 const table = useVueTable({
-  data: tableData,
+  data,
   columns,
   state: {
     get sorting() {

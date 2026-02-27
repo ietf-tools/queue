@@ -47,6 +47,8 @@ import type { SortingState } from '@tanstack/vue-table'
 import { getVNodeText } from '../utils/vue'
 import { getFinalReviewIndex } from '~/utils/api'
 
+const emptyArray: QueueCommonItem[] = []
+
 const {
   data,
   status,
@@ -57,6 +59,7 @@ const {
   {
     server: false,
     lazy: true,
+    default: () => emptyArray
   }
 )
 
@@ -92,12 +95,8 @@ const columns = [
   }),
 ]
 
-const emptyArray: QueueCommonItem[] = []
-
-const tableData = computed(() => data.value?.items ?? emptyArray)
-
 const table = useVueTable({
-  data: tableData,
+  data,
   columns,
   state: {
     get globalFilter() {

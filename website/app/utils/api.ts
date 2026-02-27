@@ -14,7 +14,7 @@ export const getQueueIndex = async () => {
         console.error('Queue fetch succeeded but data failed validation', path, unverifiedData, error)
         throw Error('Queue fetch failed. Try again later.')
     }
-    return data
+    return data.items
 }
 
 export const getFinalReviewIndex = async () => {
@@ -30,7 +30,7 @@ export const getFinalReviewIndex = async () => {
         console.error('Final review fetch succeeded but data failed validation', path, unverifiedData, error)
         throw Error('Final review fetch failed. Try again later.')
     }
-    return data
+    return data.items
 }
 
 export const getClusterIndex = async () => {
@@ -46,7 +46,7 @@ export const getClusterIndex = async () => {
         console.error('Cluster index fetch succeeded but data failed validation', path, unverifiedData, error)
         throw Error('Cluster index fetch failed. Try again later.')
     }
-    return data
+    return data.list
 }
 
 export const getClusterPackage = async (clusterNumber: number) => {
