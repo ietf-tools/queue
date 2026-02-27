@@ -46,6 +46,7 @@ import {
 import type { SortingState } from '@tanstack/vue-table'
 import Label from './Label.vue'
 import { getVNodeText } from '../utils/vue'
+import { getQueueIndex } from '../utils/api'
 
 const {
   data,
@@ -127,9 +128,11 @@ const columns = [
   }),
 ]
 
+const emptyArray: QueueCommonItem[] = []
+
 const table = useVueTable({
   get data() {
-    return data.value?.items ?? []
+    return data.value?.items ?? emptyArray
   },
   columns,
   state: {

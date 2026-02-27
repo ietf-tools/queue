@@ -88,10 +88,11 @@ const columns = [
   }),
 ]
 
+const emptyArray: ClusterItemCommon[] = []
+
 const table = useVueTable({
   get data() {
-    console.log("rows", data.value?.list ?? [])
-    return data.value?.list ?? []
+    return data.value?.list ?? emptyArray
   },
   columns,
   state: {
