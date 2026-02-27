@@ -45,6 +45,7 @@ import {
 } from '@tanstack/vue-table'
 import type { SortingState } from '@tanstack/vue-table'
 import { getVNodeText } from '../utils/vue'
+import { getFinalReviewIndex } from '~/utils/api'
 
 const {
   data,
@@ -52,22 +53,14 @@ const {
   error,
 } = await useAsyncData(
   'queue',
-  async () => [],
+  getFinalReviewIndex,
   {
     server: false,
     lazy: true,
   }
 )
 
-type SomeQueueType = {
-  id: string
-  rfcNumber?: number
-  labels?: string[]
-  name: string
-  clusters?: number[]
-}
-
-const columnHelper = createColumnHelper<SomeQueueType>()
+const columnHelper = createColumnHelper<QueueCommonItem>()
 
 const sorting = ref<SortingState>([])
 
