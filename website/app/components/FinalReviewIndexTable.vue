@@ -54,7 +54,7 @@ const {
   status,
   error,
 } = await useAsyncData(
-  'queue',
+  'final-review-index',
   getFinalReviewIndex,
   {
     server: false,

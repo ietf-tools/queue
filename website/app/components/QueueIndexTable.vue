@@ -55,7 +55,7 @@ const {
   status,
   error,
 } = await useAsyncData(
-  'queue',
+  'queue-index',
   getQueueIndex,
   {
     server: false,

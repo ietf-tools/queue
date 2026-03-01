@@ -53,7 +53,7 @@ const {
   status,
   error,
 } = await useAsyncData(
-  'queue',
+  'clusters-index',
   getClusterIndex,
   {
     server: false,
