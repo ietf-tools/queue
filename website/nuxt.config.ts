@@ -14,6 +14,9 @@ export default defineNuxtConfig({
     'nuxt-vitalizer'
   ],
   css: ['~/assets/css/tailwind.css'],
+  colorMode: {
+    classSuffix: ''
+  },
   vite: {
     plugins: [
       // TS error
