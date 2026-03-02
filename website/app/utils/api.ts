@@ -1,4 +1,4 @@
-import { API_QUEUE_INDEX_PATH, API_CLUSTER_INDEX_PATH, clusterNumberPathBuilder, API_FINAL_REVIEW_INDEX_PATH } from './url'
+import { API_QUEUE_INDEX_PATH, API_CLUSTER_INDEX_PATH, apiClusterNumberPathBuilder, API_FINAL_REVIEW_INDEX_PATH } from './url'
 import { ClusterPackageCommonSchema } from './validators'
 
 export const getQueueIndex = async () => {
@@ -50,7 +50,7 @@ export const getClusterIndex = async () => {
 }
 
 export const getClusterPackage = async (clusterNumber: number) => {
-    const path = clusterNumberPathBuilder(clusterNumber)
+    const path = apiClusterNumberPathBuilder(clusterNumber)
     const response = await fetch(path)
     if (!response.ok) {
         console.error('Cluster number fetch failed', path, response.status, response.statusText, response)

@@ -10,6 +10,10 @@ export const API_FINAL_REVIEW_INDEX_PATH = '/api/v1/final-review/index.json'
 export const API_CLUSTER_INDEX_PATH = '/api/v1/clusters/index.json'
 
 export const clusterNumberPathBuilder = (clusterNumber: number) => {
+  return `/clusters/${clusterNumber}/` as const
+}
+
+export const apiClusterNumberPathBuilder = (clusterNumber: number) => {
   return `/api/v1/clusters/${clusterNumber}.json` as const
 }
 

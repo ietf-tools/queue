@@ -71,7 +71,7 @@ const columns = [
     header: 'Cluster number',
     cell: data => {
       return h(Anchor, {
-        href: `/cluster/${data.row.original.number}`,
+        href: clusterNumberPathBuilder(data.getValue()),
         'class': [ANCHOR_TAILWIND_STYLE, 'font-bold text-md whitespace-nowrap']
       }, () => [
         data.getValue(),
