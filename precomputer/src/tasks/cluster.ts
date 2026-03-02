@@ -22,7 +22,7 @@ export const getClusterPackage = async ({ api, clusterNumber }: Props): Promise<
     cluster: {
       number: cluster.number,
       allPublished: clusterDocuments.length > 0 ? clusterDocuments.every(document => document.disposition === 'published') : false,
-      documents: clusterDocuments,
+      documents: clusterDocuments.filter(clusterDocument => clusterDocument.disposition !== 'published'),
     },
   }
 
