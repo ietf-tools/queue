@@ -1,6 +1,6 @@
 <template>
   <span :class="[
-    'font-semibold no-underline hover:underline focus:underline inline-block p-1 rounded-md',
+    'font-semibold inline-block p-1 rounded-md',
     theme === 'isPublished'
       ? 'text-gray-600 bg-gray-100 dark:text-gray-500 dark:bg-gray-800'
       : theme === 'isNotReceived'
