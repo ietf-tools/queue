@@ -35,6 +35,13 @@ const getS3Singleton = () => {
   return s3Ref
 }
 
+const sniffS3ContentType = (key: string) => {
+  if (key.endsWith('.json')) {
+    return "application/json"
+  }
+  return undefined
+}
+
 type StreamingBlobPayloadInputTypes = ConstructorParameters<
   typeof PutObjectCommand
 >[0]['Body']
@@ -49,7 +56,8 @@ export const saveToS3 = async (
     new PutObjectCommand({
       Bucket: bucket,
       Key: key,
-      Body: contents
+      Body: contents,
+      ContentType: sniffS3ContentType(key)
     })
   )
 }

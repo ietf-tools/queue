@@ -129,15 +129,15 @@ const clusterGraphData = computed(() => {
     ...(clusterToUse.value.documents ?? []).flatMap((clusterMember): LinkParam[] | null => {
       const { references } = clusterMember
 
-      return references ? references.map((reference): LinkParam | null => {
+      return references.map((reference): LinkParam => {
         const { draftName, targetDraftName, relationship } = reference
 
         return {
-          source: draftName,
+          source: draftName, 
           target: targetDraftName,
           rel: relationship,
         }
-      }).filter(isLinkParam) : null
+      })
     }).filter(isLinkParam)
   )
 

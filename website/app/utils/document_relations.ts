@@ -36,7 +36,7 @@ function lines({ id, rfcNumber }: LinesProps): Line[] {
     const newRfcNumber = `RFC ${rfcNumber}`
     lines.push({
       text: newRfcNumber,
-      width: newRfcNumber.length,
+      width: newRfcNumber.length * 2,
       style: 'font-weight: bold'
     })
   }
