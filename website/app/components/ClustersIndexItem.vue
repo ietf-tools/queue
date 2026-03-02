@@ -11,7 +11,7 @@
       <span class="font-normal">RFC{{ NBSP }}</span>
       <span class="font-semibold">{{ `${props.document.rfcNumber}:${SPACE} ` }}</span>
     </span>
-    <span class="font-mono font-normal">
+    <span class="font-mono font-normal mr-1">
       {{ props.document.name }}
     </span>
     <Icon v-if="props.document.disposition === 'published'" name="uil:books" title="(Disposition: published)" />
