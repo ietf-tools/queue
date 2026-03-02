@@ -13,7 +13,7 @@ export const getClusterIndex = async ({ api }: Props): Promise<ClusterIndexCommo
   const clusterIndexCommon: ClusterIndexCommon = {
     list: clusterList.filter(item => item.isActive).map((cluster): ClusterItemCommon => {
       const { number, documents } = cluster
-      const clusterItems = documents?.map(clusterMemberToClusterDocumentCommon) ?? []
+      const clusterItems = documents?.map((clusterMember) => clusterMemberToClusterDocumentCommon(number, clusterMember)) ?? []
       return {
         number,
         allPublished: clusterItems.length > 0 ? clusterItems.every(

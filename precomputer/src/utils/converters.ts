@@ -99,10 +99,10 @@ export const parseRelationship = (relationship: string) => {
 type ClusterDocuments = NonNullable<Cluster["documents"]>
 type ClusterMember = ClusterDocuments[number]
 
-export const clusterMemberToClusterDocumentCommon = (cluster: ClusterMember): ClusterDocumentCommon => {
-  const { name, rfcNumber, disposition, references, isReceived } = cluster
+export const clusterMemberToClusterDocumentCommon = (clusterNumber: number, clusterMember: ClusterMember): ClusterDocumentCommon => {
+  const { name, rfcNumber, disposition, references, isReceived } = clusterMember
 
-  console.log( `[cluster ${cluster.name}]`, `references (${references?.length ?? typeof references}):`, JSON.stringify(references))
+  console.log(`[cluster  ${clusterNumber}]`, `[${name}]`, references?.length ? `${references.length}reference(s)` : 'no references')
 
   return {
     name,

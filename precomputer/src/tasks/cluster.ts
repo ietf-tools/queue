@@ -16,7 +16,7 @@ export const getClusterPackage = async ({ api, clusterNumber }: Props): Promise<
     return null
   }
 
-  const clusterDocuments = cluster.documents?.map(clusterMemberToClusterDocumentCommon) ?? [] 
+  const clusterDocuments = cluster.documents?.map(clusterMember => clusterMemberToClusterDocumentCommon(cluster.number, clusterMember)) ?? []
 
   const clusterPackage: ClusterPackageCommon = {
     cluster: {
