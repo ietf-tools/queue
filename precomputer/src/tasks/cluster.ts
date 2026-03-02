@@ -16,10 +16,13 @@ export const getClusterPackage = async ({ api, clusterNumber }: Props): Promise<
     return null
   }
 
+  const clusterDocuments = cluster.documents?.map(clusterMemberToClusterDocumentCommon) ?? [] 
+
   const clusterPackage: ClusterPackageCommon = {
     cluster: {
       number: cluster.number,
-      documents: cluster.documents?.map(clusterMemberToClusterDocumentCommon) ?? []
+      allPublished: clusterDocuments.length > 0 ? clusterDocuments.every(document => document.disposition === 'published') : false,
+      documents: clusterDocuments,
     },
   }
 
