@@ -1,5 +1,5 @@
 <template>
-  <Anchor :href="`/docs/${props.document.name}`" :class="[
+  <span :class="[
     'font-semibold no-underline hover:underline focus:underline inline-block p-1 rounded-md',
     theme === 'isPublished'
       ? 'text-gray-600 bg-gray-100 dark:text-gray-500 dark:bg-gray-800'
@@ -20,11 +20,10 @@
     <Icon v-if="props.document.disposition === 'in_progress'" name="uil:brain" title="(Disposition: in progress)" />
     <Icon v-if="props.document.isReceived" name="uil:envelope-receive" title="(Received)"/>
     <Icon v-if="!props.document.isReceived" name="uil:envelope-block" title="(Not Received)"/>
-  </Anchor>
+  </span>
 </template>
 
 <script setup lang="ts">
-import { Anchor } from '#components'
 import { NBSP, SPACE } from '../utils/strings'
 
 type Props = {

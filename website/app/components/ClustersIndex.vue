@@ -83,6 +83,9 @@ const columns = [
     header: 'Members',
     cell: data => {
       const docs = data.getValue()
+      if (data.row.original.allPublished) {
+        return h('span', 'All published')
+      }
       return h('span', { class: 'inline-flex flex-wrap gap-2' }, docs.map(document => {
         return h(ClustersIndexItem, { document })
       }))
