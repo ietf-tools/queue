@@ -50,6 +50,7 @@ export default defineNuxtConfig({
        */
       '/api/v1/**': {
         proxy: 'http://localhost:3001/api/v1/**'
+        // proxy: 'https://queue.staging.ietf.org/'
       },
     }
   },
