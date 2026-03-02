@@ -103,6 +103,7 @@ export type ClusterDocumentCommon = z.infer<typeof ClusterDocumentCommonSchema>
 
 const ClusterItemCommonSchema = z.object({
   number: z.number(),
+  allPublished: z.boolean(),
   documents: ClusterDocumentCommonSchema.array()
 })
 

@@ -13,9 +13,16 @@ export const getClusterIndex = async ({ api }: Props): Promise<ClusterIndexCommo
   const clusterIndexCommon: ClusterIndexCommon = {
     list: clusterList.filter(item => item.isActive).map((cluster): ClusterItemCommon => {
       const { number, documents } = cluster
+      const clusterItems = documents?.map(clusterMemberToClusterDocumentCommon) ?? []
       return {
         number,
-        documents: documents?.map(clusterMemberToClusterDocumentCommon) ?? []
+        allPublished: clusterItems.length > 0 ? clusterItems.every(
+          document => document.disposition === 'published'
+        ) : false,
+        documents: clusterItems.filter(
+          // don't show published documents
+          document => document.disposition !== 'published'
+        ) ?? []
       }
     })
   }

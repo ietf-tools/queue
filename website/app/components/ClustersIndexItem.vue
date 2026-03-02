@@ -5,7 +5,7 @@
       ? 'text-gray-600 bg-gray-100 dark:text-gray-500 dark:bg-gray-800'
       : theme === 'isNotReceived'
         ? 'bg-[#520b12] text-white'
-        : 'text-gray-700 dark:text-gray-200'
+        : 'text-white dark:text-gray-200'
   ]">
     <span v-if="props.document.rfcNumber">
       <span class="font-normal">RFC{{ NBSP }}</span>
