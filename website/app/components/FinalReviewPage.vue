@@ -16,7 +16,8 @@ const canonicalPath = `/${normalizedSlug}/`
 
 const { error, data, status } = await useAsyncData(canonicalPath, async () => {
   return []
-})
+},
+  { server: false, lazy: true })
 
 if (status.value === 'success' && data.value === null) {
   throw createError({
