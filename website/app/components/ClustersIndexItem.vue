@@ -7,12 +7,6 @@
         ? 'bg-[#520b12] text-white'
         : 'text-gray-700 dark:text-gray-200'
   ]">
-    <Icon v-if="props.document.disposition === 'published'" name="uil:books" title="(Disposition: published)" />
-    <Icon v-if="props.document.disposition === 'withdrawn'" name="uil:border-clear" title="(Disposition: withdrawn)" />
-    <Icon v-if="props.document.disposition === 'created'" name="uil:bookmark-full" title="(Disposition: created)" />
-    <Icon v-if="props.document.disposition === 'in_progress'" name="uil:brain" title="(Disposition: in progress)" />
-    <Icon v-if="props.document.isReceived" name="uil:envelope-receive" title="(Received)"/>
-    <Icon v-if="!props.document.isReceived" name="uil:envelope-block" title="(Not Received)"/>
     <span v-if="props.document.rfcNumber">
       <span class="font-normal">RFC{{ NBSP }}</span>
       <span class="font-semibold">{{ `${props.document.rfcNumber}:${SPACE} ` }}</span>
@@ -20,15 +14,12 @@
     <span class="font-mono font-normal">
       {{ props.document.name }}
     </span>
-    <span class="sr-only">
-      ({{ props.document.disposition }})
-      <template v-if="props.document.isReceived">
-        (document received)
-      </template>
-      <template v-else>
-        (document not received)
-      </template>
-    </span>
+    <Icon v-if="props.document.disposition === 'published'" name="uil:books" title="(Disposition: published)" />
+    <Icon v-if="props.document.disposition === 'withdrawn'" name="uil:border-clear" title="(Disposition: withdrawn)" />
+    <Icon v-if="props.document.disposition === 'created'" name="uil:bookmark-full" title="(Disposition: created)" />
+    <Icon v-if="props.document.disposition === 'in_progress'" name="uil:brain" title="(Disposition: in progress)" />
+    <Icon v-if="props.document.isReceived" name="uil:envelope-receive" title="(Received)"/>
+    <Icon v-if="!props.document.isReceived" name="uil:envelope-block" title="(Not Received)"/>
   </Anchor>
 </template>
 
