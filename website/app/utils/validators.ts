@@ -58,7 +58,7 @@ export const QueueCommonItemSchema = z.object({
   deadlineIso: z.string().optional(), // ISO date
   labels: LabelCommonSchema.array().optional(),
   clusters: z.number().array().optional(),
-  rfcNumber: z.number().optional(),
+  // rfcNumber: z.number().optional(),
   pages: z.number().optional(),
   enqueuedAtIso: z.string().optional(), // ISO date
   ianaStatus: IanaStatusCommonSchema.optional(),

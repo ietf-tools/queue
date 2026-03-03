@@ -81,16 +81,6 @@ const columns = [
     },
     sortingFn: 'alphanumeric',
   }),
-  columnHelper.accessor('rfcNumber', {
-    header: 'RFC Number',
-    cell: data => data.getValue(),
-    sortingFn: (rowA, rowB, columnId) => {
-      const a = Number(rowA.getValue(columnId))
-      const b = Number(rowB.getValue(columnId))
-      return a - b
-    },
-    sortUndefined: 'last',
-  }),
   columnHelper.accessor(
     'labels', {
     header: 'Labels',
@@ -198,8 +188,7 @@ const table = useVueTable({
     if (searchQuery.value && searchQuery.value.trim()) {
       const searchTerm = searchQuery.value.trim().toLowerCase()
       const nameMatch = d.name?.toLowerCase().includes(searchTerm)
-      const rfcMatch = d.rfcNumber?.toString().toLowerCase().includes(searchTerm)
-      if (!nameMatch && !rfcMatch) {
+      if (!nameMatch) {
         return false
       }
     }

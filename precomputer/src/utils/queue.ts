@@ -32,7 +32,6 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
       return {
         name,
         title,
-        rfcNumber: rfcNumber ?? undefined,
         pages,
         clusters: typeof clusterNumber === 'number' ? [clusterNumber] : undefined,
         enqueuedAtIso: enqueuedAt?.toISOString(),
