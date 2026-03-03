@@ -46,6 +46,7 @@ import {
 import type { SortingState } from '@tanstack/vue-table'
 import { getVNodeText } from '../utils/vue'
 import { getFinalReviewIndex } from '~/utils/api'
+import Label from './Label.vue'
 
 const emptyArray: QueueCommonItem[] = []
 
@@ -89,7 +90,9 @@ const columns = [
     cell: data => {
       const labels = data.getValue()
       if (!labels) return undefined
-      return 'test'
+      return h('ul', { class: 'inline-flex flex-wrap gap-2' }, labels.map(label => {
+        return h('li', { class: 'inline' }, h(Label, { label }))
+      }))
     },
     enableSorting: false,
   }),

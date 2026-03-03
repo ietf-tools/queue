@@ -95,8 +95,8 @@ const columns = [
     cell: data => {
       const labels = data.getValue()
       if (!labels) return undefined
-      return h('span', { class: 'inline-flex flex-wrap gap-2' }, labels.map(label => {
-        return h(Label, { label })
+      return h('ul', { class: 'inline-flex flex-wrap gap-2' }, labels.map(label => {
+        return h('li', { class: 'inline' }, h(Label, { label }))
       }))
     },
     enableSorting: false,
@@ -119,11 +119,11 @@ const columns = [
       const clustersB = rowB.getValue(columnId)
       const a = Array.isArray(clustersA) && clustersA.length > 0 ? clustersA[0] : undefined
       const b = Array.isArray(clustersB) && clustersB.length > 0 ? clustersB[0] : undefined
-      if(a === undefined && b === undefined) {
+      if (a === undefined && b === undefined) {
         return 1
-      } else if(a === undefined) {
+      } else if (a === undefined) {
         return 1
-      } else if(b === undefined) {
+      } else if (b === undefined) {
         return 1
       }
       return a - b
