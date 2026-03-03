@@ -47,6 +47,8 @@ import type { SortingState } from '@tanstack/vue-table'
 import Label from './Label.vue'
 import { getVNodeText } from '../utils/vue'
 import { getQueueIndex } from '../utils/api'
+import { calculateEnqueuedAtData, renderEnqueuedAt } from '~/utils/queue'
+import { DateTime } from 'luxon'
 
 const emptyArray: QueueCommonItem[] = []
 
@@ -100,6 +102,51 @@ const columns = [
       }))
     },
     enableSorting: false,
+  }),
+  columnHelper.accessor(
+    'enqueuedAtIso', {
+    header: () => h('div', { class: 'text-center' }, [
+      h('div', 'Enqueue Date'),
+      h('div', { class: "text-xs" }, '(Weeks in queue)')
+    ]),
+    cell: data => {
+      const value = data.getValue()
+      if (!value) return ''
+      const dateTime = DateTime.fromISO(value)
+      const enqueuedAtData = calculateEnqueuedAtData(dateTime.toJSDate())
+      return renderEnqueuedAt(enqueuedAtData)
+    },
+    sortingFn: (rowA, rowB, columnId) => {
+      const now = DateTime.now()
+
+      const aIso = rowA.getValue(columnId)
+      if (typeof aIso !== 'string') {
+        console.error("Not string was", typeof aIso, aIso)
+        throw Error(`Expected string (iso date string) but was something else. See console.`)
+      }
+      const a = DateTime.fromISO(aIso)
+      if (!(a instanceof Date)) {
+        console.error("Not date was", a)
+        throw Error(`Expected date but was something else. See console.`)
+      }
+      const aDateTime = DateTime.fromJSDate(a)
+      const aDiffInDays = now.diff(aDateTime, 'days').days
+
+      const bIso = rowB.getValue(columnId)
+      if (typeof bIso !== 'string') {
+        console.error("Not string was", typeof bIso, bIso)
+        throw Error(`Expected string (iso date string) but was something else. See console.`)
+      }
+      const b = DateTime.fromISO(bIso)
+      if (!(b instanceof Date)) {
+        console.error("Not date was", b)
+        throw Error(`Expected date but was something else. See console.`)
+      }
+      const bDateTime = DateTime.fromJSDate(b)
+      const bDiffInDays = now.diff(bDateTime, 'days').days
+
+      return (aDiffInDays > bDiffInDays) ? 1 : (aDiffInDays < bDiffInDays) ? -1 : 0
+    },
   }),
   columnHelper.accessor(
     'clusters', {
