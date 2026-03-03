@@ -20,7 +20,7 @@ const { error, data: page } = await useAsyncData(markdownPath, () =>
 if (error.value || page.value === null) {
     throw createError({
         statusCode: 404,
-        statusMessage: 'Not Found',
+        statusMessage: `Not Found`,
         fatal: true
     })
 }
