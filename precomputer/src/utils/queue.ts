@@ -20,7 +20,6 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         externalDeadline,
         labels,
         cluster,
-        rfcNumber,
         pages,
         enqueuedAt,
         ianaStatus,
