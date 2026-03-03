@@ -114,12 +114,7 @@ const columns = [
         console.error("Not string was", typeof aIso, aIso)
         throw Error(`Expected string (iso date string) but was something else. See console.`)
       }
-      const a = DateTime.fromISO(aIso)
-      if (!(a instanceof Date)) {
-        console.error("Not date was", a)
-        throw Error(`Expected date but was something else. See console.`)
-      }
-      const aDateTime = DateTime.fromJSDate(a)
+      const aDateTime = DateTime.fromISO(aIso)
       const aDiffInDays = now.diff(aDateTime, 'days').days
 
       const bIso = rowB.getValue(columnId)
@@ -127,12 +122,7 @@ const columns = [
         console.error("Not string was", typeof bIso, bIso)
         throw Error(`Expected string (iso date string) but was something else. See console.`)
       }
-      const b = DateTime.fromISO(bIso)
-      if (!(b instanceof Date)) {
-        console.error("Not date was", b)
-        throw Error(`Expected date but was something else. See console.`)
-      }
-      const bDateTime = DateTime.fromJSDate(b)
+      const bDateTime = DateTime.fromISO(bIso)
       const bDiffInDays = now.diff(bDateTime, 'days').days
 
       return (aDiffInDays > bDiffInDays) ? 1 : (aDiffInDays < bDiffInDays) ? -1 : 0
