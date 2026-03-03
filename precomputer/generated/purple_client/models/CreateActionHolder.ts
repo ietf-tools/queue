@@ -22,67 +22,67 @@ import {
 } from './BaseDatatrackerPerson.ts';
 
 /**
- * Serialize an ActionHolder with person name
+ * Serializer for creating ActionHolder instances
  * @export
- * @interface ActionHolder
+ * @interface CreateActionHolder
  */
-export interface ActionHolder {
+export interface CreateActionHolder {
     /**
      * 
      * @type {number}
-     * @memberof ActionHolder
+     * @memberof CreateActionHolder
      */
     readonly id?: number;
     /**
      * 
      * @type {BaseDatatrackerPerson}
-     * @memberof ActionHolder
+     * @memberof CreateActionHolder
      */
     readonly person?: BaseDatatrackerPerson;
     /**
      * 
      * @type {Date}
-     * @memberof ActionHolder
+     * @memberof CreateActionHolder
      */
     deadline?: Date | null;
     /**
      * 
      * @type {Date}
-     * @memberof ActionHolder
+     * @memberof CreateActionHolder
      */
     readonly sinceWhen?: Date;
     /**
      * The action is considered done when the completed field is set with a datetime.
      * @type {Date}
-     * @memberof ActionHolder
+     * @memberof CreateActionHolder
      */
     completed?: Date | null;
     /**
      * 
      * @type {string}
-     * @memberof ActionHolder
+     * @memberof CreateActionHolder
      */
     comment?: string;
     /**
      * 
      * @type {string}
-     * @memberof ActionHolder
+     * @memberof CreateActionHolder
      */
     body?: string;
 }
 
 /**
- * Check if a given object implements the ActionHolder interface.
+ * Check if a given object implements the CreateActionHolder interface.
  */
-export function instanceOfActionHolder(value: object): value is ActionHolder {
+export function instanceOfCreateActionHolder(value: object): value is CreateActionHolder {
     return true;
 }
 
-export function ActionHolderFromJSON(json: any): ActionHolder {
-    return ActionHolderFromJSONTyped(json, false);
+export function CreateActionHolderFromJSON(json: any): CreateActionHolder {
+    return CreateActionHolderFromJSONTyped(json, false);
 }
 
-export function ActionHolderFromJSONTyped(json: any, ignoreDiscriminator: boolean): ActionHolder {
+export function CreateActionHolderFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateActionHolder {
     if (json == null) {
         return json;
     }
@@ -98,11 +98,11 @@ export function ActionHolderFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-export function ActionHolderToJSON(json: any): ActionHolder {
-    return ActionHolderToJSONTyped(json, false);
+export function CreateActionHolderToJSON(json: any): CreateActionHolder {
+    return CreateActionHolderToJSONTyped(json, false);
 }
 
-export function ActionHolderToJSONTyped(value?: Omit<ActionHolder, 'id'|'person'|'since_when'> | null, ignoreDiscriminator: boolean = false): any {
+export function CreateActionHolderToJSONTyped(value?: Omit<CreateActionHolder, 'id'|'person'|'since_when'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

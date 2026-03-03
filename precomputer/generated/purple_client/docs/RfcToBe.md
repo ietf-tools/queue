@@ -39,6 +39,7 @@ Name | Type
 `ianaStatus` | [IanaStatus](IanaStatus.md)
 `additionalEmails` | [Array&lt;AdditionalEmail&gt;](AdditionalEmail.md)
 `repository` | string
+`blockingReasons` | [Array&lt;RfcToBeBlockingReason&gt;](RfcToBeBlockingReason.md)
 
 ## Example
 
@@ -79,6 +80,7 @@ const example = {
   "ianaStatus": null,
   "additionalEmails": null,
   "repository": null,
+  "blockingReasons": null,
 } satisfies RfcToBe
 
 console.log(example)

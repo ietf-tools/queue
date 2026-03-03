@@ -13,6 +13,7 @@ docs/AuthorOrderStatus.md
 docs/BaseDatatrackerPerson.md
 docs/BaseDatatrackerPersonRequest.md
 docs/BlockingReason.md
+docs/BlockingReasonRequest.md
 docs/Capability.md
 docs/Cluster.md
 docs/ClusterAddRemoveDocumentRequest.md
@@ -21,6 +22,8 @@ docs/ClusterMemberRequest.md
 docs/ClusterReorderDocumentsRequest.md
 docs/ClusterRequest.md
 docs/ColorEnum.md
+docs/CreateActionHolder.md
+docs/CreateActionHolderRequest.md
 docs/CreateFinalApproval.md
 docs/CreateFinalApprovalRequest.md
 docs/CreateRfcAuthor.md
@@ -120,6 +123,7 @@ models/AuthorOrderStatus.ts
 models/BaseDatatrackerPerson.ts
 models/BaseDatatrackerPersonRequest.ts
 models/BlockingReason.ts
+models/BlockingReasonRequest.ts
 models/Capability.ts
 models/Cluster.ts
 models/ClusterAddRemoveDocumentRequest.ts
@@ -128,6 +132,8 @@ models/ClusterMemberRequest.ts
 models/ClusterReorderDocumentsRequest.ts
 models/ClusterRequest.ts
 models/ColorEnum.ts
+models/CreateActionHolder.ts
+models/CreateActionHolderRequest.ts
 models/CreateFinalApproval.ts
 models/CreateFinalApprovalRequest.ts
 models/CreateRfcAuthor.ts

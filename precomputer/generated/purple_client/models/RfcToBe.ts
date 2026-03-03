@@ -62,6 +62,13 @@ import {
     SimpleClusterToJSON,
     SimpleClusterToJSONTyped,
 } from './SimpleCluster.ts';
+import type { RfcToBeBlockingReason } from './RfcToBeBlockingReason.ts';
+import {
+    RfcToBeBlockingReasonFromJSON,
+    RfcToBeBlockingReasonFromJSONTyped,
+    RfcToBeBlockingReasonToJSON,
+    RfcToBeBlockingReasonToJSONTyped,
+} from './RfcToBeBlockingReason.ts';
 import type { AdditionalEmail } from './AdditionalEmail.ts';
 import {
     AdditionalEmailFromJSON,
@@ -282,6 +289,12 @@ export interface RfcToBe {
      * @memberof RfcToBe
      */
     repository?: string;
+    /**
+     * 
+     * @type {Array<RfcToBeBlockingReason>}
+     * @memberof RfcToBe
+     */
+    readonly blockingReasons?: Array<RfcToBeBlockingReason>;
 }
 
 /**
@@ -341,6 +354,7 @@ export function RfcToBeFromJSONTyped(json: any, ignoreDiscriminator: boolean): R
         'ianaStatus': json['iana_status'] == null ? undefined : IanaStatusFromJSON(json['iana_status']),
         'additionalEmails': json['additional_emails'] == null ? undefined : ((json['additional_emails'] as Array<any>).map(AdditionalEmailFromJSON)),
         'repository': json['repository'] == null ? undefined : json['repository'],
+        'blockingReasons': json['blocking_reasons'] == null ? undefined : ((json['blocking_reasons'] as Array<any>).map(RfcToBeBlockingReasonFromJSON)),
     };
 }
 
@@ -348,7 +362,7 @@ export function RfcToBeToJSON(json: any): RfcToBe {
     return RfcToBeToJSONTyped(json, false);
 }
 
-export function RfcToBeToJSONTyped(value?: Omit<RfcToBe, 'id'|'name'|'draft'|'cluster'|'shepherd'|'iesg_contact'|'assignment_set'|'actionholder_set'|'pending_activities'|'published_at'|'subseries'|'iana_status'|'additional_emails'> | null, ignoreDiscriminator: boolean = false): any {
+export function RfcToBeToJSONTyped(value?: Omit<RfcToBe, 'id'|'name'|'draft'|'cluster'|'shepherd'|'iesg_contact'|'assignment_set'|'actionholder_set'|'pending_activities'|'published_at'|'subseries'|'iana_status'|'additional_emails'|'blocking_reasons'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

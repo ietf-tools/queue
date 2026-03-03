@@ -30,6 +30,8 @@ import type {
   ClusterAddRemoveDocumentRequest,
   ClusterReorderDocumentsRequest,
   ClusterRequest,
+  CreateActionHolder,
+  CreateActionHolderRequest,
   CreateFinalApproval,
   CreateFinalApprovalRequest,
   CreateRfcAuthor,
@@ -123,6 +125,10 @@ import {
     ClusterReorderDocumentsRequestToJSON,
     ClusterRequestFromJSON,
     ClusterRequestToJSON,
+    CreateActionHolderFromJSON,
+    CreateActionHolderToJSON,
+    CreateActionHolderRequestFromJSON,
+    CreateActionHolderRequestToJSON,
     CreateFinalApprovalFromJSON,
     CreateFinalApprovalToJSON,
     CreateFinalApprovalRequestFromJSON,
@@ -336,6 +342,11 @@ export interface DocRelationshipNamesRetrieveRequest {
 export interface DocumentMailSendRequest {
     draftName: string;
     mailMessageRequest: MailMessageRequest;
+}
+
+export interface DocumentsActionHoldersCreateRequest {
+    draftName: string;
+    createActionHolderRequest: CreateActionHolderRequest;
 }
 
 export interface DocumentsActionHoldersListRequest {
@@ -1786,6 +1797,61 @@ export class PurpleApi extends runtime.BaseAPI {
      */
     async documentMailSend(requestParameters: DocumentMailSendRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MailResponse> {
         const response = await this.documentMailSendRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for documentsActionHoldersCreate without sending the request
+     */
+    async documentsActionHoldersCreateRequestOpts(requestParameters: DocumentsActionHoldersCreateRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['draftName'] == null) {
+            throw new runtime.RequiredError(
+                'draftName',
+                'Required parameter "draftName" was null or undefined when calling documentsActionHoldersCreate().'
+            );
+        }
+
+        if (requestParameters['createActionHolderRequest'] == null) {
+            throw new runtime.RequiredError(
+                'createActionHolderRequest',
+                'Required parameter "createActionHolderRequest" was null or undefined when calling documentsActionHoldersCreate().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/api/rpc/documents/{draft_name}/action_holders/`;
+        urlPath = urlPath.replace(`{${"draft_name"}}`, encodeURIComponent(String(requestParameters['draftName'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateActionHolderRequestToJSON(requestParameters['createActionHolderRequest']),
+        };
+    }
+
+    /**
+     * ViewSet for ActionHolder entries related to a draft
+     */
+    async documentsActionHoldersCreateRaw(requestParameters: DocumentsActionHoldersCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateActionHolder>> {
+        const requestOptions = await this.documentsActionHoldersCreateRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateActionHolderFromJSON(jsonValue));
+    }
+
+    /**
+     * ViewSet for ActionHolder entries related to a draft
+     */
+    async documentsActionHoldersCreate(requestParameters: DocumentsActionHoldersCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateActionHolder> {
+        const response = await this.documentsActionHoldersCreateRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

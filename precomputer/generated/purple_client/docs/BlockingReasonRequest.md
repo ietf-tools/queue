@@ -1,35 +1,29 @@
 
-# ActionHolder
+# BlockingReasonRequest
 
-Serialize an ActionHolder with person name
+Serialize BlockingReason model
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`id` | number
-`person` | [BaseDatatrackerPerson](BaseDatatrackerPerson.md)
-`deadline` | Date
-`sinceWhen` | Date
-`completed` | Date
-`comment` | string
-`body` | string
+`slug` | string
+`name` | string
+`desc` | string
+`used` | boolean
 
 ## Example
 
 ```typescript
-import type { ActionHolder } from ''
+import type { BlockingReasonRequest } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "id": null,
-  "person": null,
-  "deadline": null,
-  "sinceWhen": null,
-  "completed": null,
-  "comment": null,
-  "body": null,
-} satisfies ActionHolder
+  "slug": null,
+  "name": null,
+  "desc": null,
+  "used": null,
+} satisfies BlockingReasonRequest
 
 console.log(example)
 
@@ -38,7 +32,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as ActionHolder
+const exampleParsed = JSON.parse(exampleJSON) as BlockingReasonRequest
 console.log(exampleParsed)
 ```
 

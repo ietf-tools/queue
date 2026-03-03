@@ -1,7 +1,7 @@
 
-# ActionHolder
+# CreateActionHolder
 
-Serialize an ActionHolder with person name
+Serializer for creating ActionHolder instances
 
 ## Properties
 
@@ -18,7 +18,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { ActionHolder } from ''
+import type { CreateActionHolder } from ''
 
 // TODO: Update the object below with actual values
 const example = {
@@ -29,7 +29,7 @@ const example = {
   "completed": null,
   "comment": null,
   "body": null,
-} satisfies ActionHolder
+} satisfies CreateActionHolder
 
 console.log(example)
 
@@ -38,7 +38,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as ActionHolder
+const exampleParsed = JSON.parse(exampleJSON) as CreateActionHolder
 console.log(exampleParsed)
 ```
 

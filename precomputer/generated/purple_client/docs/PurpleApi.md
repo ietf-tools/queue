@@ -26,6 +26,7 @@ All URIs are relative to *http://localhost*
 | [**docRelationshipNamesList**](PurpleApi.md#docrelationshipnameslist) | **GET** /api/rpc/doc_relationship_names/ |  |
 | [**docRelationshipNamesRetrieve**](PurpleApi.md#docrelationshipnamesretrieve) | **GET** /api/rpc/doc_relationship_names/{slug}/ |  |
 | [**documentMailSend**](PurpleApi.md#documentmailsend) | **POST** /api/rpc/documents/{draft_name}/mail |  |
+| [**documentsActionHoldersCreate**](PurpleApi.md#documentsactionholderscreate) | **POST** /api/rpc/documents/{draft_name}/action_holders/ |  |
 | [**documentsActionHoldersList**](PurpleApi.md#documentsactionholderslist) | **GET** /api/rpc/documents/{draft_name}/action_holders/ |  |
 | [**documentsActionHoldersPartialUpdate**](PurpleApi.md#documentsactionholderspartialupdate) | **PATCH** /api/rpc/documents/{draft_name}/action_holders/{id}/ |  |
 | [**documentsActionHoldersRetrieve**](PurpleApi.md#documentsactionholdersretrieve) | **GET** /api/rpc/documents/{draft_name}/action_holders/{id}/ |  |
@@ -1671,6 +1672,80 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## documentsActionHoldersCreate
+
+> CreateActionHolder documentsActionHoldersCreate(draftName, createActionHolderRequest)
+
+
+
+ViewSet for ActionHolder entries related to a draft
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PurpleApi,
+} from '';
+import type { DocumentsActionHoldersCreateRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: cookieAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PurpleApi(config);
+
+  const body = {
+    // string
+    draftName: draftName_example,
+    // CreateActionHolderRequest
+    createActionHolderRequest: ...,
+  } satisfies DocumentsActionHoldersCreateRequest;
+
+  try {
+    const data = await api.documentsActionHoldersCreate(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **draftName** | `string` |  | [Defaults to `undefined`] |
+| **createActionHolderRequest** | [CreateActionHolderRequest](CreateActionHolderRequest.md) |  | |
+
+### Return type
+
+[**CreateActionHolder**](CreateActionHolder.md)
+
+### Authorization
+
+[cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** |  |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

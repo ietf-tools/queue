@@ -1,35 +1,31 @@
 
-# ActionHolder
+# CreateActionHolderRequest
 
-Serialize an ActionHolder with person name
+Serializer for creating ActionHolder instances
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`id` | number
-`person` | [BaseDatatrackerPerson](BaseDatatrackerPerson.md)
 `deadline` | Date
-`sinceWhen` | Date
 `completed` | Date
 `comment` | string
 `body` | string
+`personId` | number
 
 ## Example
 
 ```typescript
-import type { ActionHolder } from ''
+import type { CreateActionHolderRequest } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "id": null,
-  "person": null,
   "deadline": null,
-  "sinceWhen": null,
   "completed": null,
   "comment": null,
   "body": null,
-} satisfies ActionHolder
+  "personId": null,
+} satisfies CreateActionHolderRequest
 
 console.log(example)
 
@@ -38,7 +34,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as ActionHolder
+const exampleParsed = JSON.parse(exampleJSON) as CreateActionHolderRequest
 console.log(exampleParsed)
 ```
 
