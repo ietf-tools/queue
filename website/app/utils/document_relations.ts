@@ -217,8 +217,7 @@ export function drawGraph({ data, pushRouter, colorMode, setTooltip }: Props) {
   let max_r = 0
   const a = node
     .append("a")
-    .attr("href", (d) => d.url ??
-      '#' // we need a href (eg '#') to be focusable even if it doesn't have a d.url so that the `title` is available
+    .attr("href", (d) => '#' // we need a href (eg '#') to be focusable so that the `title` is available
     )
     .attr("title", (d) => getNodeTitle(d).join(" "))
     .on("focus mouseover", function (e, d) {
