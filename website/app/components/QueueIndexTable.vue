@@ -138,7 +138,7 @@ const columns = [
         return
       }
       return h('ul', value.map(assignmentsByRole => {
-        return h('li', { class: 'inline-flex flex-wrap gap-1'}, [
+        return h('li', { class: 'inline-flex flex-wrap items-center gap-1'}, [
           h(BaseBadge, { class: '' }, assignmentsByRole.role.replace(/_/g, ' ')),
           assignmentsByRole.blockingReasons ? h('span', { class: 'text-xs text-gray-500 dark:text-neutral-400' },
             assignmentsByRole.blockingReasons.map(blockingReason =>
