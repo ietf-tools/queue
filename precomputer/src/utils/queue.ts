@@ -44,7 +44,7 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         name,
         title,
         pages,
-        assignmentsByRoles: assignmentsByRole.map(([role, publicAssignments]): AssignmentsByRole => {
+        assignmentsByRoles: assignmentsByRole.map(([role]): AssignmentsByRole => {
           let sanitisedBlockingReasons: BlockingReason[] | undefined = undefined
 
           if (role === 'blocked' && blockingReasons) {
@@ -63,17 +63,17 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
           return {
             role,
             blockingReasons: sanitisedBlockingReasons,
-            assignments: publicAssignments.map((publicAssignment): AssignmentsByRole["assignments"][number] | undefined => {
-              const { state } = publicAssignment
+            // assignments: publicAssignments.map((publicAssignment): AssignmentsByRole["assignments"][number] | undefined => {
+            //   const { state } = publicAssignment
 
-              if (!state) {
-                return undefined
-              }
+            //   if (!state) {
+            //     return undefined
+            //   }
 
-              return {
-                state
-              }
-            }).filter(val => val !== undefined)
+            //   return {
+            //     state
+            //   }
+            // }).filter(val => val !== undefined)
           }
         }),
         clusters: typeof clusterNumber === 'number' ? [clusterNumber] : undefined,

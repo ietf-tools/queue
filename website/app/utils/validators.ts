@@ -34,13 +34,13 @@ const DispositionCommonSchema = z.union([
   z.literal('withdrawn')
 ])
 
-const AssignmentStateSchema = z.union([
-  z.literal('assigned'),
-  z.literal('in_progress'),
-  z.literal('done'),
-  z.literal('withdrawn'),
-  z.literal('closed_for_hold')
-])
+// const AssignmentStateSchema = z.union([
+//   z.literal('assigned'),
+//   z.literal('in_progress'),
+//   z.literal('done'),
+//   z.literal('withdrawn'),
+//   z.literal('closed_for_hold')
+// ])
 
 const BlockingReasonSchema = z.object({
   reason: z.object({
@@ -50,14 +50,14 @@ const BlockingReasonSchema = z.object({
 
 export type BlockingReason = z.infer<typeof BlockingReasonSchema>
 
-const AssignmentSchema = z.object({
-  state: AssignmentStateSchema
-})
+// const AssignmentSchema = z.object({
+//   state: AssignmentStateSchema
+// })
 
 const AssignmentsByRoleSchema = z.object({
   role: z.string(),
   blockingReasons: BlockingReasonSchema.array().optional(),
-  assignments: AssignmentSchema.array(),
+  // assignments: AssignmentSchema.array(),
 })
 
 const LabelCommonSchema = z.object({
