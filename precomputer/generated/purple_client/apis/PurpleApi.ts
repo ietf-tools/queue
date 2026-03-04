@@ -644,6 +644,10 @@ export interface DocumentsSearchRequest {
     ordering?: string;
 }
 
+export interface DocumentsSyncMetadataRequest {
+    draftName: string;
+}
+
 export interface DocumentsUpdateRequest {
     draftName: string;
     rfcToBeRequest: RfcToBeRequest;
@@ -4762,6 +4766,50 @@ export class PurpleApi extends runtime.BaseAPI {
     async documentsSearch(requestParameters: DocumentsSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaginatedRfcToBeList> {
         const response = await this.documentsSearchRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Creates request options for documentsSyncMetadata without sending the request
+     */
+    async documentsSyncMetadataRequestOpts(requestParameters: DocumentsSyncMetadataRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['draftName'] == null) {
+            throw new runtime.RequiredError(
+                'draftName',
+                'Required parameter "draftName" was null or undefined when calling documentsSyncMetadata().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/rpc/documents/{draft__name}/sync_metadata/`;
+        urlPath = urlPath.replace(`{${"draft__name"}}`, encodeURIComponent(String(requestParameters['draftName'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Push current RFC metadata to the datatracker via rpcapi purple_rfc_partial_update.
+     */
+    async documentsSyncMetadataRaw(requestParameters: DocumentsSyncMetadataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.documentsSyncMetadataRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Push current RFC metadata to the datatracker via rpcapi purple_rfc_partial_update.
+     */
+    async documentsSyncMetadata(requestParameters: DocumentsSyncMetadataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.documentsSyncMetadataRaw(requestParameters, initOverrides);
     }
 
     /**

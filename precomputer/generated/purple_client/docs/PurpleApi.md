@@ -83,6 +83,7 @@ All URIs are relative to *http://localhost*
 | [**documentsRelatedUpdate**](PurpleApi.md#documentsrelatedupdate) | **PUT** /api/rpc/documents/{draft_name}/related/{id}/ |  |
 | [**documentsRetrieve**](PurpleApi.md#documentsretrieve) | **GET** /api/rpc/documents/{draft__name}/ |  |
 | [**documentsSearch**](PurpleApi.md#documentssearch) | **GET** /api/rpc/documents/search/ |  |
+| [**documentsSyncMetadata**](PurpleApi.md#documentssyncmetadata) | **POST** /api/rpc/documents/{draft__name}/sync_metadata/ |  |
 | [**documentsUpdate**](PurpleApi.md#documentsupdate) | **PUT** /api/rpc/documents/{draft__name}/ |  |
 | [**labelsCreate**](PurpleApi.md#labelscreate) | **POST** /api/rpc/labels/ |  |
 | [**labelsDestroy**](PurpleApi.md#labelsdestroy) | **DELETE** /api/rpc/labels/{id}/ |  |
@@ -5845,6 +5846,77 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## documentsSyncMetadata
+
+> documentsSyncMetadata(draftName)
+
+
+
+Push current RFC metadata to the datatracker via rpcapi purple_rfc_partial_update.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PurpleApi,
+} from '';
+import type { DocumentsSyncMetadataRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: cookieAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PurpleApi(config);
+
+  const body = {
+    // string
+    draftName: draftName_example,
+  } satisfies DocumentsSyncMetadataRequest;
+
+  try {
+    const data = await api.documentsSyncMetadata(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **draftName** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | No response body |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
