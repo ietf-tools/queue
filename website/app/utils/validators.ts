@@ -34,6 +34,32 @@ const DispositionCommonSchema = z.union([
   z.literal('withdrawn')
 ])
 
+const AssignmentStateSchema = z.union([
+    z.literal('assigned'),
+    z.literal('in_progress'),
+    z.literal('done'),
+    z.literal('withdrawn'),
+    z.literal('closed_for_hold')
+])
+
+const BlockingReasonSchema = z.object({
+  reason: z.object({
+    name: z.string()
+  })
+})
+
+export type BlockingReason = z.infer<typeof BlockingReasonSchema>
+
+const AssignmentSchema = z.object({
+  blockingReasons: BlockingReasonSchema.array().optional(),
+  state: AssignmentStateSchema.optional()
+})
+
+const AssignmentsByRoleSchema = z.object({
+  role: z.string(),
+  assignments: AssignmentSchema.array(),  
+})
+
 const LabelCommonSchema = z.object({
   slug: z.string(),
   themeColor: ThemeColorCommonSchema,
@@ -58,7 +84,7 @@ export const QueueCommonItemSchema = z.object({
   deadlineIso: z.string().optional(), // ISO date
   labels: LabelCommonSchema.array().optional(),
   clusters: z.number().array().optional(),
-  // rfcNumber: z.number().optional(),
+  assignmentsByRoles: AssignmentsByRoleSchema.array().optional(),
   pages: z.number().optional(),
   enqueuedAtIso: z.string().optional(), // ISO date
   ianaStatus: IanaStatusCommonSchema.optional(),

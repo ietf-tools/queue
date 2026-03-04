@@ -129,6 +129,14 @@ const columns = [
     },
   }),
   columnHelper.accessor(
+    'assignmentsByRoles', {
+    header: 'Assignments',
+    cell: data => {
+      const value = data.getValue()
+      return JSON.stringify(value)
+    }
+  }),
+  columnHelper.accessor(
     'clusters', {
     header: 'Cluster',
     cell: data => {
