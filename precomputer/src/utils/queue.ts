@@ -1,7 +1,8 @@
 import { PurpleApi, type ApiPubqQueueListRequest } from "../../generated/purple_client/index.ts";
-import { type QueueCommon, type QueueCommonItem, QueueCommonSchema } from '../../../website/app/utils/validators.ts'
+import { type QueueCommon, type QueueCommonItem, QueueCommonSchema, type BlockingReason } from '../../../website/app/utils/validators.ts'
 import { assertIsString } from "../utils/typescript.ts";
 import { parseDisposition, parseIanaStatus, parseLabels } from "../utils/converters.ts";
+import { groupBy } from "es-toolkit";
 
 type Props = {
   api: PurpleApi
@@ -19,6 +20,8 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         disposition,
         externalDeadline,
         labels,
+        assignmentSet,
+        blockingReasons,
         cluster,
         pages,
         enqueuedAt,
@@ -28,10 +31,44 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
       assertIsString(title)
       const clusterNumber: number | undefined = cluster?.number ?? undefined
 
+      const publicAssignments = assignmentSet ?? []
+
+      const assignmentsByRole = Object.entries(groupBy(
+        publicAssignments,
+        (assignment) => assignment.role
+      ))
+
+
       return {
         name,
         title,
         pages,
+        assignmentsByRoles: assignmentsByRole.map(([role, publicAssignments]) => {
+          return {
+            role,
+            assignments: publicAssignments.map(publicAssignment => {
+              const { state } = publicAssignment
+              let sanitisedBlockingReasons: BlockingReason[] | undefined = undefined
+
+              if (role === 'blocked' && blockingReasons) {
+                sanitisedBlockingReasons = blockingReasons?.map(blockingReason => {
+                  if (!blockingReason.reason?.name) {
+                    return
+                  }
+                  return {
+                    reason: {
+                      name: blockingReason.reason.name
+                    }
+                  }
+                }).filter(blockingReason => blockingReason !== undefined) ?? undefined
+              }
+              return {
+                blockingReasons: sanitisedBlockingReasons,
+                state
+              }
+            })
+          }
+        }),
         clusters: typeof clusterNumber === 'number' ? [clusterNumber] : undefined,
         enqueuedAtIso: enqueuedAt?.toISOString(),
         deadlineIso: externalDeadline?.toISOString(),
