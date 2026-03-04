@@ -49,6 +49,7 @@ import { getVNodeText } from '../utils/vue'
 import { getQueueIndex } from '../utils/api'
 import { calculateEnqueuedAtData, renderEnqueuedAt } from '~/utils/queue'
 import { DateTime } from 'luxon'
+import BaseBadge from './BaseBadge.vue'
 
 const emptyArray: QueueCommonItem[] = []
 
@@ -133,7 +134,20 @@ const columns = [
     header: 'Assignments',
     cell: data => {
       const value = data.getValue()
-      return JSON.stringify(value)
+      if (!value) {
+        return
+      }
+      return h('ul', value.map(assignmentsByRole => {
+        return h('li', {}, [
+          h(BaseBadge, { label: assignmentsByRole.role.replace(/_/g, ' '), class: 'mr-1' }),
+          assignmentsByRole.blockingReasons ? h('span', { class: 'text-xs text-gray-500 dark:text-neutral-400 ml-2' }, assignmentsByRole.blockingReasons.map(blockingReason =>
+            blockingReason.reason.name
+          )) : null,
+          assignmentsByRole.assignments.length > 0 ? h('ul', { class: '' }, assignmentsByRole.assignments.map(assignment => {
+            return h('li', { class: 'inline text-xs text-gray-500 dark:text-neutral-400 ml-2' }, assignment.state)
+          })) : null
+        ])
+      }))
     }
   }),
   columnHelper.accessor(

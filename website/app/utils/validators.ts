@@ -51,7 +51,7 @@ const BlockingReasonSchema = z.object({
 export type BlockingReason = z.infer<typeof BlockingReasonSchema>
 
 const AssignmentSchema = z.object({
-  state: AssignmentStateSchema.optional()
+  state: AssignmentStateSchema
 })
 
 const AssignmentsByRoleSchema = z.object({

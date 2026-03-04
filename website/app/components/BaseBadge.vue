@@ -17,7 +17,7 @@ import type { ThemeColorCommon } from '../utils/validators'
 import { badgeColors } from '../utils/badge'
 
 type Props = {
-  color: ThemeColorCommon,
+  color?: ThemeColorCommon,
   size?: 'xs' | 'lg' | 'xl'
 }
 
