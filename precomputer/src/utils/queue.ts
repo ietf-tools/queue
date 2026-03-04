@@ -9,6 +9,8 @@ type Props = {
   params?: ApiPubqQueueListRequest
 }
 
+type AssignmentsByRole = NonNullable<QueueCommonItem["assignmentsByRoles"]>[number]
+
 export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommon> => {
   const list = await api.apiPubqQueueList(params)
 
@@ -38,35 +40,40 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         (assignment) => assignment.role
       ))
 
-
       return {
         name,
         title,
         pages,
-        assignmentsByRoles: assignmentsByRole.map(([role, publicAssignments]) => {
-          return {
-            role,
-            assignments: publicAssignments.map(publicAssignment => {
-              const { state } = publicAssignment
-              let sanitisedBlockingReasons: BlockingReason[] | undefined = undefined
+        assignmentsByRoles: assignmentsByRole.map(([role, publicAssignments]): AssignmentsByRole => {
+          let sanitisedBlockingReasons: BlockingReason[] | undefined = undefined
 
-              if (role === 'blocked' && blockingReasons) {
-                sanitisedBlockingReasons = blockingReasons?.map(blockingReason => {
-                  if (!blockingReason.reason?.name) {
-                    return
-                  }
-                  return {
-                    reason: {
-                      name: blockingReason.reason.name
-                    }
-                  }
-                }).filter(blockingReason => blockingReason !== undefined) ?? undefined
+          if (role === 'blocked' && blockingReasons) {
+            sanitisedBlockingReasons = blockingReasons?.map(blockingReason => {
+              if (!blockingReason.reason?.name) {
+                return
               }
               return {
-                blockingReasons: sanitisedBlockingReasons,
+                reason: {
+                  name: blockingReason.reason.name
+                }
+              }
+            }).filter(blockingReason => blockingReason !== undefined) ?? undefined
+          }
+
+          return {
+            role,
+            blockingReasons: sanitisedBlockingReasons,
+            assignments: publicAssignments.map((publicAssignment): AssignmentsByRole["assignments"][number] | undefined => {
+              const { state } = publicAssignment
+
+              if (!state) {
+                return undefined
+              }
+
+              return {
                 state
               }
-            })
+            }).filter(val => val !== undefined)
           }
         }),
         clusters: typeof clusterNumber === 'number' ? [clusterNumber] : undefined,

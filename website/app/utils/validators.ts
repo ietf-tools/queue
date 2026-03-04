@@ -35,11 +35,11 @@ const DispositionCommonSchema = z.union([
 ])
 
 const AssignmentStateSchema = z.union([
-    z.literal('assigned'),
-    z.literal('in_progress'),
-    z.literal('done'),
-    z.literal('withdrawn'),
-    z.literal('closed_for_hold')
+  z.literal('assigned'),
+  z.literal('in_progress'),
+  z.literal('done'),
+  z.literal('withdrawn'),
+  z.literal('closed_for_hold')
 ])
 
 const BlockingReasonSchema = z.object({
@@ -51,13 +51,13 @@ const BlockingReasonSchema = z.object({
 export type BlockingReason = z.infer<typeof BlockingReasonSchema>
 
 const AssignmentSchema = z.object({
-  blockingReasons: BlockingReasonSchema.array().optional(),
   state: AssignmentStateSchema.optional()
 })
 
 const AssignmentsByRoleSchema = z.object({
   role: z.string(),
-  assignments: AssignmentSchema.array(),  
+  blockingReasons: BlockingReasonSchema.array().optional(),
+  assignments: AssignmentSchema.array(),
 })
 
 const LabelCommonSchema = z.object({
@@ -107,12 +107,12 @@ const ClusterDocumentRelationshipCommonSchema = z.union([
 ])
 
 const ClusterDocumentReferenceCommonSchema = z.object({
-    relationship: ClusterDocumentRelationshipCommonSchema,
-    draftName: z.string(),
-    sourceRfcNumber: z.number().optional(),
-    targetDraftName: z.string(),
-    targetRfcNumber: z.number().optional(),
-    targetDisposition: DispositionCommonSchema.optional(),
+  relationship: ClusterDocumentRelationshipCommonSchema,
+  draftName: z.string(),
+  sourceRfcNumber: z.number().optional(),
+  targetDraftName: z.string(),
+  targetRfcNumber: z.number().optional(),
+  targetDisposition: DispositionCommonSchema.optional(),
 })
 
 export type ClusterDocumentReferenceCommon = z.infer<typeof ClusterDocumentReferenceCommonSchema>
@@ -138,7 +138,7 @@ export type ClusterItemCommon = z.infer<typeof ClusterItemCommonSchema>
 const ClusterRfcToBeCommonSchema = z.object({
   name: z.string(),
   rfcNumber: z.number().optional(),
-  disposition: DispositionCommonSchema,  
+  disposition: DispositionCommonSchema,
 })
 
 export type ClusterRfcToBeCommon = z.infer<typeof ClusterRfcToBeCommonSchema>
