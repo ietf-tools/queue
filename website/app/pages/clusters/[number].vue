@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-[100vh]">
     <NuxtLayout name="default">
-      <div class="mx-auto container text-right py-5">
+      <div class="mx-auto container py-5">
         <ClusterPage v-if="clusterNumber" :cluster-number="clusterNumber" />
       </div>
     </NuxtLayout>

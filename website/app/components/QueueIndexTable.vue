@@ -144,7 +144,7 @@ const columns = [
         return
       }
       return h('ul', value.map(assignmentsByRole => {
-        return h('li', { class: 'inline-flex flex-wrap items-center gap-1'}, [
+        return h('li', { class: 'inline-flex flex-wrap items-center gap-1' }, [
           h(BaseBadge, { class: '' }, assignmentsByRole.role.replace(/_/g, ' ')),
           assignmentsByRole.blockingReasons ? h('span', { class: 'text-xs text-gray-500 dark:text-neutral-400' },
             assignmentsByRole.blockingReasons.map(blockingReason =>
@@ -200,7 +200,7 @@ const table = useVueTable({
   state: {
     get globalFilter() {
       return JSON.stringify([
-        searchQuery.value
+        props.filterByClusterNumber
       ])
     },
     get sorting() {
@@ -208,12 +208,12 @@ const table = useVueTable({
     },
   },
   globalFilterFn: (row) => {
-    const d = row.original
-
-    if (props.filterByClusterNumber && row.original.clusters) {
-      return row.original.clusters.some(cluster => cluster === props.filterByClusterNumber) 
+    if (props.filterByClusterNumber) {
+      if (!row.original.clusters) {
+        return false
+      }
+      return row.original.clusters.some(cluster => cluster === props.filterByClusterNumber)
     }
-
     return true
   },
   getCoreRowModel: getCoreRowModel(),
@@ -225,16 +225,6 @@ const table = useVueTable({
         ? updaterOrValue(sorting.value)
         : updaterOrValue
   },
-})
-
-const searchQuery = ref('')
-
-const route = useRoute()
-
-onMounted(() => {
-  if (route.query.search && route.query.search !== searchQuery.value) {
-    searchQuery.value = route.query.search as string
-  }
 })
 
 useHead({
