@@ -51,6 +51,12 @@ import { calculateEnqueuedAtData, renderEnqueuedAt } from '~/utils/queue'
 import { DateTime } from 'luxon'
 import BaseBadge from './BaseBadge.vue'
 
+type Props = {
+  filterByClusterNumber?: number
+}
+
+const props = defineProps<Props>()
+
 const emptyArray: QueueCommonItem[] = []
 
 const {
@@ -204,13 +210,8 @@ const table = useVueTable({
   globalFilterFn: (row) => {
     const d = row.original
 
-    // Search filter
-    if (searchQuery.value && searchQuery.value.trim()) {
-      const searchTerm = searchQuery.value.trim().toLowerCase()
-      const nameMatch = d.name?.toLowerCase().includes(searchTerm)
-      if (!nameMatch) {
-        return false
-      }
+    if (props.filterByClusterNumber && row.original.clusters) {
+      return row.original.clusters.some(cluster => cluster === props.filterByClusterNumber) 
     }
 
     return true

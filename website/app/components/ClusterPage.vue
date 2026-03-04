@@ -7,6 +7,7 @@
   </div>
   <div v-else-if="status === 'success' && clusterPackage">
     <DocumentDependenciesGraph :cluster="clusterPackage.cluster" />
+    <QueueIndexTable :filter-by-cluster-number="props.clusterNumber" />
   </div>
   <div v-else>
     <!-- 404 or unknown state -->
