@@ -139,12 +139,12 @@ const columns = [
       }
       return h('ul', value.map(assignmentsByRole => {
         return h('li', {}, [
-          h(BaseBadge, { class: 'mr-1' }, assignmentsByRole.role.replace(/_/g, ' ')),
-          assignmentsByRole.blockingReasons ? h('span', { class: 'text-xs text-gray-500 dark:text-neutral-400 ml-2' }, assignmentsByRole.blockingReasons.map(blockingReason =>
+          h(BaseBadge, { class: '' }, assignmentsByRole.role.replace(/_/g, ' ')),
+          assignmentsByRole.blockingReasons ? h('span', { class: 'text-xs text-gray-500 dark:text-neutral-400' }, assignmentsByRole.blockingReasons.map(blockingReason =>
             blockingReason.reason.name
           )) : null,
-          assignmentsByRole.assignments.length > 0 ? h('ul', { class: '' }, assignmentsByRole.assignments.map(assignment => {
-            return h('li', { class: 'inline text-xs text-gray-500 dark:text-neutral-400 ml-2' }, h(BaseBadge, assignment.state.replace(/_/g, ' ')))
+          assignmentsByRole.assignments.length > 0 ? h('ul', { class: 'flex-inline gap-1' }, assignmentsByRole.assignments.map(assignment => {
+            return h('li', { class: 'inline text-xs text-gray-500 dark:text-neutral-400' }, h(BaseBadge, assignment.state.replace(/_/g, ' ')))
           })) : null
         ])
       }))
