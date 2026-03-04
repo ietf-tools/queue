@@ -138,14 +138,22 @@ const columns = [
         return
       }
       return h('ul', value.map(assignmentsByRole => {
-        return h('li', {}, [
+        return h('li', { class: 'inline-flex flex-wrap gap-1'}, [
           h(BaseBadge, { class: '' }, assignmentsByRole.role.replace(/_/g, ' ')),
-          assignmentsByRole.blockingReasons ? h('span', { class: 'text-xs text-gray-500 dark:text-neutral-400' }, assignmentsByRole.blockingReasons.map(blockingReason =>
-            blockingReason.reason.name
-          )) : null,
-          assignmentsByRole.assignments.length > 0 ? h('ul', { class: 'flex-inline gap-1' }, assignmentsByRole.assignments.map(assignment => {
-            return h('li', { class: 'inline text-xs text-gray-500 dark:text-neutral-400' }, h(BaseBadge, assignment.state.replace(/_/g, ' ')))
-          })) : null
+          assignmentsByRole.blockingReasons ? h('span', { class: 'text-xs text-gray-500 dark:text-neutral-400' },
+            assignmentsByRole.blockingReasons.map(blockingReason =>
+              blockingReason.reason.name
+            )) : null,
+          assignmentsByRole.assignments.length > 0 ?
+            h(
+              'ul',
+              { class: 'inline-flex flex-wrap gap-1' },
+              assignmentsByRole.assignments.map(assignment => {
+                return h('li',
+                  { class: 'inline text-xs text-gray-500 dark:text-neutral-400' },
+                  h(BaseBadge, assignment.state.replace(/_/g, ' '))
+                )
+              })) : null
         ])
       }))
     }
