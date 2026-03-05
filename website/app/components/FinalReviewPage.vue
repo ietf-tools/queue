@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto my-6">
     <template v-if="finalReview">
-      <Heading level="1">Final Review for <span class="font-mono">{{ slug }}</span></Heading>
+      <Heading level="1">Final Review for <span class="font-mono">{{ props.draftName }}</span></Heading>
       <template v-if="finalReview.renderableApprovalLogMessages">
         <Heading level="2">Approval Logs</Heading>
         <ol class="flex flex-col gap-2">
@@ -20,13 +20,13 @@
 <script setup lang="ts">
 import { DateTime } from 'luxon'
 
-const route = useRoute()
+type Props = {
+  draftName: string
+}
 
-const slug = route.path
+const props = defineProps<Props>()
 
-const normalizedSlug = slug.replace(/^\//, '').replace(/\/$/, '')
-
-const canonicalPath = `/${normalizedSlug}/`
+const canonicalPath = `/final-review/${props.draftName}/`
 
 const emptyArray: QueueCommonItem[] = []
 
@@ -46,7 +46,7 @@ const {
 
 const finalReview = computed(() => {
   if (!data.value) return undefined
-  const item = data.value.find(queueCommonItem => queueCommonItem.name === slug)
+  const item = data.value.find(queueCommonItem => queueCommonItem.name === props.draftName)
   return {
     ...item,
     renderableApprovalLogMessages: item?.approvalLogMessages?.map(approvalLogMessage => {
@@ -69,6 +69,8 @@ if (status.value === 'success' && data.value === null) {
     fatal: true
   })
 }
+
+const route = useRoute()
 
 if (route.fullPath !== canonicalPath) {
   await navigateTo({
