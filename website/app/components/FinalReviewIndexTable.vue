@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { Anchor } from '#components'
+import { Anchor, Icon } from '#components'
 import {
   FlexRender,
   getCoreRowModel,
@@ -47,6 +47,7 @@ import type { SortingState } from '@tanstack/vue-table'
 import { getVNodeText } from '../utils/vue'
 import { getFinalReviewIndex } from '~/utils/api'
 import Label from './Label.vue'
+import { datatrackerDraftUrlBuilder } from '~/utils/url'
 
 const emptyArray: QueueCommonItem[] = []
 
@@ -72,8 +73,9 @@ const columns = [
   columnHelper.accessor('name', {
     header: 'Document',
     cell: data => {
-      return h(Anchor, { href: `/docs/${data.row.original.name}`, 'class': ANCHOR_TAILWIND_STYLE }, () => [
+      return h(Anchor, { href: datatrackerDraftUrlBuilder(data.row.original.name), 'class': ANCHOR_TAILWIND_STYLE }, () => [
         data.getValue(),
+        h(Icon, { name: 'fluent:window-new-20-regular', size: "1.25em", class: "text-gray-400 dark:text-neutral-500 mr-2 align-middle" }),
       ])
     },
     sortingFn: 'alphanumeric',

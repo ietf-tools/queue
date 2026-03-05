@@ -17,6 +17,10 @@ export const apiClusterNumberPathBuilder = (clusterNumber: number) => {
   return `/api/v1/clusters/${clusterNumber}.json` as const
 }
 
+export const datatrackerDraftUrlBuilder = (draftName: string) => {
+  return `https://datatracker.ietf.org/doc/${draftName}/` as const
+}
+
 const httpRegex = /^https?:\/\//
 export const isExternalLink = (href?: string): boolean => {
   if (

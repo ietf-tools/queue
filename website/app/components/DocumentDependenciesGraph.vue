@@ -29,6 +29,7 @@ import { uniqBy } from 'es-toolkit';
 import { drawGraph, type DrawGraphParameters, type SetTooltip } from '~/utils/document_relations';
 import { legendData, type DataParam, type LinkParam, type NodeParam } from '~/utils/document_relations-utils'
 import { type ClusterPackageCommon } from '../utils/validators'
+import { datatrackerDraftUrlBuilder } from '~/utils/url';
 
 type Props = {
   cluster: ClusterPackageCommon["cluster"],
@@ -95,14 +96,14 @@ const clusterGraphData = computed(() => {
           {
             id: draftName,
             rfcNumber: sourceRfcNumber,
-            url: `/docs/${draftName}`,
+            url: datatrackerDraftUrlBuilder(draftName),
             disposition,
             isReceived,
           },
           {
             id: targetDraftName,
             rfcNumber: targetRfcNumber,
-            url: `/docs/${targetDraftName}`,
+            url: datatrackerDraftUrlBuilder(targetDraftName),
             disposition: targetDisposition,
             isReceived: undefined,
           }
@@ -111,7 +112,7 @@ const clusterGraphData = computed(() => {
 
       return [{
         id: name,
-        url: `/docs/${name}`,
+        url: datatrackerDraftUrlBuilder(name),
         rfcNumber,
         isReceived,
         disposition,

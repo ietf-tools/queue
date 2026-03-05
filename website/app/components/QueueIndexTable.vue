@@ -50,6 +50,7 @@ import { getQueueIndex } from '../utils/api'
 import { calculateEnqueuedAtData, renderEnqueuedAt } from '~/utils/queue'
 import { DateTime } from 'luxon'
 import BaseBadge from './BaseBadge.vue'
+import { datatrackerDraftUrlBuilder } from '~/utils/url'
 
 type Props = {
   filterByClusterNumber?: number
@@ -81,9 +82,9 @@ const columns = [
   columnHelper.accessor('name', {
     header: 'Document',
     cell: data => {
-      return h(Anchor, { href: `/docs/${data.row.original.name}`, 'class': ANCHOR_TAILWIND_STYLE }, () => [
-        h(Icon, { name: "uil:file-alt", size: "1.25em", class: "text-gray-400 dark:text-neutral-500 mr-2 align-middle" }),
+      return h(Anchor, { href: datatrackerDraftUrlBuilder(data.row.original.name), 'class': ANCHOR_TAILWIND_STYLE }, () => [
         data.getValue(),
+        h(Icon, { name: 'fluent:window-new-20-regular', size: "1.25em", class: "text-gray-400 dark:text-neutral-500 mr-2 align-middle" }),
       ])
     },
     sortingFn: 'alphanumeric',
