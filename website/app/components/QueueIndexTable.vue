@@ -161,7 +161,7 @@ const columns = [
         return role.replace(/_/g, ' ')
       }
 
-      return h('ul', [
+      return h('ul', { class: 'inline-flex flex-wrap items-center gap-1' }, [
         isAwaitingEditorAssignment ? h('li',
           { class: 'inline-flex flex-wrap items-center gap-1' },
           h(BaseBadge, { color: 'emerald' }, 'Awaiting Editor Assignment')
