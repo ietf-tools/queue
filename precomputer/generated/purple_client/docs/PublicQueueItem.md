@@ -25,6 +25,7 @@ Name | Type
 `ianaStatus` | [IanaStatus](IanaStatus.md)
 `blockingReasons` | [Array&lt;RfcToBeBlockingReason&gt;](RfcToBeBlockingReason.md)
 `authors` | [Array&lt;PublicQueueAuthor&gt;](PublicQueueAuthor.md)
+`approvalLogMessage` | [Array&lt;ApprovalLogMessage&gt;](ApprovalLogMessage.md)
 
 ## Example
 
@@ -51,6 +52,7 @@ const example = {
   "ianaStatus": null,
   "blockingReasons": null,
   "authors": null,
+  "approvalLogMessage": null,
 } satisfies PublicQueueItem
 
 console.log(example)
