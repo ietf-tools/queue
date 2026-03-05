@@ -216,7 +216,9 @@ export function drawGraph({ data, pushRouter, colorMode, setTooltip }: Props) {
 
   let max_r = 0
   const a = node
-    .append("button")
+    .append("a")
+    .attr('href', '#' // focusable
+    )
     .attr("title", (d) => getNodeTitle(d).join(" "))
     .on("focus mouseover", function (e, d) {
       e.preventDefault()
