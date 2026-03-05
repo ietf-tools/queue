@@ -217,6 +217,7 @@ export function drawGraph({ data, pushRouter, colorMode, setTooltip }: Props) {
   let max_r = 0
   const a = node
     .append("a")
+    .attr('class', 'no-underline')
     .attr('href', '#' // focusable
     )
     .attr("title", (d) => getNodeTitle(d).join(" "))
