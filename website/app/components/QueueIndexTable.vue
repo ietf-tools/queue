@@ -164,11 +164,11 @@ const columns = [
 
 
       return h('ul', [
-        isAwaitingEditorAssignment ? h('span', 'Awaiting Editor Assignment') : undefined,
+        isAwaitingEditorAssignment ? h(BaseBadge, { color: 'emerald' }, 'Awaiting Editor Assignment') : undefined,
         ...value.map(assignmentsByRole => {
           const badge = h(BaseBadge, { class: '' }, humanFriendlyName(assignmentsByRole.role))
           return h('li', { class: 'inline-flex flex-wrap items-center gap-1' }, [
-            assignmentsByRole.role === 'final_review_editor' ? h(Anchor, { href: finalReviewPathBuilder(data.row.original.name) }, badge) : badge,
+            assignmentsByRole.role === 'final_review_editor' ? h(Anchor, { href: finalReviewPathBuilder(data.row.original.name) }, () => badge) : badge,
             assignmentsByRole.blockingReasons ? h('span', { class: 'text-xs text-gray-500 dark:text-neutral-400' },
               assignmentsByRole.blockingReasons.map(blockingReason =>
                 blockingReason.reason.name
