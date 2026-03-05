@@ -14,6 +14,11 @@
         </ol>
       </template>
     </template>
+    <template v-else>
+      <Heading level="1">Final Review for <span class="font-mono">{{ props.draftName }}</span></Heading>
+      <p>No final review is available. Please try again later.</p>
+      <!-- 404 -->
+    </template>
   </div>
 </template>
 
@@ -62,7 +67,7 @@ const finalReview = computed(() => {
   }
 })
 
-if (status.value === 'success' && data.value === null) {
+if (!finalReview || status.value === 'success' && data.value === null) {
   throw createError({
     statusCode: 404,
     statusMessage: 'Not Found',
