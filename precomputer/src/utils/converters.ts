@@ -1,5 +1,6 @@
-import { type Cluster, type QueueItem } from "../../generated/purple_client/index.ts";
-import { type ClusterDocumentCommon, type ClusterDocumentReferenceCommon, type QueueCommonItem } from "../../../website/app/utils/validators.ts";
+import { DateTime } from 'luxon'
+import { type Cluster, type QueueItem, type ApprovalLogMessage } from "../../generated/purple_client/index.ts";
+import { type ClusterDocumentCommon, type ClusterDocumentReferenceCommon, type QueueCommonItem, type ApprovalLogMessageCommon } from "../../../website/app/utils/validators.ts";
 import { assertIsString, assertNever } from "./typescript.ts";
 
 export const parseDisposition = (disposition: string): QueueCommonItem["disposition"] => {
@@ -127,4 +128,30 @@ export const clusterMemberToClusterDocumentCommon = (clusterNumber: number, clus
       }
     }) ?? []
   }
+}
+
+export const parseApprovalLogMessages = (approvalLogMessages?: ApprovalLogMessage[]): undefined | ApprovalLogMessageCommon[] => {
+  if (!approvalLogMessages) {
+    return undefined
+  }
+
+  const parseMinimalRfcToBe = (rfcToBe: NonNullable<ApprovalLogMessage["rfcToBe"]>): ApprovalLogMessageCommon["rfcToBe"] => {
+    assertIsString(rfcToBe.name)
+    return {
+      name: rfcToBe.name,
+      rfcNumber: rfcToBe.rfcNumber ?? undefined,
+    }
+  }
+
+  return approvalLogMessages.map((approvalLogMessage): ApprovalLogMessageCommon => {
+    if (approvalLogMessage.rfcToBe) {
+      assertIsString(approvalLogMessage.rfcToBe.name)
+    }
+
+    return {
+      rfcToBe: approvalLogMessage.rfcToBe ? parseMinimalRfcToBe(approvalLogMessage.rfcToBe) : undefined,
+      logMessage: approvalLogMessage.logMessage,
+      timeIso: approvalLogMessage.time ? DateTime.fromJSDate(approvalLogMessage.time).toISO() ?? undefined : undefined
+    }
+  })
 }

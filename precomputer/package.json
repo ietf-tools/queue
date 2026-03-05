@@ -24,9 +24,11 @@
     "@supercharge/promise-pool": "3.2.0",
     "es-toolkit": "1.44.0",
     "fastify": "5.7.4",
+    "luxon": "3.7.2",
     "zod": "4.3.6"
   },
   "devDependencies": {
+    "@types/luxon": "3.7.1",
     "@types/node": "24.0.10",
     "typescript": "5.8.3",
     "vitest": "4.0.18",

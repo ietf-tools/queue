@@ -75,6 +75,17 @@ const IanaStatusCommonSchema = z.object({
   description: z.string()
 })
 
+const ApprovalLogMessageCommonSchema = z.object({
+  rfcToBe: z.object({
+    name: z.string(),
+    rfcNumber: z.number().optional()
+  }).optional(),
+  logMessage: z.string(),
+  timeIso: z.string().optional()
+})
+
+export type ApprovalLogMessageCommon = z.infer<typeof ApprovalLogMessageCommonSchema>
+
 export const QueueCommonItemSchema = z.object({
   name: z.string(),
   title: z.string().optional(),
@@ -86,6 +97,7 @@ export const QueueCommonItemSchema = z.object({
   pages: z.number().optional(),
   enqueuedAtIso: z.string().optional(), // ISO date
   ianaStatus: IanaStatusCommonSchema.optional(),
+  approvalLogMessages: ApprovalLogMessageCommonSchema.array().optional()
 })
 
 export type QueueCommonItem = z.infer<typeof QueueCommonItemSchema>

@@ -47,7 +47,7 @@ import type { SortingState } from '@tanstack/vue-table'
 import { getVNodeText } from '../utils/vue'
 import { getFinalReviewIndex } from '~/utils/api'
 import Label from './Label.vue'
-import { datatrackerDraftUrlBuilder, finalReviewPathBuilder } from '~/utils/url'
+import { finalReviewPathBuilder } from '~/utils/url'
 
 const emptyArray: QueueCommonItem[] = []
 

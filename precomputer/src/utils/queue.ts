@@ -1,7 +1,7 @@
 import { PurpleApi, type ApiPubqQueueListRequest } from "../../generated/purple_client/index.ts";
 import { type QueueCommon, type QueueCommonItem, QueueCommonSchema, type BlockingReason } from '../../../website/app/utils/validators.ts'
 import { assertIsString } from "../utils/typescript.ts";
-import { parseDisposition, parseIanaStatus, parseLabels } from "../utils/converters.ts";
+import { parseApprovalLogMessages, parseDisposition, parseIanaStatus, parseLabels } from "../utils/converters.ts";
 import { groupBy } from "es-toolkit";
 
 type Props = {
@@ -23,11 +23,12 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         externalDeadline,
         labels,
         assignmentSet,
-        blockingReasons,
+        blockingReasons: queueItemBlockingReasons,
         cluster,
         pages,
         enqueuedAt,
         ianaStatus,
+        approvalLogMessage: approvalLogMessages,
       } = queueItem
       assertIsString(name)
       assertIsString(title)
@@ -45,10 +46,10 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         title,
         pages,
         assignmentsByRoles: assignmentsByRole.map(([role]): AssignmentsByRole => {
-          let sanitisedBlockingReasons: BlockingReason[] | undefined = undefined
+          let blockingReasons: BlockingReason[] | undefined = undefined
 
-          if (role === 'blocked' && blockingReasons) {
-            sanitisedBlockingReasons = blockingReasons?.map(blockingReason => {
+          if (role === 'blocked' && queueItemBlockingReasons) {
+            blockingReasons = queueItemBlockingReasons?.map(blockingReason => {
               if (!blockingReason.reason?.name) {
                 return
               }
@@ -62,18 +63,7 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
 
           return {
             role,
-            blockingReasons: sanitisedBlockingReasons,
-            // assignments: publicAssignments.map((publicAssignment): AssignmentsByRole["assignments"][number] | undefined => {
-            //   const { state } = publicAssignment
-
-            //   if (!state) {
-            //     return undefined
-            //   }
-
-            //   return {
-            //     state
-            //   }
-            // }).filter(val => val !== undefined)
+            blockingReasons,
           }
         }),
         clusters: typeof clusterNumber === 'number' ? [clusterNumber] : undefined,
@@ -81,7 +71,8 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         deadlineIso: externalDeadline?.toISOString(),
         disposition: parseDisposition(disposition),
         ianaStatus: parseIanaStatus(ianaStatus),
-        labels: parseLabels(labels)
+        labels: parseLabels(labels),
+        approvalLogMessages: parseApprovalLogMessages(approvalLogMessages)
       }
     })
   }
