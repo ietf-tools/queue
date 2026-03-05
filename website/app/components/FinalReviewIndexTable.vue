@@ -73,7 +73,7 @@ const columns = [
   columnHelper.accessor('name', {
     header: 'Document',
     cell: data => {
-      return h(Anchor, { href: datatrackerDraftUrlBuilder(data.row.original.name), 'class': ANCHOR_TAILWIND_STYLE }, () => [
+      return h(Anchor, { href: datatrackerDraftUrlBuilder(data.row.original.name), 'class': ANCHOR_TAILWIND_STYLE, target: TARGET_NEW_WINDOW, rel: EXTERNAL_LINK_REL }, () => [
         data.getValue(),
         h(Icon, { name: 'fluent:window-new-20-regular', size: "1.25em", class: "text-gray-700 dark:text-neutral-300 ml-1 align-middle" }),
       ])
