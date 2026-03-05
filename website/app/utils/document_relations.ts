@@ -272,7 +272,7 @@ export function drawGraph({ data, pushRouter, colorMode, setTooltip }: Props) {
     })
 
   a.append("circle")
-    .attr("stroke", black)
+    .attr("stroke", colorMode === 'light' ? black : gray800)
     .lower()
     .attr("fill", (d) => {
       if (d.disposition === 'published') {
