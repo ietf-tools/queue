@@ -216,9 +216,7 @@ export function drawGraph({ data, pushRouter, colorMode, setTooltip }: Props) {
 
   let max_r = 0
   const a = node
-    .append("a")
-    .attr("href", (d) => '#' // we need a href (eg '#') to be focusable so that the `title` is available
-    )
+    .append("button")
     .attr("title", (d) => getNodeTitle(d).join(" "))
     .on("focus mouseover", function (e, d) {
       e.preventDefault()
@@ -227,14 +225,14 @@ export function drawGraph({ data, pushRouter, colorMode, setTooltip }: Props) {
         console.error("Expected element but received ", target)
         return
       }
-      const titleElement = target.closest('[title]')
-      if (!titleElement) {
+      const elementWithTitle = target.closest('[title]')
+      if (!elementWithTitle) {
         console.error("Couldn't find title attribute in parents of ", target, { parents: getAncestors(target) })
         return
       }
-      const boundingClientRect = titleElement.getBoundingClientRect()
+      const boundingClientRect = elementWithTitle.getBoundingClientRect()
 
-      const title = titleElement.getAttribute('title')
+      const title = elementWithTitle.getAttribute('title')
       if (!title) {
         console.warn("couldn't find title attribute for tooltip")
         return
@@ -246,30 +244,6 @@ export function drawGraph({ data, pushRouter, colorMode, setTooltip }: Props) {
     })
     .on('blur mouseout', () => {
       setTooltip()
-    })
-    .on('click', (e) => {
-      e.preventDefault()
-      const { target } = e
-      if (!(target instanceof SVGElement || target instanceof HTMLElement)) {
-        console.error("Expected element but received ", target)
-        return
-      }
-      const anchor = target.closest('a')
-      if (!anchor) {
-        console.error("Couldn't find parent of ", target, { parents: getAncestors(target) })
-        return
-      }
-      const href = anchor.getAttribute('href')
-      if (!href) {
-        console.error("Closest <a> didn't have `href` attribute.", { parents: getAncestors(target) })
-        return
-      }
-      if (href === '#') {
-        console.info('Ignoring href navigation to empty internal link ie "#"')
-        return
-      }
-      console.log("SPA navigating to ", href)
-      pushRouter(href)
     })
 
   a.append("text")
