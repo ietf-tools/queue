@@ -166,7 +166,8 @@ const columns = [
         return
       }
       return h('span', value.description)
-    }
+    },
+    enableSorting: false,
   }),
   columnHelper.accessor(
     'clusters', {
