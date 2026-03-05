@@ -13,6 +13,10 @@ export const clusterNumberPathBuilder = (clusterNumber: number) => {
   return `/clusters/${clusterNumber}/` as const
 }
 
+export const finalReviewPathBuilder = (draftName: string) => {
+  return `/final-review/${draftName}/` as const
+}
+
 export const apiClusterNumberPathBuilder = (clusterNumber: number) => {
   return `/api/v1/clusters/${clusterNumber}.json` as const
 }

@@ -50,7 +50,7 @@ import { getQueueIndex } from '../utils/api'
 import { calculateEnqueuedAtData, renderEnqueuedAt } from '~/utils/queue'
 import { DateTime } from 'luxon'
 import BaseBadge from './BaseBadge.vue'
-import { datatrackerDraftUrlBuilder } from '~/utils/url'
+import { datatrackerDraftUrlBuilder, finalReviewPathBuilder } from '~/utils/url'
 
 type Props = {
   filterByClusterNumber?: number
@@ -144,15 +144,37 @@ const columns = [
       if (!value) {
         return
       }
-      return h('ul', value.map(assignmentsByRole => {
-        return h('li', { class: 'inline-flex flex-wrap items-center gap-1' }, [
-          h(BaseBadge, { class: '' }, assignmentsByRole.role.replace(/_/g, ' ')),
-          assignmentsByRole.blockingReasons ? h('span', { class: 'text-xs text-gray-500 dark:text-neutral-400' },
-            assignmentsByRole.blockingReasons.map(blockingReason =>
-              blockingReason.reason.name
-            )) : null,
-        ])
-      }))
+
+      // See https://github.com/ietf-tools/queue/issues/13
+      const editorRoles = ['first_editor', 'second_editor', 'final_review_editor']
+      const isAwaitingEditorAssignment = !value.some(assignmentsByRole => editorRoles.includes(assignmentsByRole.role))
+
+      const humanFriendlyName = (role: string): string => {
+        switch (role) {
+          case 'first_editor':
+            return 'In Progress (First Edit)'
+          case 'second_editor':
+            return 'In Progress (Second Edit)'
+          case 'final_review_editor':
+            return 'In Final Review'
+        }
+        return role.replace(/_/g, ' ')
+      }
+
+
+
+      return h('ul', [
+        isAwaitingEditorAssignment ? h('span', 'Awaiting Editor Assignment') : undefined,
+        ...value.map(assignmentsByRole => {
+          const badge = h(BaseBadge, { class: '' }, humanFriendlyName(assignmentsByRole.role))
+          return h('li', { class: 'inline-flex flex-wrap items-center gap-1' }, [
+            assignmentsByRole.role === 'final_review_editor' ? h(Anchor, { href: finalReviewPathBuilder(data.row.original.name) }, badge) : badge,
+            assignmentsByRole.blockingReasons ? h('span', { class: 'text-xs text-gray-500 dark:text-neutral-400' },
+              assignmentsByRole.blockingReasons.map(blockingReason =>
+                blockingReason.reason.name
+              )) : null,
+          ])
+        })])
     }
   }),
   columnHelper.accessor(
