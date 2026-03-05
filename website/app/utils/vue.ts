@@ -33,6 +33,8 @@ export const getVNodeText = (vnode: unknown): string => {
     } else {
       console.warn("Found object but don't know how to extract text from ", vnode)
     }
+  } else if(typeof vnode === 'function') {
+    return getVNodeText(vnode())
   } else {
     console.warn("Don't know how to extract text from ", vnode)
   }
