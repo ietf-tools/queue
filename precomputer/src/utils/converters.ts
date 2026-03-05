@@ -98,7 +98,7 @@ type ClusterMember = ClusterDocuments[number]
 export const clusterMemberToClusterDocumentCommon = (clusterNumber: number, clusterMember: ClusterMember): ClusterDocumentCommon => {
   const { name, rfcNumber, disposition, references, isReceived } = clusterMember
 
-  console.log(`[cluster ${clusterNumber}]`, `[${name}]`, references?.length ? `${references.length} reference(s)` : 'no references')
+  // console.log(`[cluster ${clusterNumber}]`, `[${name}]`, references?.length ? `${references.length} reference(s)` : 'no references')
 
   return {
     name,
