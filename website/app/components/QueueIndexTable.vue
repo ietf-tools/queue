@@ -147,7 +147,8 @@ const columns = [
 
       // See https://github.com/ietf-tools/queue/issues/13
       const editorRoles = ['first_editor', 'second_editor', 'final_review_editor']
-      const isAwaitingEditorAssignment = !value.some(assignmentsByRole => editorRoles.includes(assignmentsByRole.role))
+      const isAwaitingEditorAssignment = value.every(assignmentsByRole => assignmentsByRole.role !== 'blocked') &&
+        !value.some(assignmentsByRole => editorRoles.includes(assignmentsByRole.role))
 
       const humanFriendlyName = (role: string): string => {
         switch (role) {
