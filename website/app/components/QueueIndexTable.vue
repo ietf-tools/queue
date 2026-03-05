@@ -157,7 +157,7 @@ const columns = [
   columnHelper.accessor(
     'ianaStatus', {
     header: () => h('span', [
-      h('abbr', { title: 'Internet Assigned Numbers Authority' }, 'IANA'),
+      h('abbr', { class: 'no-underline', title: 'Internet Assigned Numbers Authority' }, 'IANA'),
       ' status'
     ]),
     cell: data => {
