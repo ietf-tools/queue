@@ -69,10 +69,8 @@ const LabelCommonSchema = z.object({
 
 export type LabelCommon = z.infer<typeof LabelCommonSchema>
 
-const IanaStatusSlugCommonSchema = z.union([z.literal('reconciled'), z.literal('reconciled')])
-
 const IanaStatusCommonSchema = z.object({
-  slug: IanaStatusSlugCommonSchema,
+  slug: z.string(),
   name: z.string(),
   description: z.string()
 })

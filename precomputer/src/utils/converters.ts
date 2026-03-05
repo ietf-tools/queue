@@ -21,16 +21,11 @@ export const parseIanaStatus = (ianaStatus: QueueItem["ianaStatus"]): QueueCommo
     return undefined
   }
 
-  switch (ianaStatus.slug) {
-    case 'reconciled':
-      return {
-        slug: ianaStatus.slug,
-        name: ianaStatus.name,
-        description: ianaStatus.desc
-      }
+  return {
+    slug: ianaStatus.slug,
+    name: ianaStatus.name,
+    description: ianaStatus.desc
   }
-
-  throw Error(`Unable to parse ianaStatus ${JSON.stringify(ianaStatus)}`)
 }
 
 type LabelsCommon = NonNullable<QueueCommonItem["labels"]>

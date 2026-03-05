@@ -150,18 +150,22 @@ const columns = [
             assignmentsByRole.blockingReasons.map(blockingReason =>
               blockingReason.reason.name
             )) : null,
-          // assignmentsByRole.assignments.length > 0 ?
-          //   h(
-          //     'ul',
-          //     { class: 'inline-flex flex-wrap gap-1' },
-          //     assignmentsByRole.assignments.map(assignment => {
-          //       return h('li',
-          //         { class: 'inline text-xs text-gray-500 dark:text-neutral-400' },
-          //         h(BaseBadge, assignment.state.replace(/_/g, ' '))
-          //       )
-          //     })) : null
         ])
       }))
+    }
+  }),
+  columnHelper.accessor(
+    'ianaStatus', {
+    header: () => h('span', [
+      h('abbr', { title: 'Internet Assigned Numbers Authority' }, 'IANA'),
+      ' status'
+    ]),
+    cell: data => {
+      const value = data.getValue()
+      if (!value) {
+        return
+      }
+      return h('span', value.description)
     }
   }),
   columnHelper.accessor(
@@ -192,6 +196,7 @@ const columns = [
       return a - b
     },
   }),
+
 ]
 
 const table = useVueTable({

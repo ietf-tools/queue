@@ -14,7 +14,7 @@ type AssignmentsByRole = NonNullable<QueueCommonItem["assignmentsByRoles"]>[numb
 export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommon> => {
   const list = await api.apiPubqQueueList(params)
 
-  const queueCommon: QueueCommon = {
+ const queueCommon: QueueCommon = {
     items: list.map((queueItem): QueueCommonItem => {
       const {
         name,
