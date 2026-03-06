@@ -78,13 +78,13 @@ if (!finalReview.value || status.value === 'success' && !data.value || status.va
   console.error(`[404] ${props.draftName}`, status.value, error.value)
   throw createError({
     statusCode: 404,
-    statusMessage: `Not Found [${status.value}] [${error.value}] [${finalReview.value}]`,
+    statusMessage: 'Not Found',
     fatal: true
   })
 }
 
 if (status.value === 'pending' || status.value === 'idle') {
-  console.error(`[500] ${props.draftName} unexpected state`, error.value)
+  console.error(`[500] ${props.draftName} unexpected state`, status.value, error.value)
   throw createError({
     statusCode: 500,
     statusMessage: 'Internal error',
