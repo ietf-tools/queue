@@ -56,6 +56,8 @@ type Props = {
   filterByClusterNumber?: number
 }
 
+const url = useRequestURL()
+
 const props = defineProps<Props>()
 
 const emptyArray: QueueCommonItem[] = []
@@ -66,7 +68,7 @@ const {
   error,
 } = await useAsyncData(
   'queue-index',
-  getQueueIndex,
+  () => getQueueIndex(url.hostname),
   {
     server: false,
     lazy: true,

@@ -22,9 +22,11 @@ type Props = {
 
 const props = defineProps<Props>()
 
+const url = useRequestURL()
+
 const { data: clusterPackage, error, status } = await useAsyncData(
   () => `cluster-${props.clusterNumber}`,
-  () => getClusterPackage(props.clusterNumber),
+  () => getClusterPackage(url.hostname, props.clusterNumber),
   {
     server: false,
     lazy: true,

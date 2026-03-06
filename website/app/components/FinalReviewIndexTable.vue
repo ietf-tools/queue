@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { Anchor, Icon } from '#components'
+import { Anchor } from '#components'
 import {
   FlexRender,
   getCoreRowModel,
@@ -51,13 +51,15 @@ import { finalReviewPathBuilder } from '~/utils/url'
 
 const emptyArray: QueueCommonItem[] = []
 
+const url = useRequestURL()
+
 const {
   data,
   status,
   error,
 } = await useAsyncData(
   'final-review-index',
-  getFinalReviewIndex,
+  () => getFinalReviewIndex(url.hostname),
   {
     server: false,
     lazy: true,

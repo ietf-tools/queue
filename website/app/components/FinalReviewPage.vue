@@ -35,6 +35,8 @@ type Props = {
 
 const props = defineProps<Props>()
 
+const url = useRequestURL()
+
 const canonicalPath = `/final-review/${props.draftName}/`
 
 const {
@@ -43,7 +45,7 @@ const {
   error,
 } = await useAsyncData(
   'final-review-index',
-  getFinalReviewIndex,
+  () => getFinalReviewIndex(url.hostname),
   {
     server: true,
     lazy: false,

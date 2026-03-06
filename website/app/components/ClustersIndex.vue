@@ -46,6 +46,8 @@ import {
 } from '@tanstack/vue-table'
 import { getVNodeText } from '../utils/vue'
 
+const url = useRequestURL()
+
 const emptyArray: ClusterItemCommon[] = []
 
 const {
@@ -54,7 +56,7 @@ const {
   error,
 } = await useAsyncData(
   'clusters-index',
-  getClusterIndex,
+  () => getClusterIndex(url.hostname),
   {
     server: false,
     lazy: true,
