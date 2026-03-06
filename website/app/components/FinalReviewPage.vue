@@ -2,22 +2,30 @@
   <div class="container mx-auto my-6">
     <template v-if="finalReview">
       <Heading level="1"><span class="font-mono">{{ props.draftName }}</span> final review</Heading>
-      {{ finalReview }}
-      <template v-if="finalReview.renderableApprovalLogMessages">
-        <Heading level="2">Approval Logs</Heading>
-        <ol class="flex flex-col gap-2">
-          <li v-for="approvalLog in finalReview.renderableApprovalLogMessages">
-            {{ approvalLog.logMessage }}
-            <TimeStamp :dateTime="approvalLog.time">
-              {{ approvalLog.timeAgo }}
-            </TimeStamp>
-          </li>
-        </ol>
-      </template>
+
+      <p class="flex-inline gap-2">
+        <BaseBadge v-if="finalReview.disposition">{{ finalReview.disposition }}</BaseBadge>
+        <Label v-if="finalReview.labels" v-for="label in finalReview.labels" :label="label" />
+
+        debug: we have this data {{ finalReview }}
+      </p>
+
+      <Heading level="2">Approval Logs</Heading>
+      <ol v-if="finalReview.renderableApprovalLogMessages && finalReview.renderableApprovalLogMessages.length > 0"
+        class="flex flex-col gap-2">
+        <li v-for="approvalLog in finalReview.renderableApprovalLogMessages">
+          {{ approvalLog.logMessage }}
+          <TimeStamp :dateTime="approvalLog.time">
+            {{ approvalLog.timeAgo }}
+          </TimeStamp>
+        </li>
+      </ol>
+      <p v-else class="italic">No logs available</p>
+
+
     </template>
     <template v-else>
-      <p>No final review is available. Please try again later.</p>
-      <!-- 404 -->
+      <p>404: No final review found.</p>
     </template>
   </div>
 </template>
