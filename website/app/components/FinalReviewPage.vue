@@ -13,7 +13,7 @@
         class="flex flex-col gap-2">
         <li v-for="approvalLog in finalReview.renderableApprovalLogMessages">
           <component :is="approvalLog.logMessageComponent" />
-          <p class="text-sm italic text-gray-600 dark:text-gray-400 mt-1">message posted at <TimeStamp :dateTime="approvalLog.time" /></p>
+          <p class="text-sm italic text-gray-600 dark:text-gray-400 mt-1">Posted <TimeStamp :dateTime="approvalLog.time" /></p>
         </li>
       </ol>
       <p v-else class="italic">No logs available</p>
