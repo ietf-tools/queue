@@ -3,12 +3,12 @@
     <template v-if="finalReview">
       <Heading level="1"><span class="font-mono">{{ props.draftName }}</span> final review</Heading>
 
-      <p class="flex-inline gap-2">
+      <p class="flex-inline gap-2 mt-2">
         <BaseBadge v-if="finalReview.disposition">{{ finalReview.disposition }}</BaseBadge>
         <Label v-if="finalReview.labels" v-for="label in finalReview.labels" :label="label" />
       </p>
 
-      <Heading level="2">Approval Logs</Heading>
+      <Heading level="2" class="mt-3">Approval Logs</Heading>
       <ol v-if="finalReview.renderableApprovalLogMessages && finalReview.renderableApprovalLogMessages.length > 0"
         class="flex flex-col gap-2">
         <li v-for="approvalLog in finalReview.renderableApprovalLogMessages">

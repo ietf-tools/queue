@@ -4,8 +4,7 @@
       <button
         class="mt-10 px-4 -ml-2 py-2 text-sm italic border border-transparent focus:border focus:border-gray-400 text-gray-600 dark:text-gray-400 rounded-md"
         @focus="isHoverCardOpen = true" @mouseover="isHoverCardOpen = true" @blur="isHoverCardOpen = false">
-        <time :datetime="props.dateTime.toISO() ?? undefined"
-          class="block mt-1 text-sm text-gray-300 dark:text-gray-800">
+        <time :datetime="props.dateTime.toISO() ?? undefined">
           {{ relativeDate }}
         </time>
       </button>
