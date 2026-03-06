@@ -90,4 +90,9 @@ if (route.fullPath !== canonicalPath) {
     path: canonicalPath
   })
 }
+
+useHead({
+  title: `Final Review ${props.draftName}`
+})
+
 </script>
