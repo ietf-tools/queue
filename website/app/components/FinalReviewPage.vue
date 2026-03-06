@@ -37,8 +37,6 @@ const props = defineProps<Props>()
 
 const canonicalPath = `/final-review/${props.draftName}/`
 
-const emptyArray: QueueCommonItem[] = []
-
 const {
   data,
   status,
@@ -47,9 +45,7 @@ const {
   'final-review-index',
   getFinalReviewIndex,
   {
-    server: false,
-    lazy: true,
-    default: () => emptyArray
+    server: true,
   }
 )
 
