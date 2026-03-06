@@ -46,13 +46,14 @@ const {
   getFinalReviewIndex,
   {
     server: true,
+    lazy: false,
   }
 )
 
 const finalReview = computed(() => {
-  if (!data.value) return undefined
+  if (!data.value) return null
   const item = data.value.find(queueCommonItem => queueCommonItem.name === props.draftName)
-  if (!item) return undefined
+  if (!item) return null
   return {
     ...item,
     renderableApprovalLogMessages: item?.approvalLogMessages?.map(approvalLogMessage => {
@@ -61,9 +62,9 @@ const finalReview = computed(() => {
 
       return {
         ...approvalLogMessage,
-        logMessageComponent: h('div', { class: 'font-mono' },
+        logMessageComponent: h('div', { class: 'font-mono flex flex-col gap-2' },
           approvalLogMessage.logMessage.split(/\n/g).map(
-            line => h('span', [line, h('br')])
+            line => h('p', String(line))
           )
         ),
         time,
@@ -73,10 +74,20 @@ const finalReview = computed(() => {
   }
 })
 
-if (!finalReview || status.value === 'success' && data.value === null) {
+if (!finalReview.value || status.value === 'success' && data.value === null || status.value === 'error') {
+  console.error(`[404] ${props.draftName}`, status.value, error.value)
   throw createError({
     statusCode: 404,
     statusMessage: 'Not Found',
+    fatal: true
+  })
+}
+
+if (status.value === 'pending' || status.value === 'idle') {
+  console.error(`[500] ${props.draftName} unexpected state`, error.value)
+  throw createError({
+    statusCode: 500,
+    statusMessage: 'Internal error',
     fatal: true
   })
 }
@@ -90,7 +101,7 @@ if (route.fullPath !== canonicalPath) {
 }
 
 useHead({
-  title: `Final Review ${props.draftName}`
+  title: `${props.draftName} final review`
 })
 
 </script>
