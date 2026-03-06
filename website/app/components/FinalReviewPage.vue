@@ -74,11 +74,11 @@ const finalReview = computed(() => {
   }
 })
 
-if (!finalReview.value || status.value === 'success' && data.value === null || status.value === 'error') {
+if (!finalReview.value || status.value === 'success' && !data.value || status.value === 'error') {
   console.error(`[404] ${props.draftName}`, status.value, error.value)
   throw createError({
     statusCode: 404,
-    statusMessage: 'Not Found',
+    statusMessage: `Not Found [${status.value}] [${error.value}] [${finalReview.value}]`,
     fatal: true
   })
 }
