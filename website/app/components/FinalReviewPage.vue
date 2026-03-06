@@ -56,6 +56,7 @@ const {
 const finalReview = computed(() => {
   if (!data.value) return undefined
   const item = data.value.find(queueCommonItem => queueCommonItem.name === props.draftName)
+  if (!item) return undefined
   return {
     ...item,
     renderableApprovalLogMessages: item?.approvalLogMessages?.map(approvalLogMessage => {
