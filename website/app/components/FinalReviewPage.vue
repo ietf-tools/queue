@@ -8,14 +8,12 @@
         <Label v-if="finalReview.labels" v-for="label in finalReview.labels" :label="label" />
       </p>
 
-      <Heading level="2" class="mt-3">Approval Logs</Heading>
+      <Heading level="2" class="mt-3 mb-2">Approval Logs</Heading>
       <ol v-if="finalReview.renderableApprovalLogMessages && finalReview.renderableApprovalLogMessages.length > 0"
         class="flex flex-col gap-2">
         <li v-for="approvalLog in finalReview.renderableApprovalLogMessages">
           <component :is="approvalLog.logMessageComponent" />
-          <TimeStamp :dateTime="approvalLog.time">
-            {{ approvalLog.timeAgo }}
-          </TimeStamp>
+          <p class="text-sm italic text-gray-600 dark:text-gray-400 mt-1">message posted at <TimeStamp :dateTime="approvalLog.time" /></p>
         </li>
       </ol>
       <p v-else class="italic">No logs available</p>
