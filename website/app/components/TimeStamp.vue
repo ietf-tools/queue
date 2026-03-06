@@ -1,7 +1,7 @@
 <template>
   <HoverCardRoot v-model:open="isHoverCardOpen">
     <HoverCardTrigger as-child>
-      <button class="px-2 py-1 border border-transparent focus:border focus:border-gray-400 rounded-md"
+      <button class="-ml-1 px-1 py-1 border border-transparent focus:border focus:border-gray-400 rounded-md"
         @focus="isHoverCardOpen = true" @mouseover="isHoverCardOpen = true" @blur="isHoverCardOpen = false">
         <time :datetime="props.dateTime.toISO() ?? undefined">
           {{ relativeDate }}
