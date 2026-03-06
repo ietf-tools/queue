@@ -6,23 +6,19 @@
       <p class="flex-inline gap-2">
         <BaseBadge v-if="finalReview.disposition">{{ finalReview.disposition }}</BaseBadge>
         <Label v-if="finalReview.labels" v-for="label in finalReview.labels" :label="label" />
-
-        debug: we have this data {{ finalReview }}
       </p>
 
       <Heading level="2">Approval Logs</Heading>
       <ol v-if="finalReview.renderableApprovalLogMessages && finalReview.renderableApprovalLogMessages.length > 0"
         class="flex flex-col gap-2">
         <li v-for="approvalLog in finalReview.renderableApprovalLogMessages">
-          {{ approvalLog.logMessage }}
+          <component :is="approvalLog.logMessageComponent" />
           <TimeStamp :dateTime="approvalLog.time">
             {{ approvalLog.timeAgo }}
           </TimeStamp>
         </li>
       </ol>
       <p v-else class="italic">No logs available</p>
-
-
     </template>
     <template v-else>
       <p>404: No final review found.</p>
@@ -68,6 +64,11 @@ const finalReview = computed(() => {
 
       return {
         ...approvalLogMessage,
+        logMessageComponent: h('div', { class: 'font-mono' },
+          approvalLogMessage.logMessage.split(/\n/g).map(
+            line => h('span', [line, h('br')])
+          )
+        ),
         time,
         timeAgo,
       }
