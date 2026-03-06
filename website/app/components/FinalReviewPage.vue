@@ -4,7 +4,7 @@
       <Heading level="1"><span class="font-mono">{{ props.draftName }}</span> final review</Heading>
 
       <p class="flex-inline gap-2 mt-2">
-        <BaseBadge v-if="finalReview.disposition">{{ finalReview.disposition }}</BaseBadge>
+        <BaseBadge v-if="finalReview.disposition">{{ finalReview.disposition.replace(/_/g, ' ') }}</BaseBadge>
         <Label v-if="finalReview.labels" v-for="label in finalReview.labels" :label="label" />
       </p>
 
