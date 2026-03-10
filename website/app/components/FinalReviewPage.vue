@@ -22,7 +22,7 @@
 
       <hr class="mt-12" />
       <p v-if="finalReview.generatedAt" class="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
-        Final Review last checked
+        Updated
         <TimeStamp :dateTime="finalReview.generatedAt" />
       </p>
     </template>
