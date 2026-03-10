@@ -31,7 +31,7 @@
       </RpcTfoot>
     </RpcTable>
     <p v-if="generatedAt" class="text-sm italic text-gray-600 dark:text-gray-400 mt-1">
-      Updated
+      Last updated
       <TimeStamp :dateTime="generatedAt" />
     </p>
   </div>
