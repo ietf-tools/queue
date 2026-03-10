@@ -43,10 +43,6 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         (assignment) => assignment.role
       ))
 
-      if (approvalLogMessages) {
-        console.log(`[draft ${name}]  approval log messages: `, JSON.stringify(approvalLogMessages))
-      }
-
       return {
         name,
         title,
