@@ -30,6 +30,10 @@
         </tr>
       </RpcTfoot>
     </RpcTable>
+    <p v-if="generatedAt" class="text-sm italic text-gray-600 dark:text-gray-400 mt-1">
+      Updated
+      <TimeStamp :dateTime="generatedAt" />
+    </p>
   </div>
 </template>
 
@@ -48,6 +52,7 @@ import { getVNodeText } from '../utils/vue'
 import { getFinalReviewIndex } from '~/utils/api'
 import Label from './Label.vue'
 import { finalReviewPathBuilder } from '~/utils/url'
+import { DateTime } from 'luxon'
 
 const url = useRequestURL()
 
@@ -63,6 +68,8 @@ const {
     lazy: true
   }
 )
+
+const generatedAt = computed(() => data.value?.generatedAtIso ? DateTime.fromISO(data.value.generatedAtIso) : undefined)
 
 const columnHelper = createColumnHelper<QueueCommonItem>()
 
