@@ -12,7 +12,7 @@
       <HoverCardContent
         class="border shadow-sm overflow-x-hidden rounded-md bg-white dark:bg-black border-gray-400 dark:border-white px-3 py-2">
         <p class="font-bold">{{ fullDate }}</p>
-        <HoverCardArrow class="fill-gray-200 stroke-gray-500 -mt-[1px]" />
+        <HoverCardArrow class="fill-white stroke-gray-500 -mt-[1px]" />
       </HoverCardContent>
     </HoverCardPortal>
   </HoverCardRoot>

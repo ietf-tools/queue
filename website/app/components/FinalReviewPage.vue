@@ -13,15 +13,16 @@
         class="flex flex-col gap-2">
         <li v-for="approvalLog in finalReview.renderableApprovalLogMessages">
           <component :is="approvalLog.logMessageComponent" />
-          <p class="text-xs italic text-gray-600 dark:text-gray-400 mt-1">Posted
+          <p class="text-xs italic text-gray-600 dark:text-gray-400 mt-1">Log posted
             <TimeStamp :dateTime="approvalLog.time" />
           </p>
         </li>
       </ol>
       <p v-else class="italic">No logs available</p>
 
-      <p v-if="finalReview.generatedAt" class="text-sm italic text-gray-600 dark:text-gray-400 mt-1">
-        Updated
+      <hr class="mt-12" />
+      <p v-if="finalReview.generatedAt" class="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
+        Final Review last checked
         <TimeStamp :dateTime="finalReview.generatedAt" />
       </p>
     </template>
