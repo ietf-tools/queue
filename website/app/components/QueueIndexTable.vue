@@ -30,6 +30,10 @@
         </tr>
       </RpcTfoot>
     </RpcTable>
+    <p v-if="generatedAt" class="text-sm italic text-gray-600 dark:text-gray-400 mt-1">
+      Updated
+      <TimeStamp :dateTime="generatedAt" />
+    </p>
   </div>
 </template>
 
@@ -60,8 +64,6 @@ const url = useRequestURL()
 
 const props = defineProps<Props>()
 
-const emptyArray: QueueCommonItem[] = []
-
 const {
   data,
   status,
@@ -71,10 +73,11 @@ const {
   () => getQueueIndex(url.hostname),
   {
     server: false,
-    lazy: true,
-    default: () => emptyArray
+    lazy: true
   }
 )
+
+const generatedAt = computed(() => data.value?.generatedAtIso ? DateTime.fromISO(data.value.generatedAtIso) : undefined)
 
 const columnHelper = createColumnHelper<QueueCommonItem>()
 
@@ -224,11 +227,14 @@ const columns = [
       return a - b
     },
   }),
-
 ]
 
+const emptyArray: QueueCommonItem[] = []
+
 const table = useVueTable({
-  data,
+  get data() {
+    return data.value?.items ?? emptyArray // Need a const emptyArray rather than a new array every data(){} to prevent unnecessary rerenders / freezing
+  },
   columns,
   state: {
     get globalFilter() {

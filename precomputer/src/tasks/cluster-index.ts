@@ -2,6 +2,7 @@
 import { PurpleApi } from "../../generated/purple_client/index.ts";
 import { type ClusterIndexCommon, type ClusterItemCommon, ClusterIndexCommonSchema } from '../../../website/app/utils/validators.ts'
 import { clusterMemberToClusterDocumentCommon } from "../utils/converters.ts";
+import { DateTime } from "luxon";
 
 type Props = {
   api: PurpleApi
@@ -11,6 +12,7 @@ export const getClusterIndex = async ({ api }: Props): Promise<ClusterIndexCommo
   const clusterList = await api.apiPubqClustersList()
 
   const clusterIndexCommon: ClusterIndexCommon = {
+    generatedAtIso: DateTime.now().toISO(),
     list: clusterList.filter(item => item.isActive).map((cluster): ClusterItemCommon => {
       const { number, documents } = cluster
       const clusterItems = documents?.map((clusterMember) => clusterMemberToClusterDocumentCommon(number, clusterMember)) ?? []

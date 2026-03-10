@@ -30,6 +30,10 @@
         </tr>
       </RpcTfoot>
     </RpcTable>
+    <p v-if="generatedAt" class="text-sm italic text-gray-600 dark:text-gray-400 mt-1">
+      Updated
+      <TimeStamp :dateTime="generatedAt" />
+    </p>
   </div>
 </template>
 
@@ -45,10 +49,9 @@ import {
   getSortedRowModel,
 } from '@tanstack/vue-table'
 import { getVNodeText } from '../utils/vue'
+import { DateTime } from 'luxon'
 
 const url = useRequestURL()
-
-const emptyArray: ClusterItemCommon[] = []
 
 const {
   data,
@@ -59,10 +62,11 @@ const {
   () => getClusterIndex(url.hostname),
   {
     server: false,
-    lazy: true,
-    default: () => emptyArray
+    lazy: true
   }
 )
+
+const generatedAt = computed(() => data.value?.generatedAtIso ? DateTime.fromISO(data.value.generatedAtIso) : undefined)
 
 const columnHelper = createColumnHelper<ClusterItemCommon>()
 
@@ -96,8 +100,12 @@ const columns = [
   }),
 ]
 
+const emptyArray: ClusterItemCommon[] = []
+
 const table = useVueTable({
-  data,
+  get data() {
+    return data.value?.list ?? emptyArray // Need a const emptyArray rather than a new array every data(){} to prevent unnecessary rerenders / freezing
+  },
   columns,
   state: {
     get sorting() {

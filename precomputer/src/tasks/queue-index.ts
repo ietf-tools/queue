@@ -6,4 +6,4 @@ type Props = {
   api: PurpleApi
 }
 
-export const getQueue = async (props: Props): Promise<QueueCommon> => getQueueCommon(props)
+export const getQueueIndex = async (props: Props): Promise<QueueCommon> => getQueueCommon(props)

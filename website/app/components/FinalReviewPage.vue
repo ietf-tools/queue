@@ -13,10 +13,17 @@
         class="flex flex-col gap-2">
         <li v-for="approvalLog in finalReview.renderableApprovalLogMessages">
           <component :is="approvalLog.logMessageComponent" />
-          <p class="text-sm italic text-gray-600 dark:text-gray-400 mt-1">Posted <TimeStamp :dateTime="approvalLog.time" /></p>
+          <p class="text-xs italic text-gray-600 dark:text-gray-400 mt-1">Posted
+            <TimeStamp :dateTime="approvalLog.time" />
+          </p>
         </li>
       </ol>
       <p v-else class="italic">No logs available</p>
+
+      <p v-if="finalReview.generatedAt" class="text-sm italic text-gray-600 dark:text-gray-400 mt-1">
+        Updated
+        <TimeStamp :dateTime="finalReview.generatedAt" />
+      </p>
     </template>
     <template v-else>
       <p>404: No final review found.</p>
@@ -45,17 +52,18 @@ const {
   'final-review-index',
   () => getFinalReviewIndex(url.hostname),
   {
-    server: true,
+    server: true, // rendering on the server to generate real 404s for missing content
     lazy: false,
   }
 )
 
 const finalReview = computed(() => {
   if (!data.value) return null
-  const item = data.value.find(queueCommonItem => queueCommonItem.name === props.draftName)
+  const item = data.value.items.find(queueCommonItem => queueCommonItem.name === props.draftName)
   if (!item) return null
   return {
     ...item,
+    generatedAt: data.value.generatedAtIso ? DateTime.fromISO(data.value.generatedAtIso) : undefined,
     renderableApprovalLogMessages: item?.approvalLogMessages?.map(approvalLogMessage => {
       const time = approvalLogMessage.timeIso ? DateTime.fromISO(approvalLogMessage.timeIso) : undefined
       const timeAgo = time ? time.toRelativeCalendar() : undefined

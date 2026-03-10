@@ -103,6 +103,7 @@ export const QueueCommonItemSchema = z.object({
 export type QueueCommonItem = z.infer<typeof QueueCommonItemSchema>
 
 export const QueueCommonSchema = z.object({
+  generatedAtIso: z.string(),
   items: z.array(QueueCommonItemSchema)
 })
 
@@ -154,12 +155,14 @@ const ClusterRfcToBeCommonSchema = z.object({
 export type ClusterRfcToBeCommon = z.infer<typeof ClusterRfcToBeCommonSchema>
 
 export const ClusterPackageCommonSchema = z.object({
+  generatedAtIso: z.string(),
   cluster: ClusterItemCommonSchema
 })
 
 export type ClusterPackageCommon = z.infer<typeof ClusterPackageCommonSchema>
 
 export const ClusterIndexCommonSchema = z.object({
+  generatedAtIso: z.string(),
   list: ClusterItemCommonSchema.array()
 })
 

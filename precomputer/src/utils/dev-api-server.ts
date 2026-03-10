@@ -1,6 +1,6 @@
 import Fastify from 'fastify'
 import { getApiClient } from './api.ts'
-import { getQueue } from '../tasks/queue.ts'
+import { getQueueIndex } from '../tasks/queue-index.ts'
 import { getClusterPackage } from '../tasks/cluster.ts'
 import { getClusterIndex } from '../tasks/cluster-index.ts'
 import { getFinalReviewIndex } from '../tasks/final-review-index.ts'
@@ -11,7 +11,7 @@ const fastify = Fastify({
 
 fastify.get('/api/v1/queue.json', async () => {
   const api = getApiClient('dev')
-  const queueCommon = await getQueue({ api })
+  const queueCommon = await getQueueIndex({ api })
   return queueCommon
 })
 

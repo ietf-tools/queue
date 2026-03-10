@@ -10,7 +10,7 @@ export const getQueueIndex = async (hostName: string) => {
         console.error('Queue fetch succeeded but data failed validation', path, unverifiedData, error)
         throw Error('Queue fetch failed. Try again later.')
     }
-    return data.items
+    return data
 }
 
 export const getFinalReviewIndex = async (hostName: string) => {
@@ -22,7 +22,7 @@ export const getFinalReviewIndex = async (hostName: string) => {
         console.error('Final review index fetch succeeded but data failed validation', path, unverifiedData, error)
         throw Error('Final review index fetch failed. Try again later.')
     }
-    return data.items
+    return data
 }
 
 export const getClusterIndex = async (hostName:string) => {
@@ -34,7 +34,7 @@ export const getClusterIndex = async (hostName:string) => {
         console.error('Cluster index fetch succeeded but data failed validation', path, unverifiedData, error)
         throw Error('Cluster index fetch failed. Try again later.')
     }
-    return data.list
+    return data
 }
 
 export const getClusterPackage = async (hostName: string, clusterNumber: number) => {
