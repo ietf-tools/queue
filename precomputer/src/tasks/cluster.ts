@@ -2,6 +2,7 @@
 import { PurpleApi } from "../../generated/purple_client/index.ts";
 import { type ClusterPackageCommon, ClusterPackageCommonSchema } from '../../../website/app/utils/validators.ts'
 import { clusterMemberToClusterDocumentCommon } from "../utils/converters.ts";
+import { DateTime } from "luxon";
 
 type Props = {
   api: PurpleApi
@@ -19,6 +20,7 @@ export const getClusterPackage = async ({ api, clusterNumber }: Props): Promise<
   const clusterDocuments = cluster.documents?.map(clusterMember => clusterMemberToClusterDocumentCommon(cluster.number, clusterMember)) ?? []
 
   const clusterPackage: ClusterPackageCommon = {
+    generatedAtIso: DateTime.now().toISO(),
     cluster: {
       number: cluster.number,
       allPublished: clusterDocuments.length > 0 ? clusterDocuments.every(document => document.disposition === 'published') : false,

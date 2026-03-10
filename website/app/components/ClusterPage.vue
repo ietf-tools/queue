@@ -28,7 +28,7 @@ const { data: clusterPackage, error, status } = await useAsyncData(
   () => `cluster-${props.clusterNumber}`,
   () => getClusterPackage(url.hostname, props.clusterNumber),
   {
-    server: false,
+    server: true, // rendering on the server to generate real 404s for missing content
     lazy: true,
   }
 )

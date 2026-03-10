@@ -49,8 +49,6 @@ import { getFinalReviewIndex } from '~/utils/api'
 import Label from './Label.vue'
 import { finalReviewPathBuilder } from '~/utils/url'
 
-const emptyArray: QueueCommonItem[] = []
-
 const url = useRequestURL()
 
 const {
@@ -62,8 +60,7 @@ const {
   () => getFinalReviewIndex(url.hostname),
   {
     server: false,
-    lazy: true,
-    default: () => emptyArray
+    lazy: true
   }
 )
 
@@ -95,8 +92,12 @@ const columns = [
   }),
 ]
 
+const emptyArray: QueueCommonItem[] = []
+
 const table = useVueTable({
-  data,
+  get data() {
+    return data.value?.items ?? emptyArray // Need a const emptyArray rather than a new array every data(){} to prevent unnecessary rerenders / freezing
+  },
   columns,
   state: {
     get globalFilter() {
