@@ -1,3 +1,4 @@
 namespace: queue
 resources:
   - queue.yaml
+  - cron.yaml
