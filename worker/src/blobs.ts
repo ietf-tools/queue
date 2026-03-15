@@ -11,7 +11,7 @@ export async function blobs(request: Request, env: Env) {
 
     // -> Fetch R2 object
     if (objectPath.endsWith('.json')) {
-      const object = await env.QUEUE_STAGING_BUCKET.get(objectPath)
+      const object = await env.QUEUE_BUCKET.get(objectPath)
       if (object) {
         const headers = new Headers()
         object.writeHttpMetadata(headers)

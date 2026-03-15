@@ -1,4 +1,4 @@
-name: Build and Release
+name: Build and Deploy Website
 run-name: ${{ inputs.deploy == 'Skip' && '[Dev]' || '[Release]' }} Build ${{ github.run_number }} of branch ${{ github.ref_name }} by @${{ github.actor }}
 
 on:    
