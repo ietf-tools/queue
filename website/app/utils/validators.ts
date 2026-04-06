@@ -115,6 +115,7 @@ const ClusterDocumentRelationshipCommonSchema = z.union([
   z.literal('not-received'),
   z.literal('not-received-2g'),
   z.literal('not-received-3g'),
+  z.literal('withdrawnref')
 ])
 
 const ClusterDocumentReferenceCommonSchema = z.object({
