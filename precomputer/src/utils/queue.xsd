@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:q="http://www.rfc-editor.org/rfc-editor-queue"
+           targetNamespace="http://www.rfc-editor.org/rfc-editor-queue"
+           elementFormDefault="qualified">
+
+  <!-- Import xml namespace for xml:id -->
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace"
+             schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+
+  <!-- Root element -->
+  <xs:element name="rfc-editor-queue">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="section" type="q:sectionType" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Section: contains one or more entries -->
+  <xs:complexType name="sectionType">
+    <xs:sequence>
+      <xs:element name="entry" type="q:entryType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- one RFC draft in the queue -->
+  <xs:complexType name="entryType">
+    <xs:sequence>
+      <xs:element name="draft"          type="xs:string"/>
+      <xs:element name="date-received"  type="xs:date"/>
+      <xs:element name="state"          type="xs:string"/>
+      <xs:element name="auth48-url"     type="xs:anyURI"  minOccurs="0"/>
+      <xs:element name="normRef"        type="q:normRefType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="authors"        type="xs:string"/>
+      <xs:element name="title"          type="xs:string"/>
+      <xs:element name="bytes"          type="xs:positiveInteger"/>
+      <xs:element name="source"         type="xs:string"/>
+      <xs:element name="consensus"      type="q:consensusType"/>
+      <xs:element name="awaiting_ad_approval" type="q:yesNoType" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute ref="xml:id" use="required"/>
+  </xs:complexType>
+
+  <!-- Normative reference -->
+  <xs:complexType name="normRefType">
+    <xs:sequence>
+      <xs:element name="ref-name"  type="xs:string"/>
+      <xs:element name="ref-state" type="q:refStateType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ref-state -->
+  <xs:simpleType name="refStateType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="IN-QUEUE"/>
+      <xs:enumeration value="NOT-RECEIVED"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- consensus -->
+  <xs:simpleType name="consensusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="yes"/>
+      <xs:enumeration value="no"/>
+      <xs:enumeration value="N/A"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- awaiting_ad_approval -->
+  <xs:simpleType name="yesNoType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="yes"/>
+      <xs:enumeration value="no"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

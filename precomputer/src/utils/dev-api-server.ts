@@ -4,6 +4,7 @@ import { getQueueIndex } from '../tasks/queue-index.ts'
 import { getClusterPackage } from '../tasks/cluster.ts'
 import { getClusterIndex } from '../tasks/cluster-index.ts'
 import { getFinalReviewIndex } from '../tasks/final-review-index.ts'
+import { getQueueXML } from '../tasks/queue-xml.ts'
 
 const fastify = Fastify({
   logger: true
@@ -50,6 +51,16 @@ fastify.get('/api/v1/clusters/index.json', async (request) => {
 fastify.get('/api/v1/final-review/index.json', async (request) => {
   const api = getApiClient('dev')
   return getFinalReviewIndex({ api })
+})
+
+fastify.get('/api/v1/queue.xml', async (request, reply) => {
+  const api = getApiClient('dev')
+  const queueXML = await getQueueXML(api)
+  console.log({ queueXML })
+  reply
+    .code(200)
+    .type('text/xml')
+    .send(queueXML)
 })
 
 fastify.listen({
