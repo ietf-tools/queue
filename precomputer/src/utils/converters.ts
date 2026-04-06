@@ -87,6 +87,7 @@ export const parseRelationship = (relationship: string) => {
     case 'not-received':
     case 'not-received-2g':
     case 'not-received-3g':
+    case 'withdrawnref':
       return relationship
   }
   throw Error(`Unable to parse relationship ${JSON.stringify(relationship)}`)
