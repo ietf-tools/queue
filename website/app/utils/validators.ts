@@ -86,9 +86,17 @@ const ApprovalLogMessageCommonSchema = z.object({
 
 export type ApprovalLogMessageCommon = z.infer<typeof ApprovalLogMessageCommonSchema>
 
+const AuthorCommonSchema = z.object({
+  titlepageName: z.string(),
+  isEditor: z.boolean()
+})
+
 export const QueueCommonItemSchema = z.object({
   name: z.string(),
-  title: z.string().optional(),
+  title: z.string(),
+  stream: z.string(),
+  consensus: z.boolean(),
+  authors: AuthorCommonSchema.array(),
   disposition: DispositionCommonSchema,
   deadlineIso: z.string().optional(), // ISO date
   labels: LabelCommonSchema.array().optional(),

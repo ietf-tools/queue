@@ -1,34 +1,24 @@
 
-# ClusterMember
+# PublishRfcStatus
 
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`name` | string
-`rfcNumber` | number
-`disposition` | string
-`references` | [Array&lt;RpcRelatedDocument&gt;](RpcRelatedDocument.md)
-`isReceived` | boolean
-`order` | number
-`isBlocked` | boolean
+`status` | [StatusEnum](StatusEnum.md)
+`detail` | string
 
 ## Example
 
 ```typescript
-import type { ClusterMember } from ''
+import type { PublishRfcStatus } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "name": null,
-  "rfcNumber": null,
-  "disposition": null,
-  "references": null,
-  "isReceived": null,
-  "order": null,
-  "isBlocked": null,
-} satisfies ClusterMember
+  "status": null,
+  "detail": null,
+} satisfies PublishRfcStatus
 
 console.log(example)
 
@@ -37,7 +27,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as ClusterMember
+const exampleParsed = JSON.parse(exampleJSON) as PublishRfcStatus
 console.log(exampleParsed)
 ```
 

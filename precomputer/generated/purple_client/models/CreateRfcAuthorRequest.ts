@@ -32,11 +32,11 @@ export interface CreateRfcAuthorRequest {
      */
     isEditor?: boolean;
     /**
-     * 
+     * Affiliation of the person
      * @type {string}
      * @memberof CreateRfcAuthorRequest
      */
-    affiliation?: string | null;
+    affiliation?: string;
     /**
      * datatracker ID of a Person
      * @type {number}

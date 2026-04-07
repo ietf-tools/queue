@@ -61,12 +61,6 @@ export interface CreateRfcAuthor {
      * @memberof CreateRfcAuthor
      */
     readonly datatrackerUrl?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateRfcAuthor
-     */
-    affiliation?: string | null;
 }
 
 /**
@@ -94,7 +88,6 @@ export function CreateRfcAuthorFromJSONTyped(json: any, ignoreDiscriminator: boo
         'isEditor': json['is_editor'] == null ? undefined : json['is_editor'],
         'picture': json['picture'] == null ? undefined : json['picture'],
         'datatrackerUrl': json['datatracker_url'] == null ? undefined : json['datatracker_url'],
-        'affiliation': json['affiliation'] == null ? undefined : json['affiliation'],
     };
 }
 
@@ -111,7 +104,6 @@ export function CreateRfcAuthorToJSONTyped(value?: Omit<CreateRfcAuthor, 'id'|'n
         
         'titlepage_name': value['titlepageName'],
         'is_editor': value['isEditor'],
-        'affiliation': value['affiliation'],
     };
 }
 

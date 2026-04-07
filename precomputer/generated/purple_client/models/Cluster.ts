@@ -44,8 +44,8 @@ export interface Cluster {
      */
     readonly documents?: Array<ClusterMember>;
     /**
-     * A cluster is considered active if at least one of its documents is not in
-     * terminal state (published/withdrawn).
+     * A cluster is considered active if at least one of its documents is
+     * in_progress.
      * @type {boolean}
      * @memberof Cluster
      */
