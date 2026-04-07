@@ -3,7 +3,10 @@ import {
   XsdValidator,
   XmlValidateError
 } from 'libxml2-wasm'
+import { xmlRegisterFsInputProviders } from "libxml2-wasm/lib/nodejs.mjs";
 import { JSDOM } from 'jsdom'
+
+xmlRegisterFsInputProviders();
 
 export const getDOMParser = async (): Promise<DOMParser> => {
   const jsdom = new JSDOM()
@@ -83,8 +86,9 @@ export const deleteDefaultNamespaces = (xml: string): string => {
 /**
  * validate xml
  */
-export const validateXml = (xml: string, xsd: string): boolean => {  
-  const xsdDocument = XsdValidator.fromDoc(XmlDocument.fromString(xsd))
+export const validateXml = (xml: string, xsd: string): boolean => {
+  const xsdSourceDocument = XmlDocument.fromString(xsd)
+  const xsdDocument = XsdValidator.fromDoc(xsdSourceDocument)
   const xmlDocument = XmlDocument.fromString(xml)
   try {
     xsdDocument.validate(xmlDocument)
@@ -109,5 +113,8 @@ export const validateXml = (xml: string, xsd: string): boolean => {
       console.error('rfc-index.xml validiation failure during rendering', e)
     }
     throw e
+  } finally {
+    xsdSourceDocument.dispose();
+    xmlDocument.dispose();
   }
 }
