@@ -26,6 +26,7 @@ Name | Type
 `blockingReasons` | [Array&lt;RfcToBeBlockingReason&gt;](RfcToBeBlockingReason.md)
 `authors` | [Array&lt;PublicQueueAuthor&gt;](PublicQueueAuthor.md)
 `approvalLogMessage` | [Array&lt;ApprovalLogMessage&gt;](ApprovalLogMessage.md)
+`stream` | string
 
 ## Example
 
@@ -53,6 +54,7 @@ const example = {
   "blockingReasons": null,
   "authors": null,
   "approvalLogMessage": null,
+  "stream": null,
 } satisfies PublicQueueItem
 
 console.log(example)

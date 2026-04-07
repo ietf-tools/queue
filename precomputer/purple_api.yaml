@@ -51,6 +51,12 @@ paths:
         name: disposition
         schema:
           type: string
+          enum:
+          - created
+          - in_progress
+          - published
+          - withdrawn
+        description: Filter queue items by disposition slug.
       - in: query
         name: pending_final_approval
         schema:
@@ -522,6 +528,12 @@ paths:
         name: disposition
         schema:
           type: string
+          enum:
+          - created
+          - in_progress
+          - published
+          - withdrawn
+        description: Filter documents by disposition slug.
       - name: limit
         required: false
         in: query
@@ -686,6 +698,44 @@ paths:
                 items:
                   $ref: '#/components/schemas/RfcToBeHistory'
           description: ''
+  /api/rpc/documents/{draft__name}/pub_status/:
+    get:
+      operationId: documents_pub_status_retrieve
+      parameters:
+      - in: path
+        name: draft__name
+        schema:
+          type: string
+          description: Name of draft
+        required: true
+      tags:
+      - purple
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublishRfcStatus'
+          description: ''
+  /api/rpc/documents/{draft__name}/pub_status_reset/:
+    delete:
+      operationId: documents_pub_status_clear_failed
+      parameters:
+      - in: path
+        name: draft__name
+        schema:
+          type: string
+          description: Name of draft
+        required: true
+      tags:
+      - purple
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/rpc/documents/{draft__name}/publish/:
     post:
       operationId: documents_publish
@@ -867,6 +917,28 @@ paths:
               schema:
                 $ref: '#/components/schemas/ActionHolder'
           description: ''
+    delete:
+      operationId: documents_action_holders_destroy
+      description: ViewSet for ActionHolder entries related to a draft
+      parameters:
+      - in: path
+        name: draft_name
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this action holder.
+        required: true
+      tags:
+      - purple
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/rpc/documents/{draft_name}/additional_emails/:
     get:
       operationId: documents_additional_emails_list
@@ -2160,6 +2232,12 @@ paths:
         name: disposition
         schema:
           type: string
+          enum:
+          - created
+          - in_progress
+          - published
+          - withdrawn
+        description: Optional disposition slug to filter matching documents.
       - name: limit
         required: false
         in: query
@@ -2406,6 +2484,12 @@ paths:
         name: disposition
         schema:
           type: string
+          enum:
+          - created
+          - in_progress
+          - published
+          - withdrawn
+        description: Filter queue items by disposition slug.
       - in: query
         name: pending_final_approval
         schema:
@@ -3427,8 +3511,8 @@ components:
         is_active:
           type: boolean
           description: |-
-            A cluster is considered active if at least one of its documents is not in
-            terminal state (published/withdrawn).
+            A cluster is considered active if at least one of its documents is
+            in_progress.
           readOnly: true
       required:
       - number
@@ -3468,6 +3552,9 @@ components:
           readOnly: true
         order:
           type: integer
+        is_blocked:
+          type: boolean
+          readOnly: true
       required:
       - name
       - order
@@ -3694,10 +3781,6 @@ components:
           type: string
           format: uri
           readOnly: true
-        affiliation:
-          type: string
-          nullable: true
-          maxLength: 255
       required:
       - titlepage_name
     CreateRfcAuthorRequest:
@@ -3711,8 +3794,8 @@ components:
           type: boolean
         affiliation:
           type: string
-          nullable: true
-          maxLength: 255
+          writeOnly: true
+          description: Affiliation of the person
         person_id:
           type: integer
           writeOnly: true
@@ -4755,6 +4838,9 @@ components:
           items:
             $ref: '#/components/schemas/ApprovalLogMessage'
           readOnly: true
+        stream:
+          type: string
+          readOnly: true
       required:
       - authors
       - disposition
@@ -4771,6 +4857,17 @@ components:
           maxLength: 40
       required:
       - head_sha
+    PublishRfcStatus:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        detail:
+          type: string
+          maxLength: 1000
+      required:
+      - detail
+      - status
     QueueItem:
       type: object
       description: RfcToBe serializer suitable for displaying a queue of many
@@ -5339,6 +5436,18 @@ components:
         * `done` - Done
         * `withdrawn` - Withdrawn
         * `closed_for_hold` - Closed For Hold
+    StatusEnum:
+      enum:
+      - none
+      - pending
+      - published
+      - failed
+      type: string
+      description: |-
+        * `none` - none
+        * `pending` - pending
+        * `published` - published
+        * `failed` - failed
     Submission:
       type: object
       description: Serialize a submission

@@ -7,9 +7,9 @@
   "scripts": {
     "job": "node src/job.ts",
     "format": "npx prettier --config ./prettier.config.cjs src --write",
-    "test": "TZ=UTC npm run test:types",
+    "test": "TZ=UTC npm run test:unittests && npm run test:types",
     "test:types": "vue-tsc -b --noEmit",
-    "test:unittests": "TZ=UTC vitest run",
+    "test:unittests": "NODE_OPTIONS=--experimental-print-required-tla TZ=UTC vitest run",
     "test:unittests:watch": "TZ=UTC vitest run --watch",
     "generate:api-client": "npx --no @openapitools/openapi-generator-cli generate --generator-key purple",
     "dev-api-server": "node --experimental-transform-types ./src/utils/dev-api-server.ts"
@@ -24,14 +24,22 @@
     "@supercharge/promise-pool": "3.2.0",
     "es-toolkit": "1.44.0",
     "fastify": "5.7.4",
+    "jsdom": "28.1.0",
+    "libxml2-wasm": "0.7.1",
     "luxon": "3.7.2",
     "zod": "4.3.6"
   },
   "devDependencies": {
+    "@types/jsdom": "28.0.1",
     "@types/luxon": "3.7.1",
     "@types/node": "24.0.10",
     "typescript": "5.8.3",
+    "vite-plugin-top-level-await": "1.6.0",
     "vitest": "4.0.18",
     "vue-tsc": "3.2.5"
+  },
+  "// overrides": "LRU cache has a top level await which breaks vitest. If you can make queue-xml.test.ts pass without this override feel free to delete this",
+  "overrides": {
+    "lru-cache": "11.0.0"
   }
 }

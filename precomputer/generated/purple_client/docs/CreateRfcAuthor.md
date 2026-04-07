@@ -13,7 +13,6 @@ Name | Type
 `isEditor` | boolean
 `picture` | string
 `datatrackerUrl` | string
-`affiliation` | string
 
 ## Example
 
@@ -29,7 +28,6 @@ const example = {
   "isEditor": null,
   "picture": null,
   "datatrackerUrl": null,
-  "affiliation": null,
 } satisfies CreateRfcAuthor
 
 console.log(example)

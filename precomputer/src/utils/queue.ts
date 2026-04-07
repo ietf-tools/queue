@@ -34,10 +34,15 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         pages,
         enqueuedAt,
         ianaStatus,
+        stream,
+        authors,
+        finalApproval: finalApprovals,
         approvalLogMessage: approvalLogMessages,
       } = queueItem
       assertIsString(name)
       assertIsString(title)
+      assertIsString(stream)
+
       const clusterNumber: number | undefined = cluster?.number ?? undefined
 
       const publicAssignments = assignmentSet ?? []
@@ -51,6 +56,14 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         name,
         title,
         pages,
+        stream,
+        authors: authors.map(author => {
+          const { titlepageName, isEditor } = author
+          return {
+            titlepageName,
+            isEditor: Boolean(isEditor),
+          }
+        }),
         assignmentsByRoles: assignmentsByRole.map(([role]): AssignmentsByRole => {
           let blockingReasons: BlockingReason[] | undefined = undefined
 
@@ -78,7 +91,10 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         disposition: parseDisposition(disposition),
         ianaStatus: parseIanaStatus(ianaStatus),
         labels: parseLabels(labels),
-        approvalLogMessages: parseApprovalLogMessages(approvalLogMessages)
+        approvalLogMessages: parseApprovalLogMessages(approvalLogMessages),
+        consensus: finalApprovals?.every(finalApproval => {
+          return Boolean(finalApproval.approved)
+        }) ?? false
       }
     })
   }

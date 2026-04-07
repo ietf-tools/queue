@@ -204,6 +204,12 @@ export interface PublicQueueItem {
      * @memberof PublicQueueItem
      */
     readonly approvalLogMessage?: Array<ApprovalLogMessage>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicQueueItem
+     */
+    readonly stream?: string;
 }
 
 /**
@@ -247,6 +253,7 @@ export function PublicQueueItemFromJSONTyped(json: any, ignoreDiscriminator: boo
         'blockingReasons': json['blocking_reasons'] == null ? undefined : ((json['blocking_reasons'] as Array<any>).map(RfcToBeBlockingReasonFromJSON)),
         'authors': ((json['authors'] as Array<any>).map(PublicQueueAuthorFromJSON)),
         'approvalLogMessage': json['approval_log_message'] == null ? undefined : ((json['approval_log_message'] as Array<any>).map(ApprovalLogMessageFromJSON)),
+        'stream': json['stream'] == null ? undefined : json['stream'],
     };
 }
 
@@ -254,7 +261,7 @@ export function PublicQueueItemToJSON(json: any): PublicQueueItem {
     return PublicQueueItemToJSONTyped(json, false);
 }
 
-export function PublicQueueItemToJSONTyped(value?: Omit<PublicQueueItem, 'id'|'name'|'labels'|'cluster'|'assignment_set'|'actionholder_set'|'pending_activities'|'pages'|'final_approval'|'iana_status'|'blocking_reasons'|'approval_log_message'> | null, ignoreDiscriminator: boolean = false): any {
+export function PublicQueueItemToJSONTyped(value?: Omit<PublicQueueItem, 'id'|'name'|'labels'|'cluster'|'assignment_set'|'actionholder_set'|'pending_activities'|'pages'|'final_approval'|'iana_status'|'blocking_reasons'|'approval_log_message'|'stream'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

@@ -78,6 +78,7 @@ docs/PublicAssignment.md
 docs/PublicQueueAuthor.md
 docs/PublicQueueItem.md
 docs/PublishRfcRequest.md
+docs/PublishRfcStatus.md
 docs/PurpleApi.md
 docs/QueueItem.md
 docs/RfcAuthor.md
@@ -95,6 +96,7 @@ docs/RpcRoleRequest.md
 docs/SimpleCluster.md
 docs/SimpleClusterRequest.md
 docs/StateEnum.md
+docs/StatusEnum.md
 docs/Submission.md
 docs/SubmissionAuthor.md
 docs/SubmissionListItem.md
@@ -188,6 +190,7 @@ models/PublicAssignment.ts
 models/PublicQueueAuthor.ts
 models/PublicQueueItem.ts
 models/PublishRfcRequest.ts
+models/PublishRfcStatus.ts
 models/QueueItem.ts
 models/RfcAuthor.ts
 models/RfcAuthorRequest.ts
@@ -204,6 +207,7 @@ models/RpcRoleRequest.ts
 models/SimpleCluster.ts
 models/SimpleClusterRequest.ts
 models/StateEnum.ts
+models/StatusEnum.ts
 models/Submission.ts
 models/SubmissionAuthor.ts
 models/SubmissionListItem.ts

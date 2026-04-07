@@ -27,6 +27,7 @@ All URIs are relative to *http://localhost*
 | [**docRelationshipNamesRetrieve**](PurpleApi.md#docrelationshipnamesretrieve) | **GET** /api/rpc/doc_relationship_names/{slug}/ |  |
 | [**documentMailSend**](PurpleApi.md#documentmailsend) | **POST** /api/rpc/documents/{draft_name}/mail |  |
 | [**documentsActionHoldersCreate**](PurpleApi.md#documentsactionholderscreate) | **POST** /api/rpc/documents/{draft_name}/action_holders/ |  |
+| [**documentsActionHoldersDestroy**](PurpleApi.md#documentsactionholdersdestroy) | **DELETE** /api/rpc/documents/{draft_name}/action_holders/{id}/ |  |
 | [**documentsActionHoldersList**](PurpleApi.md#documentsactionholderslist) | **GET** /api/rpc/documents/{draft_name}/action_holders/ |  |
 | [**documentsActionHoldersPartialUpdate**](PurpleApi.md#documentsactionholderspartialupdate) | **PATCH** /api/rpc/documents/{draft_name}/action_holders/{id}/ |  |
 | [**documentsActionHoldersRetrieve**](PurpleApi.md#documentsactionholdersretrieve) | **GET** /api/rpc/documents/{draft_name}/action_holders/{id}/ |  |
@@ -68,6 +69,8 @@ All URIs are relative to *http://localhost*
 | [**documentsMetadataValidationResultsList**](PurpleApi.md#documentsmetadatavalidationresultslist) | **GET** /api/rpc/documents/{draft_name}/metadata_validation_results/ |  |
 | [**documentsMetadataValidationResultsRetrieve**](PurpleApi.md#documentsmetadatavalidationresultsretrieve) | **GET** /api/rpc/documents/{draft_name}/metadata_validation_results/{head_sha}/ |  |
 | [**documentsPartialUpdate**](PurpleApi.md#documentspartialupdate) | **PATCH** /api/rpc/documents/{draft__name}/ |  |
+| [**documentsPubStatusClearFailed**](PurpleApi.md#documentspubstatusclearfailed) | **DELETE** /api/rpc/documents/{draft__name}/pub_status_reset/ |  |
+| [**documentsPubStatusRetrieve**](PurpleApi.md#documentspubstatusretrieve) | **GET** /api/rpc/documents/{draft__name}/pub_status/ |  |
 | [**documentsPublish**](PurpleApi.md#documentspublish) | **POST** /api/rpc/documents/{draft__name}/publish/ |  |
 | [**documentsReferencesCreate**](PurpleApi.md#documentsreferencescreate) | **POST** /api/rpc/documents/{draft_name}/references/ |  |
 | [**documentsReferencesDestroy**](PurpleApi.md#documentsreferencesdestroy) | **DELETE** /api/rpc/documents/{draft_name}/references/{id}/ |  |
@@ -290,7 +293,7 @@ async function example() {
   const api = new PurpleApi(config);
 
   const body = {
-    // string (optional)
+    // 'created' | 'in_progress' | 'published' | 'withdrawn' | Filter queue items by disposition slug. (optional)
     disposition: disposition_example,
     // boolean | Filter by pending final approval status, true returns drafts with at least one pending final approval, false returns drafts where all final approvals are approved. (optional)
     pendingFinalApproval: true,
@@ -313,7 +316,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **disposition** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **disposition** | `created`, `in_progress`, `published`, `withdrawn` | Filter queue items by disposition slug. | [Optional] [Defaults to `undefined`] [Enum: created, in_progress, published, withdrawn] |
 | **pendingFinalApproval** | `boolean` | Filter by pending final approval status, true returns drafts with at least one pending final approval, false returns drafts where all final approvals are approved. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
@@ -1747,6 +1750,80 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## documentsActionHoldersDestroy
+
+> documentsActionHoldersDestroy(draftName, id)
+
+
+
+ViewSet for ActionHolder entries related to a draft
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PurpleApi,
+} from '';
+import type { DocumentsActionHoldersDestroyRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: cookieAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PurpleApi(config);
+
+  const body = {
+    // string
+    draftName: draftName_example,
+    // number | A unique integer value identifying this action holder.
+    id: 56,
+  } satisfies DocumentsActionHoldersDestroyRequest;
+
+  try {
+    const data = await api.documentsActionHoldersDestroy(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **draftName** | `string` |  | [Defaults to `undefined`] |
+| **id** | `number` | A unique integer value identifying this action holder. | [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | No response body |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -4404,7 +4481,7 @@ async function example() {
   const api = new PurpleApi(config);
 
   const body = {
-    // string (optional)
+    // 'created' | 'in_progress' | 'published' | 'withdrawn' | Filter documents by disposition slug. (optional)
     disposition: disposition_example,
     // number | Number of results to return per page. (optional)
     limit: 56,
@@ -4433,7 +4510,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **disposition** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **disposition** | `created`, `in_progress`, `published`, `withdrawn` | Filter documents by disposition slug. | [Optional] [Defaults to `undefined`] [Enum: created, in_progress, published, withdrawn] |
 | **limit** | `number` | Number of results to return per page. | [Optional] [Defaults to `undefined`] |
 | **offset** | `number` | The initial index from which to return the results. | [Optional] [Defaults to `undefined`] |
 | **ordering** | `string` | Which field to use when ordering the results. | [Optional] [Defaults to `undefined`] |
@@ -4735,6 +4812,144 @@ example().catch(console.error);
 ### HTTP request headers
 
 - **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## documentsPubStatusClearFailed
+
+> documentsPubStatusClearFailed(draftName)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PurpleApi,
+} from '';
+import type { DocumentsPubStatusClearFailedRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: cookieAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PurpleApi(config);
+
+  const body = {
+    // string
+    draftName: draftName_example,
+  } satisfies DocumentsPubStatusClearFailedRequest;
+
+  try {
+    const data = await api.documentsPubStatusClearFailed(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **draftName** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | No response body |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## documentsPubStatusRetrieve
+
+> PublishRfcStatus documentsPubStatusRetrieve(draftName)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PurpleApi,
+} from '';
+import type { DocumentsPubStatusRetrieveRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: cookieAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PurpleApi(config);
+
+  const body = {
+    // string
+    draftName: draftName_example,
+  } satisfies DocumentsPubStatusRetrieveRequest;
+
+  try {
+    const data = await api.documentsPubStatusRetrieve(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **draftName** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**PublishRfcStatus**](PublishRfcStatus.md)
+
+### Authorization
+
+[cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: `application/json`
 
 
@@ -5795,7 +6010,7 @@ async function example() {
   const body = {
     // string | Search query for draft name, RFC number, or author name (e.g., \'draft-ietf-example\', \'9999\', \'rfc9999\', or \'John Doe\')
     q: q_example,
-    // string (optional)
+    // 'created' | 'in_progress' | 'published' | 'withdrawn' | Optional disposition slug to filter matching documents. (optional)
     disposition: disposition_example,
     // number | Number of results to return per page. (optional)
     limit: 56,
@@ -5823,7 +6038,7 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **q** | `string` | Search query for draft name, RFC number, or author name (e.g., \&#39;draft-ietf-example\&#39;, \&#39;9999\&#39;, \&#39;rfc9999\&#39;, or \&#39;John Doe\&#39;) | [Defaults to `undefined`] |
-| **disposition** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **disposition** | `created`, `in_progress`, `published`, `withdrawn` | Optional disposition slug to filter matching documents. | [Optional] [Defaults to `undefined`] [Enum: created, in_progress, published, withdrawn] |
 | **limit** | `number` | Number of results to return per page. | [Optional] [Defaults to `undefined`] |
 | **offset** | `number` | The initial index from which to return the results. | [Optional] [Defaults to `undefined`] |
 | **ordering** | `string` | Which field to use when ordering the results. | [Optional] [Defaults to `undefined`] |
@@ -6850,7 +7065,7 @@ async function example() {
   const api = new PurpleApi(config);
 
   const body = {
-    // string (optional)
+    // 'created' | 'in_progress' | 'published' | 'withdrawn' | Filter queue items by disposition slug. (optional)
     disposition: disposition_example,
     // boolean | Filter by pending final approval status, true returns drafts with at least one pending final approval, false returns drafts where all final approvals are approved. (optional)
     pendingFinalApproval: true,
@@ -6873,7 +7088,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **disposition** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **disposition** | `created`, `in_progress`, `published`, `withdrawn` | Filter queue items by disposition slug. | [Optional] [Defaults to `undefined`] [Enum: created, in_progress, published, withdrawn] |
 | **pendingFinalApproval** | `boolean` | Filter by pending final approval status, true returns drafts with at least one pending final approval, false returns drafts where all final approvals are approved. | [Optional] [Defaults to `undefined`] |
 
 ### Return type

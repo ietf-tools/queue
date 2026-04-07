@@ -63,6 +63,12 @@ export interface ClusterMember {
      * @memberof ClusterMember
      */
     order: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterMember
+     */
+    readonly isBlocked?: boolean;
 }
 
 /**
@@ -90,6 +96,7 @@ export function ClusterMemberFromJSONTyped(json: any, ignoreDiscriminator: boole
         'references': json['references'] == null ? undefined : ((json['references'] as Array<any>).map(RpcRelatedDocumentFromJSON)),
         'isReceived': json['is_received'] == null ? undefined : json['is_received'],
         'order': json['order'],
+        'isBlocked': json['is_blocked'] == null ? undefined : json['is_blocked'],
     };
 }
 
@@ -97,7 +104,7 @@ export function ClusterMemberToJSON(json: any): ClusterMember {
     return ClusterMemberToJSONTyped(json, false);
 }
 
-export function ClusterMemberToJSONTyped(value?: Omit<ClusterMember, 'rfc_number'|'disposition'|'references'|'is_received'> | null, ignoreDiscriminator: boolean = false): any {
+export function ClusterMemberToJSONTyped(value?: Omit<ClusterMember, 'rfc_number'|'disposition'|'references'|'is_received'|'is_blocked'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

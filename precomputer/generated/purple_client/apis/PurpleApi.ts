@@ -70,6 +70,7 @@ import type {
   Profile,
   PublicQueueItem,
   PublishRfcRequest,
+  PublishRfcStatus,
   QueueItem,
   RfcAuthor,
   RfcAuthorRequest,
@@ -205,6 +206,8 @@ import {
     PublicQueueItemToJSON,
     PublishRfcRequestFromJSON,
     PublishRfcRequestToJSON,
+    PublishRfcStatusFromJSON,
+    PublishRfcStatusToJSON,
     QueueItemFromJSON,
     QueueItemToJSON,
     RfcAuthorFromJSON,
@@ -258,7 +261,7 @@ export interface ApiPubqClustersRetrieveRequest {
 }
 
 export interface ApiPubqQueueListRequest {
-    disposition?: string;
+    disposition?: ApiPubqQueueListDispositionEnum;
     pendingFinalApproval?: boolean;
 }
 
@@ -347,6 +350,11 @@ export interface DocumentMailSendRequest {
 export interface DocumentsActionHoldersCreateRequest {
     draftName: string;
     createActionHolderRequest: CreateActionHolderRequest;
+}
+
+export interface DocumentsActionHoldersDestroyRequest {
+    draftName: string;
+    id: number;
 }
 
 export interface DocumentsActionHoldersListRequest {
@@ -537,7 +545,7 @@ export interface DocumentsHistoryListRequest {
 }
 
 export interface DocumentsListRequest {
-    disposition?: string;
+    disposition?: DocumentsListDispositionEnum;
     limit?: number;
     offset?: number;
     ordering?: string;
@@ -561,6 +569,14 @@ export interface DocumentsMetadataValidationResultsRetrieveRequest {
 export interface DocumentsPartialUpdateRequest {
     draftName: string;
     patchedRfcToBeRequest?: PatchedRfcToBeRequest;
+}
+
+export interface DocumentsPubStatusClearFailedRequest {
+    draftName: string;
+}
+
+export interface DocumentsPubStatusRetrieveRequest {
+    draftName: string;
 }
 
 export interface DocumentsPublishRequest {
@@ -638,7 +654,7 @@ export interface DocumentsRetrieveRequest {
 
 export interface DocumentsSearchRequest {
     q: string;
-    disposition?: string;
+    disposition?: DocumentsSearchDispositionEnum;
     limit?: number;
     offset?: number;
     ordering?: string;
@@ -697,7 +713,7 @@ export interface ProfileRetrieveDemoOnlyRequest {
 }
 
 export interface QueueListRequest {
-    disposition?: string;
+    disposition?: QueueListDispositionEnum;
     pendingFinalApproval?: boolean;
 }
 
@@ -1857,6 +1873,58 @@ export class PurpleApi extends runtime.BaseAPI {
     async documentsActionHoldersCreate(requestParameters: DocumentsActionHoldersCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateActionHolder> {
         const response = await this.documentsActionHoldersCreateRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Creates request options for documentsActionHoldersDestroy without sending the request
+     */
+    async documentsActionHoldersDestroyRequestOpts(requestParameters: DocumentsActionHoldersDestroyRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['draftName'] == null) {
+            throw new runtime.RequiredError(
+                'draftName',
+                'Required parameter "draftName" was null or undefined when calling documentsActionHoldersDestroy().'
+            );
+        }
+
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling documentsActionHoldersDestroy().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/rpc/documents/{draft_name}/action_holders/{id}/`;
+        urlPath = urlPath.replace(`{${"draft_name"}}`, encodeURIComponent(String(requestParameters['draftName'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * ViewSet for ActionHolder entries related to a draft
+     */
+    async documentsActionHoldersDestroyRaw(requestParameters: DocumentsActionHoldersDestroyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.documentsActionHoldersDestroyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * ViewSet for ActionHolder entries related to a draft
+     */
+    async documentsActionHoldersDestroy(requestParameters: DocumentsActionHoldersDestroyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.documentsActionHoldersDestroyRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -3970,6 +4038,91 @@ export class PurpleApi extends runtime.BaseAPI {
      */
     async documentsPartialUpdate(requestParameters: DocumentsPartialUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RfcToBe> {
         const response = await this.documentsPartialUpdateRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for documentsPubStatusClearFailed without sending the request
+     */
+    async documentsPubStatusClearFailedRequestOpts(requestParameters: DocumentsPubStatusClearFailedRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['draftName'] == null) {
+            throw new runtime.RequiredError(
+                'draftName',
+                'Required parameter "draftName" was null or undefined when calling documentsPubStatusClearFailed().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/rpc/documents/{draft__name}/pub_status_reset/`;
+        urlPath = urlPath.replace(`{${"draft__name"}}`, encodeURIComponent(String(requestParameters['draftName'])));
+
+        return {
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     */
+    async documentsPubStatusClearFailedRaw(requestParameters: DocumentsPubStatusClearFailedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.documentsPubStatusClearFailedRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async documentsPubStatusClearFailed(requestParameters: DocumentsPubStatusClearFailedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.documentsPubStatusClearFailedRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Creates request options for documentsPubStatusRetrieve without sending the request
+     */
+    async documentsPubStatusRetrieveRequestOpts(requestParameters: DocumentsPubStatusRetrieveRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['draftName'] == null) {
+            throw new runtime.RequiredError(
+                'draftName',
+                'Required parameter "draftName" was null or undefined when calling documentsPubStatusRetrieve().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/rpc/documents/{draft__name}/pub_status/`;
+        urlPath = urlPath.replace(`{${"draft__name"}}`, encodeURIComponent(String(requestParameters['draftName'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     */
+    async documentsPubStatusRetrieveRaw(requestParameters: DocumentsPubStatusRetrieveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublishRfcStatus>> {
+        const requestOptions = await this.documentsPubStatusRetrieveRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PublishRfcStatusFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async documentsPubStatusRetrieve(requestParameters: DocumentsPubStatusRetrieveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PublishRfcStatus> {
+        const response = await this.documentsPubStatusRetrieveRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -6826,3 +6979,44 @@ export class PurpleApi extends runtime.BaseAPI {
     }
 
 }
+
+/**
+ * @export
+ */
+export const ApiPubqQueueListDispositionEnum = {
+    Created: 'created',
+    InProgress: 'in_progress',
+    Published: 'published',
+    Withdrawn: 'withdrawn'
+} as const;
+export type ApiPubqQueueListDispositionEnum = typeof ApiPubqQueueListDispositionEnum[keyof typeof ApiPubqQueueListDispositionEnum];
+/**
+ * @export
+ */
+export const DocumentsListDispositionEnum = {
+    Created: 'created',
+    InProgress: 'in_progress',
+    Published: 'published',
+    Withdrawn: 'withdrawn'
+} as const;
+export type DocumentsListDispositionEnum = typeof DocumentsListDispositionEnum[keyof typeof DocumentsListDispositionEnum];
+/**
+ * @export
+ */
+export const DocumentsSearchDispositionEnum = {
+    Created: 'created',
+    InProgress: 'in_progress',
+    Published: 'published',
+    Withdrawn: 'withdrawn'
+} as const;
+export type DocumentsSearchDispositionEnum = typeof DocumentsSearchDispositionEnum[keyof typeof DocumentsSearchDispositionEnum];
+/**
+ * @export
+ */
+export const QueueListDispositionEnum = {
+    Created: 'created',
+    InProgress: 'in_progress',
+    Published: 'published',
+    Withdrawn: 'withdrawn'
+} as const;
+export type QueueListDispositionEnum = typeof QueueListDispositionEnum[keyof typeof QueueListDispositionEnum];
