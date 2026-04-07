@@ -41,7 +41,6 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
       } = queueItem
       assertIsString(name)
       assertIsString(title)
-      assertIsString(stream)
 
       const clusterNumber: number | undefined = cluster?.number ?? undefined
 

@@ -94,7 +94,7 @@ const AuthorCommonSchema = z.object({
 export const QueueCommonItemSchema = z.object({
   name: z.string(),
   title: z.string(),
-  stream: z.string(),
+  stream: z.string().optional(),
   consensus: z.boolean(),
   authors: AuthorCommonSchema.array(),
   disposition: DispositionCommonSchema,
