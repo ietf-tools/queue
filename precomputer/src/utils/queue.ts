@@ -87,6 +87,19 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         ianaStatus: parseIanaStatus(ianaStatus),
         labels: parseLabels(labels),
         approvalLogMessages: parseApprovalLogMessages(approvalLogMessages),
+        finalApprovals: finalApprovals?.map(finalApproval => {
+          const approverName = finalApproval.approver?.name
+          if (!approverName) {
+            throw Error('Expected approver name')
+          }
+          const approvedAtJSDate = finalApproval.approved
+          const approvedAtIso = approvedAtJSDate ? DateTime.fromJSDate(approvedAtJSDate).toISO() : undefined
+
+          return {
+            approverName,
+            approvedAtIso: approvedAtIso ?? undefined,
+          }
+        }),
         consensus: finalApprovals?.every(finalApproval => {
           return Boolean(finalApproval.approved)
         }) ?? false

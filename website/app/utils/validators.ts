@@ -91,11 +91,17 @@ const AuthorCommonSchema = z.object({
   isEditor: z.boolean()
 })
 
+const FinalApprovalSchema = z.object({
+  approverName: z.string(),
+  approvedAtIso: z.string().optional(),
+})
+
 export const QueueCommonItemSchema = z.object({
   name: z.string(),
   title: z.string(),
   stream: z.string().optional(),
   consensus: z.boolean(),
+  finalApprovals: FinalApprovalSchema.array().optional(),
   authors: AuthorCommonSchema.array(),
   disposition: DispositionCommonSchema,
   deadlineIso: z.string().optional(), // ISO date
