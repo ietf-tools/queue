@@ -38,7 +38,15 @@ const mode = computed(() => {
 
 const url = useRequestURL()
 
-const canonicalPath = computed(() => `/final-review/${id.value ? `${id.value.toUpperCase()}/` : ''}`)
+const canonicalPath = computed(() => {
+  if (!mode.value) return undefined
+  if (mode.value.cluster) {
+    return `/final-review/C${mode.value.cluster}/`
+  }
+  if (mode.value.draftName) {
+    return `/final-review/${mode.value.draftName}/`
+  }
+})
 
 if (id.value && route.fullPath !== canonicalPath.value) {
   await navigateTo({
