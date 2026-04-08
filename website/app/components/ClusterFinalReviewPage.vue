@@ -1,7 +1,7 @@
 <template>
   <div v-if="props.queue">
     <Heading level="1">Cluster <span class="font-mono">{{ props.cluster }}</span> final review</Heading>
-    <div v-for="draft in clusterDrafts" :key="draft.name">
+    <div v-for="draft in clusterDrafts" :key="draft.name" class="mb-6">
       <FinalReviewDraft heading-level="2" :draft-name="draft.name" :queue="props.queue" />
     </div>
   </div>

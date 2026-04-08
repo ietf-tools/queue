@@ -12,7 +12,7 @@
       class="flex flex-col gap-2">
       <li v-for="approvalLog in finalReview.renderableApprovalLogMessages">
         <component :is="approvalLog.logMessageComponent" />
-        <p class="text-xs italic text-gray-600 dark:text-gray-400 mt-1">Log posted
+        <p v-if="approvalLog.time" class="text-xs italic text-gray-600 dark:text-gray-400 mt-1">Log posted
           <TimeStamp :dateTime="approvalLog.time" />
         </p>
       </li>

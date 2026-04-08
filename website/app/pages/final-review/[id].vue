@@ -23,7 +23,7 @@ const mode = computed(() => {
     return undefined
   }
 
-  const cluster = id.value.match(/c(\d+)/)
+  const cluster = id.value.match(/c(\d+)/i)
 
   if (!cluster || !cluster[1]) {
     return {
@@ -38,11 +38,11 @@ const mode = computed(() => {
 
 const url = useRequestURL()
 
-const canonicalPath = `/final-review/${id}/`
+const canonicalPath = computed(() => `/final-review/${id.value ? `${id.value.toUpperCase()}/` : ''}`)
 
-if (route.fullPath !== canonicalPath) {
+if (id.value && route.fullPath !== canonicalPath.value) {
   await navigateTo({
-    path: canonicalPath
+    path: canonicalPath.value
   })
 }
 
