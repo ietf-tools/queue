@@ -20,13 +20,13 @@
         <tr v-for="approverItem in finalReview.finalApprovals">
           <RpcTd>{{ approverItem.approverName }}</RpcTd>
           <RpcTd>
-            <abbr v-if="Boolean(approverItem.approvedAtIso)" title="Yes">Y</abbr>
-            <abbr v-else title="No">N</abbr>
+            <abbr v-if="Boolean(approverItem.approvedAtIso)" title="Yes" class="no-underline">Y</abbr>
+            <abbr v-else title="No" class="no-underline">N</abbr>
           </RpcTd>
           <RpcTd>
-            <span v-if="approverItem.approvedAtIso">
+            <time v-if="approverItem.approvedAtIso" :datetime="approverItem.approvedAtIso">
               {{ approverItem.approvedAtIso.split("T")[0] }}
-            </span>
+            </time>
             <span v-else>(not available)</span>
           </RpcTd>
         </tr>
