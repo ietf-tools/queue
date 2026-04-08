@@ -7,7 +7,7 @@
       <Label v-if="finalReview.labels" v-for="label in finalReview.labels" :label="label" />
     </p>
 
-    <Heading :level="headingLevelPlusOne" class="mt-3">Approval Status</Heading>
+    <Heading :level="headingLevelPlusOne" class="mt-3 mb-1">Approval Status</Heading>
     <RpcTable v-if="finalReview.finalApprovals" class="mx-auto">
       <RpcThead>
         <tr>
@@ -34,7 +34,7 @@
     </RpcTable>
     <p v-else class="italic">No status available yet.</p>
 
-    <Heading :level="headingLevelPlusOne" class="mt-3">Approval Logs</Heading>
+    <Heading :level="headingLevelPlusOne" class="mt-3 mb-1">Approval Logs</Heading>
     <ol v-if="finalReview.renderableApprovalLogMessages && finalReview.renderableApprovalLogMessages.length > 0"
       class="flex flex-col gap-2">
       <li v-for="approvalLog in finalReview.renderableApprovalLogMessages">
