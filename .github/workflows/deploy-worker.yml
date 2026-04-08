@@ -50,6 +50,7 @@ jobs:
   demo:
     name: Deploy to Demo
     if: ${{ !failure() && !cancelled() && (inputs.deploy == 'Staging + Demo') }}
+    needs: [staging]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment:
