@@ -7,6 +7,31 @@
       <Label v-if="finalReview.labels" v-for="label in finalReview.labels" :label="label" />
     </p>
 
+    <Heading :level="headingLevelPlusOne" class="mt-3">Approval Status</Heading>
+    <RpcTable v-if="finalReview.finalApprovals" class="mx-auto">
+      <RpcThead>
+        <RpcTh>Name</RpcTh>
+        <RpcTh>Approved?</RpcTh>
+        <RpcTh>Date of Approval</RpcTh>
+      </RpcThead>
+      <RpcTbody>
+        <RpcTr v-for="approverItem in finalReview.finalApprovals">
+          <RpcTd>{{ approverItem.approverName }}</RpcTd>
+          <RpcTd>
+            <abbr v-if="Boolean(approverItem.approvedAtIso)" title="Yes">Y</abbr>
+            <abbr v-else title="No">N</abbr>
+          </RpcTd>
+          <RpcTd>
+            <span v-if="approverItem.approvedAtIso">
+              {{ approverItem.approvedAtIso.split("T")[0] }}
+            </span>
+            <span v-else>(not available)</span>
+          </RpcTd>
+        </RpcTr>
+      </RpcTbody>
+    </RpcTable>
+    <p v-else class="italic">No status available yet.</p>
+
     <Heading :level="headingLevelPlusOne" class="mt-3">Approval Logs</Heading>
     <ol v-if="finalReview.renderableApprovalLogMessages && finalReview.renderableApprovalLogMessages.length > 0"
       class="flex flex-col gap-2">
