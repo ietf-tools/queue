@@ -1,5 +1,5 @@
 name: Deploy Worker
-run-name: ${{ inputs.deploy == 'Staging Only' && '[Staging]' || '[Staging + Production]' }} Deployment ${{ github.run_number }} of branch ${{ github.ref_name }} by @${{ github.actor }}
+run-name: '[${{ inputs.deploy }}] Deployment ${{ github.run_number }} of branch ${{ github.ref_name }} by @${{ github.actor }}'
 
 on:
   workflow_dispatch:
@@ -11,6 +11,7 @@ on:
         type: choice
         options:
           - Staging Only
+          - Staging + Demo
           - Staging + Prod
 
 concurrency:
@@ -45,6 +46,32 @@ jobs:
         run: |
           npm ci
           npx wrangler deploy --env staging --name queue-worker-staging
+
+  demo:
+    name: Deploy to Demo
+    if: ${{ !failure() && !cancelled() && (inputs.deploy == 'Staging + Demo') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: demo
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+
+      - name: Deploy Worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKER_DEPLOY_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_WORKER_DEPLOY_ACCOUNT_ID }}
+        working-directory: worker
+        run: |
+          npm ci
+          npx wrangler deploy --env demo --name queue-worker-demo
 
   production:
     name: Deploy to Production
