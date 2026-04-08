@@ -40,6 +40,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
           }
         ],
         "pages": 19,
+        "stream": "TEST",
         "enqueuedAtIso": "2022-03-07T12:00:00.000Z",
         "approvalLogMessages": []
       },

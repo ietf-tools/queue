@@ -8,28 +8,39 @@ import { getQueueCommon } from '../utils/queue.ts'
 import { QueueCommon } from '../../../website/app/utils/validators.ts'
 import { JSDOM } from 'jsdom'
 
-const xsdPath = path.resolve(import.meta.dirname, '..', 'utils', 'queue.xsd')
-const xsdString = fsPromises.readFile(xsdPath, 'utf-8')
+type Props = {
+  api: PurpleApi
+}
 
-export const getQueueXML = async (api: PurpleApi): Promise<string> => {
+export const getQueueXML = async ({ api }: Props): Promise<string> => {
   const queue = await getQueueCommon({ api })
   return renderQueueXML(queue)
 }
+
+const xsdPath = path.resolve(import.meta.dirname, '..', 'utils', 'queue.xsd')
+const xsdString = fsPromises.readFile(xsdPath, 'utf-8')
+
+const NAMESPACE = 'http://www.rfc-editor.org/rfc-editor-queue'
+const XML_DECLARATION = '<?xml version="1.0" encoding="utf-8"?>'
+
 /**
- * Generates a queue.xml file per the XSD
+ * Generates a queue.xml file aNd validate against the XSD
  */
 export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
+  console.log("========")
   console.log(JSON.stringify(queue, null, 2))
+  console.log("========")
 
   const dom = await getDOMParser()
 
-  const NAMESPACE = 'http://www.rfc-editor.org/rfc-editor-queue'
   const doc = dom.parseFromString(`<rfc-editor-queue xmlns="${NAMESPACE}"></rfc-editor-queue>`, 'text/xml')
 
   const itemsbyGroup = groupBy(queue.items, (item) => item.stream ?? 'NO STREAM')
   const sections = Object.keys(itemsbyGroup)
 
   sections.forEach(section => {
+    // eg <section name="IETF STREAM: WORKING GROUP STANDARDS TRACK">
+    // or <section name="IETF STREAM: NON-WORKING GROUP STANDARDS TRACK">
     const sectionEl = doc.createElementNS(NAMESPACE, 'section')
     doc.documentElement.append(sectionEl)
     sectionEl.setAttribute('name', section.toUpperCase())
@@ -38,7 +49,7 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
     items.forEach(item => {
       const entryEl = doc.createElementNS(NAMESPACE, 'entry')
       sectionEl.append(entryEl)
-      entryEl.setAttribute('xml:id', item.name)
+      entryEl.setAttribute('id', item.name)
 
       // eg <draft>draft-ietf-ecrit-similar-location-19.txt</draft>
       const draftEl = doc.createElementNS(NAMESPACE, 'draft')
@@ -46,10 +57,11 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
       draftEl.textContent = item.name
 
       // eg <date-received>2022-03-07</date-received>
-      if (item.enqueuedAtIso) {
+      const enqueuedAtIsoDateTime = item.enqueuedAtIso ? DateTime.fromISO(item.enqueuedAtIso).toISO() : undefined
+      if (enqueuedAtIsoDateTime) {
         const dateReceivedEl = doc.createElementNS(NAMESPACE, 'date-received')
         entryEl.append(dateReceivedEl)
-        dateReceivedEl.textContent = DateTime.fromISO(item.enqueuedAtIso).toFormat('')
+        dateReceivedEl.textContent = enqueuedAtIsoDateTime.split('T')[0]
       }
 
       // was <state>MISSREF*R(1G)</state>
@@ -60,7 +72,7 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
 
         item.assignmentsByRoles.forEach(assignentByRole => {
           const assignmentEl = doc.createElementNS(NAMESPACE, 'assignment')
-          entryEl.append(assignmentEl)
+          assignmentsEl.append(assignmentEl)
           assignmentEl.textContent = assignentByRole.role
         })
       }
@@ -95,12 +107,18 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
       consensusEl.textContent = item.consensus ? 'yes' : 'no'
     })
   })
-  
+
   const jsdom = new JSDOM()
   const serializer = new jsdom.window.XMLSerializer()
   const xmlString = serializer.serializeToString(doc);
 
-  validateXml(xmlString, await xsdString)
+  const xmlWithDeclaration = `${XML_DECLARATION}\n${xmlString}`;
 
-  return xmlString
+  console.log('------')
+  console.log(xmlWithDeclaration)
+  console.log('------')
+
+  validateXml(xmlWithDeclaration, await xsdString)
+
+  return xmlWithDeclaration
 }

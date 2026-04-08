@@ -55,7 +55,7 @@ fastify.get('/api/v1/final-review/index.json', async (request) => {
 
 fastify.get('/api/v1/queue.xml', async (request, reply) => {
   const api = getApiClient('dev')
-  const queueXML = await getQueueXML(api)
+  const queueXML = await getQueueXML({ api })
   console.log({ queueXML })
   reply
     .code(200)

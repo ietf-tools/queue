@@ -4,25 +4,27 @@ import { getClusterPackage } from './tasks/cluster.ts'
 import { getFinalReviewIndex } from './tasks/final-review-index.ts'
 import { getQueueIndex } from './tasks/queue-index.ts'
 import { getApiClient } from './utils/api.ts'
-import { CLUSTER_INDEX_PATH, clusterPathBuilder, deleteFromS3, FINAL_REVIEW_INDEX_PATH, listS3Files, QUEUE_INDEX_PATH, saveToS3 } from './utils/s3.ts'
+import { CLUSTER_INDEX_PATH, clusterPathBuilder, deleteFromS3, FINAL_REVIEW_INDEX_PATH, listS3Files, QUEUE_INDEX_PATH, QUEUE_INDEX_XML_PATH, saveToS3 } from './utils/s3.ts'
 import { type ClusterPackageCommon } from '../../website/app/utils/validators.ts'
 import { difference } from 'es-toolkit'
 import { assertIsString } from './utils/typescript.ts'
+import { getQueueXML } from './tasks/queue-xml.ts'
 
 type S3UploadTask = { key: string, contents: string }
 
-// This is absolutely just a hint number, not a hard limit at all
+// This is just a hint number, not a hard limit at all
 const NUMBER_OF_CONCURRENT_API_USAGES = 4
 
-// This is absolutely just a hint number, not a hard limit at all
+// This is just a hint number, not a hard limit at all
 const NUMBER_OF_CONCURRENT_S3_USAGES = 4
 
 const main = async (): Promise<void> => {
   const api = getApiClient()
-  const [queueIndex, clusterIndex, finalReviewIndex] = await Promise.all([
+  const [queueIndex, clusterIndex, finalReviewIndex, queueXML] = await Promise.all([
     getQueueIndex({ api }),
     getClusterIndex({ api }),
-    getFinalReviewIndex({ api })
+    getFinalReviewIndex({ api }),
+    getQueueXML({ api })
   ])
 
   console.log(`[Clusters] Fetching cluster API data for ${clusterIndex.list.length} item(s) using ${NUMBER_OF_CONCURRENT_API_USAGES} concurrent processes`)
@@ -53,6 +55,7 @@ const main = async (): Promise<void> => {
     { key: QUEUE_INDEX_PATH, contents: JSON.stringify(queueIndex) },
     { key: CLUSTER_INDEX_PATH, contents: JSON.stringify(clusterIndex) },
     { key: FINAL_REVIEW_INDEX_PATH, contents: JSON.stringify(finalReviewIndex) },
+    { key: QUEUE_INDEX_XML_PATH, contents: queueXML },
     ...clusterPackages.map((clusterPackage): S3UploadTask => {
       return {
         key: clusterPathBuilder(clusterPackage.cluster.number),
