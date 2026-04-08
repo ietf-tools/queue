@@ -5,7 +5,7 @@ import { groupBy } from 'es-toolkit'
 import { PurpleApi } from '../../generated/purple_client/index.ts'
 import { getDOMParser, validateXml } from '../utils/dom.ts'
 import { getQueueCommon } from '../utils/queue.ts'
-import { QueueCommon } from '../../../website/app/utils/validators.ts'
+import { type QueueCommon } from '../../../website/app/utils/validators.ts'
 import { JSDOM } from 'jsdom'
 
 type Props = {
