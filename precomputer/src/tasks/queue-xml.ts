@@ -27,9 +27,9 @@ const XML_DECLARATION = '<?xml version="1.0" encoding="utf-8"?>'
  * Generates a queue.xml file aNd validate against the XSD
  */
 export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
-  console.log("========")
-  console.log(JSON.stringify(queue, null, 2))
-  console.log("========")
+  // console.log("========")
+  // console.log(JSON.stringify(queue, null, 2))
+  // console.log("========")
 
   const dom = await getDOMParser()
 
@@ -114,9 +114,9 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
 
   const xmlWithDeclaration = `${XML_DECLARATION}\n${xmlString}`;
 
-  console.log('------')
-  console.log(xmlWithDeclaration)
-  console.log('------')
+  // console.log('------')
+  // console.log(xmlWithDeclaration)
+  // console.log('------')
 
   validateXml(xmlWithDeclaration, await xsdString)
 
