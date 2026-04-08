@@ -6,8 +6,13 @@
     {{ error }}
   </div>
   <div v-else-if="status === 'success' && clusterPackage">
-    <DocumentDependenciesGraph :cluster="clusterPackage.cluster" />
     <QueueIndexTable :filter-by-cluster-number="props.clusterNumber" class="mt-3" />
+    <DocumentDependenciesGraph :cluster="clusterPackage.cluster" />
+    <table>
+      <tbody>
+        ...
+      </tbody>
+    </table>
   </div>
   <div v-else>
     <!-- 404 or unknown state -->

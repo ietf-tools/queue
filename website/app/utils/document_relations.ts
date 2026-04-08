@@ -13,6 +13,7 @@ const link_color: Record<Relationship, string> = {
   "not-received": red,
   "not-received-2g": orange,
   'not-received-3g': teal,
+  'withdrawnref': yellow
 } as const
 
 const getLinkColor = (rel: Relationship) => {
