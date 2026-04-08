@@ -19,7 +19,7 @@
 		}
 	},
 	"env": {
-    "staging": {
+	    "staging": {
 			"routes": [
 				{ "pattern": "queue.staging.rfc-editor.org/api/v1/*", "zone_name": "rfc-editor.org" },
 			],
@@ -28,6 +28,18 @@
 					"binding": "QUEUE_BUCKET",
 					"bucket_name": "queue-staging",
 					"preview_bucket_name": "queue-staging"
+				}
+			]
+		},
+	    "demo": {
+			"routes": [
+				{ "pattern": "queue.demo.rfc-editor.org/api/v1/*", "zone_name": "rfc-editor.org" },
+			],
+			"r2_buckets": [
+				{
+					"binding": "QUEUE_BUCKET",
+					"bucket_name": "queue-demo",
+					"preview_bucket_name": "queue-demo"
 				}
 			]
 		},
