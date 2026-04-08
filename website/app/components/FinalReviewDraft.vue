@@ -1,7 +1,9 @@
 <template>
   <div v-if="finalReview">
-    <Heading :level="props.headingLevel" class="mb-1">
+    <Heading :level="props.headingLevel" class="mb-1" :id="props.id" has-internal-link>
       <span class="font-mono">{{ props.draftName }}</span> final review
+      {{ SPACE }}
+      <a :href="`#${props.id}`" :class="ANCHOR_TAILWIND_STYLE" :aria-label="`Internal link to ${props.draftName}`">#</a>
     </Heading>
 
     <Heading :level="headingLevelPlusOne" class="mt-3 mb-1">Approval Status</Heading>
@@ -47,8 +49,11 @@
 
 <script setup lang="ts">
 import { DateTime } from 'luxon'
+import { SPACE } from '../utils/strings'
+import { ANCHOR_TAILWIND_STYLE } from '../utils/theme'
 
 type Props = {
+  id: string
   headingLevel: HeadingLevel
   draftName: string
   queue?: QueueCommon

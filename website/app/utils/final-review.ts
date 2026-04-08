@@ -1,0 +1,1 @@
+export const makeDomId = (name: string, index: number): string => `${index}-${name}`
