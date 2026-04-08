@@ -2,6 +2,11 @@
   <div class="container mx-auto my-6">
     <ClusterFinalReviewPage v-if="mode?.cluster" :cluster="mode.cluster" :queue="data" />
     <FinalReviewDraft v-if="mode?.draftName" heading-level="1" :draft-name="mode.draftName" :queue="data" />
+    <hr class="mt-12" />
+    <p v-if="data?.generatedAtIso" class="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
+      Last updated
+      <TimeStamp :dateTimeIso="data.generatedAtIso" />
+    </p>
   </div>
 </template>
 
@@ -77,6 +82,6 @@ if (!data.value || status.value === 'success' && !data.value || status.value ===
 }
 
 useHead({
-  title: `${id} final review`
+  title: `${id.value} final review`
 })
 </script>

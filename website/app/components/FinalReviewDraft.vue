@@ -18,12 +18,6 @@
       </li>
     </ol>
     <p v-else class="italic">No logs available</p>
-
-    <hr class="mt-12" />
-    <p v-if="finalReview.generatedAt" class="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
-      Last updated
-      <TimeStamp :dateTime="finalReview.generatedAt" />
-    </p>
   </div>
 </template>
 

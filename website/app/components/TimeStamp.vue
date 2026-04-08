@@ -1,9 +1,9 @@
 <template>
-  <HoverCardRoot v-model:open="isHoverCardOpen">
+  <HoverCardRoot v-model:open="isHoverCardOpen" v-if="theDateTime && fullDate && relativeDate">
     <HoverCardTrigger as-child>
       <button class="-ml-1 px-1 py-1 border border-transparent focus:border focus:border-gray-400 rounded-md"
         @focus="isHoverCardOpen = true" @mouseover="isHoverCardOpen = true" @blur="isHoverCardOpen = false">
-        <time :datetime="props.dateTime.toISO() ?? undefined">
+        <time :datetime="theDateTime.toISO() ?? undefined">
           {{ relativeDate }}
         </time>
       </button>
@@ -16,7 +16,7 @@
       </HoverCardContent>
     </HoverCardPortal>
   </HoverCardRoot>
-  <span class="hidden print:block italic font-semibold">
+  <span v-if="relativeDate && fullDate" class="hidden print:block italic font-semibold">
     {{ relativeDate }}, {{ fullDate }}
   </span>
 </template>
@@ -25,15 +25,26 @@
 import { DateTime } from 'luxon'
 
 type Props = {
-  dateTime: DateTime
+  dateTime?: DateTime
+  dateTimeIso?: string
 }
 
 const props = defineProps<Props>()
 
-// eg. X years ago
-const relativeDate = computed(() => props.dateTime.toRelativeCalendar())
+const theDateTime = computed(() => {
+  if(props.dateTime) {
+    return props.dateTime
+  }
+  if(props.dateTimeIso) {
+    return DateTime.fromISO(props.dateTimeIso)
+  }
+  return undefined
+})
 
-const fullDate = computed(() => props.dateTime.toLocaleString(DateTime.DATETIME_FULL))
+// eg. X years ago
+const relativeDate = computed(() => theDateTime.value?.toRelativeCalendar())
+
+const fullDate = computed(() => theDateTime.value?.toLocaleString(DateTime.DATETIME_FULL))
 
 const isHoverCardOpen = ref(false)
 </script>
