@@ -26,13 +26,15 @@ export const gray800 = "#4e444a"
 export type Relationship = 'refqueue' |
   'not-received' | // implicit 1g
   'not-received-2g' |
-  'not-received-3g'
+  'not-received-3g' |
+  'withdrawnref'
 
 export const ref_type: Record<Relationship, string> = {
   refqueue: 'ref queue',
   'not-received': 'not received',
   'not-received-2g': 'not received 2g',
   'not-received-3g': 'not received 3g',
+  'withdrawnref': 'withdrawn ref',
 } as const;
 
 export const getHumanReadableRelationshipName = (relationship: Relationship | string) => {
