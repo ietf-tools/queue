@@ -10,14 +10,14 @@
     <Heading :level="headingLevelPlusOne" class="mt-3">Approval Status</Heading>
     <RpcTable v-if="finalReview.finalApprovals" class="mx-auto">
       <RpcThead>
-        <RpcTr>
+        <tr>
           <RpcTh>Name</RpcTh>
           <RpcTh>Approved?</RpcTh>
           <RpcTh>Date of Approval</RpcTh>
-        </RpcTr>
+        </tr>
       </RpcThead>
       <RpcTbody>
-        <RpcTr v-for="approverItem in finalReview.finalApprovals">
+        <tr v-for="approverItem in finalReview.finalApprovals">
           <RpcTd>{{ approverItem.approverName }}</RpcTd>
           <RpcTd>
             <abbr v-if="Boolean(approverItem.approvedAtIso)" title="Yes">Y</abbr>
@@ -29,7 +29,7 @@
             </span>
             <span v-else>(not available)</span>
           </RpcTd>
-        </RpcTr>
+        </tr>
       </RpcTbody>
     </RpcTable>
     <p v-else class="italic">No status available yet.</p>
