@@ -1,0 +1,81 @@
+<template>
+  <div v-if="finalReview">
+    <Heading :level="props.headingLevel"><span class="font-mono">{{ props.draftName }}</span> final review</Heading>
+
+    <p class="flex-inline gap-2 mt-2">
+      <BaseBadge v-if="finalReview.disposition">{{ finalReview.disposition.replace(/_/g, ' ') }}</BaseBadge>
+      <Label v-if="finalReview.labels" v-for="label in finalReview.labels" :label="label" />
+    </p>
+
+    <Heading :level="headingLevelPlusOne" class="mt-3 mb-2">Approval Logs</Heading>
+    <ol v-if="finalReview.renderableApprovalLogMessages && finalReview.renderableApprovalLogMessages.length > 0"
+      class="flex flex-col gap-2">
+      <li v-for="approvalLog in finalReview.renderableApprovalLogMessages">
+        <component :is="approvalLog.logMessageComponent" />
+        <p class="text-xs italic text-gray-600 dark:text-gray-400 mt-1">Log posted
+          <TimeStamp :dateTime="approvalLog.time" />
+        </p>
+      </li>
+    </ol>
+    <p v-else class="italic">No logs available</p>
+
+    <hr class="mt-12" />
+    <p v-if="finalReview.generatedAt" class="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
+      Last updated
+      <TimeStamp :dateTime="finalReview.generatedAt" />
+    </p>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { DateTime } from 'luxon'
+
+type Props = {
+  headingLevel: HeadingLevel
+  draftName: string
+  queue?: QueueCommon
+}
+
+const props = defineProps<Props>()
+
+const headingLevelPlusOne = computed((): HeadingLevel => {
+  if (props.headingLevel === '6') {
+    return '6'
+  }
+  return (parseInt(props.headingLevel, 10) + 1).toString() as HeadingLevel
+})
+
+const finalReview = computed(() => {
+  if (!props.queue) return null
+  const item = props.queue.items.find(queueCommonItem => queueCommonItem.name === props.draftName)
+  if (!item) return null
+  return {
+    ...item,
+    generatedAt: props.queue.generatedAtIso ? DateTime.fromISO(props.queue.generatedAtIso) : undefined,
+    renderableApprovalLogMessages: item?.approvalLogMessages?.map(approvalLogMessage => {
+      const time = approvalLogMessage.timeIso ? DateTime.fromISO(approvalLogMessage.timeIso) : undefined
+      const timeAgo = time ? time.toRelativeCalendar() : undefined
+
+      return {
+        ...approvalLogMessage,
+        logMessageComponent: h('div', { class: 'font-mono flex flex-col gap-2' },
+          approvalLogMessage.logMessage.split(/\n/g).map(
+            line => h('p', String(line))
+          )
+        ),
+        time,
+        timeAgo,
+      }
+    }) ?? undefined
+  }
+})
+
+if (!finalReview.value) {
+  console.error(`[404] ${props.draftName}`)
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Not Found',
+    fatal: true
+  })
+}
+</script>
