@@ -1,11 +1,8 @@
 <template>
   <div v-if="finalReview">
-    <Heading :level="props.headingLevel"><span class="font-mono">{{ props.draftName }}</span> final review</Heading>
-
-    <p class="flex-inline gap-2 mt-2">
-      <BaseBadge v-if="finalReview.disposition">{{ finalReview.disposition.replace(/_/g, ' ') }}</BaseBadge>
-      <Label v-if="finalReview.labels" v-for="label in finalReview.labels" :label="label" />
-    </p>
+    <Heading :level="props.headingLevel" class="mb-1">
+      <span class="font-mono">{{ props.draftName }}</span> final review
+    </Heading>
 
     <Heading :level="headingLevelPlusOne" class="mt-3 mb-1">Approval Status</Heading>
     <RpcTable v-if="finalReview.finalApprovals" class="mx-auto">
