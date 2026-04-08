@@ -10,9 +10,11 @@
     <Heading :level="headingLevelPlusOne" class="mt-3">Approval Status</Heading>
     <RpcTable v-if="finalReview.finalApprovals" class="mx-auto">
       <RpcThead>
-        <RpcTh>Name</RpcTh>
-        <RpcTh>Approved?</RpcTh>
-        <RpcTh>Date of Approval</RpcTh>
+        <RpcTr>
+          <RpcTh>Name</RpcTh>
+          <RpcTh>Approved?</RpcTh>
+          <RpcTh>Date of Approval</RpcTh>
+        </RpcTr>
       </RpcThead>
       <RpcTbody>
         <RpcTr v-for="approverItem in finalReview.finalApprovals">
