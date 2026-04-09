@@ -4,13 +4,27 @@ import { getClusterPackage } from './tasks/cluster.ts'
 import { getFinalReviewIndex } from './tasks/final-review-index.ts'
 import { getQueueIndex } from './tasks/queue-index.ts'
 import { getApiClient } from './utils/api.ts'
-import { CLUSTER_INDEX_PATH, clusterPathBuilder, deleteFromS3, FINAL_REVIEW_INDEX_PATH, listS3Files, QUEUE_INDEX_PATH, QUEUE_INDEX_XML_PATH, saveToS3 } from './utils/s3.ts'
+import {
+  CLUSTER_INDEX_PATH,
+  FINAL_REVIEW_INDEX_PATH,
+  QUEUE_INDEX_PATH,
+  QUEUE_INDEX_XML_PATH,
+  QUEUE_XSD_PATH,
+  ROBOTS_TXT_PATH,
+  type S3UploadTask,
+  clusterPathBuilder,
+  deleteFromS3,
+  listS3Files,
+  saveToS3
+} from './utils/s3.ts'
 import { type ClusterPackageCommon } from '../../website/app/utils/validators.ts'
 import { difference } from 'es-toolkit'
 import { assertIsString } from './utils/typescript.ts'
 import { getQueueXML } from './tasks/queue-xml.ts'
-
-type S3UploadTask = { key: string, contents: string }
+import { getQueueXSD } from './tasks/queue-xsd.ts'
+import { getSiteMapXmls } from './tasks/sitemap-xml.ts'
+import { getRobotsTxt } from './tasks/robots-txt.ts'
+import { getFavicons } from './tasks/favicon.ts'
 
 // This is just a hint number, not a hard limit at all
 const NUMBER_OF_CONCURRENT_API_USAGES = 4
@@ -19,12 +33,18 @@ const NUMBER_OF_CONCURRENT_API_USAGES = 4
 const NUMBER_OF_CONCURRENT_S3_USAGES = 4
 
 const main = async (): Promise<void> => {
+  const websiteOrigin = process.env.NUXT_PUBLIC_SITE_BASE
+
+  assertIsString(websiteOrigin, 'Expected process.env.NUXT_PUBLIC_SITE_BASE to be string')
+
   const api = getApiClient()
-  const [queueIndex, clusterIndex, finalReviewIndex, queueXML] = await Promise.all([
+  const [queueIndex, clusterIndex, finalReviewIndex, queueXML, queueXSD, faviconUploadTasks] = await Promise.all([
     getQueueIndex({ api }),
     getClusterIndex({ api }),
     getFinalReviewIndex({ api }),
-    getQueueXML({ api })
+    getQueueXML({ api }),
+    getQueueXSD(),
+    getFavicons()
   ])
 
   console.log(`[Clusters] Fetching cluster API data for ${clusterIndex.list.length} item(s) using ${NUMBER_OF_CONCURRENT_API_USAGES} concurrent processes`)
@@ -45,17 +65,25 @@ const main = async (): Promise<void> => {
   }
 
   const clusterPackages = maybeClusterPackages.filter(
-    // `null` is a valid response if a cluster is !isActive but we don't care about uploading that
+    // `null` is a valid response if a cluster is !isActive so we don't want to upload that
     maybeClusterPackage => maybeClusterPackage !== null
   )
 
+  const robotsTxt = getRobotsTxt(websiteOrigin)
+
   console.log(`[Clusters] Successfully fetched ALL cluster API data for ${clusterPackages.length} cluster(s).`)
+
+  const siteMapUploadTasks: S3UploadTask[] = await getSiteMapXmls({ websiteOrigin, clusterIndex, finalReviewIndex })
 
   const uploadTasks: S3UploadTask[] = [
     { key: QUEUE_INDEX_PATH, contents: JSON.stringify(queueIndex) },
     { key: CLUSTER_INDEX_PATH, contents: JSON.stringify(clusterIndex) },
     { key: FINAL_REVIEW_INDEX_PATH, contents: JSON.stringify(finalReviewIndex) },
     { key: QUEUE_INDEX_XML_PATH, contents: queueXML },
+    { key: QUEUE_XSD_PATH, contents: queueXSD },
+    { key: ROBOTS_TXT_PATH, contents: robotsTxt },
+    ...siteMapUploadTasks,
+    ...faviconUploadTasks,
     ...clusterPackages.map((clusterPackage): S3UploadTask => {
       return {
         key: clusterPathBuilder(clusterPackage.cluster.number),

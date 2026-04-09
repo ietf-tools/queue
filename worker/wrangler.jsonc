@@ -22,6 +22,8 @@
 	    "staging": {
 			"routes": [
 				{ "pattern": "queue.staging.rfc-editor.org/api/v1/*", "zone_name": "rfc-editor.org" },
+				{ "pattern": "queue.staging.rfc-editor.org/robots.txt", "zone_name": "rfc-editor.org" },
+				{ "pattern": "queue.staging.rfc-editor.org/sitemap*", "zone_name": "rfc-editor.org" },
 			],
 			"r2_buckets": [
 				{
