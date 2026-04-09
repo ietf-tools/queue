@@ -6,11 +6,13 @@
           Looking for published RFCs? Go to
           <Anchor :href="RFC_EDITOR_SITE_URL_ORIGIN" class="text-blue-300 dark:text-blue-100">
             {{ RFC_EDITOR_SITE_URL_ORIGIN }}
+            <Icon name="fluent:window-new-20-regular" size="1.25em"
+              class="text-gray-700 dark:text-neutral-300 ml-1 align-middle" />
           </Anchor>.
         </p>
       </div>
       <div class="container mx-auto">
-        <Heading level="1" style-level="3" class="w-full mx-2 mb-2 md:mb-3 text-gray-600 font-semibold text-balance">
+        <Heading level="1" style-level="3" class="w-full mx-2 mb-2 md:mb-3 text-gray-600 dark:text-gray-200 font-semibold text-balance">
           Upcoming RFCs Queue
         </Heading>
         <QueueIndexTable />
@@ -28,7 +30,7 @@ definePageMeta({
 })
 
 useQueueRfcEditorHead({
-  title: 'Queue of upcoming RFCs',
+  title: 'Official queue of upcoming RFCs',
   canonicalPath: '/',
   contentType: 'article'
 })

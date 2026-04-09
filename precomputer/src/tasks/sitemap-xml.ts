@@ -35,6 +35,11 @@ export const getSiteMapXmls = async ({ websiteOrigin, clusterIndex, finalReviewI
       changefreq: EnumChangefreq.DAILY,
       priority: 0.3
     },
+    {
+      url: `${websiteOrigin}/final-review/`,
+      changefreq: EnumChangefreq.DAILY,
+      priority: 0.3
+    },
     ...markdownPaths.map((markdownPath): SitemapItemLoose => {
       return {
         url: `${websiteOrigin}${markdownPath}`,

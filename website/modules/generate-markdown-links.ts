@@ -19,8 +19,9 @@ const regenerateMarkdownList = async (logger?: Logger) => {
   const markdownPaths = await globby(['**/*.md'], {
     cwd: contentPath
   })
-  const markdownPathToPublicPath = (markdownPath: string) =>
-    `/${markdownPath.replace(/\.md$/, '/')}`
+  const markdownPathToPublicPath = (markdownPath: string) => {
+    return `/${markdownPath.replace(/\.md$/, '/').replace(/\/index\/$/, '/')}`
+  }
 
   const markdownPublicPaths: string[] = markdownPaths.map(markdownPathToPublicPath)
 
