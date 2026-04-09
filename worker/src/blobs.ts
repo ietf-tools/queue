@@ -3,7 +3,7 @@ export async function blobs(request: Request, env: Env) {
   const normalizedPath = decodeURIComponent(url.pathname.endsWith('/') ? url.pathname.slice(0, -1) : url.pathname)
 
   /**
-   * Queue bucket usage (note env.QUEUE_STAGING_BUCKET)
+   * Queue bucket usage (note env.QUEUE_BUCKET)
    */
   const API_V1_PREFIX = '/api/v1/'
   if (normalizedPath.startsWith(API_V1_PREFIX)) {
@@ -26,7 +26,29 @@ export async function blobs(request: Request, env: Env) {
         })
       }
     }
+
+    const FAVICON_PREFIX = 'favicon/'
+    if (objectPath.startsWith(FAVICON_PREFIX) && objectPath.endsWith('.png')) {
+      const faviconObjectPath = `other/favicon-${objectPath.substring(FAVICON_PREFIX.length)}`
+
+      const object = await env.QUEUE_BUCKET.get(faviconObjectPath)
+      if (object) {
+        const headers = new Headers()
+        object.writeHttpMetadata(headers)
+        headers.set('etag', object.httpEtag)
+        headers.set('Cf-R2-Served', '1')
+        headers.set('Access-Control-Allow-Origin', '*')
+        headers.set('Content-Encoding', 'gzip')
+        headers.set('Content-Type', 'image/png')
+
+        return new Response(object.body, {
+          headers
+        })
+      }
+    }
   }
+
+
 
   const SITEMAP_PREFIX = '/sitemap'
   if (normalizedPath.startsWith(SITEMAP_PREFIX)) {
