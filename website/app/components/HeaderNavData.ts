@@ -1,3 +1,4 @@
+import { CLUSTERS_PATH, FINAL_REVIEW_PATH, HOME_PATH } from '~/utils/url'
 import type { VueClick } from '~/utils/vue'
 
 /**
@@ -37,17 +38,17 @@ export const useMenuData = (mode: Mode) => {
     const data: MenuItem[] = [
       {
         label: 'Queue',
-        href: "/",
+        href: HOME_PATH,
         hideLabelDesktop: false,
       },
       {
         label: 'Clusters',
-        href: "/clusters/",
+        href: CLUSTERS_PATH,
         hideLabelDesktop: false,
       },
       {
         label: 'Final Review',
-        href: "/final-review/",
+        href: FINAL_REVIEW_PATH,
         hideLabelDesktop: false,
       },
       {

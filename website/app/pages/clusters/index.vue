@@ -13,7 +13,16 @@
 </template>
 
 <script setup lang="ts">
+import { useQueueRfcEditorHead } from '~/utils/head';
+import { CLUSTERS_PATH } from '~/utils/url';
+
 definePageMeta({
   layout: false
+})
+
+useQueueRfcEditorHead({
+  title: 'Clusters of upcoming RFCs',
+  canonicalPath: CLUSTERS_PATH,
+  contentType: 'article'
 })
 </script>

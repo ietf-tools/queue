@@ -6,3 +6,14 @@
         <FinalReviewIndexTable />
     </div>
 </template>
+
+<script setup lang="ts">
+import { useQueueRfcEditorHead } from '~/utils/head';
+import { FINAL_REVIEW_PATH } from '~/utils/url';
+
+useQueueRfcEditorHead({
+  title: 'Final Review of upcoming RFCs',
+  canonicalPath: FINAL_REVIEW_PATH,
+  contentType: 'article'
+})
+</script>

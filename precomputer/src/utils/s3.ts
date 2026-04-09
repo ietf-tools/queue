@@ -82,14 +82,33 @@ export const listS3Files = async () => {
     keys.push(...(data.Contents ?? []));
   }
   return keys;
-};
+}
+
+export type S3UploadTask = { key: string, contents: string | Buffer<ArrayBufferLike> }
 
 export const QUEUE_INDEX_PATH = 'queue/index.json'
 
 export const QUEUE_INDEX_XML_PATH = 'queue/index.xml'
+
+export const QUEUE_XSD_PATH = 'queue/queue.xsd'
 
 export const CLUSTER_INDEX_PATH = 'clusters/index.json'
 
 export const FINAL_REVIEW_INDEX_PATH = 'final-review/index.json'
 
 export const clusterPathBuilder = (clusterNumber: number) => `clusters/${clusterNumber}.json`
+
+export const ROBOTS_TXT_PATH = 'other/robots.txt'
+
+export const faviconPathBuilder = (widthPx: number, heightPx: number) => `other/favicon-${widthPx}x${heightPx}.png` as const
+
+export const siteMapXmlFilenameBuilder = (index: number) => {
+  if (index === 0) {
+    return `sitemap.xml` as const
+  }
+  return `sitemap-${index}.xml` as const
+}
+
+export const siteMapXmlPathPrefixBuilder = (sitemapFilename: string) => {
+  return `sitemap/${sitemapFilename}` as const
+}

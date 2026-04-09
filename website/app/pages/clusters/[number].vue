@@ -9,6 +9,8 @@
 </template>
 
 <script setup lang="ts">
+import { useQueueRfcEditorHead } from '~/utils/head'
+
 const route = useRoute()
 
 definePageMeta({
@@ -18,4 +20,12 @@ definePageMeta({
 })
 
 const clusterNumber = computed(() => route.params.number ? parseInt(route.params.number.toString(), 10) : undefined)
+
+const canonicalPath = computed(() => clusterNumber.value ? clusterNumberPathBuilder(clusterNumber.value) : undefined)
+
+useQueueRfcEditorHead({
+  title: 'Clusters of upcoming RFCs',
+  canonicalPath: canonicalPath.value,
+  contentType: 'article'
+})
 </script>

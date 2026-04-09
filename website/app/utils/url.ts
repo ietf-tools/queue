@@ -1,9 +1,28 @@
 import { kebabCase } from 'es-toolkit'
+import { assertIsString } from '../utils/typescript'
+import type { ImagePreviewHorizontalDimensions, ImagePreviewVerticalDimensions } from './meta-thumbnail'
+
+export const assertUrlOrigin = <FallbackConst extends string>(runtimeConfig: unknown, errorKey: string, fallback: FallbackConst): FallbackConst => {
+  assertIsString(runtimeConfig)
+  const expectedOrigin = new URL(runtimeConfig).origin
+  if (expectedOrigin !== runtimeConfig) {
+    throw Error(`Nuxt runtime config ${JSON.stringify(errorKey)} isn't a URL origin pattern as expected. Was: ${JSON.stringify(runtimeConfig)} but expected ${JSON.stringify(expectedOrigin)}`)
+  }
+  return (runtimeConfig ?? fallback) as FallbackConst // for TS purposes we'll type the response as the fallback
+}
+
+export const usePublicSiteUrlOrigin = () => {
+  const runtimeConfig = useRuntimeConfig()
+  return assertUrlOrigin(runtimeConfig.public.siteBase, 'siteBase', 'https://www.rfc-editor.org')
+}
 
 export const IETF_URL_ORIGIN = 'https://www.ietf.org'
 export const RFC_EDITOR_SITE_URL_ORIGIN = 'https://www.rfc-editor.org'
 export const QUEUE_RFC_EDITOR_SITE_URL_ORIGIN = 'https://queue.rfc-editor.org'
 export const DATATRACKER_URL_ORIGIN = 'https://datatracker.ietf.org'
+export const FINAL_REVIEW_PATH = '/final-review/'
+export const CLUSTERS_PATH = '/clusters/'
+export const HOME_PATH = '/'
 
 export const API_QUEUE_INDEX_PATH = '/api/v1/queue/index.json'
 export const API_FINAL_REVIEW_INDEX_PATH = '/api/v1/final-review/index.json'
@@ -24,6 +43,16 @@ export const apiClusterNumberPathBuilder = (clusterNumber: number) => {
 export const datatrackerDraftUrlBuilder = (draftName: string) => {
   return `https://datatracker.ietf.org/doc/${draftName}/` as const
 }
+
+export const linkPreviewImageUrlBuilder = (
+  widthPx: ImagePreviewHorizontalDimensions,
+  heightPx: ImagePreviewVerticalDimensions
+) => {
+  return `/api/v1/meta-thumbnail/rfc-editor-logo-${widthPx}x${heightPx}.png` as const
+}
+
+export const faviconPathBuilder = (widthPx: number, heightPx: number) =>
+  `/api/v1/favicon/${widthPx}x${heightPx}.png`
 
 const httpRegex = /^https?:\/\//
 export const isExternalLink = (href?: string): boolean => {
