@@ -20,9 +20,16 @@
 </template>
 
 <script setup lang="ts">
+import { useQueueRfcEditorHead } from '~/utils/head';
 import { RFC_EDITOR_SITE_URL_ORIGIN } from '~/utils/url'
 
 definePageMeta({
   layout: false
+})
+
+useQueueRfcEditorHead({
+  title: 'Queue of upcoming RFCs',
+  canonicalPath: '/',
+  contentType: 'article'
 })
 </script>

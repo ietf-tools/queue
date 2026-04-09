@@ -11,6 +11,8 @@
 </template>
 
 <script setup lang="ts">
+import { useQueueRfcEditorHead } from '~/utils/head';
+
 const route = useRoute()
 
 const id = computed(() => route.params.id?.toString())
@@ -81,7 +83,9 @@ if (!data.value || status.value === 'success' && !data.value || status.value ===
   })
 }
 
-useHead({
-  title: `${id.value} final review`
+useQueueRfcEditorHead({
+  title: `${id.value} final review`,
+  canonicalPath: canonicalPath.value,
+  contentType: 'article'
 })
 </script>

@@ -36,6 +36,14 @@ export default defineNuxtConfig({
       ]
     }
   },
+  // https://nuxt.com/docs/guide/going-further/runtime-config
+  runtimeConfig: {
+    cfServiceTokenId: '', // NUXT_CF_SERVICE_TOKEN_ID env var
+    cfServiceTokenSecret: '', // NUXT_CF_SERVICE_TOKEN_SECRET env var
+    public: {
+      siteBase: 'https://queue.rfc-editor.org', // NUXT_PUBLIC_SITE_BASE env var
+    }
+  },
   routeRules: {
     "/queue": {
       redirect: "/",

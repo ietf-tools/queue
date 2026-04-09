@@ -47,7 +47,7 @@ export const getSiteMapXmls = async ({ websiteOrigin, clusterIndex, finalReviewI
         {
           url: `${websiteOrigin}${clusterPathBuilder(clusterItem.number)}`,
           changefreq: EnumChangefreq.WEEKLY,
-          priority: 0.3 // note higher priority than /rfc/* route
+          priority: 0.3
         }
       ]
     }),
@@ -57,13 +57,13 @@ export const getSiteMapXmls = async ({ websiteOrigin, clusterIndex, finalReviewI
           return {
             url: `${websiteOrigin}${finalReviewClusterPathBuilder(cluster)}`,
             changefreq: EnumChangefreq.WEEKLY,
-            priority: 0.3 // note higher priority than /rfc/* route
+            priority: 0.3
           }
         }),
         {
           url: `${websiteOrigin}${finalReviewDraftPathBuilder(queueItem.name)}`,
           changefreq: EnumChangefreq.WEEKLY,
-          priority: 0.3 // note higher priority than /rfc/* route
+          priority: 0.3
         }
       ]
     })
