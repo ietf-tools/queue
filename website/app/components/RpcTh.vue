@@ -3,7 +3,7 @@
     class="px-1 first:pl-3 last:pr-3 py-3.5 text-left text-sm content-start font-semibold text-gray-900 dark:text-neutral-400"
     :aria-sort="props.sortDirection ? props.sortDirection === 'asc' ? 'ascending' : 'descending' : undefined">
     <div class="flex flex-row">
-      <div class="text-gray-800 dark:text-neutral-400">
+      <div class="text-gray-800 dark:text-gray-200">
         <slot />
       </div>
       <button v-if="props.isSortable" type="button" :class="[
