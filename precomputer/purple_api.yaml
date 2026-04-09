@@ -4171,10 +4171,8 @@ components:
           $ref: '#/components/schemas/MsgtypeEnum'
         to:
           type: string
-          maxLength: 1000
         cc:
           type: string
-          maxLength: 1000
         subject:
           type: string
           maxLength: 1000
@@ -4194,10 +4192,8 @@ components:
         to:
           type: string
           minLength: 1
-          maxLength: 1000
         cc:
           type: string
-          maxLength: 1000
         subject:
           type: string
           minLength: 1
@@ -4651,6 +4647,18 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RfcAuthorRequest'
+        shepherd_id:
+          type: integer
+          writeOnly: true
+          nullable: true
+          description: Set the document shepherd by providing their datatracker person
+            ID. The DatatrackerPerson record will be created if it does not exist.
+        iesg_contact_id:
+          type: integer
+          writeOnly: true
+          nullable: true
+          description: Set the IESG contact by providing their datatracker person
+            ID. The DatatrackerPerson record will be created if it does not exist.
         rfc_number:
           type: integer
           maximum: 2147483647
@@ -4676,6 +4684,12 @@ components:
           type: string
           description: Repository name (e.g., ietf-tools/purple)
           maxLength: 1000
+        stream_manager_id:
+          type: integer
+          writeOnly: true
+          nullable: true
+          description: Set the stream manager by providing their datatracker person
+            ID. The DatatrackerPerson record will be created if it does not exist.
     PatchedRpcRelatedDocumentRequest:
       type: object
       description: Serializer for related document for an RfcToBe
@@ -4840,12 +4854,31 @@ components:
           readOnly: true
         stream:
           type: string
+          description: Current stream
+        group:
+          type: string
+          description: Acronym of datatracker group where this document originated,
+            if any
+          maxLength: 40
+        group_name:
+          type: string
+          nullable: true
+          readOnly: true
+        std_level:
+          type: string
+          description: Current StdLevel
+        references:
+          type: array
+          items:
+            $ref: '#/components/schemas/RpcRelatedDocument'
           readOnly: true
       required:
       - authors
       - disposition
       - draft_url
       - enqueued_at
+      - std_level
+      - stream
       - title
     PublishRfcRequest:
       type: object
@@ -5136,6 +5169,10 @@ components:
           items:
             $ref: '#/components/schemas/RfcToBeBlockingReason'
           readOnly: true
+        stream_manager:
+          allOf:
+          - $ref: '#/components/schemas/BaseDatatrackerPerson'
+          readOnly: true
       required:
       - authors
       - boilerplate
@@ -5259,6 +5296,18 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RfcAuthorRequest'
+        shepherd_id:
+          type: integer
+          writeOnly: true
+          nullable: true
+          description: Set the document shepherd by providing their datatracker person
+            ID. The DatatrackerPerson record will be created if it does not exist.
+        iesg_contact_id:
+          type: integer
+          writeOnly: true
+          nullable: true
+          description: Set the IESG contact by providing their datatracker person
+            ID. The DatatrackerPerson record will be created if it does not exist.
         rfc_number:
           type: integer
           maximum: 2147483647
@@ -5284,6 +5333,12 @@ components:
           type: string
           description: Repository name (e.g., ietf-tools/purple)
           maxLength: 1000
+        stream_manager_id:
+          type: integer
+          writeOnly: true
+          nullable: true
+          description: Set the stream manager by providing their datatracker person
+            ID. The DatatrackerPerson record will be created if it does not exist.
       required:
       - authors
       - boilerplate

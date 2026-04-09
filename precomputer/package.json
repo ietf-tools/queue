@@ -39,9 +39,5 @@
     "vite-plugin-top-level-await": "1.6.0",
     "vitest": "4.0.18",
     "vue-tsc": "3.2.5"
-  },
-  "// overrides": "LRU cache has a top level await which breaks vitest. If you can make queue-xml.test.ts pass without this override feel free to delete this",
-  "overrides": {
-    "lru-cache": "11.0.0"
   }
 }
