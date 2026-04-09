@@ -5,25 +5,28 @@
       (formerly auth48)
     </Heading>
     <p v-if="clusterDrafts" class="italic">
-      This cluster has {{ clusterDrafts.length }}.
+      This cluster has {{ clusterDrafts.length }}
+      {{ SPACE }}
       <template v-if="clusterDrafts.length === 1">draft.</template>
       <template v-else>drafts.</template>
     </p>
-    <div class="py-1 px-2 bg-gray-700 dark:bg-gray-200">
+    <div class="py-1 px-2 bg-gray-200 dark:bg-gray-800 font-sm">
       <p class="font-bold mb-1">Table of contents:</p>
-      <ul class="mt-0 list-disc pl-6">
-        <li v-for="(draft, index) in clusterDrafts" :key="draft.name" class="mb-6">
+      <ul class="mt-0 list-disc pl-6 text-black dark:text-white">
+        <li v-for="(draft, index) in clusterDrafts" :key="draft.name">
           <a :href="`#${makeDomId(draft.name, index)}`" :class="ANCHOR_TAILWIND_STYLE">{{ draft.name }}</a>
         </li>
       </ul>
     </div>
     <div v-for="(draft, index) in clusterDrafts" :key="draft.name" class="mb-6">
-      <FinalReviewDraft heading-level="2" :draft-name="draft.name" :queue="props.queue" :id="makeDomId(draft.name, index)" />
+      <FinalReviewDraft heading-level="2" :draft-name="draft.name" :queue="props.queue"
+        :id="makeDomId(draft.name, index)" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { SPACE } from '../utils/strings'
 import { ANCHOR_TAILWIND_STYLE } from '../utils/theme'
 import { makeDomId } from '../utils/final-review'
 
