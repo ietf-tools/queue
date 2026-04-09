@@ -10,11 +10,11 @@
       <template v-if="clusterDrafts.length === 1">draft.</template>
       <template v-else>drafts.</template>
     </p>
-    <div class="py-1 px-2 bg-gray-200 dark:bg-gray-800 font-sm">
+    <div class="py-1 px-2 bg-gray-200 dark:bg-gray-800 font-sm max-w-md">
       <p class="font-bold mb-1">Table of contents:</p>
       <ul class="mt-0 list-disc pl-6 text-black dark:text-white">
         <li v-for="(draft, index) in clusterDrafts" :key="draft.name">
-          <a :href="`#${makeDomId(draft.name, index)}`" :class="ANCHOR_TAILWIND_STYLE">{{ draft.name }}</a>
+          <a :href="`#${makeDomId(draft.name, index)}`" :class="[ANCHOR_TAILWIND_STYLE, 'wrap-anywhere']">{{ draft.name }}</a>
         </li>
       </ul>
     </div>
