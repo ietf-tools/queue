@@ -6,7 +6,7 @@
           Looking for published RFCs? Go to
           <Anchor :href="RFC_EDITOR_SITE_URL_ORIGIN" class="text-blue-300 dark:text-blue-100">
             {{ RFC_EDITOR_SITE_URL_ORIGIN }}
-          </Anchor>
+          </Anchor>.
         </p>
       </div>
       <div class="container mx-auto">
