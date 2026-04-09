@@ -23,10 +23,13 @@ Name | Type
 `stream` | string
 `publicationStream` | string
 `authors` | [Array&lt;RfcAuthorRequest&gt;](RfcAuthorRequest.md)
+`shepherdId` | number
+`iesgContactId` | number
 `rfcNumber` | number
 `consensus` | boolean
 `ianaStatusSlug` | [IanaStatusSlugEnum](IanaStatusSlugEnum.md)
 `repository` | string
+`streamManagerId` | number
 
 ## Example
 
@@ -51,10 +54,13 @@ const example = {
   "stream": null,
   "publicationStream": null,
   "authors": null,
+  "shepherdId": null,
+  "iesgContactId": null,
   "rfcNumber": null,
   "consensus": null,
   "ianaStatusSlug": null,
   "repository": null,
+  "streamManagerId": null,
 } satisfies RfcToBeRequest
 
 console.log(example)

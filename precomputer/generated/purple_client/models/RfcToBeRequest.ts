@@ -131,6 +131,18 @@ export interface RfcToBeRequest {
      */
     authors: Array<RfcAuthorRequest>;
     /**
+     * Set the document shepherd by providing their datatracker person ID. The DatatrackerPerson record will be created if it does not exist.
+     * @type {number}
+     * @memberof RfcToBeRequest
+     */
+    shepherdId?: number | null;
+    /**
+     * Set the IESG contact by providing their datatracker person ID. The DatatrackerPerson record will be created if it does not exist.
+     * @type {number}
+     * @memberof RfcToBeRequest
+     */
+    iesgContactId?: number | null;
+    /**
      * 
      * @type {number}
      * @memberof RfcToBeRequest
@@ -160,6 +172,12 @@ export interface RfcToBeRequest {
      * @memberof RfcToBeRequest
      */
     repository?: string;
+    /**
+     * Set the stream manager by providing their datatracker person ID. The DatatrackerPerson record will be created if it does not exist.
+     * @type {number}
+     * @memberof RfcToBeRequest
+     */
+    streamManagerId?: number | null;
 }
 
 
@@ -205,10 +223,13 @@ export function RfcToBeRequestFromJSONTyped(json: any, ignoreDiscriminator: bool
         'stream': json['stream'],
         'publicationStream': json['publication_stream'] == null ? undefined : json['publication_stream'],
         'authors': ((json['authors'] as Array<any>).map(RfcAuthorRequestFromJSON)),
+        'shepherdId': json['shepherd_id'] == null ? undefined : json['shepherd_id'],
+        'iesgContactId': json['iesg_contact_id'] == null ? undefined : json['iesg_contact_id'],
         'rfcNumber': json['rfc_number'] == null ? undefined : json['rfc_number'],
         'consensus': json['consensus'] == null ? undefined : json['consensus'],
         'ianaStatusSlug': json['iana_status_slug'] == null ? undefined : IanaStatusSlugEnumFromJSON(json['iana_status_slug']),
         'repository': json['repository'] == null ? undefined : json['repository'],
+        'streamManagerId': json['stream_manager_id'] == null ? undefined : json['stream_manager_id'],
     };
 }
 
@@ -239,10 +260,13 @@ export function RfcToBeRequestToJSONTyped(value?: RfcToBeRequest | null, ignoreD
         'stream': value['stream'],
         'publication_stream': value['publicationStream'],
         'authors': ((value['authors'] as Array<any>).map(RfcAuthorRequestToJSON)),
+        'shepherd_id': value['shepherdId'],
+        'iesg_contact_id': value['iesgContactId'],
         'rfc_number': value['rfcNumber'],
         'consensus': value['consensus'],
         'iana_status_slug': IanaStatusSlugEnumToJSON(value['ianaStatusSlug']),
         'repository': value['repository'],
+        'stream_manager_id': value['streamManagerId'],
     };
 }
 

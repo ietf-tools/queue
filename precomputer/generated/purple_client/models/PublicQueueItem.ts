@@ -20,6 +20,13 @@ import {
     PublicAssignmentToJSON,
     PublicAssignmentToJSONTyped,
 } from './PublicAssignment.ts';
+import type { RpcRelatedDocument } from './RpcRelatedDocument.ts';
+import {
+    RpcRelatedDocumentFromJSON,
+    RpcRelatedDocumentFromJSONTyped,
+    RpcRelatedDocumentToJSON,
+    RpcRelatedDocumentToJSONTyped,
+} from './RpcRelatedDocument.ts';
 import type { ActionHolder } from './ActionHolder.ts';
 import {
     ActionHolderFromJSON,
@@ -205,11 +212,35 @@ export interface PublicQueueItem {
      */
     readonly approvalLogMessage?: Array<ApprovalLogMessage>;
     /**
+     * Current stream
+     * @type {string}
+     * @memberof PublicQueueItem
+     */
+    stream: string;
+    /**
+     * Acronym of datatracker group where this document originated, if any
+     * @type {string}
+     * @memberof PublicQueueItem
+     */
+    group?: string;
+    /**
      * 
      * @type {string}
      * @memberof PublicQueueItem
      */
-    readonly stream?: string;
+    readonly groupName?: string | null;
+    /**
+     * Current StdLevel
+     * @type {string}
+     * @memberof PublicQueueItem
+     */
+    stdLevel: string;
+    /**
+     * 
+     * @type {Array<RpcRelatedDocument>}
+     * @memberof PublicQueueItem
+     */
+    readonly references?: Array<RpcRelatedDocument>;
 }
 
 /**
@@ -221,6 +252,8 @@ export function instanceOfPublicQueueItem(value: object): value is PublicQueueIt
     if (!('disposition' in value) || value['disposition'] === undefined) return false;
     if (!('enqueuedAt' in value) || value['enqueuedAt'] === undefined) return false;
     if (!('authors' in value) || value['authors'] === undefined) return false;
+    if (!('stream' in value) || value['stream'] === undefined) return false;
+    if (!('stdLevel' in value) || value['stdLevel'] === undefined) return false;
     return true;
 }
 
@@ -253,7 +286,11 @@ export function PublicQueueItemFromJSONTyped(json: any, ignoreDiscriminator: boo
         'blockingReasons': json['blocking_reasons'] == null ? undefined : ((json['blocking_reasons'] as Array<any>).map(RfcToBeBlockingReasonFromJSON)),
         'authors': ((json['authors'] as Array<any>).map(PublicQueueAuthorFromJSON)),
         'approvalLogMessage': json['approval_log_message'] == null ? undefined : ((json['approval_log_message'] as Array<any>).map(ApprovalLogMessageFromJSON)),
-        'stream': json['stream'] == null ? undefined : json['stream'],
+        'stream': json['stream'],
+        'group': json['group'] == null ? undefined : json['group'],
+        'groupName': json['group_name'] == null ? undefined : json['group_name'],
+        'stdLevel': json['std_level'],
+        'references': json['references'] == null ? undefined : ((json['references'] as Array<any>).map(RpcRelatedDocumentFromJSON)),
     };
 }
 
@@ -261,7 +298,7 @@ export function PublicQueueItemToJSON(json: any): PublicQueueItem {
     return PublicQueueItemToJSONTyped(json, false);
 }
 
-export function PublicQueueItemToJSONTyped(value?: Omit<PublicQueueItem, 'id'|'name'|'labels'|'cluster'|'assignment_set'|'actionholder_set'|'pending_activities'|'pages'|'final_approval'|'iana_status'|'blocking_reasons'|'approval_log_message'|'stream'> | null, ignoreDiscriminator: boolean = false): any {
+export function PublicQueueItemToJSONTyped(value?: Omit<PublicQueueItem, 'id'|'name'|'labels'|'cluster'|'assignment_set'|'actionholder_set'|'pending_activities'|'pages'|'final_approval'|'iana_status'|'blocking_reasons'|'approval_log_message'|'group_name'|'references'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
@@ -275,6 +312,9 @@ export function PublicQueueItemToJSONTyped(value?: Omit<PublicQueueItem, 'id'|'n
         'rfc_number': value['rfcNumber'],
         'enqueued_at': value['enqueuedAt'].toISOString(),
         'authors': ((value['authors'] as Array<any>).map(PublicQueueAuthorToJSON)),
+        'stream': value['stream'],
+        'group': value['group'],
+        'std_level': value['stdLevel'],
     };
 }
 

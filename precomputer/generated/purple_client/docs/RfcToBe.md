@@ -40,6 +40,7 @@ Name | Type
 `additionalEmails` | [Array&lt;AdditionalEmail&gt;](AdditionalEmail.md)
 `repository` | string
 `blockingReasons` | [Array&lt;RfcToBeBlockingReason&gt;](RfcToBeBlockingReason.md)
+`streamManager` | [BaseDatatrackerPerson](BaseDatatrackerPerson.md)
 
 ## Example
 
@@ -81,6 +82,7 @@ const example = {
   "additionalEmails": null,
   "repository": null,
   "blockingReasons": null,
+  "streamManager": null,
 } satisfies RfcToBe
 
 console.log(example)
