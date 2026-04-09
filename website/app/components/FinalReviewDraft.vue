@@ -16,7 +16,7 @@
       <RpcTbody>
         <tr v-for="approverItem in finalReview.finalApprovals">
           <RpcTd>{{ approverItem.approverName }}</RpcTd>
-          <RpcTd>
+          <RpcTd class="text-center">
             <abbr v-if="Boolean(approverItem.approvedAtIso)" title="Yes" class="no-underline">Y</abbr>
             <abbr v-else title="No" class="no-underline">N</abbr>
           </RpcTd>
