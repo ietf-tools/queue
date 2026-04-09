@@ -51,7 +51,7 @@ export const useQueueRfcEditorHead = (props: UseQueueRfcEditorProps) => {
       ...buildGoogleScholarMetaTags(newProps),
     ].map(allowDuplicateNames),
     link: [
-      buildCanonical(newProps, publicSiteOrigin),
+      ...buildCanonical(newProps, publicSiteOrigin),
       ...buildFaviconLinks(),
     ],
     noscript: [
@@ -62,7 +62,7 @@ export const useQueueRfcEditorHead = (props: UseQueueRfcEditorProps) => {
          * See related DataTracker issue https://github.com/ietf-tools/datatracker/issues/9667
          **/
         'data-nosnippet': "true",
-        innerHTML: 'Your browser JavaScript is disabled. Most of this site works without it, but some features —like search— require it. Please enable JavaScript and reload the page.',
+        innerHTML: 'Your browser JavaScript is disabled. Most of this site works without it, but some features —like dropdown menus— require it. Please enable JavaScript and reload the page.',
       }
     ]
   })
@@ -114,18 +114,14 @@ type MetaTag = {
 }
 
 const buildOpenGraphMetaTags = (props: UseQueueRfcEditorProps, publicSiteOrigin: string): MetaTag[] => {
-  const { authors, publishedDateTime, customThumbnail, modifiedDateTime, customThumbnailAltText, description, contentType, canonicalPath } = props
+  const { authors, publishedDateTime, modifiedDateTime, customThumbnailAltText, description, contentType, canonicalPath } = props
   const linkPreviewImage = linkPreviewImageBuilder('opengraph', publicSiteOrigin)
-  const canonicalUrl = new URL(canonicalPath, publicSiteOrigin).toString()
+  const canonicalUrl = canonicalPath ? new URL(canonicalPath, publicSiteOrigin).toString() : undefined
 
   const metaTags: MetaTag[] = [
     {
       property: 'og:title',
       content: props.title
-    },
-    {
-      property: 'og:url',
-      content: canonicalUrl
     },
     {
       property: 'og:image',
@@ -148,6 +144,13 @@ const buildOpenGraphMetaTags = (props: UseQueueRfcEditorProps, publicSiteOrigin:
       content: linkPreviewImage.widthHeight[1]?.toString() ?? '1024'
     }
   ]
+
+  if (canonicalUrl) {
+    metaTags.push({
+      property: 'og:url',
+      content: canonicalUrl
+    })
+  }
 
   if (description) {
     metaTags.push({
@@ -352,9 +355,12 @@ type GoogleScholarMetadata = {
   citation_pdf_url?: string // eg "https://www.rfc-editor.org/rfc/pdfrfc/rfc6376.txt.pdf"
 }
 
-const buildCanonical = ({ canonicalPath }: UseQueueRfcEditorProps, publicSiteOrigin: string): LinkTag => {
+const buildCanonical = ({ canonicalPath }: UseQueueRfcEditorProps, publicSiteOrigin: string): LinkTag[] => {
+  if (!canonicalPath) {
+    return []
+  }
   const canonicalUrl = new URL(canonicalPath, publicSiteOrigin).toString()
-  return { rel: 'canonical', href: canonicalUrl }
+  return [{ rel: 'canonical', href: canonicalUrl }]
 }
 
 /**
