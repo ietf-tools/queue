@@ -48,8 +48,6 @@ export async function blobs(request: Request, env: Env) {
     }
   }
 
-
-
   const SITEMAP_PREFIX = '/sitemap'
   if (normalizedPath.startsWith(SITEMAP_PREFIX)) {
     const objectPath = `sitemap/sitemap${normalizedPath.substring(SITEMAP_PREFIX.length)}`

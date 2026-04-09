@@ -1,6 +1,5 @@
 import { SITEMAP_XML_0 } from "../utils/url.ts"
 
-
 // placeholder string that shouldn't collide with actual data
 const ORIGIN_PLACEHOLDER = '__ORIGIN__'
 

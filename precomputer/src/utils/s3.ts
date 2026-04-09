@@ -110,5 +110,5 @@ export const siteMapXmlFilenameBuilder = (index: number) => {
 }
 
 export const siteMapXmlPathPrefixBuilder = (sitemapFilename: string) => {
-  return `/sitemap/${sitemapFilename}` as const
+  return `sitemap/${sitemapFilename}` as const
 }
