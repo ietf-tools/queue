@@ -9,7 +9,7 @@
       <RpcThead>
         <tr>
           <RpcTh>Name</RpcTh>
-          <RpcTh>Approved?</RpcTh>
+          <RpcTh class="text-center">Approved?</RpcTh>
           <RpcTh>Date of Approval</RpcTh>
         </tr>
       </RpcThead>
