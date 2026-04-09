@@ -41,7 +41,8 @@ export default defineNuxtConfig({
     cfServiceTokenId: '', // NUXT_CF_SERVICE_TOKEN_ID env var
     cfServiceTokenSecret: '', // NUXT_CF_SERVICE_TOKEN_SECRET env var
     public: {
-      siteBase: 'https://queue.rfc-editor.org', // NUXT_PUBLIC_SITE_BASE env var
+      siteBase: 'https://queue.rfc-editor.org', // NUXT_PUBLIC_SITE_BASE env va
+      matomoSiteId: '12', // NUXT_PUBLIC_MATOMO_SITE_ID
     }
   },
   routeRules: {
