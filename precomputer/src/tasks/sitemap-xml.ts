@@ -5,7 +5,7 @@ import { PassThrough, Readable } from 'node:stream'
 import { type SitemapItemLoose, EnumChangefreq, SitemapAndIndexStream, SitemapStream, streamToPromise } from 'sitemap'
 import { type ClusterIndexCommon, type QueueCommon } from '../../../website/app/utils/validators.ts'
 import { clusterPathBuilder, finalReviewClusterPathBuilder, finalReviewDraftPathBuilder } from '../utils/url.ts'
-import { S3UploadTask, siteMapXmlFilenameBuilder, siteMapXmlPathPrefixBuilder } from '../utils/s3.ts'
+import { type S3UploadTask, siteMapXmlFilenameBuilder, siteMapXmlPathPrefixBuilder } from '../utils/s3.ts'
 
 const precomputerRoot = path.resolve(import.meta.dirname, '..', '..')
 export const markdownPathsJsonPath = path.join(precomputerRoot, 'src', 'assets', 'markdown-paths.json')
