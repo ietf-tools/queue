@@ -1,8 +1,8 @@
 {
   "name": "queue",
   "version": "0.0.1",
-  "type": "module",
   "private": true,
+  "type": "module",
   "scripts": {
     "cleanup": "nuxt cleanup",
     "build": "npm run build:nuxt",
@@ -11,6 +11,7 @@
     "dev": "nuxt dev",
     "test": "npm run test:types",
     "test:types": "vue-tsc -b --noEmit",
+    "test:lint": "oxlint",
     "generate": "nuxt generate",
     "preview": "npm run build:nuxt && nuxt preview",
     "preview:dev": "npm run build:nuxt:dev && nuxt preview",
