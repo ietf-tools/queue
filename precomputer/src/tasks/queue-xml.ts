@@ -28,7 +28,7 @@ const XML_DECLARATION = '<?xml version="1.0" encoding="utf-8"?>'
  */
 export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
   console.log("========")
-  console.log(JSON.stringify(queue, null, 2))
+  console.log(JSON.stringify(queue))
   console.log("========")
 
   const dom = await getDOMParser()
