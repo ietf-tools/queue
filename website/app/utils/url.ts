@@ -48,7 +48,7 @@ export const linkPreviewImageUrlBuilder = (
   widthPx: ImagePreviewHorizontalDimensions,
   heightPx: ImagePreviewVerticalDimensions
 ) => {
-  return `/api/v1/meta-thumbnail/rfc-editor-logo-${widthPx}x${heightPx}.png` as const
+  return `/api/v1/thumbnail/rfc-editor-logo-${widthPx}x${heightPx}.png` as const
 }
 
 export const faviconPathBuilder = (widthPx: number, heightPx: number) =>
