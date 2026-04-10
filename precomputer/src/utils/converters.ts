@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { type Cluster, type QueueItem, type ApprovalLogMessage, RpcRelatedDocument } from "../../generated/purple_client/index.ts";
+import { type Cluster, type QueueItem, type ApprovalLogMessage, type RpcRelatedDocument } from "../../generated/purple_client/index.ts";
 import { type ClusterDocumentCommon, type DocumentReferenceCommon, type QueueCommonItem, type ApprovalLogMessageCommon } from "../../../website/app/utils/validators.ts";
 import { assertIsString, assertNever } from "./typescript.ts";
 
