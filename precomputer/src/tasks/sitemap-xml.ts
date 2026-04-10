@@ -102,7 +102,7 @@ export const getSiteMapXmls = async ({ websiteOrigin, clusterIndex, finalReviewI
       });
       pendingPromises.push(capturePromise)
 
-      return [`${websiteOrigin}${filename}`, sitemapStream, destination as unknown as WriteStream];
+      return [`${websiteOrigin}/${filename}`, sitemapStream, destination as unknown as WriteStream];
     }
   });
 
