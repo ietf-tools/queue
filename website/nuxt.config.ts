@@ -7,7 +7,6 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   modules: [
     '@nuxt/content',
-    '@nuxt/eslint',
     '@nuxt/icon',
     '@nuxtjs/color-mode',
     'reka-ui/nuxt',
