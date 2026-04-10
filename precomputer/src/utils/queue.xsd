@@ -27,7 +27,7 @@
       <xs:element name="date-received"  type="xs:string"         minOccurs="0"/>
       <xs:element name="assignments"    type="q:assignmentsType" minOccurs="0" />
       <xs:element name="auth48-url"     type="xs:anyURI"         minOccurs="0" />
-      <xs:element name="normRef"        type="q:normRefType"     minOccurs="0" />
+      <xs:element name="normRef"        type="q:normRefType"     minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="authors"        type="xs:string"         minOccurs="0" />
       <xs:element name="title"          type="xs:string"         />
       <xs:element name="source"         type="xs:string"         minOccurs="0" />

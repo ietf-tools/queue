@@ -22,15 +22,12 @@ const xsdString = fsPromises.readFile(xsdPath, 'utf-8')
 
 const NAMESPACE = 'http://www.rfc-editor.org/rfc-editor-queue'
 const XML_DECLARATION = '<?xml version="1.0" encoding="utf-8"?>'
+const XML_COMMENT = '<!-- See queue.xsd for validation -->'
 
 /**
  * Generates a queue.xml file aNd validate against the XSD
  */
 export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
-  console.log("========")
-  console.log(JSON.stringify(queue))
-  console.log("========")
-
   const dom = await getDOMParser()
 
   const doc = dom.parseFromString(`<rfc-editor-queue xmlns="${NAMESPACE}"></rfc-editor-queue>`, 'text/xml')
@@ -39,7 +36,7 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
     // eg "IETF STREAM: WORKING GROUP STANDARDS TRACK"
     // or "IETF STREAM: NON-WORKING GROUP STANDARDS TRACK"
     const sectionNameParts = [
-      item.stream?.toUpperCase(),
+      item.stream ? `${item.stream.toUpperCase()} STREAM` : undefined,
       item.groupName?.toUpperCase()
     ].filter(val => Boolean(val))
 
@@ -60,6 +57,7 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
     sectionEl.setAttribute('name', section)
 
     const items = itemsbyGroup[section]
+
     items.forEach(item => {
       const entryEl = doc.createElementNS(NAMESPACE, 'entry')
       sectionEl.append(entryEl)
@@ -136,13 +134,13 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
   const serializer = new jsdom.window.XMLSerializer()
   const xmlString = serializer.serializeToString(doc);
 
-  const xmlWithDeclaration = `${XML_DECLARATION}\n${xmlString}`;
+  const finalXML = `${XML_DECLARATION}\n${XML_COMMENT}\n${xmlString}`;
 
   // console.log('------')
-  // console.log(xmlWithDeclaration)
+  // console.log(finalXML)
   // console.log('------')
 
-  validateXml(xmlWithDeclaration, await xsdString)
+  validateXml(finalXML, await xsdString)
 
-  return xmlWithDeclaration
+  return finalXML
 }
