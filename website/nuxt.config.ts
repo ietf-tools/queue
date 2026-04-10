@@ -49,6 +49,9 @@ export default defineNuxtConfig({
     "/queue": {
       redirect: "/",
     },
+    "/queue.xml": {
+      redirect: "/api/v1/queue.xml",
+    },
     "/cluster": {
       redirect: "/clusters/",
     },

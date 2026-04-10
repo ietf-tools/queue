@@ -77,6 +77,14 @@ export async function blobs(request: Request, env: Env) {
       to: 'other/favicon-32x32.png'
     },
     {
+      from: '/api/v1/queue.xml',
+      to: 'queue/index.xml'
+    },
+    {
+      from: '/api/v1/queue.xsd',
+      to: 'queue/queue.xsd'
+    },
+    {
       from: '/robots.txt',
       to: 'other/robots.txt'
     }
