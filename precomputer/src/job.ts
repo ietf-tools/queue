@@ -25,6 +25,7 @@ import { getQueueXSD } from './tasks/queue-xsd.ts'
 import { getSiteMapXmls } from './tasks/sitemap-xml.ts'
 import { getRobotsTxt } from './tasks/robots-txt.ts'
 import { getFavicons } from './tasks/favicon.ts'
+import { getMetaThumbnails } from './tasks/meta-thumbnails.ts'
 
 // This is just a hint number, not a hard limit at all
 const NUMBER_OF_CONCURRENT_API_USAGES = 4
@@ -38,13 +39,14 @@ const main = async (): Promise<void> => {
   assertIsString(websiteOrigin, 'Expected process.env.NUXT_PUBLIC_SITE_BASE to be string')
 
   const api = getApiClient()
-  const [queueIndex, clusterIndex, finalReviewIndex, queueXML, queueXSD, faviconUploadTasks] = await Promise.all([
+  const [queueIndex, clusterIndex, finalReviewIndex, queueXML, queueXSD, faviconUploadTasks, metaThumbnailsTasks] = await Promise.all([
     getQueueIndex({ api }),
     getClusterIndex({ api }),
     getFinalReviewIndex({ api }),
     getQueueXML({ api }),
     getQueueXSD(),
-    getFavicons()
+    getFavicons(),
+    getMetaThumbnails()
   ])
 
   console.log(`[Clusters] Fetching cluster API data for ${clusterIndex.list.length} item(s) using ${NUMBER_OF_CONCURRENT_API_USAGES} concurrent processes`)
@@ -72,9 +74,7 @@ const main = async (): Promise<void> => {
   const robotsTxt = getRobotsTxt(websiteOrigin)
 
   console.log(`[Clusters] Successfully fetched ALL cluster API data for ${clusterPackages.length} cluster(s).`)
-
-  const siteMapUploadTasks: S3UploadTask[] = await getSiteMapXmls({ websiteOrigin, clusterIndex, finalReviewIndex })
-
+  
   const uploadTasks: S3UploadTask[] = [
     { key: QUEUE_INDEX_PATH, contents: JSON.stringify(queueIndex) },
     { key: CLUSTER_INDEX_PATH, contents: JSON.stringify(clusterIndex) },
@@ -82,8 +82,9 @@ const main = async (): Promise<void> => {
     { key: QUEUE_INDEX_XML_PATH, contents: queueXML },
     { key: QUEUE_XSD_PATH, contents: queueXSD },
     { key: ROBOTS_TXT_PATH, contents: robotsTxt },
-    ...siteMapUploadTasks,
+    ...await getSiteMapXmls({ websiteOrigin, clusterIndex, finalReviewIndex }),
     ...faviconUploadTasks,
+    ...metaThumbnailsTasks,
     ...clusterPackages.map((clusterPackage): S3UploadTask => {
       return {
         key: clusterPathBuilder(clusterPackage.cluster.number),

@@ -10,7 +10,7 @@ export async function blobs(request: Request, env: Env) {
     const objectPath = normalizedPath.substring(API_V1_PREFIX.length)
 
     // -> Fetch R2 object
-    if (objectPath.endsWith('.json')) {
+    if (objectPath.endsWith('.json') || objectPath.endsWith('.png')) {
       const object = await env.QUEUE_BUCKET.get(objectPath)
       if (object) {
         const headers = new Headers()
