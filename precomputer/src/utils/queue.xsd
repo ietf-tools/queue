@@ -56,6 +56,10 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="IN-QUEUE"/>
       <xs:enumeration value="NOT-RECEIVED"/>
+      <xs:enumeration value="REFQUEUE"/>
+      <xs:enumeration value="NOT-RECEIVED-2G"/>
+      <xs:enumeration value="NOT-RECEIVED-3G"/>
+      <xs:enumeration value="WITHDRAWNREF"/>
     </xs:restriction>
   </xs:simpleType>
 
