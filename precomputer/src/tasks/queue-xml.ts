@@ -1,12 +1,12 @@
 import path from 'node:path'
 import fsPromises from 'node:fs/promises'
+import { JSDOM } from 'jsdom'
 import { DateTime } from 'luxon'
 import { groupBy } from 'es-toolkit'
 import { PurpleApi } from '../../generated/purple_client/index.ts'
 import { getDOMParser, validateXml } from '../utils/dom.ts'
 import { getQueueCommon } from '../utils/queue.ts'
 import { type QueueCommon } from '../../../website/app/utils/validators.ts'
-import { JSDOM } from 'jsdom'
 
 type Props = {
   api: PurpleApi
@@ -27,15 +27,29 @@ const XML_DECLARATION = '<?xml version="1.0" encoding="utf-8"?>'
  * Generates a queue.xml file aNd validate against the XSD
  */
 export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
-  // console.log("========")
-  // console.log(JSON.stringify(queue, null, 2))
-  // console.log("========")
+  console.log("========")
+  console.log(JSON.stringify(queue, null, 2))
+  console.log("========")
 
   const dom = await getDOMParser()
 
   const doc = dom.parseFromString(`<rfc-editor-queue xmlns="${NAMESPACE}"></rfc-editor-queue>`, 'text/xml')
 
-  const itemsbyGroup = groupBy(queue.items, (item) => item.stream ?? 'NO STREAM')
+  const itemsbyGroup = groupBy(queue.items, (item) => {
+    // eg "IETF STREAM: WORKING GROUP STANDARDS TRACK"
+    // or "IETF STREAM: NON-WORKING GROUP STANDARDS TRACK"
+    const sectionNameParts = [
+      item.stream?.toUpperCase(),
+      item.groupName?.toUpperCase()
+    ].filter(val => Boolean(val))
+
+    if (sectionNameParts.length > 0) {
+      const COLON_AND_SPACE = ': '
+      const sectionName = sectionNameParts.join(COLON_AND_SPACE)
+      return sectionName
+    }
+    return 'UNKNOWN'
+  })
   const sections = Object.keys(itemsbyGroup)
 
   sections.forEach(section => {
@@ -43,7 +57,7 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
     // or <section name="IETF STREAM: NON-WORKING GROUP STANDARDS TRACK">
     const sectionEl = doc.createElementNS(NAMESPACE, 'section')
     doc.documentElement.append(sectionEl)
-    sectionEl.setAttribute('name', section.toUpperCase())
+    sectionEl.setAttribute('name', section)
 
     const items = itemsbyGroup[section]
     items.forEach(item => {
@@ -77,9 +91,19 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
         })
       }
 
-      // TODO
       // eg <normRef><ref-name>draft-ietf-ecrit-lost-planned-changes</ref-name><ref-state>NOT-RECEIVED</ref-state></normRef>
-      // TODO
+      item.references?.forEach(reference => {
+        const normRefEl = doc.createElementNS(NAMESPACE, 'normRef')
+        entryEl.append(normRefEl)
+
+        const refNameEl = doc.createElementNS(NAMESPACE, 'ref-name')
+        normRefEl.append(refNameEl)
+        refNameEl.textContent = reference.targetDraftName
+
+        const refStateEl = doc.createElementNS(NAMESPACE, 'ref-state')
+        normRefEl.append(refStateEl)
+        refStateEl.textContent = reference.relationship.toUpperCase()
+      })
 
       // eg <authors>B. Rosen, R. Marshall, J. Martin</authors>
       const authorsEl = doc.createElementNS(NAMESPACE, 'authors')
@@ -94,12 +118,12 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
       entryEl.append(titleEl)
       titleEl.textContent = item.title
 
-      // TODO
-      // eg <source>Emergency Context Resolution with Internet Technologies</source>
-      // const sourceEl = doc.createElementNS(NS, 'source')
-      // entryEl.append(sourceEl)
-      // titleEl.textContent = item.source
-      // TODO
+      if (item.groupName) {
+        // eg <source>Emergency Context Resolution with Internet Technologies</source>
+        const sourceEl = doc.createElementNS(NAMESPACE, 'source')
+        entryEl.append(sourceEl)
+        sourceEl.textContent = item.groupName
+      }
 
       // eg <consensus>yes</consensus>
       const consensusEl = doc.createElementNS(NAMESPACE, 'consensus')

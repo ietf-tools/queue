@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
-import { type Cluster, type QueueItem, type ApprovalLogMessage } from "../../generated/purple_client/index.ts";
-import { type ClusterDocumentCommon, type ClusterDocumentReferenceCommon, type QueueCommonItem, type ApprovalLogMessageCommon } from "../../../website/app/utils/validators.ts";
+import { type Cluster, type QueueItem, type ApprovalLogMessage, RpcRelatedDocument } from "../../generated/purple_client/index.ts";
+import { type ClusterDocumentCommon, type DocumentReferenceCommon, type QueueCommonItem, type ApprovalLogMessageCommon } from "../../../website/app/utils/validators.ts";
 import { assertIsString, assertNever } from "./typescript.ts";
 
 export const parseDisposition = (disposition: string): QueueCommonItem["disposition"] => {
@@ -99,36 +99,38 @@ type ClusterMember = ClusterDocuments[number]
 export const clusterMemberToClusterDocumentCommon = (clusterNumber: number, clusterMember: ClusterMember): ClusterDocumentCommon => {
   const { name, rfcNumber, disposition, references, isReceived } = clusterMember
 
-  // console.log(`[cluster ${clusterNumber}]`, `[${name}]`, references?.length ? `${references.length} reference(s)` : 'no references')
-
   return {
     name,
     disposition: disposition ? parseDisposition(disposition) : undefined,
     isReceived: Boolean(isReceived),
     rfcNumber: rfcNumber ?? undefined,
-    references: references?.map((reference): ClusterDocumentReferenceCommon => {
-      const {
-        relationship,
-        draftName,
-        targetDraftName,
-        targetRfcNumber,
-        sourceRfcNumber,
-        targetDisposition,
-      } = reference
-
-      assertIsString(draftName)
-      assertIsString(targetDraftName)
-
-      return {
-        relationship: parseRelationship(relationship),
-        draftName,
-        targetDraftName,
-        targetRfcNumber,
-        sourceRfcNumber,
-        targetDisposition: targetDisposition ? parseDisposition(targetDisposition) : undefined
-      }
-    }) ?? []
+    references: parseReferences(references) 
   }
+}
+
+export const parseReferences = (references?: RpcRelatedDocument[]): DocumentReferenceCommon[] => {
+  return references?.map((reference): DocumentReferenceCommon => {
+    const {
+      relationship,
+      draftName,
+      targetDraftName,
+      targetRfcNumber,
+      sourceRfcNumber,
+      targetDisposition,
+    } = reference
+
+    assertIsString(draftName)
+    assertIsString(targetDraftName)
+
+    return {
+      relationship: parseRelationship(relationship),
+      draftName,
+      targetDraftName,
+      targetRfcNumber,
+      sourceRfcNumber,
+      targetDisposition: targetDisposition ? parseDisposition(targetDisposition) : undefined
+    }
+  }) ?? []
 }
 
 export const parseApprovalLogMessages = (approvalLogMessages?: ApprovalLogMessage[]): undefined | ApprovalLogMessageCommon[] => {

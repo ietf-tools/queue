@@ -96,6 +96,23 @@ const FinalApprovalSchema = z.object({
   approvedAtIso: z.string().optional(),
 })
 
+const ClusterDocumentRelationshipCommonSchema = z.union([
+  z.literal('refqueue'),
+  z.literal('not-received'),
+  z.literal('not-received-2g'),
+  z.literal('not-received-3g'),
+  z.literal('withdrawnref')
+])
+
+const DocumentReferenceCommonSchema = z.object({
+  relationship: ClusterDocumentRelationshipCommonSchema,
+  draftName: z.string(),
+  sourceRfcNumber: z.number().optional(),
+  targetDraftName: z.string(),
+  targetRfcNumber: z.number().optional(),
+  targetDisposition: DispositionCommonSchema.optional(),
+})
+
 export const QueueCommonItemSchema = z.object({
   name: z.string(),
   title: z.string(),
@@ -111,7 +128,11 @@ export const QueueCommonItemSchema = z.object({
   pages: z.number().optional(),
   enqueuedAtIso: z.string().optional(), // ISO date
   ianaStatus: IanaStatusCommonSchema.optional(),
-  approvalLogMessages: ApprovalLogMessageCommonSchema.array().optional()
+  approvalLogMessages: ApprovalLogMessageCommonSchema.array().optional(),
+  group: z.string().optional(),
+  groupName: z.string().optional(),
+  stdLevel: z.string().optional(),
+  references: DocumentReferenceCommonSchema.array().optional(),
 })
 
 export type QueueCommonItem = z.infer<typeof QueueCommonItemSchema>
@@ -123,31 +144,13 @@ export const QueueCommonSchema = z.object({
 
 export type QueueCommon = z.infer<typeof QueueCommonSchema>
 
-
-const ClusterDocumentRelationshipCommonSchema = z.union([
-  z.literal('refqueue'),
-  z.literal('not-received'),
-  z.literal('not-received-2g'),
-  z.literal('not-received-3g'),
-  z.literal('withdrawnref')
-])
-
-const ClusterDocumentReferenceCommonSchema = z.object({
-  relationship: ClusterDocumentRelationshipCommonSchema,
-  draftName: z.string(),
-  sourceRfcNumber: z.number().optional(),
-  targetDraftName: z.string(),
-  targetRfcNumber: z.number().optional(),
-  targetDisposition: DispositionCommonSchema.optional(),
-})
-
-export type ClusterDocumentReferenceCommon = z.infer<typeof ClusterDocumentReferenceCommonSchema>
+export type DocumentReferenceCommon = z.infer<typeof DocumentReferenceCommonSchema>
 
 export const ClusterDocumentCommonSchema = z.object({
   name: z.string(),
   rfcNumber: z.number().optional(),
   disposition: DispositionCommonSchema.optional(),
-  references: ClusterDocumentReferenceCommonSchema.array(),
+  references: DocumentReferenceCommonSchema.array(),
   isReceived: z.boolean()
 })
 

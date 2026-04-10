@@ -2,7 +2,7 @@ import { DateTime } from 'luxon'
 import { PurpleApi, type ApiPubqQueueListRequest } from "../../generated/purple_client/index.ts";
 import { type QueueCommon, type QueueCommonItem, QueueCommonSchema, type BlockingReason } from '../../../website/app/utils/validators.ts'
 import { assertIsString } from "../utils/typescript.ts";
-import { parseApprovalLogMessages, parseDisposition, parseIanaStatus, parseLabels } from "../utils/converters.ts";
+import { parseApprovalLogMessages, parseDisposition, parseIanaStatus, parseLabels, parseReferences } from "../utils/converters.ts";
 import { groupBy } from "es-toolkit";
 
 type Props = {
@@ -32,6 +32,10 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         ianaStatus,
         stream,
         authors,
+        group,
+        groupName,
+        stdLevel,
+        references,
         finalApproval: finalApprovals,
         approvalLogMessage: approvalLogMessages,
       } = queueItem
@@ -52,6 +56,10 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         title,
         pages,
         stream,
+        group,
+        groupName: groupName ?? undefined,
+        stdLevel,
+        references: parseReferences(references),
         authors: authors.map(author => {
           const { titlepageName, isEditor } = author
           return {
