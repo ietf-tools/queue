@@ -14,7 +14,7 @@
     <span class="font-mono font-normal mr-1">
       {{ props.document.name }}
     </span>
-    <span class="ml-2 flex-inline gap-2 leading-2">
+    <span class="inline-flex ml-2 gap-2 leading-2">
       <BaseBadge v-if="props.document.disposition === 'published'" color="green" title="(Disposition: published)">
         published
       </BaseBadge>
