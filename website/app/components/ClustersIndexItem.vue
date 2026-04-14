@@ -14,12 +14,21 @@
     <span class="font-mono font-normal mr-1">
       {{ props.document.name }}
     </span>
-    <Icon v-if="props.document.disposition === 'published'" name="uil:books" title="(Disposition: published)" />
-    <Icon v-if="props.document.disposition === 'withdrawn'" name="uil:border-clear" title="(Disposition: withdrawn)" />
-    <Icon v-if="props.document.disposition === 'created'" name="uil:bookmark-full" title="(Disposition: created)" />
-    <Icon v-if="props.document.disposition === 'in_progress'" name="uil:brain" title="(Disposition: in progress)" />
-    <Icon v-if="props.document.isReceived" name="uil:envelope-receive" title="(Received)"/>
-    <Icon v-if="!props.document.isReceived" name="uil:envelope-block" title="(Not Received)"/>
+    <span class="ml-2 flex-inline gap-2 leading-2">
+      <BaseBadge v-if="props.document.disposition === 'published'" color="green" title="(Disposition: published)">
+        published
+      </BaseBadge>
+      <BaseBadge v-if="props.document.disposition === 'withdrawn'" color="blue" title="(Disposition: withdrawn)">
+        withdrawn
+      </BaseBadge>
+      <BaseBadge v-if="props.document.disposition === 'created'" color="green" title="(Disposition: created)">created
+      </BaseBadge>
+      <BaseBadge v-if="props.document.disposition === 'in_progress'" color="blue" title="(Disposition: in progress)">in
+        progress
+      </BaseBadge>
+      <BaseBadge v-if="props.document.isReceived" title="(Received)" color="pink">received</BaseBadge>
+      <BaseBadge v-if="!props.document.isReceived" title="(Not Received)" color="orange">not received</BaseBadge>
+    </span>
   </span>
 </template>
 
