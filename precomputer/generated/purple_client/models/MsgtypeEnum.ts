@@ -15,14 +15,16 @@
 
 /**
  * * `blank` - freeform
- * * `finalapproval` - final approval
+ * * `finalreview` - final review notification
  * * `publication` - publication announcement
+ * * `enqueuing` - enqueuing notification
  * @export
  */
 export const MsgtypeEnum = {
     Blank: 'blank',
-    Finalapproval: 'finalapproval',
-    Publication: 'publication'
+    Finalreview: 'finalreview',
+    Publication: 'publication',
+    Enqueuing: 'enqueuing'
 } as const;
 export type MsgtypeEnum = typeof MsgtypeEnum[keyof typeof MsgtypeEnum];
 

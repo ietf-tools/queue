@@ -4,6 +4,8 @@ import { type ClusterPackageCommon, ClusterPackageCommonSchema } from '../../../
 import { clusterMemberToClusterDocumentCommon } from "../utils/converters.ts";
 import { DateTime } from "luxon";
 
+type ClusterDocumentCommon = ClusterPackageCommon["cluster"]["documents"][number]
+
 type Props = {
   api: PurpleApi
   clusterNumber: number
@@ -24,7 +26,11 @@ export const getClusterPackage = async ({ api, clusterNumber }: Props): Promise<
     cluster: {
       number: cluster.number,
       allPublished: clusterDocuments.length > 0 ? clusterDocuments.every(document => document.disposition === 'published') : false,
-      documents: clusterDocuments.filter(clusterDocument => clusterDocument.disposition !== 'published'),
+      documents: clusterDocuments
+        .map((clusterDocument): ClusterDocumentCommon => {
+          return { ...clusterDocument }
+        })
+        .filter(clusterDocument => clusterDocument.disposition !== 'published')
     },
   }
 

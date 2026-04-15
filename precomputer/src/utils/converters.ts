@@ -97,14 +97,15 @@ type ClusterDocuments = NonNullable<Cluster["documents"]>
 type ClusterMember = ClusterDocuments[number]
 
 export const clusterMemberToClusterDocumentCommon = (clusterNumber: number, clusterMember: ClusterMember): ClusterDocumentCommon => {
-  const { name, rfcNumber, disposition, references, isReceived } = clusterMember
+  const { name, rfcNumber, disposition, references, isReceived, isBlocked } = clusterMember
 
   return {
     name,
     disposition: disposition ? parseDisposition(disposition) : undefined,
     isReceived: Boolean(isReceived),
     rfcNumber: rfcNumber ?? undefined,
-    references: parseReferences(references) 
+    references: parseReferences(references),
+    isBlocked: Boolean(isBlocked)
   }
 }
 
