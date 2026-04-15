@@ -1,7 +1,7 @@
 
 # MsgtypeEnum
 
-* `blank` - freeform * `finalapproval` - final approval * `publication` - publication announcement
+* `blank` - freeform * `finalreview` - final review notification * `publication` - publication announcement * `enqueuing` - enqueuing notification
 
 ## Properties
 

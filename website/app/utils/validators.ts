@@ -151,7 +151,8 @@ export const ClusterDocumentCommonSchema = z.object({
   rfcNumber: z.number().optional(),
   disposition: DispositionCommonSchema.optional(),
   references: DocumentReferenceCommonSchema.array(),
-  isReceived: z.boolean()
+  isReceived: z.boolean(),
+  isBlocked: z.boolean()
 })
 
 export type ClusterDocumentCommon = z.infer<typeof ClusterDocumentCommonSchema>
