@@ -4,15 +4,13 @@
     <Icon name="ei:spinner-3" size="1.3rem" class="animate-spin" />
   </div>
 
-  <div v-if="tooltip.text" class="absolute transition-all" :style="{
+  <div v-show="tooltip.text" class="absolute transition-all" :style="{
     left: `${tooltip.position[0]}px`,
     top: `${tooltip.position[1]}px`,
   }">
     <div
       class="absolute transition-all bottom-0 text-xs text-center bg-white dark:bg-black text-black dark:text-white border border-gray-400 rounded-md shadow-xl p-2 w-[15em]"
-      aria-atomic="true"
-      aria-live="polite"
-      >
+      aria-atomic="true" aria-live="polite">
       <p v-for="line in tooltip.text">{{ line }}</p>
     </div>
   </div>
@@ -58,8 +56,6 @@ const showLegend = ref(false)
 const hasMounted = ref(false)
 
 const clusterGraphData = computed(() => {
-  // delay building graph until this is available
-
   const newClusterGraphData: DataParam = {
     links: [],
     nodes: []
@@ -134,7 +130,7 @@ const clusterGraphData = computed(() => {
         const { draftName, targetDraftName, relationship } = reference
 
         return {
-          source: draftName, 
+          source: draftName,
           target: targetDraftName,
           rel: relationship,
         }
@@ -161,7 +157,7 @@ const attemptToRenderGraph = () => {
   }
 
   const graphData = structuredClone(
-    // the D3 code will mutate arg data so we'll make a copy
+    // the D3 code will mutate data so we'll make a copy
     clusterGraphData.value
   )
 
