@@ -52,11 +52,6 @@ type Props = {
 export function drawGraph({ data: _data, pushRouter, setTooltip }: Props) {
   const data = normalizeData(_data)
 
-  const zoom = d3
-    .zoom<SVGSVGElement, unknown>()
-    .scaleExtent([1 / 32, 32])
-    .on("zoom", zoomed)
-
   const width = 1000
   const height = 1000
 
@@ -71,7 +66,6 @@ export function drawGraph({ data: _data, pushRouter, setTooltip }: Props) {
     .attr('overflow', "visible")
     .attr("version", "1.1")
     .attr("viewBox", [-width / 2, -height / 2, width, height].join(" "))
-    .call(zoom)
 
   svg
     .append("defs")
@@ -379,11 +373,6 @@ export function drawGraph({ data: _data, pushRouter, setTooltip }: Props) {
       bbox.width + 2 * adjust,
       bbox.height + 2 * adjust,
     ])
-  }
-
-  function zoomed({ transform }: { transform: string }) {
-    link.attr("transform", transform)
-    node.attr("transform", transform)
   }
 
   return [
