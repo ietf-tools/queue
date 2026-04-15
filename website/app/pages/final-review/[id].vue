@@ -84,6 +84,28 @@ if (!data.value || status.value === 'success' && !data.value || status.value ===
   })
 }
 
+if (data.value && mode.value) {
+  if (mode.value.cluster) {
+    // if this specific cluster isn't in the final reviews data then 404
+    if (!data.value.items.some(item => item.clusters?.some(cluster => cluster === mode.value?.cluster))) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Cluster Not Found',
+        fatal: true
+      })
+    }
+  } else if (mode.value.draftName) {
+    // if this specific draft isn't in the final reviews data then 404
+    if (!data.value.items.some(item => item.name === mode.value?.draftName)) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Draft Not Found',
+        fatal: true
+      })
+    }
+  }
+}
+
 useQueueRfcEditorHead({
   title: `${id.value} final review`,
   canonicalPath: canonicalPath.value,

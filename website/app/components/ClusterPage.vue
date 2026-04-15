@@ -42,7 +42,7 @@ const { data: clusterPackage, error, status } = await useAsyncData(
   }
 )
 
-if (status.value === 'success' && clusterPackage === undefined) {
+if (status.value === 'error' || status.value === 'success' && clusterPackage === undefined) {
   throw createError({
     status: 404,
     statusText: 'Page Not Found',
