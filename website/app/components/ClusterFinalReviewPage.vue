@@ -15,8 +15,9 @@
       <p class="font-bold">Table of contents:</p>
       <ul class="mt-0 list-disc pl-6 text-black dark:text-white">
         <li v-for="(draft, index) in clusterDrafts" :key="draft.name">
-          <a :href="`#${makeDomId(draft.name, index)}`" :class="[ANCHOR_TAILWIND_STYLE, 'wrap-anywhere']">{{ draft.name
-            }}</a>
+          <a :href="`#${makeDomId(draft.name, index)}`" :class="[ANCHOR_TAILWIND_STYLE, 'wrap-anywhere']">
+            {{ draft.name }}
+          </a>
         </li>
       </ul>
     </div>

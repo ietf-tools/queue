@@ -1,6 +1,7 @@
 <template>
   <div v-if="finalReview">
-    <Heading :level="props.headingLevel" class="mb-1" :id="props.id" has-internal-link>
+    <Heading :level="props.headingLevel" :style-level="headingLevelPlusTwo" class="mb-1" :id="props.id"
+      has-internal-link>
       <span class="font-mono">{{ props.draftName }}</span> final review
     </Heading>
 
@@ -46,6 +47,7 @@
 </template>
 
 <script setup lang="ts">
+import { clamp } from 'es-toolkit'
 import { DateTime } from 'luxon'
 
 type Props = {
@@ -58,11 +60,26 @@ type Props = {
 const props = defineProps<Props>()
 
 const headingLevelPlusOne = computed((): HeadingLevel => {
-  if (props.headingLevel === '6') {
-    return '6'
-  }
-  return (parseInt(props.headingLevel, 10) + 1).toString() as HeadingLevel
+  return (
+    clamp(
+      parseInt(props.headingLevel, 10) + 1,
+      1,
+      6
+    )
+  ).toString() as HeadingLevel
 })
+
+
+const headingLevelPlusTwo = computed((): HeadingLevel => {
+  return (
+    clamp(
+      parseInt(props.headingLevel, 10) + 2,
+      1,
+      6
+    )
+  ).toString() as HeadingLevel
+})
+
 
 const finalReview = computed(() => {
   if (!props.queue) return null
