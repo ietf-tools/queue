@@ -23,6 +23,12 @@ const clusterNumber = computed(() => route.params.number ? parseInt(route.params
 
 const canonicalPath = computed(() => clusterNumber.value ? clusterNumberPathBuilder(clusterNumber.value) : undefined)
 
+if (route.fullPath !== canonicalPath.value) {
+  await navigateTo({
+    path: canonicalPath.value
+  })
+}
+
 useQueueRfcEditorHead({
   title: 'Clusters of upcoming RFCs',
   canonicalPath: canonicalPath.value,
