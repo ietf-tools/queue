@@ -14,12 +14,6 @@
       <p v-for="line in tooltip.text">{{ line }}</p>
     </div>
   </div>
-
-  <div class="flex gap-2 justify-between py-2 px-1.5">
-    <span class="flex flex-row items-center text-sm pl-1">
-      Pan and zoom the dependency graph after the layout settles.
-    </span>
-  </div>
 </template>
 
 <script setup lang="ts">
