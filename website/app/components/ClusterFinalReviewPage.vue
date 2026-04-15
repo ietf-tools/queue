@@ -1,6 +1,7 @@
 <template>
   <div v-if="props.queue">
-    <Heading level="1" class="mb-2">
+    <Heading level="1" style-level="3"
+      class="w-full mx-2 mb-2 md:mb-3 text-gray-600 dark:text-gray-200 font-semibold text-balance">
       Cluster <span class="font-mono">{{ props.cluster }}</span> final review
       (formerly auth48)
     </Heading>
@@ -14,7 +15,8 @@
       <p class="font-bold">Table of contents:</p>
       <ul class="mt-0 list-disc pl-6 text-black dark:text-white">
         <li v-for="(draft, index) in clusterDrafts" :key="draft.name">
-          <a :href="`#${makeDomId(draft.name, index)}`" :class="[ANCHOR_TAILWIND_STYLE, 'wrap-anywhere']">{{ draft.name }}</a>
+          <a :href="`#${makeDomId(draft.name, index)}`" :class="[ANCHOR_TAILWIND_STYLE, 'wrap-anywhere']">{{ draft.name
+            }}</a>
         </li>
       </ul>
     </div>
