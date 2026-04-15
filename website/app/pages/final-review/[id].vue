@@ -31,7 +31,7 @@ const mode = computed(() => {
     return undefined
   }
 
-  const cluster = id.value.match(/c(\d+)/i)
+  const cluster = id.value.match(/^c(\d+)$/i)
 
   if (!cluster || !cluster[1]) {
     return {
