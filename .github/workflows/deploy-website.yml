@@ -158,7 +158,7 @@ jobs:
   # -----------------------------------------------------------------
   staging:
     name: Deploy to Staging
-    if: ${{ !failure() && !cancelled() && (inputs.deploy == 'Staging Only' || inputs.deploy == 'Staging + Prod') }}
+    if: ${{ !failure() && !cancelled() && (inputs.deploy == 'Staging Only' || inputs.deploy == 'Staging + Demo' || inputs.deploy == 'Staging + Prod') }}
     needs: [build]
     runs-on: ubuntu-latest
     environment:
