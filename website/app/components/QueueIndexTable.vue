@@ -175,11 +175,20 @@ const columns = [
         ...value.map(assignmentsByRole => {
           const badge = h(BaseBadge, { class: '' }, humanFriendlyName(assignmentsByRole.role))
           return h('li', { class: 'inline-flex flex-wrap items-center gap-1' }, [
-            assignmentsByRole.role === 'final_review_editor' ? h(Anchor, { href: finalReviewPathBuilder(data.row.original.name) }, () => badge) : badge,
-            assignmentsByRole.blockingReasons ? h('span', { class: 'text-xs text-gray-500 dark:text-neutral-400' },
-              assignmentsByRole.blockingReasons.map(blockingReason =>
-                blockingReason.reason.name
-              )) : null,
+            assignmentsByRole.role === 'final_review_editor' ?
+              h(Anchor, { href: finalReviewPathBuilder(data.row.original.name) },
+                () =>
+                  [
+                    badge,
+                    h('span', { class: 'underline' }, 'more details')
+                  ])
+              : badge,
+            assignmentsByRole.blockingReasons ?
+              h('span', { class: 'text-xs text-gray-500 dark:text-neutral-400' },
+                assignmentsByRole.blockingReasons.map(blockingReason =>
+                  blockingReason.reason.name
+                ))
+              : null,
           ])
         })])
     }
