@@ -29,8 +29,6 @@ const LEGACY_REFQUEUE_ALIAS = 'IN-QUEUE'
  * Generates a queue.xml file aNd validate against the XSD
  */
 export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
-  console.log(JSON.stringify(queue))
-
   const dom = await getDOMParser()
 
   const doc = dom.parseFromString(
