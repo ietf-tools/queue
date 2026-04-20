@@ -84,7 +84,7 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
 
       // was <state>MISSREF*R(1G)</state>
       // now lists each assignment rather than a derived state
-      if (item.assignmentsByRoles) {
+      if (item.assignmentsByRoles && item.assignmentsByRoles.length > 0) {
         const assignmentsEl = doc.createElementNS(NAMESPACE, 'assignments')
         entryEl.append(assignmentsEl)
 
