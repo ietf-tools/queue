@@ -10,16 +10,16 @@
       <RpcThead>
         <tr>
           <RpcTh>Name</RpcTh>
-          <RpcTh class="text-center">Approved?</RpcTh>
+          <RpcTh text-align="center">Approved?</RpcTh>
           <RpcTh>Date of Approval</RpcTh>
         </tr>
       </RpcThead>
       <RpcTbody>
         <tr v-for="approverItem in finalReview.finalApprovals">
           <RpcTd>{{ approverItem.approverName }}</RpcTd>
-          <RpcTd class="text-center">
-            <abbr v-if="Boolean(approverItem.approvedAtIso)" title="Yes" class="no-underline">Y</abbr>
-            <abbr v-else title="No" class="no-underline">N</abbr>
+          <RpcTd text-align="center">
+            <abbr v-if="Boolean(approverItem.approvedAtIso)" title="Yes" class="no-underline px-2 py-1">Y</abbr>
+            <abbr v-else title="No" class="no-underline px-2 py-1">N</abbr>
           </RpcTd>
           <RpcTd>
             <time v-if="approverItem.approvedAtIso" :datetime="approverItem.approvedAtIso">

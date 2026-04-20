@@ -180,7 +180,7 @@ const columns = [
                 () =>
                   [
                     badge,
-                    h('span', { class: 'underline' }, 'more details')
+                    h('span', { class: 'underline text-xs ml-1' }, 'more details')
                   ])
               : badge,
             assignmentsByRole.blockingReasons ?

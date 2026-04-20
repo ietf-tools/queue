@@ -1,7 +1,10 @@
 <template>
-  <th
-    class="px-1 first:pl-3 last:pr-3 py-3.5 text-left text-sm content-start font-semibold text-gray-900 dark:text-neutral-400"
-    :aria-sort="props.sortDirection ? props.sortDirection === 'asc' ? 'ascending' : 'descending' : undefined">
+  <th :class="[
+    'px-1 first:pl-3 last:pr-3 py-3.5 text-sm content-start font-semibold text-gray-900 dark:text-neutral-400',
+    props.textAlign === 'left' ? 'text-left' : '',
+    props.textAlign === 'center' ? 'text-center' : '',
+    props.textAlign === 'right' ? 'text-right' : '',
+  ]" :aria-sort="props.sortDirection ? props.sortDirection === 'asc' ? 'ascending' : 'descending' : undefined">
     <div class="flex flex-row">
       <div class="text-gray-800 dark:text-gray-200">
         <slot />
@@ -25,7 +28,8 @@ type Props = {
   columnName?: string
   isSortable?: boolean
   sortDirection?: false | "desc" | "asc"
+  textAlign?: 'left' | 'center' | 'right'
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), { textAlign: 'left' })
 </script>
