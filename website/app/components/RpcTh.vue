@@ -1,11 +1,11 @@
 <template>
-  <th :class="[
-    'px-1 first:pl-3 last:pr-3 py-3.5 text-sm content-start font-semibold text-gray-900 dark:text-neutral-400',
-    props.textAlign === 'left' ? 'text-left' : '',
-    props.textAlign === 'center' ? 'text-center' : '',
-    props.textAlign === 'right' ? 'text-right' : '',
-  ]" :aria-sort="props.sortDirection ? props.sortDirection === 'asc' ? 'ascending' : 'descending' : undefined">
-    <div class="flex flex-row">
+  <th class="px-1 first:pl-3 last:pr-3 py-3.5 text-sm content-start font-semibold text-gray-900 dark:text-neutral-400"
+    :aria-sort="props.sortDirection ? props.sortDirection === 'asc' ? 'ascending' : 'descending' : undefined">
+    <div :class="['flex flex-row',
+      props.textAlign === 'left' ? 'text-left justify-start' : '',
+      props.textAlign === 'center' ? 'text-center justify-center' : '',
+      props.textAlign === 'right' ? 'text-right justify-end' : '',
+    ]">
       <div class="text-gray-800 dark:text-gray-200">
         <slot />
       </div>
