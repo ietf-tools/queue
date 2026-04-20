@@ -92,7 +92,7 @@ const columns = [
       if (data.row.original.allPublished) {
         return h('span', 'All published')
       }
-      return h('ul', { class: 'inline-flex flex-wrap gap-2' }, docs.map(document => {
+      return h('ul', { class: 'flex flex-col gap-2' }, docs.map(document => {
         return h('li', h(ClustersIndexItem, { document }))
       }))
     },
