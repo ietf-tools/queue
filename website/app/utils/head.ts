@@ -62,6 +62,7 @@ export const useQueueRfcEditorHead = (props: UseQueueRfcEditorProps) => {
          * See related DataTracker issue https://github.com/ietf-tools/datatracker/issues/9667
          **/
         'data-nosnippet': "true",
+        tagPosition: 'bodyOpen',
         innerHTML: 'Your browser JavaScript is disabled. Most of this site works without it, but some features —like dropdown menus— require it. Please enable JavaScript and reload the page.',
       }
     ]
