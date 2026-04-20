@@ -87,7 +87,7 @@ const linkPreviewImageBuilder = (mode: 'opengraph' | 'twitter', publicSiteOrigin
   }
   const widthHeight = dimensions[mode]
   if (!widthHeight || !widthHeight[0] || !widthHeight[1]) {
-    throw Error(`Cannot find dimensions from mode ${mode}, ${widthHeight}`)
+    throw Error(`Cannot find dimensions from mode ${mode}, ${String(widthHeight)}`)
   }
   const path = linkPreviewImageUrlBuilder(widthHeight[0], widthHeight[1])
 
