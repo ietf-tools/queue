@@ -70,7 +70,7 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
       // eg <draft>draft-ietf-ecrit-similar-location-19.txt</draft>
       const draftEl = doc.createElementNS(NAMESPACE, 'draft')
       entryEl.append(draftEl)
-      draftEl.textContent = item.rev
+      draftEl.textContent = `${item.name}-${item.rev}.txt`
 
       // eg <date-received>2022-03-07</date-received>
       const enqueuedAtIsoDateTime = item.enqueuedAtIso
