@@ -23,6 +23,7 @@ const xsdString = fsPromises.readFile(xsdPath, 'utf-8')
 const NAMESPACE = 'http://www.rfc-editor.org/rfc-editor-queue'
 const XML_DECLARATION = '<?xml version="1.0" encoding="utf-8"?>'
 const XML_COMMENT = '<!-- See queue.xsd for validation -->'
+const LEGACY_REFQUEUE_ALIAS = 'IN-QUEUE'
 
 /**
  * Generates a queue.xml file aNd validate against the XSD
@@ -71,7 +72,7 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
       // eg <draft>draft-ietf-ecrit-similar-location-19.txt</draft>
       const draftEl = doc.createElementNS(NAMESPACE, 'draft')
       entryEl.append(draftEl)
-      draftEl.textContent = item.draftUrl
+      draftEl.textContent = item.rev
 
       // eg <date-received>2022-03-07</date-received>
       const enqueuedAtIsoDateTime = item.enqueuedAtIso
@@ -107,16 +108,20 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
 
         const refStateEl = doc.createElementNS(NAMESPACE, 'ref-state')
         normRefEl.append(refStateEl)
-        refStateEl.textContent = reference.relationship.toUpperCase()
+        if (reference.relationship === 'refqueue') {
+          refStateEl.textContent = LEGACY_REFQUEUE_ALIAS
+        } else {
+          refStateEl.textContent = reference.relationship.toUpperCase()
+        }
       })
 
-      // eg <authors>B. Rosen, R. Marshall, J. Martin</authors>
+      // eg <authors>J. Jeong, Ed., C. Chung, T. Ahn, R. Kumar, S. Hares</authors>
       const authorsEl = doc.createElementNS(NAMESPACE, 'authors')
       entryEl.append(authorsEl)
 
       authorsEl.textContent = item.authors
         .map((author) => {
-          return `${author.titlepageName}`
+          return `${author.titlepageName}${author.isEditor ? ', Ed.' : ''}`
         })
         .join(', ')
 

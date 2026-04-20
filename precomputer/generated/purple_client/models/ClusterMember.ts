@@ -58,6 +58,16 @@ export interface ClusterMember {
      */
     readonly isReceived?: boolean | null;
     /**
+     * True if this document is a normative reference target of any other
+     * cluster member in same cluster.
+     * 
+     * Uses the pre-computed set from ClusterMemberListSerializer.to_representation
+     * when available, falling back to a direct lookup.
+     * @type {boolean}
+     * @memberof ClusterMember
+     */
+    readonly isNormref?: boolean;
+    /**
      * 
      * @type {number}
      * @memberof ClusterMember
@@ -95,6 +105,7 @@ export function ClusterMemberFromJSONTyped(json: any, ignoreDiscriminator: boole
         'disposition': json['disposition'] == null ? undefined : json['disposition'],
         'references': json['references'] == null ? undefined : ((json['references'] as Array<any>).map(RpcRelatedDocumentFromJSON)),
         'isReceived': json['is_received'] == null ? undefined : json['is_received'],
+        'isNormref': json['is_normref'] == null ? undefined : json['is_normref'],
         'order': json['order'],
         'isBlocked': json['is_blocked'] == null ? undefined : json['is_blocked'],
     };
@@ -104,7 +115,7 @@ export function ClusterMemberToJSON(json: any): ClusterMember {
     return ClusterMemberToJSONTyped(json, false);
 }
 
-export function ClusterMemberToJSONTyped(value?: Omit<ClusterMember, 'rfc_number'|'disposition'|'references'|'is_received'|'is_blocked'> | null, ignoreDiscriminator: boolean = false): any {
+export function ClusterMemberToJSONTyped(value?: Omit<ClusterMember, 'rfc_number'|'disposition'|'references'|'is_received'|'is_normref'|'is_blocked'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

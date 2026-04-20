@@ -31,6 +31,7 @@ Name | Type
 `groupName` | string
 `stdLevel` | string
 `references` | [Array&lt;RpcRelatedDocument&gt;](RpcRelatedDocument.md)
+`rev` | string
 
 ## Example
 
@@ -63,6 +64,7 @@ const example = {
   "groupName": null,
   "stdLevel": null,
   "references": null,
+  "rev": null,
 } satisfies PublicQueueItem
 
 console.log(example)

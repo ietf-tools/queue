@@ -1,30 +1,29 @@
 
-# Draft
+# ClusterMemberHistory
 
+Serialize a HistoricalClusterMember record as a membership change event
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`name` | string
-`rev` | string
-`title` | string
-`pages` | number
-`intendedStdLevel` | string
+`time` | Date
+`by` | string
+`type` | string
+`draftName` | string
 
 ## Example
 
 ```typescript
-import type { Draft } from ''
+import type { ClusterMemberHistory } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "name": null,
-  "rev": null,
-  "title": null,
-  "pages": null,
-  "intendedStdLevel": null,
-} satisfies Draft
+  "time": null,
+  "by": null,
+  "type": null,
+  "draftName": null,
+} satisfies ClusterMemberHistory
 
 console.log(example)
 
@@ -33,7 +32,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as Draft
+const exampleParsed = JSON.parse(exampleJSON) as ClusterMemberHistory
 console.log(exampleParsed)
 ```
 

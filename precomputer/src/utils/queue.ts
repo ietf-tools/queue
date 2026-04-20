@@ -33,6 +33,7 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         name,
         title,
         disposition,
+        rev,
         externalDeadline,
         labels,
         assignmentSet,
@@ -40,7 +41,6 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         cluster,
         pages,
         enqueuedAt,
-        draftUrl,
         ianaStatus,
         stream,
         authors,
@@ -52,8 +52,8 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         approvalLogMessage: approvalLogMessages
       } = queueItem
       assertIsString(name)
+      assertIsString(rev)
       assertIsString(title)
-      assertIsString(draftUrl)
 
       const clusterNumber: number | undefined = cluster?.number ?? undefined
 
@@ -65,7 +65,7 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
 
       return {
         name,
-        draftUrl,
+        rev,
         title,
         pages,
         stream,

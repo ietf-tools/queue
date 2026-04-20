@@ -18,6 +18,7 @@ docs/Capability.md
 docs/Cluster.md
 docs/ClusterAddRemoveDocumentRequest.md
 docs/ClusterMember.md
+docs/ClusterMemberHistory.md
 docs/ClusterMemberRequest.md
 docs/ClusterReorderDocumentsRequest.md
 docs/ClusterRequest.md
@@ -58,6 +59,7 @@ docs/MsgtypeEnum.md
 docs/Name.md
 docs/NestedAssignment.md
 docs/PaginatedBaseDatatrackerPersonList.md
+docs/PaginatedClusterMemberHistoryList.md
 docs/PaginatedDocumentCommentList.md
 docs/PaginatedRfcToBeList.md
 docs/PatchedActionHolderRequest.md
@@ -130,6 +132,7 @@ models/Capability.ts
 models/Cluster.ts
 models/ClusterAddRemoveDocumentRequest.ts
 models/ClusterMember.ts
+models/ClusterMemberHistory.ts
 models/ClusterMemberRequest.ts
 models/ClusterReorderDocumentsRequest.ts
 models/ClusterRequest.ts
@@ -170,6 +173,7 @@ models/MsgtypeEnum.ts
 models/Name.ts
 models/NestedAssignment.ts
 models/PaginatedBaseDatatrackerPersonList.ts
+models/PaginatedClusterMemberHistoryList.ts
 models/PaginatedDocumentCommentList.ts
 models/PaginatedRfcToBeList.ts
 models/PatchedActionHolderRequest.ts

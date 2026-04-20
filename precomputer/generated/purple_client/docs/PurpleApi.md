@@ -17,6 +17,7 @@ All URIs are relative to *http://localhost*
 | [**capabilitiesRetrieve**](PurpleApi.md#capabilitiesretrieve) | **GET** /api/rpc/capabilities/{slug}/ |  |
 | [**clustersAddDocument**](PurpleApi.md#clustersadddocument) | **POST** /api/rpc/clusters/{number}/add-document/ |  |
 | [**clustersCreate**](PurpleApi.md#clusterscreate) | **POST** /api/rpc/clusters/ |  |
+| [**clustersHistoryList**](PurpleApi.md#clustershistorylist) | **GET** /api/rpc/clusters/{number}/history/ |  |
 | [**clustersList**](PurpleApi.md#clusterslist) | **GET** /api/rpc/clusters/ |  |
 | [**clustersPartialUpdate**](PurpleApi.md#clusterspartialupdate) | **PATCH** /api/rpc/clusters/{number}/ |  |
 | [**clustersRemoveDocument**](PurpleApi.md#clustersremovedocument) | **POST** /api/rpc/clusters/{number}/remove-document/ |  |
@@ -1030,6 +1031,83 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## clustersHistoryList
+
+> PaginatedClusterMemberHistoryList clustersHistoryList(number, limit, offset)
+
+
+
+List the add/remove/reorder history for a cluster\&#39;s membership
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PurpleApi,
+} from '';
+import type { ClustersHistoryListRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: cookieAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PurpleApi(config);
+
+  const body = {
+    // number
+    number: 56,
+    // number | Number of results to return per page. (optional)
+    limit: 56,
+    // number | The initial index from which to return the results. (optional)
+    offset: 56,
+  } satisfies ClustersHistoryListRequest;
+
+  try {
+    const data = await api.clustersHistoryList(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **number** | `number` |  | [Defaults to `undefined`] |
+| **limit** | `number` | Number of results to return per page. | [Optional] [Defaults to `undefined`] |
+| **offset** | `number` | The initial index from which to return the results. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**PaginatedClusterMemberHistoryList**](PaginatedClusterMemberHistoryList.md)
+
+### Authorization
+
+[cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

@@ -14,6 +14,8 @@ Name | Type
 `targetRfcNumber` | number
 `sourceRfcNumber` | number
 `targetDisposition` | string
+`targetIsReceived` | boolean
+`targetIsBlocked` | boolean
 
 ## Example
 
@@ -29,6 +31,8 @@ const example = {
   "targetRfcNumber": null,
   "sourceRfcNumber": null,
   "targetDisposition": null,
+  "targetIsReceived": null,
+  "targetIsBlocked": null,
 } satisfies RpcRelatedDocument
 
 console.log(example)

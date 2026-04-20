@@ -241,6 +241,12 @@ export interface PublicQueueItem {
      * @memberof PublicQueueItem
      */
     readonly references?: Array<RpcRelatedDocument>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicQueueItem
+     */
+    readonly rev?: string | null;
 }
 
 /**
@@ -291,6 +297,7 @@ export function PublicQueueItemFromJSONTyped(json: any, ignoreDiscriminator: boo
         'groupName': json['group_name'] == null ? undefined : json['group_name'],
         'stdLevel': json['std_level'],
         'references': json['references'] == null ? undefined : ((json['references'] as Array<any>).map(RpcRelatedDocumentFromJSON)),
+        'rev': json['rev'] == null ? undefined : json['rev'],
     };
 }
 
@@ -298,7 +305,7 @@ export function PublicQueueItemToJSON(json: any): PublicQueueItem {
     return PublicQueueItemToJSONTyped(json, false);
 }
 
-export function PublicQueueItemToJSONTyped(value?: Omit<PublicQueueItem, 'id'|'name'|'labels'|'cluster'|'assignment_set'|'actionholder_set'|'pending_activities'|'pages'|'final_approval'|'iana_status'|'blocking_reasons'|'approval_log_message'|'group_name'|'references'> | null, ignoreDiscriminator: boolean = false): any {
+export function PublicQueueItemToJSONTyped(value?: Omit<PublicQueueItem, 'id'|'name'|'labels'|'cluster'|'assignment_set'|'actionholder_set'|'pending_activities'|'pages'|'final_approval'|'iana_status'|'blocking_reasons'|'approval_log_message'|'group_name'|'references'|'rev'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

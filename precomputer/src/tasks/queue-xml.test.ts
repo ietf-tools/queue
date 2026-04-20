@@ -8,7 +8,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
     items: [
       {
         name: 'draft-ietf-ecrit-similar-location',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'A LoST extension to return complete and similar location info',
         stream: 'ietf',
         consensus: true,
@@ -43,7 +43,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-i2nsf-applicability',
-        draftUrl: 'x',
+        rev: 'x',
         title:
           'Applicability of Interfaces to Network Security Functions to Network-Based Security Services',
         stream: 'ietf',
@@ -95,7 +95,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-jmap-calendars',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'JSON Meta Application Protocol (JMAP) for Calendars',
         stream: 'ietf',
         consensus: true,
@@ -135,7 +135,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-halen-fedae',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Mutually Authenticating TLS in the context of Federations',
         stream: 'ise',
         consensus: false,
@@ -174,7 +174,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-stir-servprovider-oob',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Out-of-Band STIR for Service Providers',
         stream: 'ietf',
         consensus: false,
@@ -203,7 +203,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-opsawg-oam-characterization',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Guidelines for Characterizing the Term "OAM"',
         stream: 'ietf',
         consensus: true,
@@ -226,7 +226,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-scim-device-model',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Device Schema Extensions to the SCIM model',
         stream: 'ietf',
         consensus: false,
@@ -268,7 +268,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-pquip-pqc-engineers',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Post-Quantum Cryptography for Engineers',
         stream: 'ietf',
         consensus: true,
@@ -300,7 +300,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-tsvwg-careful-resume',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Convergence of Congestion Control from Retained State',
         stream: 'ietf',
         consensus: true,
@@ -325,7 +325,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-alto-oam-yang',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'YANG Data Models for the Application-Layer Traffic Optimization (ALTO) Protocol',
         stream: 'ietf',
         consensus: true,
@@ -370,7 +370,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-cose-merkle-tree-proofs',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'COSE (CBOR Object Signing and Encryption) Receipts',
         stream: 'ietf',
         consensus: false,
@@ -410,7 +410,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-tls-rfc8446bis',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'The Transport Layer Security (TLS) Protocol Version 1.3',
         stream: 'ietf',
         consensus: false,
@@ -444,7 +444,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-radext-reverse-coa',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Reverse Change-of-Authorization (CoA) in RADIUS/(D)TLS',
         stream: 'ietf',
         consensus: true,
@@ -478,7 +478,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-suit-trust-domains',
-        draftUrl: 'x',
+        rev: 'x',
         title:
           'Software Update for the Internet of Things (SUIT) Manifest Extensions for Multiple Trust Domain',
         stream: 'ietf',
@@ -520,7 +520,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-suit-manifest',
-        draftUrl: 'x',
+        rev: 'x',
         title:
           'A Concise Binary Object Representation (CBOR)-based Serialization Format for the Software Updates for Internet of Things (SUIT) Manifest',
         stream: 'ietf',
@@ -582,7 +582,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-bier-php',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'BIER Penultimate Hop Popping',
         stream: 'ietf',
         consensus: true,
@@ -618,7 +618,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-tls-tls12-frozen',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'TLS 1.2 is in Feature Freeze',
         stream: 'ietf',
         consensus: true,
@@ -666,7 +666,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-netconf-over-tls13',
-        draftUrl: 'x',
+        rev: 'x',
         title:
           'Updates to Using the NETCONF Protocol over Transport Layer Security (TLS) with Mutual X.509 Authentication',
         stream: 'ietf',
@@ -715,7 +715,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-i2nsf-registration-interface-dm',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'I2NSF Registration Interface YANG Data Model for NSF Capability Registration',
         stream: 'ietf',
         consensus: true,
@@ -766,7 +766,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-dmarc-dmarcbis',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Domain-based Message Authentication, Reporting, and Conformance (DMARC)',
         stream: 'ietf',
         consensus: true,
@@ -809,7 +809,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-tls-8773bis',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'TLS 1.3 Extension for Using Certificates with an External Pre-Shared Key',
         stream: 'ietf',
         consensus: false,
@@ -845,7 +845,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-teas-ietf-network-slice-nbi-yang',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'A YANG Data Model for the RFC 9543 Network Slice Service',
         stream: 'ietf',
         consensus: true,
@@ -882,7 +882,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-roll-dao-projection',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Root-initiated Routing State in RPL',
         stream: 'ietf',
         consensus: true,
@@ -935,7 +935,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-pce-pceps-tls13',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Updates for PCEPS: TLS Connection Establishment Restrictions',
         stream: 'ietf',
         consensus: true,
@@ -988,7 +988,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-lamps-rfc5019bis',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Updates to Lightweight OCSP Profile for High Volume Environments',
         stream: 'ietf',
         consensus: true,
@@ -1046,7 +1046,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-emailcore-rfc5322bis',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Internet Message Format',
         stream: 'ietf',
         consensus: true,
@@ -1083,7 +1083,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-dmarc-aggregate-reporting',
-        draftUrl: 'x',
+        rev: 'x',
         title:
           'Domain-based Message Authentication, Reporting, and Conformance (DMARC) Aggregate Reporting',
         stream: 'ietf',
@@ -1111,7 +1111,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-raw-architecture',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Reliable and Available Wireless Architecture',
         stream: 'ietf',
         consensus: true,
@@ -1152,7 +1152,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-i2nsf-capability-data-model',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'I2NSF Capability YANG Data Model',
         stream: 'ietf',
         consensus: true,
@@ -1216,7 +1216,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-emailcore-rfc5321bis',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Simple Mail Transfer Protocol',
         stream: 'ietf',
         consensus: true,
@@ -1253,7 +1253,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-ccamp-l1csm-yang',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'A YANG Data Model for L1 Connectivity Service Model (L1CSM)',
         stream: 'ietf',
         consensus: true,
@@ -1291,7 +1291,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-ccamp-layer1-types',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Common YANG Data Types for Layer 1 Networks',
         stream: 'ietf',
         consensus: true,
@@ -1325,7 +1325,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-i2nsf-consumer-facing-interface-dm',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'I2NSF Consumer-Facing Interface YANG Data Model',
         stream: 'ietf',
         consensus: true,
@@ -1376,7 +1376,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-6man-rfc6724-update',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Prioritizing known-local IPv6 ULAs through address selection policy',
         stream: 'ietf',
         consensus: true,
@@ -1400,7 +1400,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-i2nsf-nsf-facing-interface-dm',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'I2NSF Network Security Function-Facing Interface YANG Data Model',
         stream: 'ietf',
         consensus: true,
@@ -1451,7 +1451,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-oauth-browser-based-apps',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'OAuth 2.0 for Browser-Based Applications',
         stream: 'ietf',
         consensus: true,
@@ -1495,7 +1495,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-ccamp-otn-topo-yang',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'A YANG Data Model for Optical Transport Network Topology',
         stream: 'ietf',
         consensus: true,
@@ -1533,7 +1533,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-suit-mti',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Cryptographic Algorithms for Internet of Things (IoT) Devices',
         stream: 'ietf',
         consensus: true,
@@ -1569,7 +1569,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-ippm-capacity-protocol',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'UDP Speed Test Protocol for One-way IP Capacity Metric Measurement',
         stream: 'ietf',
         consensus: true,
@@ -1617,7 +1617,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-tls-hybrid-design',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Hybrid key exchange in TLS 1.3',
         stream: 'ietf',
         consensus: false,
@@ -1651,7 +1651,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-suit-mud',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Strong Assertions of IoT Network Access Requirements',
         stream: 'ietf',
         consensus: true,
@@ -1686,7 +1686,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-pquip-hybrid-signature-spectrums',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Hybrid signature spectrums',
         stream: 'ietf',
         consensus: false,
@@ -1734,7 +1734,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-ietf-raw-technologies',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'Reliable and Available Wireless (RAW) Technologies',
         stream: 'ietf',
         consensus: true,
@@ -1797,7 +1797,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
       },
       {
         name: 'draft-briscoe-docsis-q-protection',
-        draftUrl: 'x',
+        rev: 'x',
         title: 'The DOCSIS(r) Queue Protection Algorithm to Preserve Low Latency',
         stream: 'ise',
         consensus: false,

@@ -43,6 +43,12 @@ export interface Draft {
      * @memberof Draft
      */
     readonly pages?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Draft
+     */
+    readonly intendedStdLevel?: string;
 }
 
 /**
@@ -66,6 +72,7 @@ export function DraftFromJSONTyped(json: any, ignoreDiscriminator: boolean): Dra
         'rev': json['rev'] == null ? undefined : json['rev'],
         'title': json['title'] == null ? undefined : json['title'],
         'pages': json['pages'] == null ? undefined : json['pages'],
+        'intendedStdLevel': json['intended_std_level'] == null ? undefined : json['intended_std_level'],
     };
 }
 
@@ -73,7 +80,7 @@ export function DraftToJSON(json: any): Draft {
     return DraftToJSONTyped(json, false);
 }
 
-export function DraftToJSONTyped(value?: Omit<Draft, 'name'|'rev'|'title'|'pages'> | null, ignoreDiscriminator: boolean = false): any {
+export function DraftToJSONTyped(value?: Omit<Draft, 'name'|'rev'|'title'|'pages'|'intended_std_level'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

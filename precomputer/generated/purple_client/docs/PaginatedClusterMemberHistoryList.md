@@ -1,30 +1,28 @@
 
-# Draft
+# PaginatedClusterMemberHistoryList
 
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`name` | string
-`rev` | string
-`title` | string
-`pages` | number
-`intendedStdLevel` | string
+`count` | number
+`next` | string
+`previous` | string
+`results` | [Array&lt;ClusterMemberHistory&gt;](ClusterMemberHistory.md)
 
 ## Example
 
 ```typescript
-import type { Draft } from ''
+import type { PaginatedClusterMemberHistoryList } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "name": null,
-  "rev": null,
-  "title": null,
-  "pages": null,
-  "intendedStdLevel": null,
-} satisfies Draft
+  "count": 123,
+  "next": http://api.example.org/accounts/?offset=400&limit=100,
+  "previous": http://api.example.org/accounts/?offset=200&limit=100,
+  "results": null,
+} satisfies PaginatedClusterMemberHistoryList
 
 console.log(example)
 
@@ -33,7 +31,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as Draft
+const exampleParsed = JSON.parse(exampleJSON) as PaginatedClusterMemberHistoryList
 console.log(exampleParsed)
 ```
 

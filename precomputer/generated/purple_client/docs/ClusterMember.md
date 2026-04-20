@@ -11,6 +11,7 @@ Name | Type
 `disposition` | string
 `references` | [Array&lt;RpcRelatedDocument&gt;](RpcRelatedDocument.md)
 `isReceived` | boolean
+`isNormref` | boolean
 `order` | number
 `isBlocked` | boolean
 
@@ -26,6 +27,7 @@ const example = {
   "disposition": null,
   "references": null,
   "isReceived": null,
+  "isNormref": null,
   "order": null,
   "isBlocked": null,
 } satisfies ClusterMember

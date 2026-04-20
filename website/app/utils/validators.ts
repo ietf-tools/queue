@@ -117,8 +117,8 @@ const DocumentReferenceCommonSchema = z.object({
 
 export const QueueCommonItemSchema = z.object({
   name: z.string(),
-  draftUrl: z.string(),
   title: z.string(),
+  rev: z.string(),
   stream: z.string().optional(),
   consensus: z.boolean(),
   finalApprovals: FinalApprovalSchema.array().optional(),

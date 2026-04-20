@@ -52,6 +52,7 @@ import type {
   Name,
   NestedAssignment,
   PaginatedBaseDatatrackerPersonList,
+  PaginatedClusterMemberHistoryList,
   PaginatedDocumentCommentList,
   PaginatedRfcToBeList,
   PatchedActionHolderRequest,
@@ -170,6 +171,8 @@ import {
     NestedAssignmentToJSON,
     PaginatedBaseDatatrackerPersonListFromJSON,
     PaginatedBaseDatatrackerPersonListToJSON,
+    PaginatedClusterMemberHistoryListFromJSON,
+    PaginatedClusterMemberHistoryListToJSON,
     PaginatedDocumentCommentListFromJSON,
     PaginatedDocumentCommentListToJSON,
     PaginatedRfcToBeListFromJSON,
@@ -302,6 +305,12 @@ export interface ClustersAddDocumentRequest {
 
 export interface ClustersCreateRequest {
     clusterRequest: ClusterRequest;
+}
+
+export interface ClustersHistoryListRequest {
+    number: number;
+    limit?: number;
+    offset?: number;
 }
 
 export interface ClustersListRequest {
@@ -1383,6 +1392,59 @@ export class PurpleApi extends runtime.BaseAPI {
      */
     async clustersCreate(requestParameters: ClustersCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Cluster> {
         const response = await this.clustersCreateRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for clustersHistoryList without sending the request
+     */
+    async clustersHistoryListRequestOpts(requestParameters: ClustersHistoryListRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['number'] == null) {
+            throw new runtime.RequiredError(
+                'number',
+                'Required parameter "number" was null or undefined when calling clustersHistoryList().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        if (requestParameters['offset'] != null) {
+            queryParameters['offset'] = requestParameters['offset'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/rpc/clusters/{number}/history/`;
+        urlPath = urlPath.replace(`{${"number"}}`, encodeURIComponent(String(requestParameters['number'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * List the add/remove/reorder history for a cluster\'s membership
+     */
+    async clustersHistoryListRaw(requestParameters: ClustersHistoryListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PaginatedClusterMemberHistoryList>> {
+        const requestOptions = await this.clustersHistoryListRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedClusterMemberHistoryListFromJSON(jsonValue));
+    }
+
+    /**
+     * List the add/remove/reorder history for a cluster\'s membership
+     */
+    async clustersHistoryList(requestParameters: ClustersHistoryListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaginatedClusterMemberHistoryList> {
+        const response = await this.clustersHistoryListRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
