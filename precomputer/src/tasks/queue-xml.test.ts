@@ -4,1820 +4,1838 @@ import { QueueCommon } from '../../../website/app/utils/validators'
 
 test('Render queue.xml, validates against XSD schema', async () => {
   const mockQueue: QueueCommon = {
-    generatedAtIso: "2026-04-10T02:53:26.259+00:00",
+    generatedAtIso: '2026-04-10T02:53:26.259+00:00',
     items: [
       {
-        name: "draft-ietf-ecrit-similar-location",
-        title: "A LoST extension to return complete and similar location info",
-        stream: "ietf",
+        name: 'draft-ietf-ecrit-similar-location',
+        draftUrl: 'x',
+        title: 'A LoST extension to return complete and similar location info',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "B. Rosen", isEditor: false },
-          { titlepageName: "R. Marshall", isEditor: false },
-          { titlepageName: "J. Martin", isEditor: false },
+          { titlepageName: 'B. Rosen', isEditor: false },
+          { titlepageName: 'R. Marshall', isEditor: false },
+          { titlepageName: 'J. Martin', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [452],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [{ reason: { name: "Reference Not Received" } }],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Reference Not Received' } }]
+          }
         ],
         pages: 19,
-        enqueuedAtIso: "2022-03-07T12:00:00.000Z",
+        enqueuedAtIso: '2022-03-07T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "ecrit",
-        groupName: "Emergency Context Resolution with Internet Technologies",
-        stdLevel: "ps",
+        group: 'ecrit',
+        groupName: 'Emergency Context Resolution with Internet Technologies',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "not-received",
-            draftName: "draft-ietf-ecrit-similar-location",
-            targetDraftName: "draft-ietf-ecrit-lost-planned-changes",
-          },
-        ],
+            relationship: 'not-received',
+            draftName: 'draft-ietf-ecrit-similar-location',
+            targetDraftName: 'draft-ietf-ecrit-lost-planned-changes'
+          }
+        ]
       },
       {
-        name: "draft-ietf-i2nsf-applicability",
+        name: 'draft-ietf-i2nsf-applicability',
+        draftUrl: 'x',
         title:
-          "Applicability of Interfaces to Network Security Functions to Network-Based Security Services",
-        stream: "ietf",
+          'Applicability of Interfaces to Network Security Functions to Network-Based Security Services',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "J. Jeong", isEditor: false },
-          { titlepageName: "S. Hyun", isEditor: false },
-          { titlepageName: "T. Ahn", isEditor: false },
-          { titlepageName: "S. Hares", isEditor: false },
-          { titlepageName: "D. Lopez", isEditor: false },
+          { titlepageName: 'J. Jeong', isEditor: false },
+          { titlepageName: 'S. Hyun', isEditor: false },
+          { titlepageName: 'T. Ahn', isEditor: false },
+          { titlepageName: 'S. Hares', isEditor: false },
+          { titlepageName: 'D. Lopez', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [405],
-        assignmentsByRoles: [{ role: "first_editor" }],
+        assignmentsByRoles: [{ role: 'first_editor' }],
         pages: 29,
-        enqueuedAtIso: "2019-12-16T12:00:00.000Z",
+        enqueuedAtIso: '2019-12-16T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "i2nsf",
-        groupName: "Interface to Network Security Functions",
-        stdLevel: "inf",
+        group: 'i2nsf',
+        groupName: 'Interface to Network Security Functions',
+        stdLevel: 'inf',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-i2nsf-applicability",
-            targetDraftName: "draft-ietf-i2nsf-consumer-facing-interface-dm",
-            targetDisposition: "in_progress",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-i2nsf-applicability',
+            targetDraftName: 'draft-ietf-i2nsf-consumer-facing-interface-dm',
+            targetDisposition: 'in_progress'
           },
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-i2nsf-applicability",
-            targetDraftName: "draft-ietf-i2nsf-nsf-facing-interface-dm",
-            targetDisposition: "in_progress",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-i2nsf-applicability',
+            targetDraftName: 'draft-ietf-i2nsf-nsf-facing-interface-dm',
+            targetDisposition: 'in_progress'
           },
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-i2nsf-applicability",
-            targetDraftName: "draft-ietf-i2nsf-registration-interface-dm",
-            targetDisposition: "in_progress",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-i2nsf-applicability',
+            targetDraftName: 'draft-ietf-i2nsf-registration-interface-dm',
+            targetDisposition: 'in_progress'
           },
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-i2nsf-applicability",
-            targetDraftName: "draft-ietf-i2nsf-nsf-monitoring-data-model",
-            targetDisposition: "in_progress",
-          },
-        ],
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-i2nsf-applicability',
+            targetDraftName: 'draft-ietf-i2nsf-nsf-monitoring-data-model',
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-jmap-calendars",
-        title: "JSON Meta Application Protocol (JMAP) for Calendars",
-        stream: "ietf",
+        name: 'draft-ietf-jmap-calendars',
+        draftUrl: 'x',
+        title: 'JSON Meta Application Protocol (JMAP) for Calendars',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "N. Jenkins", isEditor: true },
-          { titlepageName: "M. Douglass", isEditor: true },
+          { titlepageName: 'N. Jenkins', isEditor: true },
+          { titlepageName: 'M. Douglass', isEditor: true }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [
           {
-            slug: "Stream Hold",
-            themeColor: "red",
+            slug: 'Stream Hold',
+            themeColor: 'red',
             isException: false,
-            isComplexity: false,
-          },
+            isComplexity: false
+          }
         ],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [{ reason: { name: "Stream Hold" } }],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Stream Hold' } }]
+          }
         ],
         pages: 61,
-        enqueuedAtIso: "2024-11-14T12:00:00.000Z",
+        enqueuedAtIso: '2024-11-14T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "jmap",
-        groupName: "JSON Mail Access Protocol",
-        stdLevel: "ps",
+        group: 'jmap',
+        groupName: 'JSON Mail Access Protocol',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "not-received",
-            draftName: "draft-ietf-jmap-calendars",
-            targetDraftName: "draft-ietf-calext-jscalendarbis",
-          },
-        ],
+            relationship: 'not-received',
+            draftName: 'draft-ietf-jmap-calendars',
+            targetDraftName: 'draft-ietf-calext-jscalendarbis'
+          }
+        ]
       },
       {
-        name: "draft-halen-fedae",
-        title: "Mutually Authenticating TLS in the context of Federations",
-        stream: "ise",
+        name: 'draft-halen-fedae',
+        draftUrl: 'x',
+        title: 'Mutually Authenticating TLS in the context of Federations',
+        stream: 'ise',
         consensus: false,
         finalApprovals: [
           {
-            approverName: "Stefan Halén",
-            approvedAtIso: "2026-04-02T12:00:00.000+00:00",
+            approverName: 'Stefan Halén',
+            approvedAtIso: '2026-04-02T12:00:00.000+00:00'
           },
-          { approverName: "Jakob Schlyter" },
+          { approverName: 'Jakob Schlyter' }
         ],
         authors: [
-          { titlepageName: "J. Schlyter", isEditor: false },
-          { titlepageName: "S. Halen", isEditor: false },
+          { titlepageName: 'J. Schlyter', isEditor: false },
+          { titlepageName: 'S. Halen', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [{ reason: { name: "Unresolved Action Holder" } }],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Unresolved Action Holder' } }]
+          }
         ],
         pages: 33,
-        enqueuedAtIso: "2025-07-30T12:00:00.000Z",
+        enqueuedAtIso: '2025-07-30T12:00:00.000Z',
         approvalLogMessages: [
           {
-            rfcToBe: { name: "draft-halen-fedae", rfcNumber: 9932 },
+            rfcToBe: { name: 'draft-halen-fedae', rfcNumber: 9932 },
             logMessage:
-              "2026-02-06: Questions sent to the authors.\r\n2026-02-08: Received author reply, all questions addressed.\r\n2026-02-10: Sent updated files.\r\n2026-02-15: Received XML file from authors with significant technical and editorial changes.\r\n2026-02-17: Per the ISE, AUTH48 is paused until we hear further.  The ISE is reviewing author-requested updates.\r\n2026-03-06: Received new XML file with substantial updates. \r\n2026-03-06: RFC Editor conducting another editorial pass.\r\n2026-04-01: Second edit pass complete. Sent updated files to authors with a few follow-up questions about new text. \r\n2026-04-02: Received author responses to all editorial questions and one author approval.",
-            timeIso: "2026-02-06T21:34:37.000+00:00",
-          },
+              '2026-02-06: Questions sent to the authors.\r\n2026-02-08: Received author reply, all questions addressed.\r\n2026-02-10: Sent updated files.\r\n2026-02-15: Received XML file from authors with significant technical and editorial changes.\r\n2026-02-17: Per the ISE, AUTH48 is paused until we hear further.  The ISE is reviewing author-requested updates.\r\n2026-03-06: Received new XML file with substantial updates. \r\n2026-03-06: RFC Editor conducting another editorial pass.\r\n2026-04-01: Second edit pass complete. Sent updated files to authors with a few follow-up questions about new text. \r\n2026-04-02: Received author responses to all editorial questions and one author approval.',
+            timeIso: '2026-02-06T21:34:37.000+00:00'
+          }
         ],
-        group: "",
-        stdLevel: "inf",
-        references: [],
+        group: '',
+        stdLevel: 'inf',
+        references: []
       },
       {
-        name: "draft-ietf-stir-servprovider-oob",
-        title: "Out-of-Band STIR for Service Providers",
-        stream: "ietf",
+        name: 'draft-ietf-stir-servprovider-oob',
+        draftUrl: 'x',
+        title: 'Out-of-Band STIR for Service Providers',
+        stream: 'ietf',
         consensus: false,
-        finalApprovals: [{ approverName: "Jon Peterson" }],
-        authors: [{ titlepageName: "J. Peterson", isEditor: false }],
-        disposition: "in_progress",
+        finalApprovals: [{ approverName: 'Jon Peterson' }],
+        authors: [{ titlepageName: 'J. Peterson', isEditor: false }],
+        disposition: 'in_progress',
         labels: [],
-        assignmentsByRoles: [{ role: "final_review_editor" }],
+        assignmentsByRoles: [{ role: 'final_review_editor' }],
         pages: 10,
-        enqueuedAtIso: "2025-07-23T12:00:00.000Z",
+        enqueuedAtIso: '2025-07-23T12:00:00.000Z',
         approvalLogMessages: [
           {
             rfcToBe: {
-              name: "draft-ietf-stir-servprovider-oob",
-              rfcNumber: 9888,
+              name: 'draft-ietf-stir-servprovider-oob',
+              rfcNumber: 9888
             },
             logMessage:
-              "2025-10-21: questions sent to author.\r\n2025-10-22: all queries resolved.",
-            timeIso: "2025-10-21T16:37:24.000+00:00",
-          },
+              '2025-10-21: questions sent to author.\r\n2025-10-22: all queries resolved.',
+            timeIso: '2025-10-21T16:37:24.000+00:00'
+          }
         ],
-        group: "stir",
-        groupName: "Secure Telephone Identity Revisited",
-        stdLevel: "ps",
-        references: [],
+        group: 'stir',
+        groupName: 'Secure Telephone Identity Revisited',
+        stdLevel: 'ps',
+        references: []
       },
       {
-        name: "draft-ietf-opsawg-oam-characterization",
+        name: 'draft-ietf-opsawg-oam-characterization',
+        draftUrl: 'x',
         title: 'Guidelines for Characterizing the Term "OAM"',
-        stream: "ietf",
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "C. Pignataro", isEditor: false },
-          { titlepageName: "A. Farrel", isEditor: false },
-          { titlepageName: "T. Mizrahi", isEditor: false },
+          { titlepageName: 'C. Pignataro', isEditor: false },
+          { titlepageName: 'A. Farrel', isEditor: false },
+          { titlepageName: 'T. Mizrahi', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         assignmentsByRoles: [],
         pages: 13,
-        enqueuedAtIso: "2026-01-28T12:00:00.000Z",
+        enqueuedAtIso: '2026-01-28T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "opsawg",
-        groupName: "Operations and Management Area Working Group",
-        stdLevel: "bcp",
-        references: [],
+        group: 'opsawg',
+        groupName: 'Operations and Management Area Working Group',
+        stdLevel: 'bcp',
+        references: []
       },
       {
-        name: "draft-ietf-scim-device-model",
-        title: "Device Schema Extensions to the SCIM model",
-        stream: "ietf",
+        name: 'draft-ietf-scim-device-model',
+        draftUrl: 'x',
+        title: 'Device Schema Extensions to the SCIM model',
+        stream: 'ietf',
         consensus: false,
         finalApprovals: [
-          { approverName: "Muhammad Shahzad" },
-          { approverName: "Hassan Iqbal" },
+          { approverName: 'Muhammad Shahzad' },
+          { approverName: 'Hassan Iqbal' },
           {
-            approverName: "Eliot Lear",
-            approvedAtIso: "2026-04-01T12:00:00.000+00:00",
-          },
+            approverName: 'Eliot Lear',
+            approvedAtIso: '2026-04-01T12:00:00.000+00:00'
+          }
         ],
         authors: [
-          { titlepageName: "M. Shahzad", isEditor: false },
-          { titlepageName: "H. Iqbal", isEditor: false },
-          { titlepageName: "E. Lear", isEditor: false },
+          { titlepageName: 'M. Shahzad', isEditor: false },
+          { titlepageName: 'H. Iqbal', isEditor: false },
+          { titlepageName: 'E. Lear', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [{ reason: { name: "Unresolved Action Holder" } }],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Unresolved Action Holder' } }]
+          }
         ],
         pages: 73,
-        enqueuedAtIso: "2025-09-04T12:00:00.000Z",
+        enqueuedAtIso: '2025-09-04T12:00:00.000Z',
         approvalLogMessages: [
           {
-            rfcToBe: { name: "draft-ietf-scim-device-model", rfcNumber: 9944 },
+            rfcToBe: { name: 'draft-ietf-scim-device-model', rfcNumber: 9944 },
             logMessage:
-              "2026-03-11: Questions sent to authors.\r\n2026-03-15: Received updated draft from authors w/ JSON and SVG adjustments.\r\n2026-03-17: Requested authors shorten a few lines in sourcecode.\r\n2026-03-18: Received updated file and author replies to RFC editor questions.\r\n2026-03-20: Sent updated files, additional follow-up questions, and request for AD approval.\r\n2026-03-24: Received AD approval and author responses to follow-up questions.\r\n2026-03-25: Sent updated files and additional follow-up questions.\r\n2026-03-26: Received additional author formatting requests. \r\n2026-03-27: Updated file per author formatting requests. \r\n2026-03-27: Requested IANA feedback re: additional fields and registry mismatch in Section 9.2.\r\n2026-03-31: Received guidance from IANA to add additional context in Section 9.2.\r\n2026-04-01: Updated files per IANA guidance. Requested author approvals.",
-            timeIso: "2026-03-11T18:39:43.000+00:00",
-          },
+              '2026-03-11: Questions sent to authors.\r\n2026-03-15: Received updated draft from authors w/ JSON and SVG adjustments.\r\n2026-03-17: Requested authors shorten a few lines in sourcecode.\r\n2026-03-18: Received updated file and author replies to RFC editor questions.\r\n2026-03-20: Sent updated files, additional follow-up questions, and request for AD approval.\r\n2026-03-24: Received AD approval and author responses to follow-up questions.\r\n2026-03-25: Sent updated files and additional follow-up questions.\r\n2026-03-26: Received additional author formatting requests. \r\n2026-03-27: Updated file per author formatting requests. \r\n2026-03-27: Requested IANA feedback re: additional fields and registry mismatch in Section 9.2.\r\n2026-03-31: Received guidance from IANA to add additional context in Section 9.2.\r\n2026-04-01: Updated files per IANA guidance. Requested author approvals.',
+            timeIso: '2026-03-11T18:39:43.000+00:00'
+          }
         ],
-        group: "scim",
-        groupName: "System for Cross-domain Identity Management",
-        stdLevel: "ps",
-        references: [],
+        group: 'scim',
+        groupName: 'System for Cross-domain Identity Management',
+        stdLevel: 'ps',
+        references: []
       },
       {
-        name: "draft-ietf-pquip-pqc-engineers",
-        title: "Post-Quantum Cryptography for Engineers",
-        stream: "ietf",
+        name: 'draft-ietf-pquip-pqc-engineers',
+        draftUrl: 'x',
+        title: 'Post-Quantum Cryptography for Engineers',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "A. Banerjee", isEditor: false },
-          { titlepageName: "T. Reddy", isEditor: false },
-          { titlepageName: "D. Schoinianakis", isEditor: false },
-          { titlepageName: "T. Hollebeek", isEditor: false },
-          { titlepageName: "M. Ounsworth", isEditor: false },
+          { titlepageName: 'A. Banerjee', isEditor: false },
+          { titlepageName: 'T. Reddy', isEditor: false },
+          { titlepageName: 'D. Schoinianakis', isEditor: false },
+          { titlepageName: 'T. Hollebeek', isEditor: false },
+          { titlepageName: 'M. Ounsworth', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [
           {
-            slug: "markdown",
-            themeColor: "amber",
+            slug: 'markdown',
+            themeColor: 'amber',
             isException: false,
-            isComplexity: false,
-          },
+            isComplexity: false
+          }
         ],
-        assignmentsByRoles: [{ role: "second_editor" }],
+        assignmentsByRoles: [{ role: 'second_editor' }],
         pages: 50,
-        enqueuedAtIso: "2025-09-09T12:00:00.000Z",
+        enqueuedAtIso: '2025-09-09T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "pquip",
-        groupName: "Post-Quantum Use In Protocols",
-        stdLevel: "inf",
-        references: [],
+        group: 'pquip',
+        groupName: 'Post-Quantum Use In Protocols',
+        stdLevel: 'inf',
+        references: []
       },
       {
-        name: "draft-ietf-tsvwg-careful-resume",
-        title: "Convergence of Congestion Control from Retained State",
-        stream: "ietf",
+        name: 'draft-ietf-tsvwg-careful-resume',
+        draftUrl: 'x',
+        title: 'Convergence of Congestion Control from Retained State',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "N. Kuhn", isEditor: false },
-          { titlepageName: "E. Stephan", isEditor: false },
-          { titlepageName: "G. Fairhurst", isEditor: false },
-          { titlepageName: "R. Secchi", isEditor: false },
-          { titlepageName: "C. Huitema", isEditor: false },
+          { titlepageName: 'N. Kuhn', isEditor: false },
+          { titlepageName: 'E. Stephan', isEditor: false },
+          { titlepageName: 'G. Fairhurst', isEditor: false },
+          { titlepageName: 'R. Secchi', isEditor: false },
+          { titlepageName: 'C. Huitema', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
-        assignmentsByRoles: [{ role: "second_editor" }],
+        assignmentsByRoles: [{ role: 'second_editor' }],
         pages: 37,
-        enqueuedAtIso: "2025-09-17T12:00:00.000Z",
+        enqueuedAtIso: '2025-09-17T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "tsvwg",
-        groupName: "Transport and Services Working Group",
-        stdLevel: "ps",
-        references: [],
+        group: 'tsvwg',
+        groupName: 'Transport and Services Working Group',
+        stdLevel: 'ps',
+        references: []
       },
       {
-        name: "draft-ietf-alto-oam-yang",
-        title:
-          "YANG Data Models for the Application-Layer Traffic Optimization (ALTO) Protocol",
-        stream: "ietf",
+        name: 'draft-ietf-alto-oam-yang',
+        draftUrl: 'x',
+        title: 'YANG Data Models for the Application-Layer Traffic Optimization (ALTO) Protocol',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "J. Zhang", isEditor: false },
-          { titlepageName: "D. Dhody", isEditor: false },
-          { titlepageName: "K. Gao", isEditor: false },
-          { titlepageName: "R. Schott", isEditor: false },
-          { titlepageName: "Q. Ma", isEditor: false },
+          { titlepageName: 'J. Zhang', isEditor: false },
+          { titlepageName: 'D. Dhody', isEditor: false },
+          { titlepageName: 'K. Gao', isEditor: false },
+          { titlepageName: 'R. Schott', isEditor: false },
+          { titlepageName: 'Q. Ma', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [463],
         assignmentsByRoles: [],
         pages: 86,
-        enqueuedAtIso: "2024-01-23T12:00:00.000Z",
+        enqueuedAtIso: '2024-01-23T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "alto",
-        groupName: "Application-Layer Traffic Optimization",
-        stdLevel: "ps",
+        group: 'alto',
+        groupName: 'Application-Layer Traffic Optimization',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-alto-oam-yang",
-            targetDraftName: "draft-ietf-netconf-restconf-client-server",
-            targetDisposition: "in_progress",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-alto-oam-yang',
+            targetDraftName: 'draft-ietf-netconf-restconf-client-server',
+            targetDisposition: 'in_progress'
           },
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-alto-oam-yang",
-            targetDraftName: "draft-ietf-netconf-http-client-server",
-            targetDisposition: "in_progress",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-alto-oam-yang',
+            targetDraftName: 'draft-ietf-netconf-http-client-server',
+            targetDisposition: 'in_progress'
           },
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-alto-oam-yang",
-            targetDraftName: "draft-ietf-netconf-netconf-client-server",
-            targetDisposition: "in_progress",
-          },
-        ],
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-alto-oam-yang',
+            targetDraftName: 'draft-ietf-netconf-netconf-client-server',
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-cose-merkle-tree-proofs",
-        title: "COSE (CBOR Object Signing and Encryption) Receipts",
-        stream: "ietf",
+        name: 'draft-ietf-cose-merkle-tree-proofs',
+        draftUrl: 'x',
+        title: 'COSE (CBOR Object Signing and Encryption) Receipts',
+        stream: 'ietf',
         consensus: false,
         finalApprovals: [
-          { approverName: "Orie Steele" },
-          { approverName: "Henk Birkholz" },
-          { approverName: "Antoine Delignat-Lavaud" },
-          { approverName: "Cedric Fournet" },
+          { approverName: 'Orie Steele' },
+          { approverName: 'Henk Birkholz' },
+          { approverName: 'Antoine Delignat-Lavaud' },
+          { approverName: 'Cedric Fournet' }
         ],
         authors: [
-          { titlepageName: "O. Steele", isEditor: false },
-          { titlepageName: "H. Birkholz", isEditor: false },
-          { titlepageName: "A. Delignat-Lavaud", isEditor: false },
-          { titlepageName: "C. Fournet", isEditor: false },
+          { titlepageName: 'O. Steele', isEditor: false },
+          { titlepageName: 'H. Birkholz', isEditor: false },
+          { titlepageName: 'A. Delignat-Lavaud', isEditor: false },
+          { titlepageName: 'C. Fournet', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [557],
-        assignmentsByRoles: [{ role: "final_review_editor" }],
+        assignmentsByRoles: [{ role: 'final_review_editor' }],
         pages: 22,
-        enqueuedAtIso: "2025-09-10T12:00:00.000Z",
+        enqueuedAtIso: '2025-09-10T12:00:00.000Z',
         approvalLogMessages: [
           {
             rfcToBe: {
-              name: "draft-ietf-cose-merkle-tree-proofs",
-              rfcNumber: 9942,
+              name: 'draft-ietf-cose-merkle-tree-proofs',
+              rfcNumber: 9942
             },
             logMessage:
-              "2026-03-06: document-specific and cluster-wide questions sent to authors.\r\n2026-04-01: some follow-up questions related to the cluster-wide questions sent (doc-specific questions have yet to be resolved).\r\n2026-04-06: response received regarding cluster-wide queries - document-specific queries have yet to be resolved.",
-            timeIso: "2026-03-06T23:48:32.000+00:00",
-          },
+              '2026-03-06: document-specific and cluster-wide questions sent to authors.\r\n2026-04-01: some follow-up questions related to the cluster-wide questions sent (doc-specific questions have yet to be resolved).\r\n2026-04-06: response received regarding cluster-wide queries - document-specific queries have yet to be resolved.',
+            timeIso: '2026-03-06T23:48:32.000+00:00'
+          }
         ],
-        group: "cose",
-        groupName: "CBOR Object Signing and Encryption",
-        stdLevel: "ps",
-        references: [],
+        group: 'cose',
+        groupName: 'CBOR Object Signing and Encryption',
+        stdLevel: 'ps',
+        references: []
       },
       {
-        name: "draft-ietf-tls-rfc8446bis",
-        title: "The Transport Layer Security (TLS) Protocol Version 1.3",
-        stream: "ietf",
+        name: 'draft-ietf-tls-rfc8446bis',
+        draftUrl: 'x',
+        title: 'The Transport Layer Security (TLS) Protocol Version 1.3',
+        stream: 'ietf',
         consensus: false,
-        finalApprovals: [
-          { approverName: "Eric Rescorla" },
-          { approverName: "Eric Rescorla" },
-        ],
-        authors: [{ titlepageName: "E. Rescorla", isEditor: false }],
-        disposition: "in_progress",
+        finalApprovals: [{ approverName: 'Eric Rescorla' }, { approverName: 'Eric Rescorla' }],
+        authors: [{ titlepageName: 'E. Rescorla', isEditor: false }],
+        disposition: 'in_progress',
         labels: [
           {
-            slug: "markdown",
-            themeColor: "amber",
+            slug: 'markdown',
+            themeColor: 'amber',
             isException: false,
-            isComplexity: false,
-          },
+            isComplexity: false
+          }
         ],
         clusters: [430],
-        assignmentsByRoles: [{ role: "final_review_editor" }],
+        assignmentsByRoles: [{ role: 'final_review_editor' }],
         pages: 162,
-        enqueuedAtIso: "2025-08-11T12:00:00.000Z",
+        enqueuedAtIso: '2025-08-11T12:00:00.000Z',
         approvalLogMessages: [
           {
-            rfcToBe: { name: "draft-ietf-tls-rfc8446bis", rfcNumber: 9846 },
+            rfcToBe: { name: 'draft-ietf-tls-rfc8446bis', rfcNumber: 9846 },
             logMessage:
               '2025-12-15: questions sent to the author.\r\n2025-12-16: Paul Wouters noted a change would be forthcoming regarding "a small change applied to it related to PKCS v1.5". \r\n2025-12-16: author requested re-review for possible reversion of text not changed as part of this bis document. \r\n2025-12-22: updated file posted for review. \r\n2026-01-14: reminder sent.\r\n2026-01-30: reminder sent. Author confirmed no action needed by the RPC at this time.',
-            timeIso: "2025-12-16T04:57:07.000+00:00",
-          },
+            timeIso: '2025-12-16T04:57:07.000+00:00'
+          }
         ],
-        group: "tls",
-        groupName: "Transport Layer Security",
-        stdLevel: "ps",
-        references: [],
+        group: 'tls',
+        groupName: 'Transport Layer Security',
+        stdLevel: 'ps',
+        references: []
       },
       {
-        name: "draft-ietf-radext-reverse-coa",
-        title: "Reverse Change-of-Authorization (CoA) in RADIUS/(D)TLS",
-        stream: "ietf",
+        name: 'draft-ietf-radext-reverse-coa',
+        draftUrl: 'x',
+        title: 'Reverse Change-of-Authorization (CoA) in RADIUS/(D)TLS',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "A. DeKok", isEditor: false },
-          { titlepageName: "V. Cargatser", isEditor: false },
+          { titlepageName: 'A. DeKok', isEditor: false },
+          { titlepageName: 'V. Cargatser', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [552],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [{ reason: { name: "Reference Not Received" } }],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Reference Not Received' } }]
+          }
         ],
         pages: 16,
-        enqueuedAtIso: "2025-08-28T12:00:00.000Z",
+        enqueuedAtIso: '2025-08-28T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "radext",
-        groupName: "RADIUS EXTensions",
-        stdLevel: "ps",
+        group: 'radext',
+        groupName: 'RADIUS EXTensions',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "not-received",
-            draftName: "draft-ietf-radext-reverse-coa",
-            targetDraftName: "draft-ietf-radext-radiusdtls-bis",
-          },
-        ],
+            relationship: 'not-received',
+            draftName: 'draft-ietf-radext-reverse-coa',
+            targetDraftName: 'draft-ietf-radext-radiusdtls-bis'
+          }
+        ]
       },
       {
-        name: "draft-ietf-suit-trust-domains",
+        name: 'draft-ietf-suit-trust-domains',
+        draftUrl: 'x',
         title:
-          "Software Update for the Internet of Things (SUIT) Manifest Extensions for Multiple Trust Domain",
-        stream: "ietf",
+          'Software Update for the Internet of Things (SUIT) Manifest Extensions for Multiple Trust Domain',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "B. Moran", isEditor: false },
-          { titlepageName: "K. Takayama", isEditor: false },
+          { titlepageName: 'B. Moran', isEditor: false },
+          { titlepageName: 'K. Takayama', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [535],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [
-              { reason: { name: "Reference Not Received (2nd Generation)" } },
-            ],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Reference Not Received (2nd Generation)' } }]
+          }
         ],
         pages: 38,
-        enqueuedAtIso: "2025-07-23T12:00:00.000Z",
+        enqueuedAtIso: '2025-07-23T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "suit",
-        groupName: "Software Updates for Internet of Things",
-        stdLevel: "ps",
+        group: 'suit',
+        groupName: 'Software Updates for Internet of Things',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-suit-trust-domains",
-            targetDraftName: "draft-ietf-suit-manifest",
-            targetDisposition: "in_progress",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-suit-trust-domains',
+            targetDraftName: 'draft-ietf-suit-manifest',
+            targetDisposition: 'in_progress'
           },
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-suit-trust-domains",
-            targetDraftName: "draft-ietf-suit-firmware-encryption",
-            targetDisposition: "in_progress",
-          },
-        ],
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-suit-trust-domains',
+            targetDraftName: 'draft-ietf-suit-firmware-encryption',
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-suit-manifest",
+        name: 'draft-ietf-suit-manifest',
+        draftUrl: 'x',
         title:
-          "A Concise Binary Object Representation (CBOR)-based Serialization Format for the Software Updates for Internet of Things (SUIT) Manifest",
-        stream: "ietf",
+          'A Concise Binary Object Representation (CBOR)-based Serialization Format for the Software Updates for Internet of Things (SUIT) Manifest',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "B. Moran", isEditor: false },
-          { titlepageName: "H. Tschofenig", isEditor: false },
-          { titlepageName: "H. Birkholz", isEditor: false },
-          { titlepageName: "K. Zandberg", isEditor: false },
-          { titlepageName: "Ø. Rønningstad", isEditor: false },
+          { titlepageName: 'B. Moran', isEditor: false },
+          { titlepageName: 'H. Tschofenig', isEditor: false },
+          { titlepageName: 'H. Birkholz', isEditor: false },
+          { titlepageName: 'K. Zandberg', isEditor: false },
+          { titlepageName: 'Ø. Rønningstad', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [535],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [{ reason: { name: "Reference Not Received" } }],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Reference Not Received' } }]
+          }
         ],
         pages: 101,
-        enqueuedAtIso: "2025-02-25T12:00:00.000Z",
+        enqueuedAtIso: '2025-02-25T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "suit",
-        groupName: "Software Updates for Internet of Things",
-        stdLevel: "ps",
+        group: 'suit',
+        groupName: 'Software Updates for Internet of Things',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-suit-manifest",
-            targetDraftName: "draft-ietf-suit-report",
-            targetDisposition: "in_progress",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-suit-manifest',
+            targetDraftName: 'draft-ietf-suit-report',
+            targetDisposition: 'in_progress'
           },
           {
-            relationship: "not-received",
-            draftName: "draft-ietf-suit-manifest",
-            targetDraftName: "draft-ietf-suit-update-management",
+            relationship: 'not-received',
+            draftName: 'draft-ietf-suit-manifest',
+            targetDraftName: 'draft-ietf-suit-update-management'
           },
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-suit-manifest",
-            targetDraftName: "draft-ietf-suit-trust-domains",
-            targetDisposition: "in_progress",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-suit-manifest',
+            targetDraftName: 'draft-ietf-suit-trust-domains',
+            targetDisposition: 'in_progress'
           },
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-suit-manifest",
-            targetDraftName: "draft-ietf-suit-firmware-encryption",
-            targetDisposition: "in_progress",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-suit-manifest',
+            targetDraftName: 'draft-ietf-suit-firmware-encryption',
+            targetDisposition: 'in_progress'
           },
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-suit-manifest",
-            targetDraftName: "draft-ietf-suit-mti",
-            targetDisposition: "in_progress",
-          },
-        ],
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-suit-manifest',
+            targetDraftName: 'draft-ietf-suit-mti',
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-bier-php",
-        title: "BIER Penultimate Hop Popping",
-        stream: "ietf",
+        name: 'draft-ietf-bier-php',
+        draftUrl: 'x',
+        title: 'BIER Penultimate Hop Popping',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
-        authors: [{ titlepageName: "Z. Zhang", isEditor: false }],
-        disposition: "in_progress",
+        authors: [{ titlepageName: 'Z. Zhang', isEditor: false }],
+        disposition: 'in_progress',
         labels: [],
         clusters: [523],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [{ reason: { name: "Reference Not Received" } }],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Reference Not Received' } }]
+          }
         ],
         pages: 9,
-        enqueuedAtIso: "2024-12-06T12:00:00.000Z",
+        enqueuedAtIso: '2024-12-06T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "bier",
-        groupName: "Bit Indexed Explicit Replication",
-        stdLevel: "ps",
+        group: 'bier',
+        groupName: 'Bit Indexed Explicit Replication',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "not-received",
-            draftName: "draft-ietf-bier-php",
-            targetDraftName: "draft-ietf-bier-lsr-non-mpls-extensions",
+            relationship: 'not-received',
+            draftName: 'draft-ietf-bier-php',
+            targetDraftName: 'draft-ietf-bier-lsr-non-mpls-extensions'
           },
           {
-            relationship: "not-received",
-            draftName: "draft-ietf-bier-php",
-            targetDraftName: "draft-ietf-bier-ospfv3-extensions",
-          },
-        ],
+            relationship: 'not-received',
+            draftName: 'draft-ietf-bier-php',
+            targetDraftName: 'draft-ietf-bier-ospfv3-extensions'
+          }
+        ]
       },
       {
-        name: "draft-ietf-tls-tls12-frozen",
-        title: "TLS 1.2 is in Feature Freeze",
-        stream: "ietf",
+        name: 'draft-ietf-tls-tls12-frozen',
+        draftUrl: 'x',
+        title: 'TLS 1.2 is in Feature Freeze',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [
           {
-            approverName: "Rich Salz",
-            approvedAtIso: "2026-01-07T12:00:00.000+00:00",
+            approverName: 'Rich Salz',
+            approvedAtIso: '2026-01-07T12:00:00.000+00:00'
           },
           {
-            approverName: "Nimrod Aviram",
-            approvedAtIso: "2026-01-08T12:00:00.000+00:00",
-          },
+            approverName: 'Nimrod Aviram',
+            approvedAtIso: '2026-01-08T12:00:00.000+00:00'
+          }
         ],
         authors: [
-          { titlepageName: "R. Salz", isEditor: false },
-          { titlepageName: "N. Aviram", isEditor: false },
+          { titlepageName: 'R. Salz', isEditor: false },
+          { titlepageName: 'N. Aviram', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [430],
-        assignmentsByRoles: [{ role: "final_review_editor" }],
+        assignmentsByRoles: [{ role: 'final_review_editor' }],
         pages: 6,
-        enqueuedAtIso: "2025-06-18T12:00:00.000Z",
+        enqueuedAtIso: '2025-06-18T12:00:00.000Z',
         approvalLogMessages: [
           {
-            rfcToBe: { name: "draft-ietf-tls-tls12-frozen", rfcNumber: 9851 },
+            rfcToBe: { name: 'draft-ietf-tls-tls12-frozen', rfcNumber: 9851 },
             logMessage:
-              "2026-01-05: Questions sent to the authors.\r\n2026-01-05: Author response received. \r\n2026-01-07: Document updated per author reply; updated files posted for review.\r\n\r\nRPC Note about publication: This document normatively references RFCs-to-be 9846. It will be published at the same time as RFC-to-be 9846.",
-            timeIso: "2026-01-05T21:46:27.000+00:00",
-          },
+              '2026-01-05: Questions sent to the authors.\r\n2026-01-05: Author response received. \r\n2026-01-07: Document updated per author reply; updated files posted for review.\r\n\r\nRPC Note about publication: This document normatively references RFCs-to-be 9846. It will be published at the same time as RFC-to-be 9846.',
+            timeIso: '2026-01-05T21:46:27.000+00:00'
+          }
         ],
-        group: "tls",
-        groupName: "Transport Layer Security",
-        stdLevel: "ps",
+        group: 'tls',
+        groupName: 'Transport Layer Security',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-tls-tls12-frozen",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-tls-tls12-frozen',
             sourceRfcNumber: 9851,
-            targetDraftName: "draft-ietf-tls-rfc8446bis",
+            targetDraftName: 'draft-ietf-tls-rfc8446bis',
             targetRfcNumber: 9846,
-            targetDisposition: "in_progress",
-          },
-        ],
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-netconf-over-tls13",
+        name: 'draft-ietf-netconf-over-tls13',
+        draftUrl: 'x',
         title:
-          "Updates to Using the NETCONF Protocol over Transport Layer Security (TLS) with Mutual X.509 Authentication",
-        stream: "ietf",
+          'Updates to Using the NETCONF Protocol over Transport Layer Security (TLS) with Mutual X.509 Authentication',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [
           {
-            approverName: "Sean Turner",
-            approvedAtIso: "2026-01-21T12:00:00.000+00:00",
+            approverName: 'Sean Turner',
+            approvedAtIso: '2026-01-21T12:00:00.000+00:00'
           },
           {
-            approverName: "Russ Housley",
-            approvedAtIso: "2026-01-21T12:00:00.000+00:00",
-          },
+            approverName: 'Russ Housley',
+            approvedAtIso: '2026-01-21T12:00:00.000+00:00'
+          }
         ],
         authors: [
-          { titlepageName: "S. Turner", isEditor: false },
-          { titlepageName: "R. Housley", isEditor: false },
+          { titlepageName: 'S. Turner', isEditor: false },
+          { titlepageName: 'R. Housley', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [496],
-        assignmentsByRoles: [{ role: "final_review_editor" }],
+        assignmentsByRoles: [{ role: 'final_review_editor' }],
         pages: 6,
-        enqueuedAtIso: "2024-01-19T12:00:00.000Z",
+        enqueuedAtIso: '2024-01-19T12:00:00.000Z',
         approvalLogMessages: [
           {
-            rfcToBe: { name: "draft-ietf-netconf-over-tls13", rfcNumber: 9918 },
+            rfcToBe: { name: 'draft-ietf-netconf-over-tls13', rfcNumber: 9918 },
             logMessage:
-              "2026-01-16: questions sent to authors.\r\n2026-01-16: response received. no updates to the text needed.\r\n2026-01-20: additional updates received. updated files sent. AD approval requested.\r\n\r\n\r\nRPC Note: This document normatively references RFC-to-be 9846, so it will be published at the same time as or after that document.",
-            timeIso: "2026-01-16T18:43:54.000+00:00",
-          },
+              '2026-01-16: questions sent to authors.\r\n2026-01-16: response received. no updates to the text needed.\r\n2026-01-20: additional updates received. updated files sent. AD approval requested.\r\n\r\n\r\nRPC Note: This document normatively references RFC-to-be 9846, so it will be published at the same time as or after that document.',
+            timeIso: '2026-01-16T18:43:54.000+00:00'
+          }
         ],
-        group: "netconf",
-        groupName: "Network Configuration",
-        stdLevel: "ps",
+        group: 'netconf',
+        groupName: 'Network Configuration',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-netconf-over-tls13",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-netconf-over-tls13',
             sourceRfcNumber: 9918,
-            targetDraftName: "draft-ietf-tls-rfc8446bis",
+            targetDraftName: 'draft-ietf-tls-rfc8446bis',
             targetRfcNumber: 9846,
-            targetDisposition: "in_progress",
-          },
-        ],
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-i2nsf-registration-interface-dm",
-        title:
-          "I2NSF Registration Interface YANG Data Model for NSF Capability Registration",
-        stream: "ietf",
+        name: 'draft-ietf-i2nsf-registration-interface-dm',
+        draftUrl: 'x',
+        title: 'I2NSF Registration Interface YANG Data Model for NSF Capability Registration',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "S. Hyun", isEditor: true },
-          { titlepageName: "J. Jeong", isEditor: true },
-          { titlepageName: "T. Roh", isEditor: false },
-          { titlepageName: "S. Wi", isEditor: false },
-          { titlepageName: "J. Park", isEditor: false },
+          { titlepageName: 'S. Hyun', isEditor: true },
+          { titlepageName: 'J. Jeong', isEditor: true },
+          { titlepageName: 'T. Roh', isEditor: false },
+          { titlepageName: 'S. Wi', isEditor: false },
+          { titlepageName: 'J. Park', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [
           {
-            slug: "Author Input Required",
-            themeColor: "slate",
+            slug: 'Author Input Required',
+            themeColor: 'slate',
             isException: false,
-            isComplexity: false,
-          },
+            isComplexity: false
+          }
         ],
         clusters: [405],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [{ reason: { name: "Author Input Required" } }],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Author Input Required' } }]
+          }
         ],
         pages: 36,
-        enqueuedAtIso: "2023-05-10T12:00:00.000Z",
+        enqueuedAtIso: '2023-05-10T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "i2nsf",
-        groupName: "Interface to Network Security Functions",
-        stdLevel: "ps",
+        group: 'i2nsf',
+        groupName: 'Interface to Network Security Functions',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-i2nsf-registration-interface-dm",
-            targetDraftName: "draft-ietf-i2nsf-applicability",
-            targetDisposition: "in_progress",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-i2nsf-registration-interface-dm',
+            targetDraftName: 'draft-ietf-i2nsf-applicability',
+            targetDisposition: 'in_progress'
           },
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-i2nsf-registration-interface-dm",
-            targetDraftName: "draft-ietf-i2nsf-capability-data-model",
-            targetDisposition: "in_progress",
-          },
-        ],
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-i2nsf-registration-interface-dm',
+            targetDraftName: 'draft-ietf-i2nsf-capability-data-model',
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-dmarc-dmarcbis",
-        title:
-          "Domain-based Message Authentication, Reporting, and Conformance (DMARC)",
-        stream: "ietf",
+        name: 'draft-ietf-dmarc-dmarcbis',
+        draftUrl: 'x',
+        title: 'Domain-based Message Authentication, Reporting, and Conformance (DMARC)',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "T. Herr", isEditor: true },
-          { titlepageName: "J. Levine", isEditor: true },
+          { titlepageName: 'T. Herr', isEditor: true },
+          { titlepageName: 'J. Levine', isEditor: true }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [
           {
-            slug: "github",
-            themeColor: "slate",
+            slug: 'github',
+            themeColor: 'slate',
             isException: false,
-            isComplexity: false,
-          },
+            isComplexity: false
+          }
         ],
         clusters: [539],
         assignmentsByRoles: [],
         pages: 82,
-        enqueuedAtIso: "2025-03-18T12:00:00.000Z",
+        enqueuedAtIso: '2025-03-18T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "dmarc",
-        groupName: "Domain-based Message Authentication, Reporting & Conformance",
-        stdLevel: "ps",
+        group: 'dmarc',
+        groupName: 'Domain-based Message Authentication, Reporting & Conformance',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-dmarc-dmarcbis",
-            targetDraftName: "draft-ietf-dmarc-failure-reporting",
-            targetDisposition: "in_progress",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-dmarc-dmarcbis',
+            targetDraftName: 'draft-ietf-dmarc-failure-reporting',
+            targetDisposition: 'in_progress'
           },
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-dmarc-dmarcbis",
-            targetDraftName: "draft-ietf-dmarc-aggregate-reporting",
-            targetDisposition: "in_progress",
-          },
-        ],
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-dmarc-dmarcbis',
+            targetDraftName: 'draft-ietf-dmarc-aggregate-reporting',
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-tls-8773bis",
-        title:
-          "TLS 1.3 Extension for Using Certificates with an External Pre-Shared Key",
-        stream: "ietf",
+        name: 'draft-ietf-tls-8773bis',
+        draftUrl: 'x',
+        title: 'TLS 1.3 Extension for Using Certificates with an External Pre-Shared Key',
+        stream: 'ietf',
         consensus: false,
-        finalApprovals: [{ approverName: "Russ Housley" }],
-        authors: [{ titlepageName: "R. Housley", isEditor: false }],
-        disposition: "in_progress",
+        finalApprovals: [{ approverName: 'Russ Housley' }],
+        authors: [{ titlepageName: 'R. Housley', isEditor: false }],
+        disposition: 'in_progress',
         labels: [],
         clusters: [430],
-        assignmentsByRoles: [{ role: "final_review_editor" }],
+        assignmentsByRoles: [{ role: 'final_review_editor' }],
         pages: 16,
-        enqueuedAtIso: "2025-09-04T12:00:00.000Z",
+        enqueuedAtIso: '2025-09-04T12:00:00.000Z',
         approvalLogMessages: [
           {
-            rfcToBe: { name: "draft-ietf-tls-8773bis", rfcNumber: 9973 },
+            rfcToBe: { name: 'draft-ietf-tls-8773bis', rfcNumber: 9973 },
             logMessage:
-              "2026-04-06: Questions sent to the author.\r\n2026-04-06: Response received.\r\n2026-04-07: Updated files sent.",
-            timeIso: "2026-04-06T19:21:56.000+00:00",
-          },
+              '2026-04-06: Questions sent to the author.\r\n2026-04-06: Response received.\r\n2026-04-07: Updated files sent.',
+            timeIso: '2026-04-06T19:21:56.000+00:00'
+          }
         ],
-        group: "tls",
-        groupName: "Transport Layer Security",
-        stdLevel: "ps",
+        group: 'tls',
+        groupName: 'Transport Layer Security',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-tls-8773bis",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-tls-8773bis',
             sourceRfcNumber: 9973,
-            targetDraftName: "draft-ietf-tls-rfc8446bis",
+            targetDraftName: 'draft-ietf-tls-rfc8446bis',
             targetRfcNumber: 9846,
-            targetDisposition: "in_progress",
-          },
-        ],
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-teas-ietf-network-slice-nbi-yang",
-        title: "A YANG Data Model for the RFC 9543 Network Slice Service",
-        stream: "ietf",
+        name: 'draft-ietf-teas-ietf-network-slice-nbi-yang',
+        draftUrl: 'x',
+        title: 'A YANG Data Model for the RFC 9543 Network Slice Service',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "B. Wu", isEditor: false },
-          { titlepageName: "D. Dhody", isEditor: false },
-          { titlepageName: "R. Rokui", isEditor: false },
-          { titlepageName: "T. Saad", isEditor: false },
-          { titlepageName: "J. Mullooly", isEditor: false },
+          { titlepageName: 'B. Wu', isEditor: false },
+          { titlepageName: 'D. Dhody', isEditor: false },
+          { titlepageName: 'R. Rokui', isEditor: false },
+          { titlepageName: 'T. Saad', isEditor: false },
+          { titlepageName: 'J. Mullooly', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [517],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [{ reason: { name: "Reference Not Received" } }],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Reference Not Received' } }]
+          }
         ],
         pages: 126,
-        enqueuedAtIso: "2025-05-12T12:00:00.000Z",
+        enqueuedAtIso: '2025-05-12T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "teas",
-        groupName: "Traffic Engineering Architecture and Signaling",
-        stdLevel: "ps",
+        group: 'teas',
+        groupName: 'Traffic Engineering Architecture and Signaling',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "not-received",
-            draftName: "draft-ietf-teas-ietf-network-slice-nbi-yang",
-            targetDraftName: "draft-ietf-teas-rfc8776-update",
-          },
-        ],
+            relationship: 'not-received',
+            draftName: 'draft-ietf-teas-ietf-network-slice-nbi-yang',
+            targetDraftName: 'draft-ietf-teas-rfc8776-update'
+          }
+        ]
       },
       {
-        name: "draft-ietf-roll-dao-projection",
-        title: "Root-initiated Routing State in RPL",
-        stream: "ietf",
+        name: 'draft-ietf-roll-dao-projection',
+        draftUrl: 'x',
+        title: 'Root-initiated Routing State in RPL',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [
           {
-            approverName: "Pascal Thubert",
-            approvedAtIso: "2026-03-16T12:00:00.000+00:00",
+            approverName: 'Pascal Thubert',
+            approvedAtIso: '2026-03-16T12:00:00.000+00:00'
           },
           {
-            approverName: "Rahul Jadhav",
-            approvedAtIso: "2026-03-17T12:00:00.000+00:00",
+            approverName: 'Rahul Jadhav',
+            approvedAtIso: '2026-03-17T12:00:00.000+00:00'
           },
           {
-            approverName: "Michael Richardson",
-            approvedAtIso: "2026-04-01T12:00:00.000+00:00",
-          },
+            approverName: 'Michael Richardson',
+            approvedAtIso: '2026-04-01T12:00:00.000+00:00'
+          }
         ],
         authors: [
-          { titlepageName: "P. Thubert", isEditor: true },
-          { titlepageName: "R. Arvind Jadhav", isEditor: false },
-          { titlepageName: "M. Richardson", isEditor: false },
+          { titlepageName: 'P. Thubert', isEditor: true },
+          { titlepageName: 'R. Arvind Jadhav', isEditor: false },
+          { titlepageName: 'M. Richardson', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [538],
-        assignmentsByRoles: [{ role: "final_review_editor" }],
+        assignmentsByRoles: [{ role: 'final_review_editor' }],
         pages: 91,
-        enqueuedAtIso: "2025-03-11T12:00:00.000Z",
+        enqueuedAtIso: '2025-03-11T12:00:00.000Z',
         approvalLogMessages: [
           {
-            rfcToBe: { name: "draft-ietf-roll-dao-projection", rfcNumber: 9914 },
+            rfcToBe: { name: 'draft-ietf-roll-dao-projection', rfcNumber: 9914 },
             logMessage:
-              "2026-02-27: Questions sent to authors.\r\n2026-03-05: Response received.\r\n2026-03-06: Response received.\r\n2026-03-09: Response received.\r\n2026-03-10: Response received.\r\n2026-03-11: Response received.\r\n2026-03-12: Response received.\r\n2026-03-14: Response received.\r\n2026-03-16: Response received.\r\n2026-03-17: Response received. Asked AD to approve Sections 2.4.5, 3.2, 3.6, 3.7.2.3, 3.7.2.4, 4.2, 5.2, 5.3, 6.4.1, 6.8, and 10 plus updates to Figure 19.\r\n2026-03-20: Response received. The authors are discussing updating a few figures.\r\n2026-03-30: Responses received.\r\n2026-03-31: AD approval received.\r\n2026-04-01: Response received. Asked AD to approve new updates to Figures 18 and 19. Asked IANA to update their registries accordingly [IANA #1449150].\r\n2026-04-03: IANA actions are complete.\r\n2026-04-06: AD approved updates to Figures 18 and 19.\r\n\r\nRPC Notes: \r\n- This document will be published at the same time as RFCs-to-be 9912 and 9913 (all cluster 538).",
-            timeIso: "2026-02-27T21:55:38.000+00:00",
-          },
+              '2026-02-27: Questions sent to authors.\r\n2026-03-05: Response received.\r\n2026-03-06: Response received.\r\n2026-03-09: Response received.\r\n2026-03-10: Response received.\r\n2026-03-11: Response received.\r\n2026-03-12: Response received.\r\n2026-03-14: Response received.\r\n2026-03-16: Response received.\r\n2026-03-17: Response received. Asked AD to approve Sections 2.4.5, 3.2, 3.6, 3.7.2.3, 3.7.2.4, 4.2, 5.2, 5.3, 6.4.1, 6.8, and 10 plus updates to Figure 19.\r\n2026-03-20: Response received. The authors are discussing updating a few figures.\r\n2026-03-30: Responses received.\r\n2026-03-31: AD approval received.\r\n2026-04-01: Response received. Asked AD to approve new updates to Figures 18 and 19. Asked IANA to update their registries accordingly [IANA #1449150].\r\n2026-04-03: IANA actions are complete.\r\n2026-04-06: AD approved updates to Figures 18 and 19.\r\n\r\nRPC Notes: \r\n- This document will be published at the same time as RFCs-to-be 9912 and 9913 (all cluster 538).',
+            timeIso: '2026-02-27T21:55:38.000+00:00'
+          }
         ],
-        group: "roll",
-        groupName: "Routing Over Low power and Lossy networks",
-        stdLevel: "ps",
+        group: 'roll',
+        groupName: 'Routing Over Low power and Lossy networks',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-roll-dao-projection",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-roll-dao-projection',
             sourceRfcNumber: 9914,
-            targetDraftName: "draft-ietf-raw-architecture",
+            targetDraftName: 'draft-ietf-raw-architecture',
             targetRfcNumber: 9912,
-            targetDisposition: "in_progress",
-          },
-        ],
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-pce-pceps-tls13",
-        title: "Updates for PCEPS: TLS Connection Establishment Restrictions",
-        stream: "ietf",
+        name: 'draft-ietf-pce-pceps-tls13',
+        draftUrl: 'x',
+        title: 'Updates for PCEPS: TLS Connection Establishment Restrictions',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [
           {
-            approverName: "Dhruv Dhody",
-            approvedAtIso: "2026-01-20T12:00:00.000+00:00",
+            approverName: 'Dhruv Dhody',
+            approvedAtIso: '2026-01-20T12:00:00.000+00:00'
           },
           {
-            approverName: "Sean Turner",
-            approvedAtIso: "2026-01-20T12:00:00.000+00:00",
+            approverName: 'Sean Turner',
+            approvedAtIso: '2026-01-20T12:00:00.000+00:00'
           },
           {
-            approverName: "Russ Housley",
-            approvedAtIso: "2026-01-16T12:00:00.000+00:00",
-          },
+            approverName: 'Russ Housley',
+            approvedAtIso: '2026-01-16T12:00:00.000+00:00'
+          }
         ],
         authors: [
-          { titlepageName: "D. Dhody", isEditor: false },
-          { titlepageName: "S. Turner", isEditor: false },
-          { titlepageName: "R. Housley", isEditor: false },
+          { titlepageName: 'D. Dhody', isEditor: false },
+          { titlepageName: 'S. Turner', isEditor: false },
+          { titlepageName: 'R. Housley', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [496],
-        assignmentsByRoles: [{ role: "final_review_editor" }],
+        assignmentsByRoles: [{ role: 'final_review_editor' }],
         pages: 6,
-        enqueuedAtIso: "2024-01-09T12:00:00.000Z",
+        enqueuedAtIso: '2024-01-09T12:00:00.000Z',
         approvalLogMessages: [
           {
-            rfcToBe: { name: "draft-ietf-pce-pceps-tls13", rfcNumber: 9916 },
+            rfcToBe: { name: 'draft-ietf-pce-pceps-tls13', rfcNumber: 9916 },
             logMessage:
-              "2026-01-16: questions sent to authors.\r\n2026-01-16: response received. updated files sent. \r\n2026-01-20: additional update received. updated files sent. \r\n\r\n\r\n\r\nRPC Note: This document normatively references RFC-to-be 9846, so it will be published at the same time as or after that document.",
-            timeIso: "2026-01-16T18:41:20.000+00:00",
-          },
+              '2026-01-16: questions sent to authors.\r\n2026-01-16: response received. updated files sent. \r\n2026-01-20: additional update received. updated files sent. \r\n\r\n\r\n\r\nRPC Note: This document normatively references RFC-to-be 9846, so it will be published at the same time as or after that document.',
+            timeIso: '2026-01-16T18:41:20.000+00:00'
+          }
         ],
-        group: "pce",
-        groupName: "Path Computation Element",
-        stdLevel: "ps",
+        group: 'pce',
+        groupName: 'Path Computation Element',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-pce-pceps-tls13",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-pce-pceps-tls13',
             sourceRfcNumber: 9916,
-            targetDraftName: "draft-ietf-tls-rfc8446bis",
+            targetDraftName: 'draft-ietf-tls-rfc8446bis',
             targetRfcNumber: 9846,
-            targetDisposition: "in_progress",
-          },
-        ],
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-lamps-rfc5019bis",
-        title: "Updates to Lightweight OCSP Profile for High Volume Environments",
-        stream: "ietf",
+        name: 'draft-ietf-lamps-rfc5019bis',
+        draftUrl: 'x',
+        title: 'Updates to Lightweight OCSP Profile for High Volume Environments',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [
           {
-            approverName: "Tadahiko Ito",
-            approvedAtIso: "2026-02-03T12:00:00.000+00:00",
+            approverName: 'Tadahiko Ito',
+            approvedAtIso: '2026-02-03T12:00:00.000+00:00'
           },
           {
-            approverName: "Clint Wilson",
-            approvedAtIso: "2026-02-02T12:00:00.000+00:00",
+            approverName: 'Clint Wilson',
+            approvedAtIso: '2026-02-02T12:00:00.000+00:00'
           },
           {
-            approverName: "Corey Bonnell",
-            approvedAtIso: "2026-02-02T12:00:00.000+00:00",
+            approverName: 'Corey Bonnell',
+            approvedAtIso: '2026-02-02T12:00:00.000+00:00'
           },
           {
-            approverName: "Sean Turner",
-            approvedAtIso: "2026-02-02T12:00:00.000+00:00",
-          },
+            approverName: 'Sean Turner',
+            approvedAtIso: '2026-02-02T12:00:00.000+00:00'
+          }
         ],
         authors: [
-          { titlepageName: "T. Ito", isEditor: false },
-          { titlepageName: "C. Wilson", isEditor: false },
-          { titlepageName: "C. Bonnell", isEditor: false },
-          { titlepageName: "S. Turner", isEditor: false },
+          { titlepageName: 'T. Ito', isEditor: false },
+          { titlepageName: 'C. Wilson', isEditor: false },
+          { titlepageName: 'C. Bonnell', isEditor: false },
+          { titlepageName: 'S. Turner', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [496],
-        assignmentsByRoles: [{ role: "final_review_editor" }],
+        assignmentsByRoles: [{ role: 'final_review_editor' }],
         pages: 36,
-        enqueuedAtIso: "2024-09-13T12:00:00.000Z",
+        enqueuedAtIso: '2024-09-13T12:00:00.000Z',
         approvalLogMessages: [
           {
-            rfcToBe: { name: "draft-ietf-lamps-rfc5019bis", rfcNumber: 9919 },
+            rfcToBe: { name: 'draft-ietf-lamps-rfc5019bis', rfcNumber: 9919 },
             logMessage:
-              "2026-01-16: questions sent to authors.\r\n2026-01-20: response received. updated files sent. 2 questions remain.\r\n2026-01-21: final 2 questions addressed. updated files sent. \r\n2026-01-22: additional updates received. updated files sent. AD approval requested.\r\n2026-01-30: reminder sent.\r\n\r\n\r\nRPC Note: This document normatively references RFC-to-be 9846, so it will be published at the same time as or after that document.",
-            timeIso: "2026-01-16T18:45:22.000+00:00",
-          },
+              '2026-01-16: questions sent to authors.\r\n2026-01-20: response received. updated files sent. 2 questions remain.\r\n2026-01-21: final 2 questions addressed. updated files sent. \r\n2026-01-22: additional updates received. updated files sent. AD approval requested.\r\n2026-01-30: reminder sent.\r\n\r\n\r\nRPC Note: This document normatively references RFC-to-be 9846, so it will be published at the same time as or after that document.',
+            timeIso: '2026-01-16T18:45:22.000+00:00'
+          }
         ],
-        group: "lamps",
-        groupName: "Limited Additional Mechanisms for PKIX and SMIME",
-        stdLevel: "ps",
+        group: 'lamps',
+        groupName: 'Limited Additional Mechanisms for PKIX and SMIME',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-lamps-rfc5019bis",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-lamps-rfc5019bis',
             sourceRfcNumber: 9919,
-            targetDraftName: "draft-ietf-tls-rfc8446bis",
+            targetDraftName: 'draft-ietf-tls-rfc8446bis',
             targetRfcNumber: 9846,
-            targetDisposition: "in_progress",
-          },
-        ],
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-emailcore-rfc5322bis",
-        title: "Internet Message Format",
-        stream: "ietf",
+        name: 'draft-ietf-emailcore-rfc5322bis',
+        draftUrl: 'x',
+        title: 'Internet Message Format',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
-        authors: [{ titlepageName: "P. Resnick", isEditor: true }],
-        disposition: "in_progress",
+        authors: [{ titlepageName: 'P. Resnick', isEditor: true }],
+        disposition: 'in_progress',
         labels: [],
         clusters: [540],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [
-              { reason: { name: "Reference: First Edit Incomplete" } },
-            ],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Reference: First Edit Incomplete' } }]
+          }
         ],
         pages: 59,
-        enqueuedAtIso: "2025-03-18T12:00:00.000Z",
+        enqueuedAtIso: '2025-03-18T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "emailcore",
-        groupName: "Revision of core Email specifications",
-        stdLevel: "std",
+        group: 'emailcore',
+        groupName: 'Revision of core Email specifications',
+        stdLevel: 'std',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-emailcore-rfc5322bis",
-            targetDraftName: "draft-ietf-emailcore-rfc5321bis",
-            targetDisposition: "in_progress",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-emailcore-rfc5322bis',
+            targetDraftName: 'draft-ietf-emailcore-rfc5321bis',
+            targetDisposition: 'in_progress'
           },
           {
-            relationship: "not-received",
-            draftName: "draft-ietf-emailcore-rfc5322bis",
-            targetDraftName: "draft-ietf-emailcore-as",
-          },
-        ],
+            relationship: 'not-received',
+            draftName: 'draft-ietf-emailcore-rfc5322bis',
+            targetDraftName: 'draft-ietf-emailcore-as'
+          }
+        ]
       },
       {
-        name: "draft-ietf-dmarc-aggregate-reporting",
+        name: 'draft-ietf-dmarc-aggregate-reporting',
+        draftUrl: 'x',
         title:
-          "Domain-based Message Authentication, Reporting, and Conformance (DMARC) Aggregate Reporting",
-        stream: "ietf",
+          'Domain-based Message Authentication, Reporting, and Conformance (DMARC) Aggregate Reporting',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
-        authors: [{ titlepageName: "A. Brotman", isEditor: true }],
-        disposition: "in_progress",
+        authors: [{ titlepageName: 'A. Brotman', isEditor: true }],
+        disposition: 'in_progress',
         labels: [],
         clusters: [539],
         assignmentsByRoles: [],
         pages: 39,
-        enqueuedAtIso: "2025-03-18T12:00:00.000Z",
+        enqueuedAtIso: '2025-03-18T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "dmarc",
-        groupName: "Domain-based Message Authentication, Reporting & Conformance",
-        stdLevel: "ps",
+        group: 'dmarc',
+        groupName: 'Domain-based Message Authentication, Reporting & Conformance',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-dmarc-aggregate-reporting",
-            targetDraftName: "draft-ietf-dmarc-dmarcbis",
-            targetDisposition: "in_progress",
-          },
-        ],
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-dmarc-aggregate-reporting',
+            targetDraftName: 'draft-ietf-dmarc-dmarcbis',
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-raw-architecture",
-        title: "Reliable and Available Wireless Architecture",
-        stream: "ietf",
+        name: 'draft-ietf-raw-architecture',
+        draftUrl: 'x',
+        title: 'Reliable and Available Wireless Architecture',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [
           {
-            approverName: "Pascal Thubert",
-            approvedAtIso: "2026-02-19T12:00:00.000+00:00",
-          },
+            approverName: 'Pascal Thubert',
+            approvedAtIso: '2026-02-19T12:00:00.000+00:00'
+          }
         ],
-        authors: [{ titlepageName: "P. Thubert", isEditor: false }],
-        disposition: "in_progress",
+        authors: [{ titlepageName: 'P. Thubert', isEditor: false }],
+        disposition: 'in_progress',
         labels: [],
         clusters: [538],
-        assignmentsByRoles: [{ role: "final_review_editor" }],
+        assignmentsByRoles: [{ role: 'final_review_editor' }],
         pages: 45,
-        enqueuedAtIso: "2025-07-28T12:00:00.000Z",
+        enqueuedAtIso: '2025-07-28T12:00:00.000Z',
         approvalLogMessages: [
           {
-            rfcToBe: { name: "draft-ietf-raw-architecture", rfcNumber: 9912 },
+            rfcToBe: { name: 'draft-ietf-raw-architecture', rfcNumber: 9912 },
             logMessage:
-              "2026-02-09: Sent questions to author and requested AD review of question #1.\r\n2026-02-10: Received AD approval of question #1.\r\n2026-02-11: Received author response.\r\n2026-02-13: Sent updated files and a few follow-up questions.\r\n2026-02-18: Sent updated files based on additional requests.\r\n2026-02-19: Received author approval. All approvals received and AUTH48 complete.\r\n\r\n\r\nRPC Note: This document will be published as the same time as RFCs-to-be 9913 and 9914 (all cluster 538).",
-            timeIso: "2026-02-10T05:46:23.000+00:00",
-          },
+              '2026-02-09: Sent questions to author and requested AD review of question #1.\r\n2026-02-10: Received AD approval of question #1.\r\n2026-02-11: Received author response.\r\n2026-02-13: Sent updated files and a few follow-up questions.\r\n2026-02-18: Sent updated files based on additional requests.\r\n2026-02-19: Received author approval. All approvals received and AUTH48 complete.\r\n\r\n\r\nRPC Note: This document will be published as the same time as RFCs-to-be 9913 and 9914 (all cluster 538).',
+            timeIso: '2026-02-10T05:46:23.000+00:00'
+          }
         ],
-        group: "detnet",
-        groupName: "Deterministic Networking",
-        stdLevel: "inf",
+        group: 'detnet',
+        groupName: 'Deterministic Networking',
+        stdLevel: 'inf',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-raw-architecture",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-raw-architecture',
             sourceRfcNumber: 9912,
-            targetDraftName: "draft-ietf-raw-technologies",
+            targetDraftName: 'draft-ietf-raw-technologies',
             targetRfcNumber: 9913,
-            targetDisposition: "in_progress",
-          },
-        ],
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-i2nsf-capability-data-model",
-        title: "I2NSF Capability YANG Data Model",
-        stream: "ietf",
+        name: 'draft-ietf-i2nsf-capability-data-model',
+        draftUrl: 'x',
+        title: 'I2NSF Capability YANG Data Model',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "S. Hares", isEditor: true },
-          { titlepageName: "J. Jeong", isEditor: true },
-          { titlepageName: "J. Kim", isEditor: false },
-          { titlepageName: "R. Moskowitz", isEditor: false },
-          { titlepageName: "Q. Lin", isEditor: false },
+          { titlepageName: 'S. Hares', isEditor: true },
+          { titlepageName: 'J. Jeong', isEditor: true },
+          { titlepageName: 'J. Kim', isEditor: false },
+          { titlepageName: 'R. Moskowitz', isEditor: false },
+          { titlepageName: 'Q. Lin', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [
           {
-            slug: "Author Input Required",
-            themeColor: "slate",
+            slug: 'Author Input Required',
+            themeColor: 'slate',
             isException: false,
-            isComplexity: false,
-          },
+            isComplexity: false
+          }
         ],
         clusters: [405],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [{ reason: { name: "Author Input Required" } }],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Author Input Required' } }]
+          }
         ],
         pages: 73,
-        enqueuedAtIso: "2022-05-16T12:00:00.000Z",
+        enqueuedAtIso: '2022-05-16T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "i2nsf",
-        groupName: "Interface to Network Security Functions",
-        stdLevel: "ps",
+        group: 'i2nsf',
+        groupName: 'Interface to Network Security Functions',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-i2nsf-capability-data-model",
-            targetDraftName: "draft-ietf-i2nsf-nsf-facing-interface-dm",
-            targetDisposition: "in_progress",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-i2nsf-capability-data-model',
+            targetDraftName: 'draft-ietf-i2nsf-nsf-facing-interface-dm',
+            targetDisposition: 'in_progress'
           },
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-i2nsf-capability-data-model",
-            targetDraftName: "draft-ietf-i2nsf-nsf-monitoring-data-model",
-            targetDisposition: "in_progress",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-i2nsf-capability-data-model',
+            targetDraftName: 'draft-ietf-i2nsf-nsf-monitoring-data-model',
+            targetDisposition: 'in_progress'
           },
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-i2nsf-capability-data-model",
-            targetDraftName: "draft-ietf-i2nsf-registration-interface-dm",
-            targetDisposition: "in_progress",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-i2nsf-capability-data-model',
+            targetDraftName: 'draft-ietf-i2nsf-registration-interface-dm',
+            targetDisposition: 'in_progress'
           },
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-i2nsf-capability-data-model",
-            targetDraftName: "draft-ietf-tcpm-accurate-ecn",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-i2nsf-capability-data-model',
+            targetDraftName: 'draft-ietf-tcpm-accurate-ecn',
             targetRfcNumber: 9768,
-            targetDisposition: "in_progress",
-          },
-        ],
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-emailcore-rfc5321bis",
-        title: "Simple Mail Transfer Protocol",
-        stream: "ietf",
+        name: 'draft-ietf-emailcore-rfc5321bis',
+        draftUrl: 'x',
+        title: 'Simple Mail Transfer Protocol',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
-        authors: [{ titlepageName: "J. Klensin", isEditor: false }],
-        disposition: "in_progress",
+        authors: [{ titlepageName: 'J. Klensin', isEditor: false }],
+        disposition: 'in_progress',
         labels: [],
         clusters: [540],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [{ reason: { name: "Reference Not Received" } }],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Reference Not Received' } }]
+          }
         ],
         pages: 124,
-        enqueuedAtIso: "2025-03-18T12:00:00.000Z",
+        enqueuedAtIso: '2025-03-18T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "emailcore",
-        groupName: "Revision of core Email specifications",
-        stdLevel: "std",
+        group: 'emailcore',
+        groupName: 'Revision of core Email specifications',
+        stdLevel: 'std',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-emailcore-rfc5321bis",
-            targetDraftName: "draft-ietf-emailcore-rfc5322bis",
-            targetDisposition: "in_progress",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-emailcore-rfc5321bis',
+            targetDraftName: 'draft-ietf-emailcore-rfc5322bis',
+            targetDisposition: 'in_progress'
           },
           {
-            relationship: "not-received",
-            draftName: "draft-ietf-emailcore-rfc5321bis",
-            targetDraftName: "draft-ietf-emailcore-as",
-          },
-        ],
+            relationship: 'not-received',
+            draftName: 'draft-ietf-emailcore-rfc5321bis',
+            targetDraftName: 'draft-ietf-emailcore-as'
+          }
+        ]
       },
       {
-        name: "draft-ietf-ccamp-l1csm-yang",
-        title: "A YANG Data Model for L1 Connectivity Service Model (L1CSM)",
-        stream: "ietf",
+        name: 'draft-ietf-ccamp-l1csm-yang',
+        draftUrl: 'x',
+        title: 'A YANG Data Model for L1 Connectivity Service Model (L1CSM)',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "Y. Lee", isEditor: false },
-          { titlepageName: "K. Lee", isEditor: false },
-          { titlepageName: "H. Zheng", isEditor: false },
-          { titlepageName: "O. Gonzalez de Dios", isEditor: false },
-          { titlepageName: "D. Ceccarelli", isEditor: false },
+          { titlepageName: 'Y. Lee', isEditor: false },
+          { titlepageName: 'K. Lee', isEditor: false },
+          { titlepageName: 'H. Zheng', isEditor: false },
+          { titlepageName: 'O. Gonzalez de Dios', isEditor: false },
+          { titlepageName: 'D. Ceccarelli', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [517],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [
-              { reason: { name: "Reference Not Received (2nd Generation)" } },
-            ],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Reference Not Received (2nd Generation)' } }]
+          }
         ],
         pages: 19,
-        enqueuedAtIso: "2024-04-12T12:00:00.000Z",
+        enqueuedAtIso: '2024-04-12T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "ccamp",
-        groupName: "Common Control and Measurement Plane",
-        stdLevel: "ps",
+        group: 'ccamp',
+        groupName: 'Common Control and Measurement Plane',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-ccamp-l1csm-yang",
-            targetDraftName: "draft-ietf-ccamp-layer1-types",
-            targetDisposition: "in_progress",
-          },
-        ],
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-ccamp-l1csm-yang',
+            targetDraftName: 'draft-ietf-ccamp-layer1-types',
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-ccamp-layer1-types",
-        title: "Common YANG Data Types for Layer 1 Networks",
-        stream: "ietf",
+        name: 'draft-ietf-ccamp-layer1-types',
+        draftUrl: 'x',
+        title: 'Common YANG Data Types for Layer 1 Networks',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "H. Zheng", isEditor: false },
-          { titlepageName: "I. Busi", isEditor: false },
+          { titlepageName: 'H. Zheng', isEditor: false },
+          { titlepageName: 'I. Busi', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [517],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [{ reason: { name: "Reference Not Received" } }],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Reference Not Received' } }]
+          }
         ],
         pages: 55,
-        enqueuedAtIso: "2024-02-23T12:00:00.000Z",
+        enqueuedAtIso: '2024-02-23T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "ccamp",
-        groupName: "Common Control and Measurement Plane",
-        stdLevel: "ps",
+        group: 'ccamp',
+        groupName: 'Common Control and Measurement Plane',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "not-received",
-            draftName: "draft-ietf-ccamp-layer1-types",
-            targetDraftName: "draft-ietf-teas-rfc8776-update",
-          },
-        ],
+            relationship: 'not-received',
+            draftName: 'draft-ietf-ccamp-layer1-types',
+            targetDraftName: 'draft-ietf-teas-rfc8776-update'
+          }
+        ]
       },
       {
-        name: "draft-ietf-i2nsf-consumer-facing-interface-dm",
-        title: "I2NSF Consumer-Facing Interface YANG Data Model",
-        stream: "ietf",
+        name: 'draft-ietf-i2nsf-consumer-facing-interface-dm',
+        draftUrl: 'x',
+        title: 'I2NSF Consumer-Facing Interface YANG Data Model',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "J. Jeong", isEditor: true },
-          { titlepageName: "C. Chung", isEditor: false },
-          { titlepageName: "T. Ahn", isEditor: false },
-          { titlepageName: "R. Kumar", isEditor: false },
-          { titlepageName: "S. Hares", isEditor: false },
+          { titlepageName: 'J. Jeong', isEditor: true },
+          { titlepageName: 'C. Chung', isEditor: false },
+          { titlepageName: 'T. Ahn', isEditor: false },
+          { titlepageName: 'R. Kumar', isEditor: false },
+          { titlepageName: 'S. Hares', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [
           {
-            slug: "Author Input Required",
-            themeColor: "slate",
+            slug: 'Author Input Required',
+            themeColor: 'slate',
             isException: false,
-            isComplexity: false,
-          },
+            isComplexity: false
+          }
         ],
         clusters: [405],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [{ reason: { name: "Author Input Required" } }],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Author Input Required' } }]
+          }
         ],
         pages: 74,
-        enqueuedAtIso: "2023-06-21T12:00:00.000Z",
+        enqueuedAtIso: '2023-06-21T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "i2nsf",
-        groupName: "Interface to Network Security Functions",
-        stdLevel: "ps",
+        group: 'i2nsf',
+        groupName: 'Interface to Network Security Functions',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-i2nsf-consumer-facing-interface-dm",
-            targetDraftName: "draft-ietf-i2nsf-nsf-monitoring-data-model",
-            targetDisposition: "in_progress",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-i2nsf-consumer-facing-interface-dm',
+            targetDraftName: 'draft-ietf-i2nsf-nsf-monitoring-data-model',
+            targetDisposition: 'in_progress'
           },
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-i2nsf-consumer-facing-interface-dm",
-            targetDraftName: "draft-ietf-i2nsf-capability-data-model",
-            targetDisposition: "in_progress",
-          },
-        ],
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-i2nsf-consumer-facing-interface-dm',
+            targetDraftName: 'draft-ietf-i2nsf-capability-data-model',
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-6man-rfc6724-update",
-        title:
-          "Prioritizing known-local IPv6 ULAs through address selection policy",
-        stream: "ietf",
+        name: 'draft-ietf-6man-rfc6724-update',
+        draftUrl: 'x',
+        title: 'Prioritizing known-local IPv6 ULAs through address selection policy',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "N. Buraglio", isEditor: false },
-          { titlepageName: "T. Chown", isEditor: false },
-          { titlepageName: "J. Duncan", isEditor: false },
+          { titlepageName: 'N. Buraglio', isEditor: false },
+          { titlepageName: 'T. Chown', isEditor: false },
+          { titlepageName: 'J. Duncan', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [525],
         assignmentsByRoles: [],
         pages: 21,
-        enqueuedAtIso: "2025-09-03T12:00:00.000Z",
+        enqueuedAtIso: '2025-09-03T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "6man",
-        groupName: "IPv6 Maintenance",
-        stdLevel: "ps",
-        references: [],
+        group: '6man',
+        groupName: 'IPv6 Maintenance',
+        stdLevel: 'ps',
+        references: []
       },
       {
-        name: "draft-ietf-i2nsf-nsf-facing-interface-dm",
-        title: "I2NSF Network Security Function-Facing Interface YANG Data Model",
-        stream: "ietf",
+        name: 'draft-ietf-i2nsf-nsf-facing-interface-dm',
+        draftUrl: 'x',
+        title: 'I2NSF Network Security Function-Facing Interface YANG Data Model',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "J. Kim", isEditor: true },
-          { titlepageName: "J. Jeong", isEditor: true },
-          { titlepageName: "J. Park", isEditor: false },
-          { titlepageName: "S. Hares", isEditor: false },
-          { titlepageName: "Q. Lin", isEditor: false },
+          { titlepageName: 'J. Kim', isEditor: true },
+          { titlepageName: 'J. Jeong', isEditor: true },
+          { titlepageName: 'J. Park', isEditor: false },
+          { titlepageName: 'S. Hares', isEditor: false },
+          { titlepageName: 'Q. Lin', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [
           {
-            slug: "Author Input Required",
-            themeColor: "slate",
+            slug: 'Author Input Required',
+            themeColor: 'slate',
             isException: false,
-            isComplexity: false,
-          },
+            isComplexity: false
+          }
         ],
         clusters: [405],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [
-              { reason: { name: "Reference: First Edit Incomplete" } },
-            ],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Reference: First Edit Incomplete' } }]
+          }
         ],
         pages: 81,
-        enqueuedAtIso: "2022-05-16T12:00:00.000Z",
+        enqueuedAtIso: '2022-05-16T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "i2nsf",
-        groupName: "Interface to Network Security Functions",
-        stdLevel: "ps",
+        group: 'i2nsf',
+        groupName: 'Interface to Network Security Functions',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-i2nsf-nsf-facing-interface-dm",
-            targetDraftName: "draft-ietf-i2nsf-capability-data-model",
-            targetDisposition: "in_progress",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-i2nsf-nsf-facing-interface-dm',
+            targetDraftName: 'draft-ietf-i2nsf-capability-data-model',
+            targetDisposition: 'in_progress'
           },
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-i2nsf-nsf-facing-interface-dm",
-            targetDraftName: "draft-ietf-i2nsf-nsf-monitoring-data-model",
-            targetDisposition: "in_progress",
-          },
-        ],
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-i2nsf-nsf-facing-interface-dm',
+            targetDraftName: 'draft-ietf-i2nsf-nsf-monitoring-data-model',
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-oauth-browser-based-apps",
-        title: "OAuth 2.0 for Browser-Based Applications",
-        stream: "ietf",
+        name: 'draft-ietf-oauth-browser-based-apps',
+        draftUrl: 'x',
+        title: 'OAuth 2.0 for Browser-Based Applications',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "A. Parecki", isEditor: false },
-          { titlepageName: "P. Ryck", isEditor: false },
-          { titlepageName: "D. Waite", isEditor: false },
+          { titlepageName: 'A. Parecki', isEditor: false },
+          { titlepageName: 'P. Ryck', isEditor: false },
+          { titlepageName: 'D. Waite', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [
           {
-            slug: "markdown",
-            themeColor: "amber",
+            slug: 'markdown',
+            themeColor: 'amber',
             isException: false,
-            isComplexity: false,
+            isComplexity: false
           },
           {
-            slug: "github",
-            themeColor: "slate",
+            slug: 'github',
+            themeColor: 'slate',
             isException: false,
-            isComplexity: false,
-          },
+            isComplexity: false
+          }
         ],
         clusters: [548],
         assignmentsByRoles: [],
         pages: 68,
-        enqueuedAtIso: "2025-07-08T12:00:00.000Z",
+        enqueuedAtIso: '2025-07-08T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "oauth",
-        groupName: "Web Authorization Protocol",
-        stdLevel: "bcp",
+        group: 'oauth',
+        groupName: 'Web Authorization Protocol',
+        stdLevel: 'bcp',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-oauth-browser-based-apps",
-            targetDraftName: "draft-ietf-httpbis-rfc6265bis",
-            targetDisposition: "in_progress",
-          },
-        ],
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-oauth-browser-based-apps',
+            targetDraftName: 'draft-ietf-httpbis-rfc6265bis',
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-ccamp-otn-topo-yang",
-        title: "A YANG Data Model for Optical Transport Network Topology",
-        stream: "ietf",
+        name: 'draft-ietf-ccamp-otn-topo-yang',
+        draftUrl: 'x',
+        title: 'A YANG Data Model for Optical Transport Network Topology',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "H. Zheng", isEditor: false },
-          { titlepageName: "I. Busi", isEditor: false },
-          { titlepageName: "X. Liu", isEditor: false },
-          { titlepageName: "S. Belotti", isEditor: false },
-          { titlepageName: "O. Gonzalez de Dios", isEditor: false },
+          { titlepageName: 'H. Zheng', isEditor: false },
+          { titlepageName: 'I. Busi', isEditor: false },
+          { titlepageName: 'X. Liu', isEditor: false },
+          { titlepageName: 'S. Belotti', isEditor: false },
+          { titlepageName: 'O. Gonzalez de Dios', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [517],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [
-              { reason: { name: "Reference Not Received (2nd Generation)" } },
-            ],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Reference Not Received (2nd Generation)' } }]
+          }
         ],
         pages: 92,
-        enqueuedAtIso: "2024-11-21T12:00:00.000Z",
+        enqueuedAtIso: '2024-11-21T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "ccamp",
-        groupName: "Common Control and Measurement Plane",
-        stdLevel: "ps",
+        group: 'ccamp',
+        groupName: 'Common Control and Measurement Plane',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-ccamp-otn-topo-yang",
-            targetDraftName: "draft-ietf-ccamp-layer1-types",
-            targetDisposition: "in_progress",
-          },
-        ],
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-ccamp-otn-topo-yang',
+            targetDraftName: 'draft-ietf-ccamp-layer1-types',
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-suit-mti",
-        title: "Cryptographic Algorithms for Internet of Things (IoT) Devices",
-        stream: "ietf",
+        name: 'draft-ietf-suit-mti',
+        draftUrl: 'x',
+        title: 'Cryptographic Algorithms for Internet of Things (IoT) Devices',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "B. Moran", isEditor: false },
-          { titlepageName: "Ø. Rønningstad", isEditor: false },
-          { titlepageName: "A. Tsukamoto", isEditor: false },
+          { titlepageName: 'B. Moran', isEditor: false },
+          { titlepageName: 'Ø. Rønningstad', isEditor: false },
+          { titlepageName: 'A. Tsukamoto', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [535],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [
-              { reason: { name: "Reference Not Received (2nd Generation)" } },
-            ],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Reference Not Received (2nd Generation)' } }]
+          }
         ],
         pages: 20,
-        enqueuedAtIso: "2025-07-23T12:00:00.000Z",
+        enqueuedAtIso: '2025-07-23T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "suit",
-        groupName: "Software Updates for Internet of Things",
-        stdLevel: "ps",
+        group: 'suit',
+        groupName: 'Software Updates for Internet of Things',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-suit-mti",
-            targetDraftName: "draft-ietf-suit-manifest",
-            targetDisposition: "in_progress",
-          },
-        ],
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-suit-mti',
+            targetDraftName: 'draft-ietf-suit-manifest',
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-ippm-capacity-protocol",
-        title:
-          "UDP Speed Test Protocol for One-way IP Capacity Metric Measurement",
-        stream: "ietf",
+        name: 'draft-ietf-ippm-capacity-protocol',
+        draftUrl: 'x',
+        title: 'UDP Speed Test Protocol for One-way IP Capacity Metric Measurement',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [
           {
-            approverName: "Len Ciavattone",
-            approvedAtIso: "2026-03-18T12:00:00.000+00:00",
+            approverName: 'Len Ciavattone',
+            approvedAtIso: '2026-03-18T12:00:00.000+00:00'
           },
           {
-            approverName: "Ruediger Geib",
-            approvedAtIso: "2026-03-18T12:00:00.000+00:00",
-          },
+            approverName: 'Ruediger Geib',
+            approvedAtIso: '2026-03-18T12:00:00.000+00:00'
+          }
         ],
         authors: [
-          { titlepageName: "A. Morton", isEditor: false },
-          { titlepageName: "L. Ciavattone", isEditor: false },
-          { titlepageName: "R. Geib", isEditor: true },
+          { titlepageName: 'A. Morton', isEditor: false },
+          { titlepageName: 'L. Ciavattone', isEditor: false },
+          { titlepageName: 'R. Geib', isEditor: true }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [570],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [{ reason: { name: "Unresolved Action Holder" } }],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Unresolved Action Holder' } }]
+          }
         ],
         pages: 69,
-        enqueuedAtIso: "2025-09-18T12:00:00.000Z",
+        enqueuedAtIso: '2025-09-18T12:00:00.000Z',
         approvalLogMessages: [
           {
             rfcToBe: {
-              name: "draft-ietf-ippm-capacity-protocol",
-              rfcNumber: 9946,
+              name: 'draft-ietf-ippm-capacity-protocol',
+              rfcNumber: 9946
             },
             logMessage:
-              "2026-03-11: Questions sent to authors. Med (AD) to approve the document on behalf of A. Morton. AD reviewed the addition of the editor role for Geib and requested the affiliation for A. Morton to be added.\r\n2026-03-12: Responses received.\r\n2026-03-13: Responses received.\r\n2026-03-17: Responses received. AD approved changes to Sections 4.3.1 and 4.6.\r\n2026-03-18: Responses received. AD approved changes to Figure 11 (Section 7.2).\r\n2026-03-19: Response received.\r\n2026-03-20: Asked IANA to update their registries to match the edited document [IANA #1448253].\r\n2026-03-30: Updated document. Asked AD to approve new text in Section 12.3.8.\r\n2026-03-31: Response received. AD approval received for Section 12.3.8. Asked IANA to add a note to their registry to match that in Section 12.3.8.\r\n2026-04-01: IANA actions are complete.\r\n2026-04-06: Asked authors to review IANA-related questions prior to PUB.\r\n2026-04-07: Response received. Asked AD to approve updates to Sections 6.1 and 12.3.4.",
-            timeIso: "2026-03-12T01:48:21.000+00:00",
-          },
+              '2026-03-11: Questions sent to authors. Med (AD) to approve the document on behalf of A. Morton. AD reviewed the addition of the editor role for Geib and requested the affiliation for A. Morton to be added.\r\n2026-03-12: Responses received.\r\n2026-03-13: Responses received.\r\n2026-03-17: Responses received. AD approved changes to Sections 4.3.1 and 4.6.\r\n2026-03-18: Responses received. AD approved changes to Figure 11 (Section 7.2).\r\n2026-03-19: Response received.\r\n2026-03-20: Asked IANA to update their registries to match the edited document [IANA #1448253].\r\n2026-03-30: Updated document. Asked AD to approve new text in Section 12.3.8.\r\n2026-03-31: Response received. AD approval received for Section 12.3.8. Asked IANA to add a note to their registry to match that in Section 12.3.8.\r\n2026-04-01: IANA actions are complete.\r\n2026-04-06: Asked authors to review IANA-related questions prior to PUB.\r\n2026-04-07: Response received. Asked AD to approve updates to Sections 6.1 and 12.3.4.',
+            timeIso: '2026-03-12T01:48:21.000+00:00'
+          }
         ],
-        group: "ippm",
-        groupName: "IP Performance Measurement",
-        stdLevel: "ps",
-        references: [],
+        group: 'ippm',
+        groupName: 'IP Performance Measurement',
+        stdLevel: 'ps',
+        references: []
       },
       {
-        name: "draft-ietf-tls-hybrid-design",
-        title: "Hybrid key exchange in TLS 1.3",
-        stream: "ietf",
+        name: 'draft-ietf-tls-hybrid-design',
+        draftUrl: 'x',
+        title: 'Hybrid key exchange in TLS 1.3',
+        stream: 'ietf',
         consensus: false,
         finalApprovals: [
-          { approverName: "Douglas Stebila" },
-          { approverName: "Scott Fluhrer" },
-          { approverName: "Shay Gueron" },
+          { approverName: 'Douglas Stebila' },
+          { approverName: 'Scott Fluhrer' },
+          { approverName: 'Shay Gueron' }
         ],
         authors: [
-          { titlepageName: "D. Stebila", isEditor: false },
-          { titlepageName: "S. Fluhrer", isEditor: false },
-          { titlepageName: "S. Gueron", isEditor: false },
+          { titlepageName: 'D. Stebila', isEditor: false },
+          { titlepageName: 'S. Fluhrer', isEditor: false },
+          { titlepageName: 'S. Gueron', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [553],
-        assignmentsByRoles: [{ role: "final_review_editor" }],
+        assignmentsByRoles: [{ role: 'final_review_editor' }],
         pages: 23,
-        enqueuedAtIso: "2025-09-17T12:00:00.000Z",
+        enqueuedAtIso: '2025-09-17T12:00:00.000Z',
         approvalLogMessages: [
           {
-            rfcToBe: { name: "draft-ietf-tls-hybrid-design", rfcNumber: 9954 },
-            logMessage: "2026-04-03: Questions sent to authors.",
-            timeIso: "2026-04-03T16:41:10.000+00:00",
-          },
+            rfcToBe: { name: 'draft-ietf-tls-hybrid-design', rfcNumber: 9954 },
+            logMessage: '2026-04-03: Questions sent to authors.',
+            timeIso: '2026-04-03T16:41:10.000+00:00'
+          }
         ],
-        group: "tls",
-        groupName: "Transport Layer Security",
-        stdLevel: "inf",
-        references: [],
+        group: 'tls',
+        groupName: 'Transport Layer Security',
+        stdLevel: 'inf',
+        references: []
       },
       {
-        name: "draft-ietf-suit-mud",
-        title: "Strong Assertions of IoT Network Access Requirements",
-        stream: "ietf",
+        name: 'draft-ietf-suit-mud',
+        draftUrl: 'x',
+        title: 'Strong Assertions of IoT Network Access Requirements',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [],
         authors: [
-          { titlepageName: "B. Moran", isEditor: false },
-          { titlepageName: "H. Tschofenig", isEditor: false },
+          { titlepageName: 'B. Moran', isEditor: false },
+          { titlepageName: 'H. Tschofenig', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [535],
         assignmentsByRoles: [
           {
-            role: "blocked",
-            blockingReasons: [
-              { reason: { name: "Reference Not Received (2nd Generation)" } },
-            ],
-          },
+            role: 'blocked',
+            blockingReasons: [{ reason: { name: 'Reference Not Received (2nd Generation)' } }]
+          }
         ],
         pages: 11,
-        enqueuedAtIso: "2025-02-25T12:00:00.000Z",
+        enqueuedAtIso: '2025-02-25T12:00:00.000Z',
         approvalLogMessages: [],
-        group: "suit",
-        groupName: "Software Updates for Internet of Things",
-        stdLevel: "ps",
+        group: 'suit',
+        groupName: 'Software Updates for Internet of Things',
+        stdLevel: 'ps',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-suit-mud",
-            targetDraftName: "draft-ietf-suit-manifest",
-            targetDisposition: "in_progress",
-          },
-        ],
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-suit-mud',
+            targetDraftName: 'draft-ietf-suit-manifest',
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-pquip-hybrid-signature-spectrums",
-        title: "Hybrid signature spectrums",
-        stream: "ietf",
+        name: 'draft-ietf-pquip-hybrid-signature-spectrums',
+        draftUrl: 'x',
+        title: 'Hybrid signature spectrums',
+        stream: 'ietf',
         consensus: false,
         finalApprovals: [
-          { approverName: "Nina Bindel" },
-          { approverName: "Britta Hale" },
-          { approverName: "Deirdre Connolly" },
-          { approverName: "Flo D" },
+          { approverName: 'Nina Bindel' },
+          { approverName: 'Britta Hale' },
+          { approverName: 'Deirdre Connolly' },
+          { approverName: 'Flo D' }
         ],
         authors: [
-          { titlepageName: "N. Bindel", isEditor: false },
-          { titlepageName: "B. Hale", isEditor: false },
-          { titlepageName: "D. Connolly", isEditor: false },
-          { titlepageName: "F. Driscoll", isEditor: false },
+          { titlepageName: 'N. Bindel', isEditor: false },
+          { titlepageName: 'B. Hale', isEditor: false },
+          { titlepageName: 'D. Connolly', isEditor: false },
+          { titlepageName: 'F. Driscoll', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [553],
-        assignmentsByRoles: [{ role: "final_review_editor" }],
+        assignmentsByRoles: [{ role: 'final_review_editor' }],
         pages: 28,
-        enqueuedAtIso: "2025-09-09T12:00:00.000Z",
+        enqueuedAtIso: '2025-09-09T12:00:00.000Z',
         approvalLogMessages: [
           {
             rfcToBe: {
-              name: "draft-ietf-pquip-hybrid-signature-spectrums",
-              rfcNumber: 9955,
+              name: 'draft-ietf-pquip-hybrid-signature-spectrums',
+              rfcNumber: 9955
             },
-            logMessage: "2026-04-03: Questions sent to authors.",
-            timeIso: "2026-04-03T16:48:37.000+00:00",
-          },
+            logMessage: '2026-04-03: Questions sent to authors.',
+            timeIso: '2026-04-03T16:48:37.000+00:00'
+          }
         ],
-        group: "pquip",
-        groupName: "Post-Quantum Use In Protocols",
-        stdLevel: "inf",
+        group: 'pquip',
+        groupName: 'Post-Quantum Use In Protocols',
+        stdLevel: 'inf',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-pquip-hybrid-signature-spectrums",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-pquip-hybrid-signature-spectrums',
             sourceRfcNumber: 9955,
-            targetDraftName: "draft-ietf-tls-hybrid-design",
+            targetDraftName: 'draft-ietf-tls-hybrid-design',
             targetRfcNumber: 9954,
-            targetDisposition: "in_progress",
-          },
-        ],
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-ietf-raw-technologies",
-        title: "Reliable and Available Wireless (RAW) Technologies",
-        stream: "ietf",
+        name: 'draft-ietf-raw-technologies',
+        draftUrl: 'x',
+        title: 'Reliable and Available Wireless (RAW) Technologies',
+        stream: 'ietf',
         consensus: true,
         finalApprovals: [
           {
-            approverName: "Pascal Thubert",
-            approvedAtIso: "2026-02-19T12:00:00.000+00:00",
+            approverName: 'Pascal Thubert',
+            approvedAtIso: '2026-02-19T12:00:00.000+00:00'
           },
           {
-            approverName: "Dave Cavalcanti",
-            approvedAtIso: "2026-02-19T12:00:00.000+00:00",
+            approverName: 'Dave Cavalcanti',
+            approvedAtIso: '2026-02-19T12:00:00.000+00:00'
           },
           {
-            approverName: "Xavier Vilajosana",
-            approvedAtIso: "2026-02-20T12:00:00.000+00:00",
+            approverName: 'Xavier Vilajosana',
+            approvedAtIso: '2026-02-20T12:00:00.000+00:00'
           },
           {
-            approverName: "Corinna Schmitt",
-            approvedAtIso: "2026-02-20T12:00:00.000+00:00",
+            approverName: 'Corinna Schmitt',
+            approvedAtIso: '2026-02-20T12:00:00.000+00:00'
           },
           {
-            approverName: "János Farkas",
-            approvedAtIso: "2026-02-20T12:00:00.000+00:00",
-          },
+            approverName: 'János Farkas',
+            approvedAtIso: '2026-02-20T12:00:00.000+00:00'
+          }
         ],
         authors: [
-          { titlepageName: "P. Thubert", isEditor: true },
-          { titlepageName: "D. Cavalcanti", isEditor: false },
-          { titlepageName: "X. Vilajosana", isEditor: false },
-          { titlepageName: "C. Schmitt", isEditor: false },
-          { titlepageName: "J. Farkas", isEditor: false },
+          { titlepageName: 'P. Thubert', isEditor: true },
+          { titlepageName: 'D. Cavalcanti', isEditor: false },
+          { titlepageName: 'X. Vilajosana', isEditor: false },
+          { titlepageName: 'C. Schmitt', isEditor: false },
+          { titlepageName: 'J. Farkas', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [538],
-        assignmentsByRoles: [{ role: "final_review_editor" }],
+        assignmentsByRoles: [{ role: 'final_review_editor' }],
         pages: 66,
-        enqueuedAtIso: "2025-04-22T12:00:00.000Z",
+        enqueuedAtIso: '2025-04-22T12:00:00.000Z',
         approvalLogMessages: [
           {
-            rfcToBe: { name: "draft-ietf-raw-technologies", rfcNumber: 9913 },
+            rfcToBe: { name: 'draft-ietf-raw-technologies', rfcNumber: 9913 },
             logMessage:
-              "2026-02-09: Sent questions to authors.\r\n2026-02-18: Received author responses to the majority of questions. Sent updated files.\r\n2026-02-18: Received remaining responses. All questions addressed.\r\n2026-02-19: Sent updated files. Pending response to one follow-up question.\r\n2026-02-20: Received all author approvals and responses to questions.\r\n\r\nRPC Note: This document will be published as the same time as RFCs-to-be 9912 and 9914 (all cluster 538).",
-            timeIso: "2026-02-10T05:59:35.000+00:00",
-          },
+              '2026-02-09: Sent questions to authors.\r\n2026-02-18: Received author responses to the majority of questions. Sent updated files.\r\n2026-02-18: Received remaining responses. All questions addressed.\r\n2026-02-19: Sent updated files. Pending response to one follow-up question.\r\n2026-02-20: Received all author approvals and responses to questions.\r\n\r\nRPC Note: This document will be published as the same time as RFCs-to-be 9912 and 9914 (all cluster 538).',
+            timeIso: '2026-02-10T05:59:35.000+00:00'
+          }
         ],
-        group: "detnet",
-        groupName: "Deterministic Networking",
-        stdLevel: "inf",
+        group: 'detnet',
+        groupName: 'Deterministic Networking',
+        stdLevel: 'inf',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-ietf-raw-technologies",
+            relationship: 'refqueue',
+            draftName: 'draft-ietf-raw-technologies',
             sourceRfcNumber: 9913,
-            targetDraftName: "draft-ietf-raw-architecture",
+            targetDraftName: 'draft-ietf-raw-architecture',
             targetRfcNumber: 9912,
-            targetDisposition: "in_progress",
-          },
-        ],
+            targetDisposition: 'in_progress'
+          }
+        ]
       },
       {
-        name: "draft-briscoe-docsis-q-protection",
-        title: "The DOCSIS(r) Queue Protection Algorithm to Preserve Low Latency",
-        stream: "ise",
+        name: 'draft-briscoe-docsis-q-protection',
+        draftUrl: 'x',
+        title: 'The DOCSIS(r) Queue Protection Algorithm to Preserve Low Latency',
+        stream: 'ise',
         consensus: false,
-        finalApprovals: [
-          { approverName: "Bob Briscoe" },
-          { approverName: "Greg White" },
-        ],
+        finalApprovals: [{ approverName: 'Bob Briscoe' }, { approverName: 'Greg White' }],
         authors: [
-          { titlepageName: "B. Briscoe", isEditor: true },
-          { titlepageName: "G. White", isEditor: false },
+          { titlepageName: 'B. Briscoe', isEditor: true },
+          { titlepageName: 'G. White', isEditor: false }
         ],
-        disposition: "in_progress",
+        disposition: 'in_progress',
         labels: [],
         clusters: [350],
-        assignmentsByRoles: [{ role: "final_review_editor" }],
+        assignmentsByRoles: [{ role: 'final_review_editor' }],
         pages: 32,
-        enqueuedAtIso: "2022-05-11T12:00:00.000Z",
+        enqueuedAtIso: '2022-05-11T12:00:00.000Z',
         approvalLogMessages: [
           {
             rfcToBe: {
-              name: "draft-briscoe-docsis-q-protection",
-              rfcNumber: 9957,
+              name: 'draft-briscoe-docsis-q-protection',
+              rfcNumber: 9957
             },
-            logMessage: "2026-04-06: questions sent to authors.",
-            timeIso: "2026-04-07T05:46:03.000+00:00",
-          },
+            logMessage: '2026-04-06: questions sent to authors.',
+            timeIso: '2026-04-07T05:46:03.000+00:00'
+          }
         ],
-        group: "",
-        stdLevel: "inf",
+        group: '',
+        stdLevel: 'inf',
         references: [
           {
-            relationship: "refqueue",
-            draftName: "draft-briscoe-docsis-q-protection",
+            relationship: 'refqueue',
+            draftName: 'draft-briscoe-docsis-q-protection',
             sourceRfcNumber: 9957,
-            targetDraftName: "draft-ietf-tsvwg-nqb",
+            targetDraftName: 'draft-ietf-tsvwg-nqb',
             targetRfcNumber: 9956,
-            targetDisposition: "in_progress",
-          },
-        ],
-      },
-    ],
+            targetDisposition: 'in_progress'
+          }
+        ]
+      }
+    ]
   }
 
   const str = await renderQueueXML(mockQueue)

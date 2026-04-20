@@ -30,7 +30,10 @@ const XML_COMMENT = '<!-- See queue.xsd for validation -->'
 export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
   const dom = await getDOMParser()
 
-  const doc = dom.parseFromString(`<rfc-editor-queue xmlns="${NAMESPACE}"></rfc-editor-queue>`, 'text/xml')
+  const doc = dom.parseFromString(
+    `<rfc-editor-queue xmlns="${NAMESPACE}"></rfc-editor-queue>`,
+    'text/xml'
+  )
 
   const itemsbyGroup = groupBy(queue.items, (item) => {
     // eg "IETF STREAM: WORKING GROUP STANDARDS TRACK"
@@ -38,7 +41,7 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
     const sectionNameParts = [
       item.stream ? `${item.stream.toUpperCase()} STREAM` : undefined,
       item.groupName?.toUpperCase()
-    ].filter(val => Boolean(val))
+    ].filter((val) => Boolean(val))
 
     if (sectionNameParts.length > 0) {
       const COLON_AND_SPACE = ': '
@@ -49,7 +52,7 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
   })
   const sections = Object.keys(itemsbyGroup)
 
-  sections.forEach(section => {
+  sections.forEach((section) => {
     // eg <section name="IETF STREAM: WORKING GROUP STANDARDS TRACK">
     // or <section name="IETF STREAM: NON-WORKING GROUP STANDARDS TRACK">
     const sectionEl = doc.createElementNS(NAMESPACE, 'section')
@@ -58,7 +61,7 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
 
     const items = itemsbyGroup[section]
 
-    items.forEach(item => {
+    items.forEach((item) => {
       const entryEl = doc.createElementNS(NAMESPACE, 'entry')
       sectionEl.append(entryEl)
       entryEl.setAttribute('id', item.name)
@@ -66,10 +69,12 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
       // eg <draft>draft-ietf-ecrit-similar-location-19.txt</draft>
       const draftEl = doc.createElementNS(NAMESPACE, 'draft')
       entryEl.append(draftEl)
-      draftEl.textContent = item.name
+      draftEl.textContent = item.draftUrl
 
       // eg <date-received>2022-03-07</date-received>
-      const enqueuedAtIsoDateTime = item.enqueuedAtIso ? DateTime.fromISO(item.enqueuedAtIso).toISO() : undefined
+      const enqueuedAtIsoDateTime = item.enqueuedAtIso
+        ? DateTime.fromISO(item.enqueuedAtIso).toISO()
+        : undefined
       if (enqueuedAtIsoDateTime) {
         const dateReceivedEl = doc.createElementNS(NAMESPACE, 'date-received')
         entryEl.append(dateReceivedEl)
@@ -82,7 +87,7 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
         const assignmentsEl = doc.createElementNS(NAMESPACE, 'assignments')
         entryEl.append(assignmentsEl)
 
-        item.assignmentsByRoles.forEach(assignentByRole => {
+        item.assignmentsByRoles.forEach((assignentByRole) => {
           const assignmentEl = doc.createElementNS(NAMESPACE, 'assignment')
           assignmentsEl.append(assignmentEl)
           assignmentEl.textContent = assignentByRole.role
@@ -90,7 +95,7 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
       }
 
       // eg <normRef><ref-name>draft-ietf-ecrit-lost-planned-changes</ref-name><ref-state>NOT-RECEIVED</ref-state></normRef>
-      item.references?.forEach(reference => {
+      item.references?.forEach((reference) => {
         const normRefEl = doc.createElementNS(NAMESPACE, 'normRef')
         entryEl.append(normRefEl)
 
@@ -107,9 +112,11 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
       const authorsEl = doc.createElementNS(NAMESPACE, 'authors')
       entryEl.append(authorsEl)
 
-      authorsEl.textContent = item.authors.map(author => {
-        return `${author.titlepageName}`
-      }).join(', ')
+      authorsEl.textContent = item.authors
+        .map((author) => {
+          return `${author.titlepageName}`
+        })
+        .join(', ')
 
       // eg <title>A LoST extension to return complete and similar location info</title>
       const titleEl = doc.createElementNS(NAMESPACE, 'title')
@@ -132,9 +139,9 @@ export const renderQueueXML = async (queue: QueueCommon): Promise<string> => {
 
   const jsdom = new JSDOM()
   const serializer = new jsdom.window.XMLSerializer()
-  const xmlString = serializer.serializeToString(doc);
+  const xmlString = serializer.serializeToString(doc)
 
-  const finalXML = `${XML_DECLARATION}\n${XML_COMMENT}\n${xmlString}`;
+  const finalXML = `${XML_DECLARATION}\n${XML_COMMENT}\n${xmlString}`
 
   // console.log('------')
   // console.log(finalXML)

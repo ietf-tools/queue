@@ -1,16 +1,27 @@
 import { DateTime } from 'luxon'
-import { PurpleApi, type ApiPubqQueueListRequest } from "../../generated/purple_client/index.ts";
-import { type QueueCommon, type QueueCommonItem, QueueCommonSchema, type BlockingReason } from '../../../website/app/utils/validators.ts'
-import { assertIsString } from "../utils/typescript.ts";
-import { parseApprovalLogMessages, parseDisposition, parseIanaStatus, parseLabels, parseReferences } from "../utils/converters.ts";
-import { groupBy } from "es-toolkit";
+import { PurpleApi, type ApiPubqQueueListRequest } from '../../generated/purple_client/index.ts'
+import {
+  type QueueCommon,
+  type QueueCommonItem,
+  QueueCommonSchema,
+  type BlockingReason
+} from '../../../website/app/utils/validators.ts'
+import { assertIsString } from '../utils/typescript.ts'
+import {
+  parseApprovalLogMessages,
+  parseDisposition,
+  parseIanaStatus,
+  parseLabels,
+  parseReferences
+} from '../utils/converters.ts'
+import { groupBy } from 'es-toolkit'
 
 type Props = {
   api: PurpleApi
   params?: ApiPubqQueueListRequest
 }
 
-type AssignmentsByRole = NonNullable<QueueCommonItem["assignmentsByRoles"]>[number]
+type AssignmentsByRole = NonNullable<QueueCommonItem['assignmentsByRoles']>[number]
 
 export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommon> => {
   const list = await api.apiPubqQueueList(params)
@@ -29,6 +40,7 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         cluster,
         pages,
         enqueuedAt,
+        draftUrl,
         ianaStatus,
         stream,
         authors,
@@ -37,22 +49,23 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         stdLevel,
         references,
         finalApproval: finalApprovals,
-        approvalLogMessage: approvalLogMessages,
+        approvalLogMessage: approvalLogMessages
       } = queueItem
       assertIsString(name)
       assertIsString(title)
+      assertIsString(draftUrl)
 
       const clusterNumber: number | undefined = cluster?.number ?? undefined
 
       const publicAssignments = assignmentSet ?? []
 
-      const assignmentsByRole = Object.entries(groupBy(
-        publicAssignments,
-        (assignment) => assignment.role
-      ))
+      const assignmentsByRole = Object.entries(
+        groupBy(publicAssignments, (assignment) => assignment.role)
+      )
 
       return {
         name,
+        draftUrl,
         title,
         pages,
         stream,
@@ -60,32 +73,35 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         groupName: groupName ?? undefined,
         stdLevel,
         references: parseReferences(references),
-        authors: authors.map(author => {
+        authors: authors.map((author) => {
           const { titlepageName, isEditor } = author
           return {
             titlepageName,
-            isEditor: Boolean(isEditor),
+            isEditor: Boolean(isEditor)
           }
         }),
         assignmentsByRoles: assignmentsByRole.map(([role]): AssignmentsByRole => {
           let blockingReasons: BlockingReason[] | undefined = undefined
 
           if (role === 'blocked' && queueItemBlockingReasons) {
-            blockingReasons = queueItemBlockingReasons?.map(blockingReason => {
-              if (!blockingReason.reason?.name) {
-                return
-              }
-              return {
-                reason: {
-                  name: blockingReason.reason.name
-                }
-              }
-            }).filter(blockingReason => blockingReason !== undefined) ?? undefined
+            blockingReasons =
+              queueItemBlockingReasons
+                ?.map((blockingReason) => {
+                  if (!blockingReason.reason?.name) {
+                    return
+                  }
+                  return {
+                    reason: {
+                      name: blockingReason.reason.name
+                    }
+                  }
+                })
+                .filter((blockingReason) => blockingReason !== undefined) ?? undefined
           }
 
           return {
             role,
-            blockingReasons,
+            blockingReasons
           }
         }),
         clusters: typeof clusterNumber === 'number' ? [clusterNumber] : undefined,
@@ -95,22 +111,25 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         ianaStatus: parseIanaStatus(ianaStatus),
         labels: parseLabels(labels),
         approvalLogMessages: parseApprovalLogMessages(approvalLogMessages),
-        finalApprovals: finalApprovals?.map(finalApproval => {
+        finalApprovals: finalApprovals?.map((finalApproval) => {
           const approverName = finalApproval.approver?.name
           if (!approverName) {
             throw Error('Expected approver name')
           }
           const approvedAtJSDate = finalApproval.approved
-          const approvedAtIso = approvedAtJSDate ? DateTime.fromJSDate(approvedAtJSDate).toISO() : undefined
+          const approvedAtIso = approvedAtJSDate
+            ? DateTime.fromJSDate(approvedAtJSDate).toISO()
+            : undefined
 
           return {
             approverName,
-            approvedAtIso: approvedAtIso ?? undefined,
+            approvedAtIso: approvedAtIso ?? undefined
           }
         }),
-        consensus: finalApprovals?.every(finalApproval => {
-          return Boolean(finalApproval.approved)
-        }) ?? false
+        consensus:
+          finalApprovals?.every((finalApproval) => {
+            return Boolean(finalApproval.approved)
+          }) ?? false
       }
     })
   }

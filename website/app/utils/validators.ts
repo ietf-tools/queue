@@ -56,7 +56,7 @@ export type BlockingReason = z.infer<typeof BlockingReasonSchema>
 
 const AssignmentsByRoleSchema = z.object({
   role: z.string(),
-  blockingReasons: BlockingReasonSchema.array().optional(),
+  blockingReasons: BlockingReasonSchema.array().optional()
   // assignments: AssignmentSchema.array(),
 })
 
@@ -76,10 +76,12 @@ const IanaStatusCommonSchema = z.object({
 })
 
 const ApprovalLogMessageCommonSchema = z.object({
-  rfcToBe: z.object({
-    name: z.string(),
-    rfcNumber: z.number().optional()
-  }).optional(),
+  rfcToBe: z
+    .object({
+      name: z.string(),
+      rfcNumber: z.number().optional()
+    })
+    .optional(),
   logMessage: z.string(),
   timeIso: z.string().optional()
 })
@@ -93,7 +95,7 @@ const AuthorCommonSchema = z.object({
 
 const FinalApprovalSchema = z.object({
   approverName: z.string(),
-  approvedAtIso: z.string().optional(),
+  approvedAtIso: z.string().optional()
 })
 
 const ClusterDocumentRelationshipCommonSchema = z.union([
@@ -110,11 +112,12 @@ const DocumentReferenceCommonSchema = z.object({
   sourceRfcNumber: z.number().optional(),
   targetDraftName: z.string(),
   targetRfcNumber: z.number().optional(),
-  targetDisposition: DispositionCommonSchema.optional(),
+  targetDisposition: DispositionCommonSchema.optional()
 })
 
 export const QueueCommonItemSchema = z.object({
   name: z.string(),
+  draftUrl: z.string(),
   title: z.string(),
   stream: z.string().optional(),
   consensus: z.boolean(),
@@ -132,7 +135,7 @@ export const QueueCommonItemSchema = z.object({
   group: z.string().optional(),
   groupName: z.string().optional(),
   stdLevel: z.string().optional(),
-  references: DocumentReferenceCommonSchema.array().optional(),
+  references: DocumentReferenceCommonSchema.array().optional()
 })
 
 export type QueueCommonItem = z.infer<typeof QueueCommonItemSchema>
@@ -168,7 +171,7 @@ export type ClusterItemCommon = z.infer<typeof ClusterItemCommonSchema>
 const ClusterRfcToBeCommonSchema = z.object({
   name: z.string(),
   rfcNumber: z.number().optional(),
-  disposition: DispositionCommonSchema,
+  disposition: DispositionCommonSchema
 })
 
 export type ClusterRfcToBeCommon = z.infer<typeof ClusterRfcToBeCommonSchema>
@@ -186,4 +189,3 @@ export const ClusterIndexCommonSchema = z.object({
 })
 
 export type ClusterIndexCommon = z.infer<typeof ClusterIndexCommonSchema>
-
