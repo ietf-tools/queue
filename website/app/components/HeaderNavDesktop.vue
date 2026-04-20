@@ -5,10 +5,13 @@
       <NavigationMenuItem v-for="(menuItem, index) in menuData" :key="index">
         <NavigationMenuLink v-if="menuItem.href && !menuItem.children" :id="`menu-link-${index}`" :href="menuItem.href"
           :aria-label="menuItem.label"
-          class="cursor-pointer hover:bg-blue-400 group flex select-none items-center justify-between gap-[2px] rounded-md px-4 py-3 text-[15px] leading-none outline-none focus:shadow-[0_0_0_2px]"
+          class="cursor-pointer no-underline hover:bg-blue-400 group flex select-none items-center justify-between gap-[2px] rounded-md px-4 py-3 text-[15px] leading-none outline-none focus:shadow-[0_0_0_2px]"
           as-child @click="menuItem.click">
           <Anchor>
             <Icon v-if="menuItem.icon" :name="menuItem.icon" />
+            <span v-else-if="!menuItem.hideLabelDesktop">
+              {{ menuItem.label }}
+            </span>
           </Anchor>
         </NavigationMenuLink>
 
@@ -34,7 +37,7 @@
               <NavigationMenuSub v-if="level0.children" :default-value="level0.label" class="z-100">
                 <NavigationMenuList>
                   <NavigationMenuItem :value="`${index}.${level0Index}`" class="flex flex-col">
-                    <NavigationMenuTrigger :class="MENU_ITEM_CLASS" :id="`menu-link-${index}-${level0Index}`">
+                    <NavigationMenuTrigger :id="`menu-link-${index}-${level0Index}`" :class="MENU_ITEM_CLASS">
                       <span>
                         <Icon v-if="level0.icon" :name="level0.icon" />
                         {{ level0.label }}
@@ -47,8 +50,9 @@
                       <ul class="list-none">
                         <li v-for="(level1, level1Index) in level0.children"
                           :key="`${index}.${level0Index}.${level1Index}`" class="flex flex-col">
-                          <NavigationMenuLink v-if="level1.href" :href="level1.href" :class="[MENU_ITEM_CLASS, 'pl-5']"
-                            :id="`menu-link-${index}-${level0Index}-${level1Index}`" as-child @click="level1.click">
+                          <NavigationMenuLink v-if="level1.href"
+                            :id="`menu-link-${index}-${level0Index}-${level1Index}`" :href="level1.href"
+                            :class="[MENU_ITEM_CLASS, 'pl-5']" as-child @click="level1.click">
                             <Anchor v-if="!level1.noSpaLink">
                               <Icon v-if="level1.icon" :name="level1.icon" />
                               {{ level1.label }}
@@ -74,8 +78,7 @@
                   </span>
                 </Anchor>
                 <button v-else type="button" :class="[MENU_ITEM_CLASS, 'cursor-pointer']"
-                  :aria-label="level0.activeLabelFn?.()" @click="level0.click"
-                  :id="`menu-link-${index}-${level0Index}`">
+                  :aria-label="level0.activeLabelFn?.()" @click="level0.click">
                   <span class="flex items-center">
                     <Icon v-if="level0.icon" :name="level0.icon" />
                     <Icon v-if="Boolean(level0.isActiveFn?.())" name="fluent:checkmark-12-filled"
