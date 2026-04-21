@@ -40,9 +40,7 @@ export const useDatatrackerSiteUrlOrigin = () => {
 }
 
 export const IETF_URL_ORIGIN = 'https://www.ietf.org'
-// export const QUEUE_RFC_EDITOR_SITE_URL_ORIGIN = 'https://queue.rfc-editor.org'
-// export const DATATRACKER_URL_ORIGIN = 'https://datatracker.ietf.org'
-// export const RFC_EDITOR_SITE_URL_ORIGIN = 'https://www.rfc-editor.org'
+
 export const FINAL_REVIEW_PATH = '/final-review/'
 export const CLUSTERS_PATH = '/clusters/'
 export const HOME_PATH = '/'
