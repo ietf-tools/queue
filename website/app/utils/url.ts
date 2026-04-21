@@ -1,25 +1,48 @@
 import { kebabCase } from 'es-toolkit'
 import { assertIsString } from '../utils/typescript'
-import type { ImagePreviewHorizontalDimensions, ImagePreviewVerticalDimensions } from './meta-thumbnail'
+import type {
+  ImagePreviewHorizontalDimensions,
+  ImagePreviewVerticalDimensions
+} from './meta-thumbnail'
 
-export const assertUrlOrigin = <FallbackConst extends string>(runtimeConfig: unknown, errorKey: string, fallback: FallbackConst): FallbackConst => {
+export const assertUrlOrigin = <FallbackConst extends string>(
+  runtimeConfig: unknown,
+  errorKey: string,
+  fallback: FallbackConst
+): FallbackConst => {
   assertIsString(runtimeConfig)
   const expectedOrigin = new URL(runtimeConfig).origin
   if (expectedOrigin !== runtimeConfig) {
-    throw Error(`Nuxt runtime config ${JSON.stringify(errorKey)} isn't a URL origin pattern as expected. Was: ${JSON.stringify(runtimeConfig)} but expected ${JSON.stringify(expectedOrigin)}`)
+    throw Error(
+      `Nuxt runtime config ${JSON.stringify(errorKey)} isn't a URL origin pattern as expected. Was: ${JSON.stringify(runtimeConfig)} but expected ${JSON.stringify(expectedOrigin)}`
+    )
   }
   return (runtimeConfig ?? fallback) as FallbackConst // for TS purposes we'll type the response as the fallback
 }
 
 export const usePublicSiteUrlOrigin = () => {
   const runtimeConfig = useRuntimeConfig()
-  return assertUrlOrigin(runtimeConfig.public.siteBase, 'siteBase', 'https://www.rfc-editor.org')
+  return assertUrlOrigin(runtimeConfig.public.siteBase, 'siteBase', 'https://queue.rfc-editor.org')
+}
+
+export const useRedSiteUrlOrigin = () => {
+  const runtimeConfig = useRuntimeConfig()
+  return assertUrlOrigin(runtimeConfig.public.redBase, 'redBase', 'https://www.rfc-editor.org')
+}
+
+export const useDatatrackerSiteUrlOrigin = () => {
+  const runtimeConfig = useRuntimeConfig()
+  return assertUrlOrigin(
+    runtimeConfig.public.datatrackerBase,
+    'datatrackerBase',
+    'https://datatracker.ietf.org'
+  )
 }
 
 export const IETF_URL_ORIGIN = 'https://www.ietf.org'
-export const RFC_EDITOR_SITE_URL_ORIGIN = 'https://www.rfc-editor.org'
-export const QUEUE_RFC_EDITOR_SITE_URL_ORIGIN = 'https://queue.rfc-editor.org'
-export const DATATRACKER_URL_ORIGIN = 'https://datatracker.ietf.org'
+// export const QUEUE_RFC_EDITOR_SITE_URL_ORIGIN = 'https://queue.rfc-editor.org'
+// export const DATATRACKER_URL_ORIGIN = 'https://datatracker.ietf.org'
+// export const RFC_EDITOR_SITE_URL_ORIGIN = 'https://www.rfc-editor.org'
 export const FINAL_REVIEW_PATH = '/final-review/'
 export const CLUSTERS_PATH = '/clusters/'
 export const HOME_PATH = '/'
@@ -40,8 +63,8 @@ export const apiClusterNumberPathBuilder = (clusterNumber: number) => {
   return `/api/v1/clusters/${clusterNumber}.json` as const
 }
 
-export const datatrackerDraftUrlBuilder = (draftName: string) => {
-  return `https://datatracker.ietf.org/doc/${draftName}/` as const
+export const datatrackerDraftPathBuilder = (draftName: string) => {
+  return `/doc/${draftName}/` as const
 }
 
 export const linkPreviewImageUrlBuilder = (

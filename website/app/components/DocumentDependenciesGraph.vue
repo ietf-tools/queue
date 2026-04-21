@@ -21,7 +21,7 @@ import { uniqBy } from 'es-toolkit';
 import { drawGraph, type DrawGraphParameters, type SetTooltip } from '~/utils/document_relations';
 import { legendData, type DataParam, type LinkParam, type NodeParam } from '~/utils/document_relations-utils'
 import { type ClusterDocumentCommon, type ClusterPackageCommon } from '../utils/validators'
-import { datatrackerDraftUrlBuilder } from '~/utils/url';
+import { datatrackerDraftPathBuilder } from '~/utils/url';
 
 type Props = {
   cluster: ClusterPackageCommon["cluster"],
@@ -122,7 +122,7 @@ const clusterGraphData = computed(() => {
 
       return [{
         id: name,
-        url: datatrackerDraftUrlBuilder(name),
+        url: datatrackerDraftPathBuilder(name),
         rfcNumber,
         isReceived,
         disposition,

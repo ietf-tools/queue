@@ -5,13 +5,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-08-05',
   typescript: { strict: true },
   devtools: { enabled: false },
-  modules: [
-    '@nuxt/content',
-    '@nuxt/icon',
-    '@nuxtjs/color-mode',
-    'reka-ui/nuxt',
-    'nuxt-vitalizer'
-  ],
+  modules: ['@nuxt/content', '@nuxt/icon', '@nuxtjs/color-mode', 'reka-ui/nuxt', 'nuxt-vitalizer'],
   css: ['~/assets/css/tailwind.css'],
   colorMode: {
     classSuffix: ''
@@ -22,12 +16,12 @@ export default defineNuxtConfig({
       // Possibly related to https://github.com/tailwindlabs/tailwindcss/issues/18802
       // possibly related to waiting for Nuxt/tailwincss to use Vite 6?
       tailwindcss()
-    ],
+    ]
   },
   app: {
     head: {
       htmlAttrs: {
-        lang: 'en',
+        lang: 'en'
       },
       link: [
         { rel: 'preconnect', href: 'https://static.ietf.org' },
@@ -42,18 +36,20 @@ export default defineNuxtConfig({
     public: {
       siteBase: 'https://queue.rfc-editor.org', // NUXT_PUBLIC_SITE_BASE env va
       matomoSiteId: '12', // NUXT_PUBLIC_MATOMO_SITE_ID
+      datatrackerBase: 'https://datatracker.ietf.org', // NUXT_PUBLIC_DATATRACKER_BASE
+      redBase: 'https://www.rfc-editor.org' // NUXT_PUBLIC_RED_BASE
     }
   },
   routeRules: {
-    "/queue": {
-      redirect: "/",
+    '/queue': {
+      redirect: '/'
     },
-    "/queue.xml": {
-      redirect: "/api/v1/queue.xml",
+    '/queue.xml': {
+      redirect: '/api/v1/queue.xml'
     },
-    "/cluster": {
-      redirect: "/clusters/",
-    },
+    '/cluster': {
+      redirect: '/clusters/'
+    }
   },
   $development: {
     routeRules: {
@@ -65,7 +61,7 @@ export default defineNuxtConfig({
       '/api/v1/**': {
         proxy: 'http://localhost:3001/api/v1/**'
         // proxy: 'https://queue.staging.ietf.org/'
-      },
+      }
     }
-  },
+  }
 })

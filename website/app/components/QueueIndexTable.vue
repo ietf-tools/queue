@@ -54,7 +54,7 @@ import { getQueueIndex } from '../utils/api'
 import { calculateEnqueuedAtData, renderEnqueuedAt } from '~/utils/queue'
 import { DateTime } from 'luxon'
 import BaseBadge from './BaseBadge.vue'
-import { datatrackerDraftUrlBuilder, finalReviewPathBuilder } from '~/utils/url'
+import { datatrackerDraftPathBuilder, finalReviewPathBuilder } from '~/utils/url'
 
 type Props = {
   filterByClusterNumber?: number
@@ -83,11 +83,13 @@ const columnHelper = createColumnHelper<QueueCommonItem>()
 
 const sorting = ref<SortingState>([])
 
+const datatrackerUrlOrigin = useDatatrackerSiteUrlOrigin()
+
 const columns = [
   columnHelper.accessor('name', {
     header: 'Document',
     cell: data => {
-      return h(Anchor, { href: datatrackerDraftUrlBuilder(data.row.original.name), 'class': ANCHOR_TAILWIND_STYLE }, () => [
+      return h(Anchor, { href: `${datatrackerUrlOrigin}${datatrackerDraftPathBuilder(data.row.original.name)}`, 'class': ANCHOR_TAILWIND_STYLE }, () => [
         data.getValue(),
         h(Icon, { name: 'fluent:window-new-20-regular', size: "1.25em", class: "text-gray-700 dark:text-neutral-300 ml-1 align-middle" }),
       ])
