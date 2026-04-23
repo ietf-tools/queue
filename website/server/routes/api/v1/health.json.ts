@@ -37,12 +37,13 @@ export default defineEventHandler(async (event) => {
   }
 })
 
+type Check = {
+  ok: boolean
+  statusCode: number
+}
 
 const httpCheck = (url: string) => {
-  return new Promise<{
-    ok: boolean,
-    statusCode: number
-  }>((resolve, reject) => {
+  return new Promise<Check>((resolve, reject) => {
     https
       .request(url, { method: 'HEAD' }, (res) => {
         const { statusCode } = res
