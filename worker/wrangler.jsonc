@@ -24,6 +24,7 @@
 				{ "pattern": "queue.staging.rfc-editor.org/api/v1/*", "zone_name": "rfc-editor.org" },
 				{ "pattern": "queue.staging.rfc-editor.org/robots.txt", "zone_name": "rfc-editor.org" },
 				{ "pattern": "queue.staging.rfc-editor.org/sitemap*", "zone_name": "rfc-editor.org" },
+				{ "pattern": "queue.staging.rfc-editor.org/favicon*", "zone_name": "rfc-editor.org" },
 			],
 			"r2_buckets": [
 				{
@@ -36,6 +37,9 @@
 	    "demo": {
 			"routes": [
 				{ "pattern": "queue.demo.rfc-editor.org/api/v1/*", "zone_name": "rfc-editor.org" },
+				{ "pattern": "queue.demo.rfc-editor.org/robots.txt", "zone_name": "rfc-editor.org" },
+				{ "pattern": "queue.demo.rfc-editor.org/sitemap*", "zone_name": "rfc-editor.org" },
+				{ "pattern": "queue.demo.rfc-editor.org/favicon*", "zone_name": "rfc-editor.org" },
 			],
 			"r2_buckets": [
 				{
@@ -49,6 +53,9 @@
 			"routes": [
 				/* UNCOMMENT ONCE READY TO REPLACE LIVE WEBSITE:
 				{ "pattern": "queue.rfc-editor.org/api/v1/*", "zone_name": "rfc-editor.org" },
+				{ "pattern": "queue.rfc-editor.org/robots.txt", "zone_name": "rfc-editor.org" },
+				{ "pattern": "queue.rfc-editor.org/sitemap*", "zone_name": "rfc-editor.org" },
+				{ "pattern": "queue.rfc-editor.org/favicon*", "zone_name": "rfc-editor.org" },
 				*/
 			],
 			"r2_buckets": [

@@ -25,7 +25,6 @@ export async function blobs(request: Request, env: Env) {
           headers.set('Content-Type', 'image/png')
         }
 
-
         return new Response(object.body, {
           headers
         })
