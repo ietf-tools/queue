@@ -199,11 +199,12 @@ const makeTooltip = (node: NodeParam): string[] | undefined => {
   return tooltip.length > 0 ? tooltip : undefined
 }
 
+
 /**
  * based on https://docs.google.com/spreadsheets/d/1WoPNZiFf9Hx4Qc6N5UE1-RKhYYNybBeCYZM72wL5TSM/edit?gid=0#gid=0
  */
 export const getCircleTheme = (node: NodeParam): CircleTheme => {
-  if (Boolean(node.isReceived) && Boolean(node.isNormRef) && !node.hasNormRef && !node.isBlocked && node.disposition === 'in_progress') {
+  if (Boolean(node.isReceived) && Boolean(node.isNormRef) && !(node.hasNormRef) && !(node.isBlocked) && node.disposition === 'in_progress') {
     return {
       fill: blue,
       textColor: black,
@@ -213,7 +214,7 @@ export const getCircleTheme = (node: NodeParam): CircleTheme => {
       tooltip: makeTooltip(node)
     }
   }
-  if (Boolean(node.isReceived) && Boolean(node.hasNormRef) && Boolean(node.hasNormRefInQueue) && !node.hasNormRefBlocked && !node.isBlocked && node.disposition === 'in_progress') {
+  if (Boolean(node.isReceived) && Boolean(node.hasNormRef) && Boolean(node.hasNormRefInQueue) && !(node.hasNormRefBlocked) && !(node.isBlocked) && node.disposition === 'in_progress') {
     return {
       fill: green,
       textColor: black,
@@ -223,7 +224,13 @@ export const getCircleTheme = (node: NodeParam): CircleTheme => {
       tooltip: makeTooltip(node)
     }
   }
-  if (Boolean(node.isReceived) && Boolean(node.isNormRef) && !node.hasNormRef && Boolean(node.isBlocked)) {
+  if (
+    Boolean(node.isReceived) && (
+      (Boolean(node.isBlocked) && Boolean(node.isNormRef) && !(node.hasNormRef)) ||
+      (Boolean(node.hasNormRef) && Boolean(node.hasNormRefInQueue) && (node.hasNormRefBlocked)) ||
+      (Boolean(node.isBlocked) && Boolean(node.hasNormRef) && !(node.hasNormRefInQueue) && node.rfcNumber === undefined)
+    )
+  ) {
     return {
       fill: pink,
       textColor: black,
@@ -233,27 +240,7 @@ export const getCircleTheme = (node: NodeParam): CircleTheme => {
       tooltip: makeTooltip(node)
     }
   }
-  if (Boolean(node.isReceived) && Boolean(node.hasNormRef) && Boolean(node.hasNormRefInQueue) && Boolean(node.hasNormRefBlocked) && Boolean(node.isBlocked)) {
-    return {
-      fill: pink,
-      textColor: black,
-      strokeWidth: 2,
-      strokeStyle: 'solid',
-      text: wordsToLines([...splitDraftNameIntoWords(node.id)]),
-      tooltip: makeTooltip(node)
-    }
-  }
-  if (Boolean(node.isReceived) && Boolean(node.hasNormRef) && !node.hasNormRefInQueue && Boolean(node.isBlocked) && node.rfcNumber === undefined) {
-    return {
-      fill: pink,
-      textColor: black,
-      strokeWidth: 2,
-      strokeStyle: 'solid',
-      text: wordsToLines([...splitDraftNameIntoWords(node.id)]),
-      tooltip: makeTooltip(node)
-    }
-  }
-  if (!node.isReceived && Boolean(node.isNormRef)) {
+  if (!(node.isReceived) && Boolean(node.isNormRef)) {
     return {
       fill: orange,
       textColor: black,
@@ -264,11 +251,11 @@ export const getCircleTheme = (node: NodeParam): CircleTheme => {
     }
   }
 
-  if (Boolean(node.isReceived) && !node.hasNormRefInQueue && (!node.hasNormRefBlocked || !node.isBlocked) && node.disposition === 'published') {
+  if (Boolean(node.isReceived) && !(node.hasNormRefInQueue) && (!(node.hasNormRefBlocked) || !(node.isBlocked)) && node.disposition === 'published') {
     return {
       fill: gray200,
       textColor: black,
-      strokeWidth: 2,
+      strokeWidth: 0,
       strokeStyle: 'solid',
       text: wordsToLines([...splitDraftNameIntoWords(node.id)]),
       tooltip: makeTooltip(node)
@@ -278,7 +265,7 @@ export const getCircleTheme = (node: NodeParam): CircleTheme => {
   return {
     fill: black,
     textColor: white,
-    strokeWidth: 2,
+    strokeWidth: 0,
     strokeStyle: 'solid',
     text: wordsToLines([...splitDraftNameIntoWords(node.id)]),
     tooltip: makeTooltip(node)
@@ -337,21 +324,22 @@ export type DataParam = {
 
 export const legendData: DataParam = {
   links: [
-    { source: "draft-one-with-rfc", target: "draft-is-not-received", rel: "not-received" },
-    { source: "draft-one-with-rfc", target: "draft-refnorm-target", rel: 'not-received-2g' },
-    { source: "draft-one-with-rfc", target: "draft-refqueue-target", rel: 'not-received-3g' },
-    { source: "draft-one-with-rfc", target: "draft-relinfo-target", rel: 'refqueue' },
-    { source: "draft-one-with-rfc", target: "draft-withdrawnref-target", rel: 'not-received' },
-    { source: "draft-one-with-rfc", target: 'draft-is-received', rel: 'not-received' },
+    { source: "draft-one", target: 'draft-two', rel: 'refqueue' },
+    { source: "draft-one", target: 'draft-three-a', rel: 'refqueue' },
+    { source: "draft-one", target: 'draft-three-b', rel: 'refqueue' },
+    { source: "draft-one", target: 'draft-three-c', rel: 'refqueue' },
+    { source: "draft-one", target: "draft-four", rel: 'refqueue' },
+    { source: "draft-one", target: 'draft-five-a', rel: 'refqueue' },
+    { source: "draft-one", target: 'draft-five-b', rel: 'refqueue' },
   ],
   nodes: [
-    { id: 'draft-one-with-rfc', disposition: undefined },
-    { id: 'draft-one-without-rfc', disposition: undefined },
-    { id: 'draft-is-not-received', isReceived: false, disposition: undefined },
-    { id: 'draft-is-received', isReceived: true, disposition: undefined },
-    { id: 'draft-refnorm-target', isReceived: true, disposition: undefined },
-    { id: 'draft-refqueue-target', isReceived: true, disposition: undefined },
-    { id: 'draft-relinfo-target', isReceived: true, disposition: undefined },
-    { id: 'draft-withdrawnref-target', isReceived: true, disposition: undefined },
+    { id: 'draft-one', isReceived: true, isNormRef: true, hasNormRef: false, isBlocked: false, disposition: 'in_progress' },
+    { id: 'draft-two', isReceived: true, hasNormRef: true, hasNormRefInQueue: true, hasNormRefBlocked: false, isBlocked: false, disposition: "in_progress" },
+    { id: 'draft-three-a', isReceived: true, isBlocked: true, isNormRef: true, hasNormRef: false },
+    { id: 'draft-three-b', isReceived: true, hasNormRef: true, hasNormRefInQueue: true, hasNormRefBlocked: true },
+    { id: 'draft-three-c', isReceived: true, isBlocked: true, hasNormRef: true, hasNormRefInQueue: false, rfcNumber: undefined },
+    { id: 'draft-four', isReceived: false, isNormRef: true },
+    { id: 'draft-five-a', isReceived: true, hasNormRefInQueue: false, hasNormRefBlocked: false, disposition: 'published' },
+    { id: 'draft-five-b', isReceived: true, hasNormRefInQueue: false, isBlocked: false, disposition: 'published' },
   ],
 };
