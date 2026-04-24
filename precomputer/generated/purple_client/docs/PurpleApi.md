@@ -66,7 +66,6 @@ All URIs are relative to *http://localhost*
 | [**documentsFinalApprovalsUpdate**](PurpleApi.md#documentsfinalapprovalsupdate) | **PUT** /api/rpc/documents/{draft_name}/final_approvals/{id}/ |  |
 | [**documentsHistoryList**](PurpleApi.md#documentshistorylist) | **GET** /api/rpc/documents/{draft__name}/history/ |  |
 | [**documentsList**](PurpleApi.md#documentslist) | **GET** /api/rpc/documents/ |  |
-| [**documentsMetadataValidationResultsDestroy**](PurpleApi.md#documentsmetadatavalidationresultsdestroy) | **DELETE** /api/rpc/documents/{draft_name}/metadata_validation_results/{head_sha}/ |  |
 | [**documentsMetadataValidationResultsList**](PurpleApi.md#documentsmetadatavalidationresultslist) | **GET** /api/rpc/documents/{draft_name}/metadata_validation_results/ |  |
 | [**documentsMetadataValidationResultsRetrieve**](PurpleApi.md#documentsmetadatavalidationresultsretrieve) | **GET** /api/rpc/documents/{draft_name}/metadata_validation_results/{head_sha}/ |  |
 | [**documentsPartialUpdate**](PurpleApi.md#documentspartialupdate) | **PATCH** /api/rpc/documents/{draft__name}/ |  |
@@ -98,6 +97,7 @@ All URIs are relative to *http://localhost*
 | [**mailSend**](PurpleApi.md#mailsend) | **POST** /api/rpc/mail |  |
 | [**mailtemplateList**](PurpleApi.md#mailtemplatelist) | **GET** /api/rpc/mailtemplate/{rfctobe_id}/ |  |
 | [**metadataValidationResultsCreate**](PurpleApi.md#metadatavalidationresultscreate) | **POST** /api/rpc/documents/{draft_name}/metadata_validation_results/ |  |
+| [**metadataValidationResultsDelete**](PurpleApi.md#metadatavalidationresultsdelete) | **DELETE** /api/rpc/documents/{draft_name}/metadata_validation_results/{head_sha}/ |  |
 | [**metadataValidationResultsSync**](PurpleApi.md#metadatavalidationresultssync) | **POST** /api/rpc/documents/{draft_name}/metadata_validation_results/sync/ |  |
 | [**profile**](PurpleApi.md#profile) | **GET** /api/rpc/profile/ |  |
 | [**profileRetrieveDemoOnly**](PurpleApi.md#profileretrievedemoonly) | **GET** /api/rpc/profile/{rpc_person_id} |  |
@@ -4616,78 +4616,6 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## documentsMetadataValidationResultsDestroy
-
-> documentsMetadataValidationResultsDestroy(draftName, headSha)
-
-
-
-### Example
-
-```ts
-import {
-  Configuration,
-  PurpleApi,
-} from '';
-import type { DocumentsMetadataValidationResultsDestroyRequest } from '';
-
-async function example() {
-  console.log("🚀 Testing  SDK...");
-  const config = new Configuration({ 
-    // To configure API key authorization: cookieAuth
-    apiKey: "YOUR API KEY",
-  });
-  const api = new PurpleApi(config);
-
-  const body = {
-    // string
-    draftName: draftName_example,
-    // string
-    headSha: headSha_example,
-  } satisfies DocumentsMetadataValidationResultsDestroyRequest;
-
-  try {
-    const data = await api.documentsMetadataValidationResultsDestroy(body);
-    console.log(data);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// Run the test
-example().catch(console.error);
-```
-
-### Parameters
-
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **draftName** | `string` |  | [Defaults to `undefined`] |
-| **headSha** | `string` |  | [Defaults to `undefined`] |
-
-### Return type
-
-`void` (Empty response body)
-
-### Authorization
-
-[cookieAuth](../README.md#cookieAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: Not defined
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **204** | No response body |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-
 ## documentsMetadataValidationResultsList
 
 > Array&lt;MetadataValidationResults&gt; documentsMetadataValidationResultsList(draftName)
@@ -6904,6 +6832,82 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **201** |  |  -  |
 | **200** |  |  -  |
+| **404** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## metadataValidationResultsDelete
+
+> metadataValidationResultsDelete(draftName, headSha)
+
+
+
+Delete metadata validation results for a given RfcToBe, identified by head_sha. Pass the sentinel value \&quot;no_head_sha\&quot; to delete a record whose head_sha is NULL (i.e. the validation task failed before a git commit was fetched).
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PurpleApi,
+} from '';
+import type { MetadataValidationResultsDeleteRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: cookieAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PurpleApi(config);
+
+  const body = {
+    // string
+    draftName: draftName_example,
+    // string | Head SHA of the git commit the validation was run against
+    headSha: headSha_example,
+  } satisfies MetadataValidationResultsDeleteRequest;
+
+  try {
+    const data = await api.metadataValidationResultsDelete(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **draftName** | `string` |  | [Defaults to `undefined`] |
+| **headSha** | `string` | Head SHA of the git commit the validation was run against | [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | No response body |  -  |
+| **400** |  |  -  |
 | **404** |  |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

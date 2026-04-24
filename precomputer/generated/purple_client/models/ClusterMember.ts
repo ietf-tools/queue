@@ -20,6 +20,13 @@ import {
     RpcRelatedDocumentToJSON,
     RpcRelatedDocumentToJSONTyped,
 } from './RpcRelatedDocument.ts';
+import type { FinalApprovalCounts } from './FinalApprovalCounts.ts';
+import {
+    FinalApprovalCountsFromJSON,
+    FinalApprovalCountsFromJSONTyped,
+    FinalApprovalCountsToJSON,
+    FinalApprovalCountsToJSONTyped,
+} from './FinalApprovalCounts.ts';
 
 /**
  * 
@@ -79,6 +86,12 @@ export interface ClusterMember {
      * @memberof ClusterMember
      */
     readonly isBlocked?: boolean;
+    /**
+     * 
+     * @type {FinalApprovalCounts}
+     * @memberof ClusterMember
+     */
+    readonly finalApprovalCounts?: FinalApprovalCounts;
 }
 
 /**
@@ -108,6 +121,7 @@ export function ClusterMemberFromJSONTyped(json: any, ignoreDiscriminator: boole
         'isNormref': json['is_normref'] == null ? undefined : json['is_normref'],
         'order': json['order'],
         'isBlocked': json['is_blocked'] == null ? undefined : json['is_blocked'],
+        'finalApprovalCounts': json['final_approval_counts'] == null ? undefined : FinalApprovalCountsFromJSON(json['final_approval_counts']),
     };
 }
 
@@ -115,7 +129,7 @@ export function ClusterMemberToJSON(json: any): ClusterMember {
     return ClusterMemberToJSONTyped(json, false);
 }
 
-export function ClusterMemberToJSONTyped(value?: Omit<ClusterMember, 'rfc_number'|'disposition'|'references'|'is_received'|'is_normref'|'is_blocked'> | null, ignoreDiscriminator: boolean = false): any {
+export function ClusterMemberToJSONTyped(value?: Omit<ClusterMember, 'rfc_number'|'disposition'|'references'|'is_received'|'is_normref'|'is_blocked'|'final_approval_counts'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

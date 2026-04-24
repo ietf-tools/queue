@@ -38,6 +38,8 @@ import type {
   CreateRfcAuthorRequest,
   CreateRfcToBeRequest,
   CreateRpcRelatedDocumentRequest,
+  DeleteMetadataBadRequestResponse,
+  DeleteMetadataNotFoundResponse,
   DocumentComment,
   DocumentCommentRequest,
   FinalApproval,
@@ -143,6 +145,10 @@ import {
     CreateRfcToBeRequestToJSON,
     CreateRpcRelatedDocumentRequestFromJSON,
     CreateRpcRelatedDocumentRequestToJSON,
+    DeleteMetadataBadRequestResponseFromJSON,
+    DeleteMetadataBadRequestResponseToJSON,
+    DeleteMetadataNotFoundResponseFromJSON,
+    DeleteMetadataNotFoundResponseToJSON,
     DocumentCommentFromJSON,
     DocumentCommentToJSON,
     DocumentCommentRequestFromJSON,
@@ -561,11 +567,6 @@ export interface DocumentsListRequest {
     publishedWithinDays?: number;
 }
 
-export interface DocumentsMetadataValidationResultsDestroyRequest {
-    draftName: string;
-    headSha: string;
-}
-
 export interface DocumentsMetadataValidationResultsListRequest {
     draftName: string;
 }
@@ -710,6 +711,11 @@ export interface MailtemplateListRequest {
 
 export interface MetadataValidationResultsCreateRequest {
     draftName: string;
+}
+
+export interface MetadataValidationResultsDeleteRequest {
+    draftName: string;
+    headSha: string;
 }
 
 export interface MetadataValidationResultsSyncRequest {
@@ -3914,56 +3920,6 @@ export class PurpleApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates request options for documentsMetadataValidationResultsDestroy without sending the request
-     */
-    async documentsMetadataValidationResultsDestroyRequestOpts(requestParameters: DocumentsMetadataValidationResultsDestroyRequest): Promise<runtime.RequestOpts> {
-        if (requestParameters['draftName'] == null) {
-            throw new runtime.RequiredError(
-                'draftName',
-                'Required parameter "draftName" was null or undefined when calling documentsMetadataValidationResultsDestroy().'
-            );
-        }
-
-        if (requestParameters['headSha'] == null) {
-            throw new runtime.RequiredError(
-                'headSha',
-                'Required parameter "headSha" was null or undefined when calling documentsMetadataValidationResultsDestroy().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-
-        let urlPath = `/api/rpc/documents/{draft_name}/metadata_validation_results/{head_sha}/`;
-        urlPath = urlPath.replace(`{${"draft_name"}}`, encodeURIComponent(String(requestParameters['draftName'])));
-        urlPath = urlPath.replace(`{${"head_sha"}}`, encodeURIComponent(String(requestParameters['headSha'])));
-
-        return {
-            path: urlPath,
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        };
-    }
-
-    /**
-     */
-    async documentsMetadataValidationResultsDestroyRaw(requestParameters: DocumentsMetadataValidationResultsDestroyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        const requestOptions = await this.documentsMetadataValidationResultsDestroyRequestOpts(requestParameters);
-        const response = await this.request(requestOptions, initOverrides);
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     */
-    async documentsMetadataValidationResultsDestroy(requestParameters: DocumentsMetadataValidationResultsDestroyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.documentsMetadataValidationResultsDestroyRaw(requestParameters, initOverrides);
-    }
-
-    /**
      * Creates request options for documentsMetadataValidationResultsList without sending the request
      */
     async documentsMetadataValidationResultsListRequestOpts(requestParameters: DocumentsMetadataValidationResultsListRequest): Promise<runtime.RequestOpts> {
@@ -5475,6 +5431,58 @@ export class PurpleApi extends runtime.BaseAPI {
     async metadataValidationResultsCreate(requestParameters: MetadataValidationResultsCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MetadataValidationResults> {
         const response = await this.metadataValidationResultsCreateRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Creates request options for metadataValidationResultsDelete without sending the request
+     */
+    async metadataValidationResultsDeleteRequestOpts(requestParameters: MetadataValidationResultsDeleteRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['draftName'] == null) {
+            throw new runtime.RequiredError(
+                'draftName',
+                'Required parameter "draftName" was null or undefined when calling metadataValidationResultsDelete().'
+            );
+        }
+
+        if (requestParameters['headSha'] == null) {
+            throw new runtime.RequiredError(
+                'headSha',
+                'Required parameter "headSha" was null or undefined when calling metadataValidationResultsDelete().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/rpc/documents/{draft_name}/metadata_validation_results/{head_sha}/`;
+        urlPath = urlPath.replace(`{${"draft_name"}}`, encodeURIComponent(String(requestParameters['draftName'])));
+        urlPath = urlPath.replace(`{${"head_sha"}}`, encodeURIComponent(String(requestParameters['headSha'])));
+
+        return {
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Delete metadata validation results for a given RfcToBe, identified by head_sha. Pass the sentinel value \"no_head_sha\" to delete a record whose head_sha is NULL (i.e. the validation task failed before a git commit was fetched).
+     */
+    async metadataValidationResultsDeleteRaw(requestParameters: MetadataValidationResultsDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.metadataValidationResultsDeleteRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Delete metadata validation results for a given RfcToBe, identified by head_sha. Pass the sentinel value \"no_head_sha\" to delete a record whose head_sha is NULL (i.e. the validation task failed before a git commit was fetched).
+     */
+    async metadataValidationResultsDelete(requestParameters: MetadataValidationResultsDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.metadataValidationResultsDeleteRaw(requestParameters, initOverrides);
     }
 
     /**

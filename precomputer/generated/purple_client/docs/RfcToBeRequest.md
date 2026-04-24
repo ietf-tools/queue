@@ -30,6 +30,7 @@ Name | Type
 `ianaStatusSlug` | [IanaStatusSlugEnum](IanaStatusSlugEnum.md)
 `repository` | string
 `streamManagerId` | number
+`isAprilFirstRfc` | boolean
 
 ## Example
 
@@ -61,6 +62,7 @@ const example = {
   "ianaStatusSlug": null,
   "repository": null,
   "streamManagerId": null,
+  "isAprilFirstRfc": null,
 } satisfies RfcToBeRequest
 
 console.log(example)

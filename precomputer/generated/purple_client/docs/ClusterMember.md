@@ -14,6 +14,7 @@ Name | Type
 `isNormref` | boolean
 `order` | number
 `isBlocked` | boolean
+`finalApprovalCounts` | [FinalApprovalCounts](FinalApprovalCounts.md)
 
 ## Example
 
@@ -30,6 +31,7 @@ const example = {
   "isNormref": null,
   "order": null,
   "isBlocked": null,
+  "finalApprovalCounts": null,
 } satisfies ClusterMember
 
 console.log(example)

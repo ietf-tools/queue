@@ -178,6 +178,12 @@ export interface RfcToBeRequest {
      * @memberof RfcToBeRequest
      */
     streamManagerId?: number | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RfcToBeRequest
+     */
+    isAprilFirstRfc?: boolean;
 }
 
 
@@ -230,6 +236,7 @@ export function RfcToBeRequestFromJSONTyped(json: any, ignoreDiscriminator: bool
         'ianaStatusSlug': json['iana_status_slug'] == null ? undefined : IanaStatusSlugEnumFromJSON(json['iana_status_slug']),
         'repository': json['repository'] == null ? undefined : json['repository'],
         'streamManagerId': json['stream_manager_id'] == null ? undefined : json['stream_manager_id'],
+        'isAprilFirstRfc': json['is_april_first_rfc'] == null ? undefined : json['is_april_first_rfc'],
     };
 }
 
@@ -267,6 +274,7 @@ export function RfcToBeRequestToJSONTyped(value?: RfcToBeRequest | null, ignoreD
         'iana_status_slug': IanaStatusSlugEnumToJSON(value['ianaStatusSlug']),
         'repository': value['repository'],
         'stream_manager_id': value['streamManagerId'],
+        'is_april_first_rfc': value['isAprilFirstRfc'],
     };
 }
 
