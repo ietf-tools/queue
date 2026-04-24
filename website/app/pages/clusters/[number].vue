@@ -30,7 +30,9 @@ if (route.fullPath !== canonicalPath.value) {
 }
 
 useQueueRfcEditorHead({
-  title: 'Clusters of upcoming RFCs',
+  title: clusterNumber.value
+    ? `Cluster ${clusterNumber.value}`
+    : `Cluster of upcoming RFCs`,
   canonicalPath: canonicalPath.value,
   contentType: 'article'
 })

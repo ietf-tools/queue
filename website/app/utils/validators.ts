@@ -155,8 +155,6 @@ export type QueueCommon = z.infer<typeof QueueCommonSchema>
 
 export type DocumentReferenceCommon = z.infer<typeof DocumentReferenceCommonSchema>
 
-
-
 export const ClusterDocumentCommonSchema = z.object({
   name: z.string(),
   rfcNumber: z.number().optional(),
