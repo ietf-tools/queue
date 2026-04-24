@@ -57,12 +57,15 @@ import BaseBadge from './BaseBadge.vue'
 import { datatrackerDraftPathBuilder, finalReviewPathBuilder } from '~/utils/url'
 
 type Props = {
-  filterByClusterNumber?: number
+  filterByClusterNumber?: number,
+  showFinalApprovalCounts?: boolean
 }
 
 const url = useRequestURL()
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  showFinalApprovalCounts: false
+})
 
 const {
   data,
@@ -210,6 +213,19 @@ const columns = [
     },
     enableSorting: false,
   }),
+  ...(props.showFinalApprovalCounts ? [
+    columnHelper.accessor(
+      'finalApprovalCounts', {
+      header: 'Approvals Received',
+      cell: data => {
+        const value = data.getValue()
+        if (!value) {
+          return
+        }
+        return h('span', `${value.approved}/${value.total}`)
+      },
+      enableSorting: false,
+    })] : []),
   columnHelper.accessor(
     'clusters', {
     header: 'Cluster',

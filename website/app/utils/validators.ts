@@ -115,6 +115,11 @@ const DocumentReferenceCommonSchema = z.object({
   targetDisposition: DispositionCommonSchema.optional()
 })
 
+const FinalApprovalCommonSchema = z.object({
+  approved: z.number(),
+  total: z.number()
+})
+
 export const QueueCommonItemSchema = z.object({
   name: z.string(),
   title: z.string(),
@@ -135,7 +140,8 @@ export const QueueCommonItemSchema = z.object({
   group: z.string().optional(),
   groupName: z.string().optional(),
   stdLevel: z.string().optional(),
-  references: DocumentReferenceCommonSchema.array().optional()
+  references: DocumentReferenceCommonSchema.array().optional(),
+  finalApprovalCounts: FinalApprovalCommonSchema.optional(),
 })
 
 export type QueueCommonItem = z.infer<typeof QueueCommonItemSchema>
@@ -149,13 +155,17 @@ export type QueueCommon = z.infer<typeof QueueCommonSchema>
 
 export type DocumentReferenceCommon = z.infer<typeof DocumentReferenceCommonSchema>
 
+
+
 export const ClusterDocumentCommonSchema = z.object({
   name: z.string(),
   rfcNumber: z.number().optional(),
   disposition: DispositionCommonSchema.optional(),
   references: DocumentReferenceCommonSchema.array(),
   isReceived: z.boolean(),
-  isBlocked: z.boolean()
+  isBlocked: z.boolean().optional(),
+  isNormRef: z.boolean().optional(),
+  finalApprovalCounts: FinalApprovalCommonSchema.optional()
 })
 
 export type ClusterDocumentCommon = z.infer<typeof ClusterDocumentCommonSchema>

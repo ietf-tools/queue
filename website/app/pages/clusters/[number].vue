@@ -25,7 +25,7 @@ const canonicalPath = computed(() => clusterNumber.value ? clusterNumberPathBuil
 
 if (route.fullPath !== canonicalPath.value) {
   await navigateTo({
-    path: canonicalPath.value
+    path: canonicalPath.value,
   })
 }
 

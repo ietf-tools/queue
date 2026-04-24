@@ -1,5 +1,6 @@
+import { groupBy, uniq } from 'es-toolkit'
 import { DateTime } from 'luxon'
-import { PurpleApi, type ApiPubqQueueListRequest } from '../../generated/purple_client/index.ts'
+import { PurpleApi, type Cluster, type ApiPubqQueueListRequest } from '../../generated/purple_client/index.ts'
 import {
   type QueueCommon,
   type QueueCommonItem,
@@ -14,7 +15,6 @@ import {
   parseLabels,
   parseReferences
 } from '../utils/converters.ts'
-import { groupBy } from 'es-toolkit'
 
 type Props = {
   api: PurpleApi
@@ -23,8 +23,37 @@ type Props = {
 
 type AssignmentsByRole = NonNullable<QueueCommonItem['assignmentsByRoles']>[number]
 
+type FinalApprovalCounts = NonNullable<Cluster["documents"]>[number]['finalApprovalCounts']
+
+type FinalApprovalCountsByQueueItemName = Record<string, FinalApprovalCounts>
+
 export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommon> => {
   const list = await api.apiPubqQueueList(params)
+
+  const uniqueClusterNumbers = uniq(list
+    .map(queueItem => queueItem.cluster)
+    .filter(maybeClusterNumber => typeof maybeClusterNumber === 'number')
+  )
+
+  const clusters = await Promise.all(
+    uniqueClusterNumbers
+      .map(clusterNumber => api.apiPubqClustersRetrieve({ number: clusterNumber })
+      )
+  )
+
+  const finalApprovalCountsByQueueItemName = clusters.reduce((acc, cluster) => {
+    const byName: FinalApprovalCountsByQueueItemName = (cluster.documents ?? []).reduce((acc, item) => {
+      return {
+        ...acc,
+        [item.name]: item.finalApprovalCounts
+      }
+    }, {} as FinalApprovalCountsByQueueItemName)
+
+    return {
+      ...acc,
+      ...byName
+    }
+  }, {} as FinalApprovalCountsByQueueItemName)
 
   const queueCommon: QueueCommon = {
     generatedAtIso: DateTime.now().toISO(),
@@ -49,13 +78,15 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         stdLevel,
         references,
         finalApproval: finalApprovals,
-        approvalLogMessage: approvalLogMessages
+        approvalLogMessage: approvalLogMessages,
       } = queueItem
       assertIsString(name)
       assertIsString(rev)
       assertIsString(title)
 
       const clusterNumber: number | undefined = cluster?.number ?? undefined
+
+      const finalApprovalCounts = finalApprovalCountsByQueueItemName[name]
 
       const publicAssignments = assignmentSet ?? []
 
@@ -126,6 +157,7 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
             approvedAtIso: approvedAtIso ?? undefined
           }
         }),
+        finalApprovalCounts,
         consensus:
           finalApprovals?.every((finalApproval) => {
             return Boolean(finalApproval.approved)
