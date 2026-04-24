@@ -32,7 +32,7 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
   const list = await apiPubqQueueListCached({ api, params })
 
   const uniqueClusterNumbers = uniq(list
-    .map(queueItem => queueItem.cluster)
+    .map(queueItem => queueItem.cluster?.number)
     .filter(maybeClusterNumber => typeof maybeClusterNumber === 'number')
   )
 
