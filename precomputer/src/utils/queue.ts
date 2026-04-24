@@ -15,6 +15,7 @@ import {
   parseLabels,
   parseReferences
 } from '../utils/converters.ts'
+import { apiPubqClustersRetrieveCached, apiPubqQueueListCached } from './api.ts'
 
 type Props = {
   api: PurpleApi
@@ -28,7 +29,7 @@ type FinalApprovalCounts = NonNullable<Cluster["documents"]>[number]['finalAppro
 type FinalApprovalCountsByQueueItemName = Record<string, FinalApprovalCounts>
 
 export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommon> => {
-  const list = await api.apiPubqQueueList(params)
+  const list = await apiPubqQueueListCached({ api, params })
 
   const uniqueClusterNumbers = uniq(list
     .map(queueItem => queueItem.cluster)
@@ -37,7 +38,8 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
 
   const clusters = await Promise.all(
     uniqueClusterNumbers
-      .map(clusterNumber => api.apiPubqClustersRetrieve({ number: clusterNumber })
+      .map(
+        clusterNumber => apiPubqClustersRetrieveCached({ api, clusterNumber })
       )
   )
 
@@ -54,6 +56,8 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
       ...byName,
     }
   }, {} as FinalApprovalCountsByQueueItemName)
+
+  console.log('[finalApprovalCountsByQueueItemName]', Object.keys(finalApprovalCountsByQueueItemName))
 
   const queueCommon: QueueCommon = {
     generatedAtIso: DateTime.now().toISO(),

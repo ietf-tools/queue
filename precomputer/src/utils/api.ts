@@ -1,4 +1,4 @@
-import { Configuration, PurpleApi } from '../../generated/purple_client/index.ts'
+import { type ApiPubqQueueListRequest, type Cluster, Configuration, PublicQueueItem, PurpleApi } from '../../generated/purple_client/index.ts'
 
 type ApiMode = 'prod' | 'dev'
 
@@ -75,3 +75,35 @@ export const getApiClient = (mode?: ApiMode) => {
 
   return new PurpleApi(configuration)
 }
+
+const apiPubqClustersRetrieveCache: Record<number, Cluster> = {}
+
+type ApiPubqClustersRetrieveCachedProps = {
+  api: PurpleApi
+  clusterNumber: number
+}
+
+export const apiPubqClustersRetrieveCached = async ({ api, clusterNumber }: ApiPubqClustersRetrieveCachedProps): Promise<Cluster> => {
+  if (!apiPubqClustersRetrieveCache[clusterNumber]) {
+    apiPubqClustersRetrieveCache[clusterNumber] = await api.apiPubqClustersRetrieve({ number: clusterNumber })
+  }
+  return apiPubqClustersRetrieveCache[clusterNumber]
+}
+
+
+
+const ApiPubqQueueListCache: Record<string, PublicQueueItem[]> = {}
+
+type ApiPubqQueueListCachedProps = {
+  api: PurpleApi
+  params?: ApiPubqQueueListRequest
+}
+
+export const apiPubqQueueListCached = async ({ api, params }: ApiPubqQueueListCachedProps): Promise<PublicQueueItem[]> => {
+  const cacheKey = `${params?.pendingFinalApproval}|${params?.disposition}`
+  if (!ApiPubqQueueListCache[cacheKey]) {
+    ApiPubqQueueListCache[cacheKey] = await api.apiPubqQueueList(params)
+  }
+  return ApiPubqQueueListCache[cacheKey]
+}
+
