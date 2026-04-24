@@ -1,4 +1,4 @@
-import { type ApiPubqQueueListRequest, type Cluster, Configuration, PublicQueueItem, PurpleApi } from '../../generated/purple_client/index.ts'
+import { Configuration, PurpleApi, type ApiPubqQueueListRequest, type Cluster, type PublicQueueItem } from '../../generated/purple_client/index.ts'
 
 type ApiMode = 'prod' | 'dev'
 
