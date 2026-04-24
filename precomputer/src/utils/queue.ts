@@ -32,7 +32,7 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
   const list = await apiPubqQueueListCached({ api, params })
 
   const uniqueClusterNumbers = uniq(list
-    .map(queueItem => queueItem.cluster?.number)
+    .map((queueItem): number | undefined => queueItem.cluster?.number)
     .filter(maybeClusterNumber => typeof maybeClusterNumber === 'number')
   )
 
@@ -56,8 +56,6 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
       ...byName,
     }
   }, {} as FinalApprovalCountsByQueueItemName)
-
-  console.log('[finalApprovalCountsByQueueItemName]', Object.keys(finalApprovalCountsByQueueItemName))
 
   const queueCommon: QueueCommon = {
     generatedAtIso: DateTime.now().toISO(),
@@ -91,8 +89,6 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
       const clusterNumber: number | undefined = cluster?.number ?? undefined
 
       const finalApprovalCounts = finalApprovalCountsByQueueItemName[name]
-
-      console.log(`[${name}] finalApprovalCounts: `, JSON.stringify(finalApprovalCounts))
 
       const publicAssignments = assignmentSet ?? []
 
