@@ -7,6 +7,7 @@
     "cleanup": "nuxt cleanup",
     "build": "npm run build:nuxt",
     "build:nuxt": "nuxt build",
+    "build:dev": "npm run build:nuxt:dev",
     "build:nuxt:dev": "npx --no nuxt prepare && npx --no nuxt build --envName development",
     "dev": "nuxt dev",
     "test": "npm run test:types",
