@@ -33,10 +33,13 @@ docs/CreateRfcToBeRequest.md
 docs/CreateRpcRelatedDocumentRequest.md
 docs/DatatrackerPerson.md
 docs/DatatrackerPersonRequest.md
+docs/DeleteMetadataBadRequestResponse.md
+docs/DeleteMetadataNotFoundResponse.md
 docs/DocumentComment.md
 docs/DocumentCommentRequest.md
 docs/Draft.md
 docs/FinalApproval.md
+docs/FinalApprovalCounts.md
 docs/FinalApprovalRequest.md
 docs/HistoryLastEdit.md
 docs/IanaStatus.md
@@ -147,10 +150,13 @@ models/CreateRfcToBeRequest.ts
 models/CreateRpcRelatedDocumentRequest.ts
 models/DatatrackerPerson.ts
 models/DatatrackerPersonRequest.ts
+models/DeleteMetadataBadRequestResponse.ts
+models/DeleteMetadataNotFoundResponse.ts
 models/DocumentComment.ts
 models/DocumentCommentRequest.ts
 models/Draft.ts
 models/FinalApproval.ts
+models/FinalApprovalCounts.ts
 models/FinalApprovalRequest.ts
 models/HistoryLastEdit.ts
 models/IanaStatus.ts

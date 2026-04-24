@@ -178,6 +178,12 @@ export interface PatchedRfcToBeRequest {
      * @memberof PatchedRfcToBeRequest
      */
     streamManagerId?: number | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PatchedRfcToBeRequest
+     */
+    isAprilFirstRfc?: boolean;
 }
 
 
@@ -222,6 +228,7 @@ export function PatchedRfcToBeRequestFromJSONTyped(json: any, ignoreDiscriminato
         'ianaStatusSlug': json['iana_status_slug'] == null ? undefined : IanaStatusSlugEnumFromJSON(json['iana_status_slug']),
         'repository': json['repository'] == null ? undefined : json['repository'],
         'streamManagerId': json['stream_manager_id'] == null ? undefined : json['stream_manager_id'],
+        'isAprilFirstRfc': json['is_april_first_rfc'] == null ? undefined : json['is_april_first_rfc'],
     };
 }
 
@@ -259,6 +266,7 @@ export function PatchedRfcToBeRequestToJSONTyped(value?: PatchedRfcToBeRequest |
         'iana_status_slug': IanaStatusSlugEnumToJSON(value['ianaStatusSlug']),
         'repository': value['repository'],
         'stream_manager_id': value['streamManagerId'],
+        'is_april_first_rfc': value['isAprilFirstRfc'],
     };
 }
 

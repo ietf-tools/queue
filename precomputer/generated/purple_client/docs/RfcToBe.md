@@ -41,6 +41,7 @@ Name | Type
 `repository` | string
 `blockingReasons` | [Array&lt;RfcToBeBlockingReason&gt;](RfcToBeBlockingReason.md)
 `streamManager` | [BaseDatatrackerPerson](BaseDatatrackerPerson.md)
+`isAprilFirstRfc` | boolean
 
 ## Example
 
@@ -83,6 +84,7 @@ const example = {
   "repository": null,
   "blockingReasons": null,
   "streamManager": null,
+  "isAprilFirstRfc": null,
 } satisfies RfcToBe
 
 console.log(example)

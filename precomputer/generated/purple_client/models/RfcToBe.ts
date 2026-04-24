@@ -301,6 +301,12 @@ export interface RfcToBe {
      * @memberof RfcToBe
      */
     readonly streamManager?: BaseDatatrackerPerson;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RfcToBe
+     */
+    isAprilFirstRfc?: boolean;
 }
 
 /**
@@ -362,6 +368,7 @@ export function RfcToBeFromJSONTyped(json: any, ignoreDiscriminator: boolean): R
         'repository': json['repository'] == null ? undefined : json['repository'],
         'blockingReasons': json['blocking_reasons'] == null ? undefined : ((json['blocking_reasons'] as Array<any>).map(RfcToBeBlockingReasonFromJSON)),
         'streamManager': json['stream_manager'] == null ? undefined : BaseDatatrackerPersonFromJSON(json['stream_manager']),
+        'isAprilFirstRfc': json['is_april_first_rfc'] == null ? undefined : json['is_april_first_rfc'],
     };
 }
 
@@ -395,6 +402,7 @@ export function RfcToBeToJSONTyped(value?: Omit<RfcToBe, 'id'|'name'|'draft'|'cl
         'rfc_number': value['rfcNumber'],
         'consensus': value['consensus'],
         'repository': value['repository'],
+        'is_april_first_rfc': value['isAprilFirstRfc'],
     };
 }
 

@@ -40,11 +40,11 @@ export interface MetadataValidationResults {
      */
     readonly repository?: string;
     /**
-     * Head SHA of the commit that was validated
+     * 
      * @type {string}
      * @memberof MetadataValidationResults
      */
-    headSha?: string | null;
+    readonly headSha?: string;
     /**
      * 
      * @type {boolean}
@@ -126,7 +126,7 @@ export function MetadataValidationResultsToJSON(json: any): MetadataValidationRe
     return MetadataValidationResultsToJSONTyped(json, false);
 }
 
-export function MetadataValidationResultsToJSONTyped(value?: Omit<MetadataValidationResults, 'repository'|'can_autofix'|'is_match'|'metadata_compare'|'is_error'|'received_at'> | null, ignoreDiscriminator: boolean = false): any {
+export function MetadataValidationResultsToJSONTyped(value?: Omit<MetadataValidationResults, 'repository'|'head_sha'|'can_autofix'|'is_match'|'metadata_compare'|'is_error'|'received_at'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
@@ -134,7 +134,6 @@ export function MetadataValidationResultsToJSONTyped(value?: Omit<MetadataValida
     return {
         
         'rfc_to_be': value['rfcToBe'],
-        'head_sha': value['headSha'],
         'status': value['status'],
         'detail': value['detail'],
     };
