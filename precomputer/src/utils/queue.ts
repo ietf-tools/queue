@@ -51,7 +51,7 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
 
     return {
       ...acc,
-      ...byName
+      ...byName,
     }
   }, {} as FinalApprovalCountsByQueueItemName)
 
@@ -87,6 +87,8 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
       const clusterNumber: number | undefined = cluster?.number ?? undefined
 
       const finalApprovalCounts = finalApprovalCountsByQueueItemName[name]
+
+      console.log(`[${name}] finalApprovalCounts: `, JSON.stringify(finalApprovalCounts))
 
       const publicAssignments = assignmentSet ?? []
 
