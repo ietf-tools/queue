@@ -82,8 +82,10 @@ docs/Profile.md
 docs/PublicAssignment.md
 docs/PublicQueueAuthor.md
 docs/PublicQueueItem.md
+docs/PublishPermissionDenied.md
 docs/PublishRfcRequest.md
 docs/PublishRfcStatus.md
+docs/PublishValidationError.md
 docs/PurpleApi.md
 docs/QueueItem.md
 docs/RfcAuthor.md
@@ -199,8 +201,10 @@ models/Profile.ts
 models/PublicAssignment.ts
 models/PublicQueueAuthor.ts
 models/PublicQueueItem.ts
+models/PublishPermissionDenied.ts
 models/PublishRfcRequest.ts
 models/PublishRfcStatus.ts
+models/PublishValidationError.ts
 models/QueueItem.ts
 models/RfcAuthor.ts
 models/RfcAuthorRequest.ts

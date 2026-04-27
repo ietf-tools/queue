@@ -91,7 +91,7 @@ export interface ClusterMember {
      * @type {FinalApprovalCounts}
      * @memberof ClusterMember
      */
-    readonly finalApprovalCounts?: FinalApprovalCounts;
+    readonly finalApprovalCounts?: FinalApprovalCounts | null;
 }
 
 /**
