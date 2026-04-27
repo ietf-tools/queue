@@ -13,7 +13,8 @@ import {
   parseDisposition,
   parseIanaStatus,
   parseLabels,
-  parseReferences
+  parseReferences,
+  parseFinalApprovalCounts
 } from '../utils/converters.ts'
 import { apiPubqClustersRetrieveCached, apiPubqQueueListCached } from './api.ts'
 
@@ -159,7 +160,7 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
             approvedAtIso: approvedAtIso ?? undefined
           }
         }),
-        finalApprovalCounts,
+        finalApprovalCounts: parseFinalApprovalCounts(finalApprovalCounts),
         consensus:
           finalApprovals?.every((finalApproval) => {
             return Boolean(finalApproval.approved)

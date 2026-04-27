@@ -159,3 +159,14 @@ export const parseApprovalLogMessages = (approvalLogMessages?: ApprovalLogMessag
     }
   })
 }
+
+export const parseFinalApprovalCounts = (finalApprovalCounts: ClusterMember['finalApprovalCounts']): QueueCommonItem['finalApprovalCounts'] => {
+  if (!finalApprovalCounts) {
+    return undefined
+  }
+
+  return {
+    approved: finalApprovalCounts.approved,
+    total: finalApprovalCounts.total,
+  }
+}
