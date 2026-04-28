@@ -59,7 +59,7 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
   }, {} as FinalApprovalCountsByQueueItemName)
 
   const queueCommon: QueueCommon = {
-    generatedAtIso: DateTime.now().toISO(),
+    timestampIso: DateTime.now().toUTC().toISO(),
     items: list.map((queueItem): QueueCommonItem => {
       const {
         name,

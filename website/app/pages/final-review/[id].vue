@@ -4,9 +4,9 @@
     <FinalReviewDraft v-if="mode?.draftName" heading-level="1" :id="mode.draftName" :draft-name="mode.draftName"
       :queue="data" />
     <hr class="mt-12" />
-    <p v-if="data?.generatedAtIso" class="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
+    <p v-if="data?.timestampIso" class="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
       Last updated
-      <TimeStamp :dateTimeIso="data.generatedAtIso" />
+      <TimeStamp :dateTimeIso="data.timestampIso" />
     </p>
   </div>
 </template>

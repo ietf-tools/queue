@@ -12,7 +12,7 @@ export const getClusterIndex = async ({ api }: Props): Promise<ClusterIndexCommo
   const clusterList = await api.apiPubqClustersList()
 
   const clusterIndexCommon: ClusterIndexCommon = {
-    generatedAtIso: DateTime.now().toISO(),
+    timestampIso: DateTime.now().toUTC().toISO(),
     list: clusterList.filter(item => item.isActive).map((cluster): ClusterItemCommon => {
       const { number, documents } = cluster
       const clusterItems = documents?.map((clusterMember) => clusterMemberToClusterDocumentCommon(number, clusterMember)) ?? []

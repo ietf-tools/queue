@@ -66,7 +66,7 @@ const {
   }
 )
 
-const generatedAt = computed(() => data.value?.generatedAtIso ? DateTime.fromISO(data.value.generatedAtIso) : undefined)
+const generatedAt = computed(() => data.value?.timestampIso ? DateTime.fromISO(data.value.timestampIso) : undefined)
 
 const columnHelper = createColumnHelper<ClusterItemCommon>()
 

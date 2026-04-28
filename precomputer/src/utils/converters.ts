@@ -155,7 +155,7 @@ export const parseApprovalLogMessages = (approvalLogMessages?: ApprovalLogMessag
     return {
       rfcToBe: approvalLogMessage.rfcToBe ? parseMinimalRfcToBe(approvalLogMessage.rfcToBe) : undefined,
       logMessage: approvalLogMessage.logMessage,
-      timeIso: approvalLogMessage.time ? DateTime.fromJSDate(approvalLogMessage.time).toISO() ?? undefined : undefined
+      timeIso: approvalLogMessage.time ? DateTime.fromJSDate(approvalLogMessage.time).toUTC().toISO() ?? undefined : undefined
     }
   })
 }

@@ -87,7 +87,7 @@ const finalReview = computed(() => {
   if (!item) return null
   return {
     ...item,
-    generatedAt: props.queue.generatedAtIso ? DateTime.fromISO(props.queue.generatedAtIso) : undefined,
+    generatedAt: props.queue.timestampIso ? DateTime.fromISO(props.queue.timestampIso) : undefined,
     renderableApprovalLogMessages: item?.approvalLogMessages?.map(approvalLogMessage => {
       const time = approvalLogMessage.timeIso ? DateTime.fromISO(approvalLogMessage.timeIso) : undefined
       const timeAgo = time ? time.toRelativeCalendar() : undefined
