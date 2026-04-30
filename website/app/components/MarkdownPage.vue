@@ -29,7 +29,6 @@ if (error.value || page.value === null) {
 
 const canonicalPath = `/${normalizedSlug}/`
 
-
 if (
   // only compare route.path not route.fullPath as that will clobber ?search#id params
   route.path !== canonicalPath
