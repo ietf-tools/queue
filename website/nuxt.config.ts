@@ -59,8 +59,8 @@ export default defineNuxtConfig({
        * Uncomment/comment out the lines to adjust the config.
        */
       '/api/v1/**': {
-        proxy: 'http://localhost:3001/api/v1/**'
-        // proxy: 'https://queue.staging.ietf.org/'
+        // proxy: 'http://localhost:3001/api/v1/**'
+        proxy: 'https://queue.demo.rfc-editor.org/api/v1/**'
       }
     }
   }
