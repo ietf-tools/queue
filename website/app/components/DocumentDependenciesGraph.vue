@@ -1,5 +1,5 @@
 <template>
-  <div ref="container" id="graph"
+  <div ref="container" :id="GRAPH_DOM_ID"
     class="overflow-hidden h-[75vh] flex items-center justify-center border border-gray-700 dark:border-gray-200 rounded-md inset-shadow-sm text-center">
     <Icon name="ei:spinner-3" size="1.3rem" class="animate-spin" />
   </div>
@@ -17,8 +17,8 @@
 
   <form class="text-right mt-1">
     <label class="cursor-pointer font-bold inline-block" :data-checked="showLegend">
-      <input type="checkbox" name="showLegend" class="size-4 mr-1 align-middle" :v-model="showLegend"
-        @change="announceChange" aria-controls="graph" :aria-expanded="showLegend" />
+      <input type="checkbox" name="showLegend" class="size-4 mr-1 align-middle" value="checked" :v-model="showLegend"
+        @change="announceChange" :aria-controls="GRAPH_DOM_ID" :aria-expanded="showLegend" />
       Show legend?
     </label>
   </form>
@@ -40,6 +40,8 @@ const props = defineProps<Props>()
 
 const clusterToUse = ref(props.cluster)
 
+const GRAPH_DOM_ID = 'graph'
+
 const router = useRouter()
 
 const containerRef = useTemplateRef('container')
@@ -57,10 +59,11 @@ const setTooltip: SetTooltip = (props) => {
 /**
  * This will be shown visually, but it's mostly for screenreaders
  */
-const announceChange = () => {
+const announceChange = (event) => {
+  const { checked: isChecked } = event.target
   tooltip.value = {
     position: tooltip.value.position,
-    text: showLegend.value ? ['Graph shows legend'] : [`Graph shows cluster ${props.cluster.number}`]
+    text: isChecked ? ['Graph shows legend'] : [`Graph shows cluster ${props.cluster.number}`]
   }
 }
 
