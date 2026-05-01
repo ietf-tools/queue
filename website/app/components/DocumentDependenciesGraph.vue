@@ -18,7 +18,7 @@
   <form class="text-right mt-1">
     <label class="cursor-pointer font-bold inline-block" :data-checked="showLegend">
       <input type="checkbox" name="showLegend" class="size-4 mr-1 align-middle" value="checked" :v-model="showLegend"
-        @change="announceChange" :aria-controls="GRAPH_DOM_ID" :aria-expanded="showLegend" />
+        @change="handleChange" :aria-controls="GRAPH_DOM_ID" :aria-expanded="showLegend" />
       Show legend?
     </label>
   </form>
@@ -59,7 +59,7 @@ const setTooltip: SetTooltip = (props) => {
 /**
  * This will be shown visually, but it's mostly for screenreaders
  */
-const announceChange = (event: Event) => {
+const handleChange = (event: Event) => {
   const { target } = event
   if (!(target instanceof HTMLInputElement)) {
     const errorTitle = 'Expected native input[type=checkbox] but was'
@@ -67,6 +67,7 @@ const announceChange = (event: Event) => {
     throw Error(`${errorTitle} (see console) ${target}`)
   }
   const { checked: isChecked } = target
+  showLegend.value = isChecked
   console.log({ isChecked })
   tooltip.value = {
     position: tooltip.value.position,
