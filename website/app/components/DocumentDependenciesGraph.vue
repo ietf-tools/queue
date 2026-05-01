@@ -67,6 +67,7 @@ const announceChange = (event: Event) => {
     throw Error(`${errorTitle} (see console) ${target}`)
   }
   const { checked: isChecked } = target
+  console.log({ isChecked })
   tooltip.value = {
     position: tooltip.value.position,
     text: isChecked ? ['Graph shows legend'] : [`Graph shows cluster ${props.cluster.number}`]
