@@ -22,7 +22,6 @@
       Show legend?
     </label>
   </form>
-
 </template>
 
 <script setup lang="ts">
@@ -207,14 +206,12 @@ const attemptToRenderGraph = () => {
     return
   }
 
-  const graphData = structuredClone(
-    // the D3 code will mutate data so we'll make a copy
-    clusterGraphData.value
+  const chosenGraphData: DrawGraphParameters[0]["data"] = structuredClone(
+    // d3 graph code will mutate the data so make a copy  
+    showLegend.value
+      ? legendData
+      : clusterGraphData.value
   )
-
-  const chosenGraphData: DrawGraphParameters[0]["data"] = showLegend.value
-    ? legendData
-    : graphData
 
   let [leg_el, leg_sim] = drawGraph({
     data: chosenGraphData,
@@ -250,4 +247,7 @@ watch(() => colorMode.value, attemptToRenderGraph)
 watch(clusterGraphData, attemptToRenderGraph)
 watch(showLegend, attemptToRenderGraph)
 onMounted(attemptToRenderGraph)
+onUnmounted(() => {
+  hasMounted.value = false
+})
 </script>
