@@ -47,7 +47,7 @@ export const renderAssignmentsAsRoles = (
       editorRoles.includes(assignmentByRole.role)
     )
 
-  const humanFriendlyName = (role: string): string => {
+  const humanFriendlyRole = (role: string): string => {
     switch (role) {
       case 'first_editor':
         return 'In Progress (First Edit)'
@@ -68,7 +68,7 @@ export const renderAssignmentsAsRoles = (
         )
       : undefined,
     ...assignmentsByRolesFiltered.map((assignmentsByRole) => {
-      const badge = h(BaseBadge, { class: '' }, humanFriendlyName(assignmentsByRole.role))
+      const badge = h(BaseBadge, { class: '' }, humanFriendlyRole(assignmentsByRole.role))
       return h('li', { class: 'inline-flex flex-wrap items-center gap-1' }, [
         assignmentsByRole.role === 'final_review_editor'
           ? h(Anchor, { href: finalReviewPathBuilder(draftName) }, () => [
