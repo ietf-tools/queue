@@ -33,7 +33,7 @@
     "luxon": "3.5.0",
     "nuxt": "4.4.2",
     "nuxt-vitalizer": "2.0.0",
-    "reka-ui": "2.4.1",
+    "reka-ui": "2.9.6",
     "tailwindcss": "4.1.16",
     "vue": "3.5.13",
     "zod": "3.25.30"
