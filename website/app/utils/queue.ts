@@ -21,6 +21,8 @@ export const renderEnqueuedAt = ({
   ])
 }
 
+type AssignmentByRole = NonNullable<QueueCommonItem['assignmentsByRoles']>[number]
+
 export const renderAssignmentsAsRoles = (
   assignmentsByRoles: QueueCommonItem['assignmentsByRoles'],
   draftName: string
@@ -47,8 +49,8 @@ export const renderAssignmentsAsRoles = (
       editorRoles.includes(assignmentByRole.role)
     )
 
-  const humanFriendlyRole = (role: string): string => {
-    switch (role) {
+  const humanFriendlyRole = (assignmentByRole: AssignmentByRole): string => {
+    switch (assignmentByRole.role) {
       case 'first_editor':
         return 'In Progress (First Edit)'
       case 'second_editor':
@@ -56,7 +58,7 @@ export const renderAssignmentsAsRoles = (
       case 'final_review_editor':
         return 'In Final Review'
     }
-    return role.replace(/_/g, ' ')
+    return assignmentByRole.role.replace(/_/g, ' ')
   }
 
   return h('ul', { class: 'inline-flex flex-wrap items-center gap-1' }, [
@@ -67,20 +69,21 @@ export const renderAssignmentsAsRoles = (
           h(BaseBadge, { color: 'emerald' }, () => 'Awaiting Editor Assignment')
         )
       : undefined,
-    ...assignmentsByRolesFiltered.map((assignmentsByRole) => {
-      const badge = h(BaseBadge, { class: '' }, () => humanFriendlyRole(assignmentsByRole.role))
+    ...assignmentsByRolesFiltered.map((assignmentByRole) => {
+      const badge = h(BaseBadge, { class: '' }, () => humanFriendlyRole(assignmentByRole))
+
       return h('li', { class: 'inline-flex flex-wrap items-center gap-1' }, [
-        assignmentsByRole.role === 'final_review_editor'
+        assignmentByRole.role === 'final_review_editor'
           ? h(Anchor, { href: finalReviewPathBuilder(draftName) }, () => [
               badge,
               h('span', { class: 'underline text-xs ml-1' }, 'more details')
             ])
           : badge,
-        assignmentsByRole.blockingReasons
+        assignmentByRole.blockingReasons
           ? h(
               'span',
               { class: 'text-xs text-gray-500 dark:text-neutral-400' },
-              assignmentsByRole.blockingReasons.map((blockingReason) => blockingReason.reason.name)
+              assignmentByRole.blockingReasons.map((blockingReason) => blockingReason.reason.name)
             )
           : null
       ])

@@ -10,14 +10,14 @@
         <slot />
       </div>
       <button v-if="props.isSortable" type="button" :class="[
-        'inline-block flex items-center justify-center w-[2em] h-[2em] -pb-1 rounded-md ml-2 cursor-pointer text-gray-400 dark:text-neutral-400 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 dark:hover:text-gray-200 dark:focus:text-gray-200 px-1 py-1',
+        'inline-block flex items-center justify-center w-[2em] h-[2em] rounded-md ml-2 cursor-pointer text-gray-400 dark:text-neutral-400 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 dark:hover:text-gray-200 dark:focus:text-gray-200 px-1 py-1',
         props.sortDirection === 'asc' || props.sortDirection === 'desc' ? 'inset-shadow-sm inset-shadow-gray-300 dark:inset-shadow-black bg-gray-200 dark:bg-neutral-900' : ''
       ]" :title="`Sort by ${columnName}`">
         <Icon v-if="props.sortDirection === 'asc'" name="uil:arrow-up"
-          class="inline-block text-gray-900 dark:text-gray-100 text-lg" size="1em" />
+          class="inline-block text-gray-900 dark:text-gray-100 text-lg" size="1.2em" />
         <Icon v-else-if="props.sortDirection === 'desc'" name="uil:arrow-down"
-          class="inline-block text-gray-900 dark:text-gray-100 text-lg" size="1em" />
-        <Icon v-else name="heroicons:arrows-up-down" class="inline-block text-lg" size="1em" />
+          class="inline-block text-gray-900 dark:text-gray-100 text-lg  mt-1" size="1.2em" />
+        <Icon v-else name="heroicons:arrows-up-down" class="inline-block text-lg mt-0.5" size="1.2em" />
       </button>
     </div>
   </th>
