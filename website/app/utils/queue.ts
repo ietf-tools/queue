@@ -64,11 +64,11 @@ export const renderAssignmentsAsRoles = (
       ? h(
           'li',
           { class: 'inline-flex flex-wrap items-center gap-1' },
-          h(BaseBadge, { color: 'emerald' }, 'Awaiting Editor Assignment')
+          h(BaseBadge, { color: 'emerald' }, () => 'Awaiting Editor Assignment')
         )
       : undefined,
     ...assignmentsByRolesFiltered.map((assignmentsByRole) => {
-      const badge = h(BaseBadge, { class: '' }, humanFriendlyRole(assignmentsByRole.role))
+      const badge = h(BaseBadge, { class: '' }, () => humanFriendlyRole(assignmentsByRole.role))
       return h('li', { class: 'inline-flex flex-wrap items-center gap-1' }, [
         assignmentsByRole.role === 'final_review_editor'
           ? h(Anchor, { href: finalReviewPathBuilder(draftName) }, () => [
