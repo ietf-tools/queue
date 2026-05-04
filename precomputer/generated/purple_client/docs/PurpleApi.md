@@ -66,6 +66,8 @@ All URIs are relative to *http://localhost*
 | [**documentsFinalApprovalsUpdate**](PurpleApi.md#documentsfinalapprovalsupdate) | **PUT** /api/rpc/documents/{draft_name}/final_approvals/{id}/ |  |
 | [**documentsHistoryList**](PurpleApi.md#documentshistorylist) | **GET** /api/rpc/documents/{draft__name}/history/ |  |
 | [**documentsList**](PurpleApi.md#documentslist) | **GET** /api/rpc/documents/ |  |
+| [**documentsManualBlock**](PurpleApi.md#documentsmanualblock) | **POST** /api/rpc/documents/{draft__name}/manual_block/ |  |
+| [**documentsManualUnblock**](PurpleApi.md#documentsmanualunblock) | **DELETE** /api/rpc/documents/{draft__name}/manual_block/ |  |
 | [**documentsMetadataValidationResultsList**](PurpleApi.md#documentsmetadatavalidationresultslist) | **GET** /api/rpc/documents/{draft_name}/metadata_validation_results/ |  |
 | [**documentsMetadataValidationResultsRetrieve**](PurpleApi.md#documentsmetadatavalidationresultsretrieve) | **GET** /api/rpc/documents/{draft_name}/metadata_validation_results/{head_sha}/ |  |
 | [**documentsPartialUpdate**](PurpleApi.md#documentspartialupdate) | **PATCH** /api/rpc/documents/{draft__name}/ |  |
@@ -4612,6 +4614,147 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## documentsManualBlock
+
+> documentsManualBlock(draftName, manualBlockRequestRequest)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PurpleApi,
+} from '';
+import type { DocumentsManualBlockRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: cookieAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PurpleApi(config);
+
+  const body = {
+    // string
+    draftName: draftName_example,
+    // ManualBlockRequestRequest (optional)
+    manualBlockRequestRequest: ...,
+  } satisfies DocumentsManualBlockRequest;
+
+  try {
+    const data = await api.documentsManualBlock(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **draftName** | `string` |  | [Defaults to `undefined`] |
+| **manualBlockRequestRequest** | [ManualBlockRequestRequest](ManualBlockRequestRequest.md) |  | [Optional] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | No response body |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## documentsManualUnblock
+
+> documentsManualUnblock(draftName)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PurpleApi,
+} from '';
+import type { DocumentsManualUnblockRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: cookieAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PurpleApi(config);
+
+  const body = {
+    // string
+    draftName: draftName_example,
+  } satisfies DocumentsManualUnblockRequest;
+
+  try {
+    const data = await api.documentsManualUnblock(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **draftName** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | No response body |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

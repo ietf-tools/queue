@@ -50,6 +50,7 @@ import type {
   MailMessageRequest,
   MailResponse,
   MailTemplate,
+  ManualBlockRequestRequest,
   MetadataValidationResults,
   Name,
   NestedAssignment,
@@ -171,6 +172,8 @@ import {
     MailResponseToJSON,
     MailTemplateFromJSON,
     MailTemplateToJSON,
+    ManualBlockRequestRequestFromJSON,
+    ManualBlockRequestRequestToJSON,
     MetadataValidationResultsFromJSON,
     MetadataValidationResultsToJSON,
     NameFromJSON,
@@ -571,6 +574,15 @@ export interface DocumentsListRequest {
     offset?: number;
     ordering?: string;
     publishedWithinDays?: number;
+}
+
+export interface DocumentsManualBlockRequest {
+    draftName: string;
+    manualBlockRequestRequest?: ManualBlockRequestRequest;
+}
+
+export interface DocumentsManualUnblockRequest {
+    draftName: string;
 }
 
 export interface DocumentsMetadataValidationResultsListRequest {
@@ -3923,6 +3935,93 @@ export class PurpleApi extends runtime.BaseAPI {
     async documentsList(requestParameters: DocumentsListRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaginatedRfcToBeList> {
         const response = await this.documentsListRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Creates request options for documentsManualBlock without sending the request
+     */
+    async documentsManualBlockRequestOpts(requestParameters: DocumentsManualBlockRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['draftName'] == null) {
+            throw new runtime.RequiredError(
+                'draftName',
+                'Required parameter "draftName" was null or undefined when calling documentsManualBlock().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/api/rpc/documents/{draft__name}/manual_block/`;
+        urlPath = urlPath.replace(`{${"draft__name"}}`, encodeURIComponent(String(requestParameters['draftName'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ManualBlockRequestRequestToJSON(requestParameters['manualBlockRequestRequest']),
+        };
+    }
+
+    /**
+     */
+    async documentsManualBlockRaw(requestParameters: DocumentsManualBlockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.documentsManualBlockRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async documentsManualBlock(requestParameters: DocumentsManualBlockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.documentsManualBlockRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Creates request options for documentsManualUnblock without sending the request
+     */
+    async documentsManualUnblockRequestOpts(requestParameters: DocumentsManualUnblockRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['draftName'] == null) {
+            throw new runtime.RequiredError(
+                'draftName',
+                'Required parameter "draftName" was null or undefined when calling documentsManualUnblock().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/rpc/documents/{draft__name}/manual_block/`;
+        urlPath = urlPath.replace(`{${"draft__name"}}`, encodeURIComponent(String(requestParameters['draftName'])));
+
+        return {
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     */
+    async documentsManualUnblockRaw(requestParameters: DocumentsManualUnblockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.documentsManualUnblockRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async documentsManualUnblock(requestParameters: DocumentsManualUnblockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.documentsManualUnblockRaw(requestParameters, initOverrides);
     }
 
     /**

@@ -45,6 +45,12 @@ export interface RfcToBeBlockingReason {
      * @memberof RfcToBeBlockingReason
      */
     readonly resolved?: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof RfcToBeBlockingReason
+     */
+    readonly comment?: string;
 }
 
 /**
@@ -67,6 +73,7 @@ export function RfcToBeBlockingReasonFromJSONTyped(json: any, ignoreDiscriminato
         'reason': json['reason'] == null ? undefined : BlockingReasonFromJSON(json['reason']),
         'sinceWhen': json['since_when'] == null ? undefined : (new Date(json['since_when'])),
         'resolved': json['resolved'] == null ? undefined : (new Date(json['resolved'])),
+        'comment': json['comment'] == null ? undefined : json['comment'],
     };
 }
 
@@ -74,7 +81,7 @@ export function RfcToBeBlockingReasonToJSON(json: any): RfcToBeBlockingReason {
     return RfcToBeBlockingReasonToJSONTyped(json, false);
 }
 
-export function RfcToBeBlockingReasonToJSONTyped(value?: Omit<RfcToBeBlockingReason, 'reason'|'since_when'|'resolved'> | null, ignoreDiscriminator: boolean = false): any {
+export function RfcToBeBlockingReasonToJSONTyped(value?: Omit<RfcToBeBlockingReason, 'reason'|'since_when'|'resolved'|'comment'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

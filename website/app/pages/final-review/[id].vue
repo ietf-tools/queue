@@ -1,12 +1,12 @@
 <template>
   <div class="container mx-auto my-6">
-    <ClusterFinalReviewPage v-if="mode?.cluster" :cluster="mode.cluster" :queue="data" />
+    <ClusterFinalReviewPage v-if="mode?.cluster" :cluster="mode.cluster" :queue="clusterQueue" />
     <FinalReviewDraft v-if="mode?.draftName" heading-level="1" :id="mode.draftName" :draft-name="mode.draftName"
-      :queue="data" />
+      :queue="finalReview" />
     <hr class="mt-12" />
-    <p v-if="data?.timestampIso" class="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
+    <p v-if="finalReview?.timestampIso" class="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
       Last updated
-      <TimeStamp :dateTimeIso="data.timestampIso" />
+      <TimeStamp :dateTimeIso="finalReview.timestampIso" />
     </p>
   </div>
 </template>
@@ -67,9 +67,9 @@ if (
 const origin = usePublicSiteUrlOrigin()
 
 const {
-  data,
-  status,
-  error,
+  data: finalReview,
+  status: finalReviewStatus,
+  error: finalReviewError,
 } = await useAsyncData(
   'final-review-index',
   () => getFinalReviewIndex(origin),
@@ -79,8 +79,21 @@ const {
   }
 )
 
-if (!data.value || status.value === 'success' && !data.value || status.value === 'error') {
-  console.error(`[404] ${id}`, status.value, error.value)
+const {
+  data: clusterIndex,
+  status: clusterIndexStatus,
+  error: clusterIndexError,
+} = await useAsyncData(
+  'clusters-index',
+  () => getClusterIndex(origin),
+  {
+    server: true,
+    lazy: false
+  }
+)
+
+if (!finalReview.value || finalReviewStatus.value === 'success' && !finalReview.value || finalReviewStatus.value === 'error') {
+  console.error(`[404] ${id}`, finalReviewStatus.value, finalReviewError.value)
   throw createError({
     statusCode: 404,
     statusMessage: 'Not Found',
@@ -88,10 +101,12 @@ if (!data.value || status.value === 'success' && !data.value || status.value ===
   })
 }
 
-if (data.value && mode.value) {
+if (finalReview.value && mode.value) {
   if (mode.value.cluster) {
     // if this specific cluster isn't in the final reviews data then 404
-    if (!data.value.items.some(item => item.clusters?.some(cluster => cluster === mode.value?.cluster))) {
+    if (!finalReview.value.items.some(item => item.clusters?.some(cluster => cluster === mode.value?.cluster)) ||
+      !clusterIndex.value?.list.find(cluster => cluster.number === mode.value?.cluster)
+    ) {
       throw createError({
         statusCode: 404,
         statusMessage: 'Cluster Not Found',
@@ -100,7 +115,7 @@ if (data.value && mode.value) {
     }
   } else if (mode.value.draftName) {
     // if this specific draft isn't in the final reviews data then 404
-    if (!data.value.items.some(item => item.name === mode.value?.draftName)) {
+    if (!finalReview.value.items.some(item => item.name === mode.value?.draftName)) {
       throw createError({
         statusCode: 404,
         statusMessage: 'Draft Not Found',
@@ -109,6 +124,49 @@ if (data.value && mode.value) {
     }
   }
 }
+
+const {
+  data: queueIndex,
+  status: queueIndexStatus,
+  error: queueIndexError,
+} = await useAsyncData(
+  'queue-index',
+  () => getQueueIndex(origin),
+  {
+    server: true,
+    lazy: false
+  }
+)
+
+const clusterQueue = computed((): QueueCommon | undefined => {
+  if (!mode.value?.cluster) {
+    return undefined
+  }
+  const clusterIndexItem = clusterIndex.value?.list.find(cluster => cluster.number === mode.value?.cluster)
+  if (!clusterIndexItem) {
+    return undefined
+  }
+  if (!finalReview.value) {
+    throw Error('Expected final review to be available')
+  }
+
+  return {
+    timestampIso: finalReview.value.timestampIso,
+    items: clusterIndexItem.documents.map((clusterItem): QueueCommonItem => {
+      const { name } = clusterItem
+
+      const finalReviewItem = finalReview.value?.items.find(item => item.name === name)
+      if (finalReviewItem) {
+        return finalReviewItem
+      }
+      const queueItem = queueIndex.value?.items.find(item => item.name === name)
+      if (!queueItem) {
+        throw Error(`Cannot find queue item ${JSON.stringify(name)} in queue index.`)
+      }
+      return queueItem
+    })
+  }
+})
 
 useQueueRfcEditorHead({
   title: `${id.value} final review`,

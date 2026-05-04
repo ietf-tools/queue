@@ -125,7 +125,7 @@ export const QueueCommonItemSchema = z.object({
   title: z.string(),
   rev: z.string(),
   stream: z.string().optional(),
-  consensus: z.boolean(),
+  consensus: z.boolean().optional(),
   finalApprovals: FinalApprovalSchema.array().optional(),
   authors: AuthorCommonSchema.array(),
   disposition: DispositionCommonSchema,

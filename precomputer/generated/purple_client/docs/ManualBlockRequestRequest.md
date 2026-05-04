@@ -1,29 +1,22 @@
 
-# RfcToBeBlockingReason
+# ManualBlockRequestRequest
 
-Serialize RfcToBeBlockingReason with reason details
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`reason` | [BlockingReason](BlockingReason.md)
-`sinceWhen` | Date
-`resolved` | Date
 `comment` | string
 
 ## Example
 
 ```typescript
-import type { RfcToBeBlockingReason } from ''
+import type { ManualBlockRequestRequest } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "reason": null,
-  "sinceWhen": null,
-  "resolved": null,
   "comment": null,
-} satisfies RfcToBeBlockingReason
+} satisfies ManualBlockRequestRequest
 
 console.log(example)
 
@@ -32,7 +25,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as RfcToBeBlockingReason
+const exampleParsed = JSON.parse(exampleJSON) as ManualBlockRequestRequest
 console.log(exampleParsed)
 ```
 

@@ -1,9 +1,19 @@
 import { DateTime } from 'luxon'
-import { type Cluster, type QueueItem, type ApprovalLogMessage, type RpcRelatedDocument } from "../../generated/purple_client/index.ts";
-import { type ClusterDocumentCommon, type DocumentReferenceCommon, type QueueCommonItem, type ApprovalLogMessageCommon } from "../../../website/app/utils/validators.ts";
-import { assertIsString, assertNever } from "./typescript.ts";
+import {
+  type Cluster,
+  type QueueItem,
+  type ApprovalLogMessage,
+  type RpcRelatedDocument
+} from '../../generated/purple_client/index.ts'
+import {
+  type ClusterDocumentCommon,
+  type DocumentReferenceCommon,
+  type QueueCommonItem,
+  type ApprovalLogMessageCommon
+} from '../../../website/app/utils/validators.ts'
+import { assertIsString, assertNever } from './typescript.ts'
 
-export const parseDisposition = (disposition: string): QueueCommonItem["disposition"] => {
+export const parseDisposition = (disposition: string): QueueCommonItem['disposition'] => {
   switch (disposition) {
     case 'created':
     case 'in_progress':
@@ -14,7 +24,9 @@ export const parseDisposition = (disposition: string): QueueCommonItem["disposit
   throw Error(`Unable to parse disposition ${JSON.stringify(disposition)}`)
 }
 
-export const parseIanaStatus = (ianaStatus: QueueItem["ianaStatus"]): QueueCommonItem['ianaStatus'] => {
+export const parseIanaStatus = (
+  ianaStatus: QueueItem['ianaStatus']
+): QueueCommonItem['ianaStatus'] => {
   if (!ianaStatus) {
     return undefined
   }
@@ -29,8 +41,8 @@ export const parseIanaStatus = (ianaStatus: QueueItem["ianaStatus"]): QueueCommo
   }
 }
 
-type LabelsCommon = NonNullable<QueueCommonItem["labels"]>
-type Labels = NonNullable<QueueItem["labels"]>
+type LabelsCommon = NonNullable<QueueCommonItem['labels']>
+type Labels = NonNullable<QueueItem['labels']>
 
 export const parseColor = (color: Labels[number]['color']): LabelsCommon[number]['themeColor'] => {
   switch (color) {
@@ -63,20 +75,20 @@ export const parseColor = (color: Labels[number]['color']): LabelsCommon[number]
   assertNever(color)
 }
 
-export const parseLabels = (labels: QueueItem["labels"]): QueueCommonItem["labels"] => {
+export const parseLabels = (labels: QueueItem['labels']): QueueCommonItem['labels'] => {
   if (!labels) {
     return undefined
   }
 
   return labels
-    .filter(label => label.used)
+    .filter((label) => label.used)
     .map((label): LabelsCommon[number] => {
       const { slug, color, isException, isComplexity } = label
       return {
         slug,
         themeColor: parseColor(color),
         isException: Boolean(isException),
-        isComplexity: Boolean(isComplexity),
+        isComplexity: Boolean(isComplexity)
       }
     })
 }
@@ -93,10 +105,13 @@ export const parseRelationship = (relationship: string) => {
   throw Error(`Unable to parse relationship ${JSON.stringify(relationship)}`)
 }
 
-type ClusterDocuments = NonNullable<Cluster["documents"]>
+type ClusterDocuments = NonNullable<Cluster['documents']>
 type ClusterMember = ClusterDocuments[number]
 
-export const clusterMemberToClusterDocumentCommon = (clusterNumber: number, clusterMember: ClusterMember): ClusterDocumentCommon => {
+export const clusterMemberToClusterDocumentCommon = (
+  clusterNumber: number,
+  clusterMember: ClusterMember
+): ClusterDocumentCommon => {
   const { name, rfcNumber, disposition, references, isReceived, isBlocked } = clusterMember
 
   return {
@@ -110,40 +125,46 @@ export const clusterMemberToClusterDocumentCommon = (clusterNumber: number, clus
 }
 
 export const parseReferences = (references?: RpcRelatedDocument[]): DocumentReferenceCommon[] => {
-  return references?.map((reference): DocumentReferenceCommon => {
-    const {
-      relationship,
-      draftName,
-      targetDraftName,
-      targetRfcNumber,
-      sourceRfcNumber,
-      targetDisposition,
-    } = reference
+  return (
+    references?.map((reference): DocumentReferenceCommon => {
+      const {
+        relationship,
+        draftName,
+        targetDraftName,
+        targetRfcNumber,
+        sourceRfcNumber,
+        targetDisposition
+      } = reference
 
-    assertIsString(draftName)
-    assertIsString(targetDraftName)
+      assertIsString(draftName)
+      assertIsString(targetDraftName)
 
-    return {
-      relationship: parseRelationship(relationship),
-      draftName,
-      targetDraftName,
-      targetRfcNumber,
-      sourceRfcNumber,
-      targetDisposition: targetDisposition ? parseDisposition(targetDisposition) : undefined
-    }
-  }) ?? []
+      return {
+        relationship: parseRelationship(relationship),
+        draftName,
+        targetDraftName,
+        targetRfcNumber,
+        sourceRfcNumber,
+        targetDisposition: targetDisposition ? parseDisposition(targetDisposition) : undefined
+      }
+    }) ?? []
+  )
 }
 
-export const parseApprovalLogMessages = (approvalLogMessages?: ApprovalLogMessage[]): undefined | ApprovalLogMessageCommon[] => {
+export const parseApprovalLogMessages = (
+  approvalLogMessages?: ApprovalLogMessage[]
+): undefined | ApprovalLogMessageCommon[] => {
   if (!approvalLogMessages) {
     return undefined
   }
 
-  const parseMinimalRfcToBe = (rfcToBe: NonNullable<ApprovalLogMessage["rfcToBe"]>): ApprovalLogMessageCommon["rfcToBe"] => {
+  const parseMinimalRfcToBe = (
+    rfcToBe: NonNullable<ApprovalLogMessage['rfcToBe']>
+  ): ApprovalLogMessageCommon['rfcToBe'] => {
     assertIsString(rfcToBe.name)
     return {
       name: rfcToBe.name,
-      rfcNumber: rfcToBe.rfcNumber ?? undefined,
+      rfcNumber: rfcToBe.rfcNumber ?? undefined
     }
   }
 
@@ -153,20 +174,37 @@ export const parseApprovalLogMessages = (approvalLogMessages?: ApprovalLogMessag
     }
 
     return {
-      rfcToBe: approvalLogMessage.rfcToBe ? parseMinimalRfcToBe(approvalLogMessage.rfcToBe) : undefined,
+      rfcToBe: approvalLogMessage.rfcToBe
+        ? parseMinimalRfcToBe(approvalLogMessage.rfcToBe)
+        : undefined,
       logMessage: approvalLogMessage.logMessage,
-      timeIso: approvalLogMessage.time ? DateTime.fromJSDate(approvalLogMessage.time).toUTC().toISO() ?? undefined : undefined
+      timeIso: approvalLogMessage.time
+        ? (DateTime.fromJSDate(approvalLogMessage.time).toUTC().toISO() ?? undefined)
+        : undefined
     }
   })
 }
 
-export const parseFinalApprovalCounts = (finalApprovalCounts: ClusterMember['finalApprovalCounts']): QueueCommonItem['finalApprovalCounts'] => {
+export const parseFinalApprovalCounts = (
+  finalApprovalCounts: ClusterMember['finalApprovalCounts']
+): QueueCommonItem['finalApprovalCounts'] => {
   if (!finalApprovalCounts) {
     return undefined
   }
 
   return {
     approved: finalApprovalCounts.approved,
-    total: finalApprovalCounts.total,
+    total: finalApprovalCounts.total
+  }
+}
+
+export const clusterItemToQueueItem = (clusterMember: ClusterMember): QueueCommonItem => {
+  const { name, disposition } = clusterMember
+  return {
+    name,
+    title: '',
+    rev: '',
+    authors: [],
+    disposition: disposition ? parseDisposition(disposition) : 'in_progress'
   }
 }

@@ -53,6 +53,7 @@ export * from './MailMessage.ts';
 export * from './MailMessageRequest.ts';
 export * from './MailResponse.ts';
 export * from './MailTemplate.ts';
+export * from './ManualBlockRequestRequest.ts';
 export * from './MetadataTableRow.ts';
 export * from './MetadataTableRowValue.ts';
 export * from './MetadataValidationResults.ts';

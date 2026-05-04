@@ -53,6 +53,7 @@ docs/MailMessage.md
 docs/MailMessageRequest.md
 docs/MailResponse.md
 docs/MailTemplate.md
+docs/ManualBlockRequestRequest.md
 docs/MetadataTableRow.md
 docs/MetadataTableRowValue.md
 docs/MetadataValidationResults.md
@@ -172,6 +173,7 @@ models/MailMessage.ts
 models/MailMessageRequest.ts
 models/MailResponse.ts
 models/MailTemplate.ts
+models/ManualBlockRequestRequest.ts
 models/MetadataTableRow.ts
 models/MetadataTableRowValue.ts
 models/MetadataValidationResults.ts
