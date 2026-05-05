@@ -1,12 +1,12 @@
 <template>
   <div class="container mx-auto my-6">
     <ClusterFinalReviewPage v-if="mode?.cluster" :cluster="mode.cluster" :queue="clusterQueue" />
-    <FinalReviewDraft v-if="mode?.draftName" heading-level="1" :id="mode.draftName" :draft-name="mode.draftName"
-      :queue="finalReview" />
+    <FinalReviewDraft v-if="mode?.draftName && draftQueue" heading-level="1" :id="mode.draftName" :draft-name="mode.draftName"
+      :queue="draftQueue" />
     <hr class="mt-12" />
-    <p v-if="finalReview?.timestampIso" class="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
+    <p v-if="queueIndex?.timestampIso" class="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
       Last updated
-      <TimeStamp :dateTimeIso="finalReview.timestampIso" />
+      <TimeStamp :dateTimeIso="queueIndex.timestampIso" />
     </p>
   </div>
 </template>
@@ -67,14 +67,14 @@ if (
 const origin = usePublicSiteUrlOrigin()
 
 const {
-  data: finalReview,
-  status: finalReviewStatus,
-  error: finalReviewError,
+  data: queueIndex,
+  status: queueIndexStatus,
+  error: queueIndexError,
 } = await useAsyncData(
-  'final-review-index',
-  () => getFinalReviewIndex(origin),
+  'queue-index',
+  () => getQueueIndex(origin),
   {
-    server: true, // rendering on the server to generate real 404s for missing content
+    server: true,
     lazy: false,
   }
 )
@@ -92,8 +92,8 @@ const {
   }
 )
 
-if (!finalReview.value || finalReviewStatus.value === 'success' && !finalReview.value || finalReviewStatus.value === 'error') {
-  console.error(`[404] ${id}`, finalReviewStatus.value, finalReviewError.value)
+if (!queueIndex.value || queueIndexStatus.value === 'error') {
+  console.error(`[404] ${id}`, queueIndexStatus.value, queueIndexError.value)
   throw createError({
     statusCode: 404,
     statusMessage: 'Not Found',
@@ -101,12 +101,14 @@ if (!finalReview.value || finalReviewStatus.value === 'success' && !finalReview.
   })
 }
 
-if (finalReview.value && mode.value) {
+if (queueIndex.value && mode.value) {
   if (mode.value.cluster) {
-    // if this specific cluster isn't in the final reviews data then 404
-    if (!finalReview.value.items.some(item => item.clusters?.some(cluster => cluster === mode.value?.cluster)) ||
-      !clusterIndex.value?.list.find(cluster => cluster.number === mode.value?.cluster)
-    ) {
+    // 404 if the cluster doesn't exist or has no items with pending final approvals
+    const hasPendingItems = queueIndex.value.items.some(item =>
+      item.clusters?.some(cluster => cluster === mode.value?.cluster) &&
+      item.finalApprovals?.some(a => !a.approvedAtIso)
+    )
+    if (!hasPendingItems || !clusterIndex.value?.list.find(cluster => cluster.number === mode.value?.cluster)) {
       throw createError({
         statusCode: 404,
         statusMessage: 'Cluster Not Found',
@@ -114,8 +116,7 @@ if (finalReview.value && mode.value) {
       })
     }
   } else if (mode.value.draftName) {
-    // if this specific draft isn't in the final reviews data then 404
-    if (!finalReview.value.items.some(item => item.name === mode.value?.draftName)) {
+    if (!queueIndex.value.items.some(item => item.name === mode.value?.draftName)) {
       throw createError({
         statusCode: 404,
         statusMessage: 'Draft Not Found',
@@ -125,40 +126,28 @@ if (finalReview.value && mode.value) {
   }
 }
 
-const {
-  data: queueIndex,
-  status: queueIndexStatus,
-  error: queueIndexError,
-} = await useAsyncData(
-  'queue-index',
-  () => getQueueIndex(origin),
-  {
-    server: true,
-    lazy: false
+const draftQueue = computed((): QueueCommon | undefined => {
+  if (!mode.value?.draftName) return undefined
+  const queueItem = queueIndex.value?.items.find(item => item.name === mode.value?.draftName)
+  if (queueItem?.finalApprovals?.length) {
+    return queueIndex.value ?? undefined
   }
-)
+  return undefined
+})
 
 const clusterQueue = computed((): QueueCommon | undefined => {
   if (!mode.value?.cluster) {
     return undefined
   }
   const clusterIndexItem = clusterIndex.value?.list.find(cluster => cluster.number === mode.value?.cluster)
-  if (!clusterIndexItem) {
+  if (!clusterIndexItem || !queueIndex.value) {
     return undefined
-  }
-  if (!finalReview.value) {
-    throw Error('Expected final review to be available')
   }
 
   return {
-    timestampIso: finalReview.value.timestampIso,
+    timestampIso: queueIndex.value.timestampIso,
     items: clusterIndexItem.documents.map((clusterItem): QueueCommonItem => {
       const { name } = clusterItem
-
-      const finalReviewItem = finalReview.value?.items.find(item => item.name === name)
-      if (finalReviewItem) {
-        return finalReviewItem
-      }
       const queueItem = queueIndex.value?.items.find(item => item.name === name)
       if (!queueItem) {
         throw Error(`Cannot find queue item ${JSON.stringify(name)} in queue index.`)
