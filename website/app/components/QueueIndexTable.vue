@@ -150,7 +150,18 @@ const columns = [
     header: 'Status',
     cell: data => {
       const value = data.getValue()
-      return renderAssignmentsAsRoles(value, data.row.original.name, false)
+
+      return renderAssignmentsAsRoles({
+        assignmentsByRoles: value,
+        hideLinkDetails: false,
+        linkFinalReviewsBy: data.row.original.rfcNumber ? {
+          type: 'RFC_NUMBER',
+          rfcNumber: data.row.original.rfcNumber
+        } : {
+          type: 'DRAFTNAME',
+          draftName: data.row.original.name
+        }
+      })
     },
     sortingFn: (rowA, rowB) => {
       // Keeping the sort function in sync with the render function is important
@@ -162,10 +173,30 @@ const columns = [
       //   2) stringify the h() render output and sort as strings
       // The later has less maintenance burden so we'll try (2) until it doesn't work.
       const textA = getVNodeText(
-        renderAssignmentsAsRoles(rowA.original.assignmentsByRoles, rowA.original.name, false)
+        renderAssignmentsAsRoles({
+          assignmentsByRoles: rowA.original.assignmentsByRoles,
+          hideLinkDetails: false,
+          linkFinalReviewsBy: rowA.original.rfcNumber ? {
+            type: 'RFC_NUMBER',
+            rfcNumber: rowA.original.rfcNumber
+          } : {
+            type: 'DRAFTNAME',
+            draftName: rowA.original.name
+          }
+        })
       ).replace(/\s+/g, '') // normalise whitespace
       const textB = getVNodeText(
-        renderAssignmentsAsRoles(rowB.original.assignmentsByRoles, rowB.original.name, false)
+        renderAssignmentsAsRoles({
+          assignmentsByRoles: rowB.original.assignmentsByRoles,
+          hideLinkDetails: false,
+          linkFinalReviewsBy: rowB.original.rfcNumber ? {
+            type: 'RFC_NUMBER',
+            rfcNumber: rowB.original.rfcNumber
+          } : {
+            type: 'DRAFTNAME',
+            draftName: rowB.original.name
+          }
+        })
       ).replace(/\s+/g, '') // normalise whitespace
       return textA.localeCompare(textB)
     },

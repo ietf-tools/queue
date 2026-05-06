@@ -80,6 +80,7 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         groupName,
         stdLevel,
         references,
+        rfcNumber,
         finalApproval: finalApprovals,
         approvalLogMessage: approvalLogMessages,
       } = queueItem
@@ -104,6 +105,7 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         pages,
         stream,
         group,
+        rfcNumber: rfcNumber ?? undefined,
         groupName: groupName ?? undefined,
         stdLevel,
         references: parseReferences(references),

@@ -25,11 +25,19 @@ type AssignmentByRole = NonNullable<QueueCommonItem['assignmentsByRoles']>[numbe
 
 type BlockingReason = NonNullable<AssignmentByRole['blockingReasons']>[number]
 
-export const renderAssignmentsAsRoles = (
-  assignmentsByRoles: QueueCommonItem['assignmentsByRoles'],
-  draftName: string,
+type RenderAssignmentsAsRolesProps = {
+  assignmentsByRoles: QueueCommonItem['assignmentsByRoles']
   hideLinkDetails: boolean
-) => {
+  linkFinalReviewsBy:
+  { type: 'RFC_NUMBER', rfcNumber: number } |
+  { type: 'DRAFTNAME', draftName: string }
+}
+
+export const renderAssignmentsAsRoles = ({
+  assignmentsByRoles,
+  hideLinkDetails,
+  linkFinalReviewsBy
+}: RenderAssignmentsAsRolesProps) => {
   if (!assignmentsByRoles) {
     return
   }
@@ -87,7 +95,11 @@ export const renderAssignmentsAsRoles = (
 
       return h('li', { class: 'inline-flex flex-wrap items-center gap-1' }, [
         hideLinkDetails !== true && assignmentByRole.role === 'final_review_editor'
-          ? h(Anchor, { href: finalReviewPathBuilder(draftName) }, () => [
+          ? h(Anchor, {
+            href: linkFinalReviewsBy.type === 'RFC_NUMBER'
+              ? rfcFinalReviewPathBuilder(linkFinalReviewsBy.rfcNumber)
+              : finalReviewPathBuilder(linkFinalReviewsBy.draftName)
+          }, () => [
             badge,
             h('span', { class: 'underline text-xs ml-1' }, 'more details')
           ])

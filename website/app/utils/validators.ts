@@ -123,6 +123,7 @@ const FinalApprovalCommonSchema = z.object({
 export const QueueCommonItemSchema = z.object({
   name: z.string(),
   title: z.string(),
+  rfcNumber: z.number().optional(),
   rev: z.string(),
   stream: z.string().optional(),
   consensus: z.boolean().optional(),
@@ -148,11 +149,16 @@ export type QueueCommonItem = z.infer<typeof QueueCommonItemSchema>
 
 export const QueueCommonSchema = z.object({
   timestampIso: z.string(),
-  clusterNumber: z.number().optional(),
   items: z.array(QueueCommonItemSchema)
 })
 
 export type QueueCommon = z.infer<typeof QueueCommonSchema>
+
+export const ClusterQueueCommonSchema = QueueCommonSchema.extend({
+  clusterNumber: z.number(),
+})
+
+export type ClusterQueueCommon = z.infer<typeof ClusterQueueCommonSchema>
 
 export type DocumentReferenceCommon = z.infer<typeof DocumentReferenceCommonSchema>
 

@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 import { uniq } from 'es-toolkit'
-import { type ClusterIndexCommon, type ClusterPackageCommon, type QueueCommon } from '../../../website/app/utils/validators.ts'
+import { ClusterQueueCommonSchema, type ClusterQueueCommon, type ClusterIndexCommon, type QueueCommon } from '../../../website/app/utils/validators.ts'
 
 type Props = {
   finalReviewIndex: QueueCommon,
@@ -12,13 +12,13 @@ export const getFinalReviewClusters = ({
   finalReviewIndex,
   queueIndex,
   clusterIndex,
-}: Props): QueueCommon[] => {
+}: Props): ClusterQueueCommon[] => {
   const clusterNumbers = finalReviewIndex.items
     .flatMap(item => item.clusters)
     .filter(maybeCluster => typeof maybeCluster === 'number')
   const uniqueClusterNumbers = uniq(clusterNumbers)
 
-  return uniqueClusterNumbers.map((clusterNumber): QueueCommon => {
+  const finalReviewClusters = uniqueClusterNumbers.map((clusterNumber): ClusterQueueCommon => {
     const cluster = clusterIndex.list.find(clusterItemCommon =>
       clusterItemCommon.number === clusterNumber
     )
@@ -41,4 +41,11 @@ export const getFinalReviewClusters = ({
       })
     }
   })
+
+  const verifiedFinalReviewClusters = finalReviewClusters.map(finalReviewCluster => {
+    // This will throw on invalid, and it will remove additional props (ie deleting props unknown to schema)
+    return ClusterQueueCommonSchema.parse(finalReviewCluster)
+  })
+
+  return verifiedFinalReviewClusters
 }

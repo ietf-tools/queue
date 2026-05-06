@@ -72,7 +72,7 @@ if (!finalReviewCluster.value || typeof finalReviewCluster.value.clusterNumber !
 
 const route = useRoute()
 
-const canonicalPath = computed(() => `/final-review/C${props.cluster}/`)
+const canonicalPath = computed(() => clusterFinalReviewPathBuilder(props.cluster))
 
 if (
   // only compare route.path not route.fullPath as that will clobber ?search#id params

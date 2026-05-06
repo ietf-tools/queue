@@ -122,7 +122,17 @@ const AssignmentsAsRolesComponent = computed(() => {
   const { assignmentsByRoles, name } = item
   if (!assignmentsByRoles) return
 
-  return renderAssignmentsAsRoles(assignmentsByRoles, name, true)
+  return renderAssignmentsAsRoles({
+    assignmentsByRoles,
+    hideLinkDetails: true,
+    linkFinalReviewsBy: item.rfcNumber ? {
+      type: 'RFC_NUMBER',
+      rfcNumber: item.rfcNumber
+    } : {
+      type: 'DRAFTNAME',
+      draftName: item.name
+    }
+  })
 })
 
 </script>
