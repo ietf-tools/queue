@@ -13,7 +13,9 @@ export const getFinalReviewClusters = ({
   queueIndex,
   clusterIndex,
 }: Props): QueueCommon[] => {
-  const clusterNumbers = finalReviewIndex.items.flatMap(item => item.clusters)
+  const clusterNumbers = finalReviewIndex.items
+    .flatMap(item => item.clusters)
+    .filter(maybeCluster => typeof maybeCluster === 'number')
   const uniqueClusterNumbers = uniq(clusterNumbers)
 
   return uniqueClusterNumbers.map((clusterNumber): QueueCommon => {
