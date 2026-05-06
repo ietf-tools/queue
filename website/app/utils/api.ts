@@ -5,7 +5,7 @@ import {
   API_FINAL_REVIEW_INDEX_PATH,
   apiFinalReviewCluster
 } from './url'
-import { ClusterPackageCommonSchema } from './validators'
+import { ClusterPackageCommonSchema, ClusterQueueCommonSchema } from './validators'
 
 export const getQueueIndex = async (origin: string) => {
   const path = API_QUEUE_INDEX_PATH
@@ -40,7 +40,7 @@ export const getFinalReviewCluster = async (origin: string, clusterNumber: numbe
   const path = apiFinalReviewCluster(clusterNumber)
   const url = new URL(path, origin).toString()
   const unverifiedData = await $fetch(url)
-  const { data, error } = QueueCommonSchema.safeParse(unverifiedData)
+  const { data, error } = ClusterQueueCommonSchema.safeParse(unverifiedData)
   if (error || !data) {
     console.error(
       'Cluster package fetch succeeded but data failed validation',

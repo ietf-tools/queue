@@ -57,6 +57,14 @@ export const finalReviewPathBuilder = (draftName: string) => {
   return `/final-review/${draftName}/` as const
 }
 
+export const clusterFinalReviewPathBuilder = (clusterNumber: number) => {
+  return `/final-review/C${clusterNumber}/`
+}
+
+export const rfcFinalReviewPathBuilder = (rfcNumber: number) => {
+  return `/final-review/rfc${rfcNumber}/`
+}
+
 export const apiClusterNumberPathBuilder = (clusterNumber: number) => {
   return `/api/v1/clusters/${clusterNumber}.json` as const
 }

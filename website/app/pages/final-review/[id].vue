@@ -1,7 +1,9 @@
 <template>
   <div class="container mx-auto my-6">
     <ClusterFinalReviewPage v-if="mode?.cluster" :cluster="mode.cluster" />
-    <FinalReviewDraftPage v-if="mode?.draftName" heading-level="1" :id="mode.draftName" :draft-name="mode.draftName" />
+    <RfcFinalReviewDraftPage v-else-if="mode?.rfc" :rfc-number="mode.rfc" />
+    <FinalReviewDraftPage v-else-if="mode?.draftName" heading-level="1" :id="mode.draftName"
+      :draft-name="mode.draftName" />
   </div>
 </template>
 
@@ -23,16 +25,22 @@ const mode = computed(() => {
     return undefined
   }
 
-  const cluster = id.value.match(/^c(\d+)$/i)
-
-  if (!cluster || !cluster[1]) {
+  const rfc = id.value.match(/^rfc(\d+)$/i)
+  if (rfc && rfc[1]) {
     return {
-      draftName: id.value,
+      rfc: parseInt(rfc[1], 10)
+    }
+  }
+
+  const cluster = id.value.match(/^c(\d+)$/i)
+  if (cluster && cluster[1]) {
+    return {
+      cluster: parseInt(cluster[1], 10)
     }
   }
 
   return {
-    cluster: parseInt(cluster[1], 10)
+    draftName: id.value,
   }
 })
 </script>
