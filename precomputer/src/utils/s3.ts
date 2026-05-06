@@ -96,6 +96,8 @@ export const CLUSTER_INDEX_PATH = 'clusters/index.json'
 
 export const FINAL_REVIEW_INDEX_PATH = 'final-review/index.json'
 
+export const finalReviewClusterPathBuilder = (clusterNumber: number) => `final-review/c${clusterNumber}.json` as const
+
 export const clusterPathBuilder = (clusterNumber: number) => `clusters/${clusterNumber}.json`
 
 export const ROBOTS_TXT_PATH = 'other/robots.txt'

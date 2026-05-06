@@ -14,18 +14,20 @@ import {
   type S3UploadTask,
   clusterPathBuilder,
   deleteFromS3,
+  finalReviewClusterPathBuilder,
   listS3Files,
   saveToS3
 } from './utils/s3.ts'
 import { type ClusterPackageCommon } from '../../website/app/utils/validators.ts'
 import { difference } from 'es-toolkit'
-import { assertIsString } from './utils/typescript.ts'
+import { assertIsNumber, assertIsString } from './utils/typescript.ts'
 import { getQueueXML } from './tasks/queue-xml.ts'
 import { getQueueXSD } from './tasks/queue-xsd.ts'
 import { getSiteMapXmls } from './tasks/sitemap-xml.ts'
 import { getRobotsTxt } from './tasks/robots-txt.ts'
 import { getFavicons } from './tasks/favicon.ts'
 import { getMetaThumbnails } from './tasks/meta-thumbnails.ts'
+import { getFinalReviewClusters } from './tasks/final-review-clusters.ts'
 
 // This is just a hint number, not a hard limit at all
 const NUMBER_OF_CONCURRENT_API_USAGES = 4
@@ -71,10 +73,16 @@ const main = async (): Promise<void> => {
     maybeClusterPackage => maybeClusterPackage !== null
   )
 
+  const finalReviewClusters = getFinalReviewClusters({
+    finalReviewIndex,
+    queueIndex,
+    clusterIndex,
+  })
+
   const robotsTxt = getRobotsTxt(websiteOrigin)
 
   console.log(`[Clusters] Successfully fetched ALL cluster API data for ${clusterPackages.length} cluster(s).`)
-  
+
   const uploadTasks: S3UploadTask[] = [
     { key: QUEUE_INDEX_PATH, contents: JSON.stringify(queueIndex) },
     { key: CLUSTER_INDEX_PATH, contents: JSON.stringify(clusterIndex) },
@@ -85,6 +93,13 @@ const main = async (): Promise<void> => {
     ...await getSiteMapXmls({ websiteOrigin, clusterIndex, finalReviewIndex }),
     ...faviconUploadTasks,
     ...metaThumbnailsTasks,
+    ...finalReviewClusters.map((finalReviewCluster): S3UploadTask => {
+      assertIsNumber(finalReviewCluster.clusterNumber)
+      return {
+        key: finalReviewClusterPathBuilder(finalReviewCluster.clusterNumber),
+        contents: JSON.stringify(finalReviewCluster)
+      }
+    }),
     ...clusterPackages.map((clusterPackage): S3UploadTask => {
       return {
         key: clusterPathBuilder(clusterPackage.cluster.number),

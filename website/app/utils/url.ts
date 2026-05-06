@@ -61,6 +61,10 @@ export const apiClusterNumberPathBuilder = (clusterNumber: number) => {
   return `/api/v1/clusters/${clusterNumber}.json` as const
 }
 
+export const apiFinalReviewCluster = (clusterNumber: number) => {
+  return `/api/v1/final-review/c${clusterNumber}.json`
+}
+
 export const datatrackerDraftPathBuilder = (draftName: string) => {
   return `/doc/${draftName}/` as const
 }

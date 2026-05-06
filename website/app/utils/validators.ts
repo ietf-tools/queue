@@ -148,6 +148,7 @@ export type QueueCommonItem = z.infer<typeof QueueCommonItemSchema>
 
 export const QueueCommonSchema = z.object({
   timestampIso: z.string(),
+  clusterNumber: z.number().optional(),
   items: z.array(QueueCommonItemSchema)
 })
 

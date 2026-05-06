@@ -35,6 +35,23 @@ export const getFinalReviewIndex = async (origin: string) => {
   return data
 }
 
+export const getFinalReviewCluster = async (origin: string, clusterNumber: number) => {
+  const path = apiClusterNumberPathBuilder(clusterNumber)
+  const url = new URL(path, origin).toString()
+  const unverifiedData = await $fetch(url)
+  const { data, error } = QueueCommonSchema.safeParse(unverifiedData)
+  if (error || !data) {
+    console.error(
+      'Cluster package fetch succeeded but data failed validation',
+      path,
+      unverifiedData,
+      error
+    )
+    throw Error('Cluster package fetch failed. Try again later.')
+  }
+  return data
+}
+
 export const getClusterIndex = async (origin: string) => {
   const path = API_CLUSTER_INDEX_PATH
   const url = new URL(path, origin).toString()

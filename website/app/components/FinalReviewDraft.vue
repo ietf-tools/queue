@@ -56,7 +56,7 @@ type Props = {
   id: string
   headingLevel: HeadingLevel
   draftName: string
-  queue?: QueueCommon
+  queue: QueueCommon
 }
 
 const props = defineProps<Props>()
@@ -71,7 +71,6 @@ const headingLevelPlusOne = computed((): HeadingLevel => {
   ).toString() as HeadingLevel
 })
 
-
 const headingLevelPlusTwo = computed((): HeadingLevel => {
   return (
     clamp(
@@ -81,7 +80,6 @@ const headingLevelPlusTwo = computed((): HeadingLevel => {
     )
   ).toString() as HeadingLevel
 })
-
 
 const finalReview = computed(() => {
   if (!props.queue) return null
