@@ -18,6 +18,8 @@ type Props = {
 
 const props = defineProps<Props>()
 
+const origin = usePublicSiteUrlOrigin()
+
 const {
   data: queueIndex,
   status: queueIndexStatus,

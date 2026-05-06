@@ -6,8 +6,6 @@
 </template>
 
 <script setup lang="ts">
-import { useQueueRfcEditorHead } from '~/utils/head';
-
 const route = useRoute()
 
 const id = computed(() => route.params.id?.toString())
