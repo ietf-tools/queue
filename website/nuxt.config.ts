@@ -35,7 +35,7 @@ export default defineNuxtConfig({
     cfServiceTokenSecret: '', // NUXT_CF_SERVICE_TOKEN_SECRET env var
     public: {
       siteBase: 'https://queue.staging.rfc-editor.org', // NUXT_PUBLIC_SITE_BASE
-      matomoSiteId: '12', // NUXT_PUBLIC_MATOMO_SITE_ID
+      matomoSiteId: '15', // 15 is Queue non-production ie local dev. Otherwise will be provided by env var NUXT_PUBLIC_MATOMO_SITE_ID
       datatrackerBase: 'https://datatracker.ietf.org', // NUXT_PUBLIC_DATATRACKER_BASE
       redBase: 'https://www.rfc-editor.org' // NUXT_PUBLIC_RED_BASE
     }
