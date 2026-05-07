@@ -2,7 +2,7 @@
   <div class="container mx-auto my-6">
     <Heading level="1" style-level="3"
       class="w-full mx-2 mb-2 md:mb-3 text-gray-600 dark:text-gray-200 font-semibold text-balance">
-      Final Review (formerly auth48)
+      Final Review (formerly AUTH48)
     </Heading>
     <FinalReviewIndexTable />
   </div>

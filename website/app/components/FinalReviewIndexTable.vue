@@ -76,13 +76,27 @@ const columnHelper = createColumnHelper<QueueCommonItem>()
 const sorting = ref<SortingState>([])
 
 const columns = [
+  columnHelper.accessor('rfcNumber', {
+    header: 'RFC-to-be',
+    cell: data => {
+      return h(
+        Anchor,
+        {
+          href: data.row.original.rfcNumber
+            ? rfcFinalReviewPathBuilder(data.row.original.rfcNumber)
+            : finalReviewPathBuilder(data.row.original.name),
+          class: `${ANCHOR_TAILWIND_STYLE} underline`
+        }, () => [
+          h('b', 'RFC-to-be '),
+          data.getValue(),
+        ]
+      )
+    },
+    sortingFn: 'alphanumeric',
+  }),
   columnHelper.accessor('name', {
     header: 'Document',
-    cell: data => {
-      return h(Anchor, { href: finalReviewPathBuilder(data.row.original.name), 'class': ANCHOR_TAILWIND_STYLE }, () => [
-        data.getValue(),
-      ])
-    },
+    cell: data => data.getValue(),
     sortingFn: 'alphanumeric',
   }),
   columnHelper.accessor(
@@ -93,6 +107,29 @@ const columns = [
       if (!labels) return undefined
       return h('ul', { class: 'inline-flex flex-wrap gap-2' }, labels.map(label => {
         return h('li', { class: 'inline' }, h(Label, { label }))
+      }))
+    },
+    enableSorting: false,
+  }),
+  columnHelper.accessor(
+    'clusters', {
+    header: 'Cluster',
+    cell: data => {
+      const clusters = data.getValue()
+      if (!clusters) {
+        return undefined
+      }
+      return h('ul', { class: 'inline-flex flex-wrap gap-2' }, clusters.map(clusterNumber => {
+        return h('li', { class: 'inline' },
+          h(
+            Anchor,
+            {
+              href: clusterFinalReviewPathBuilder(clusterNumber),
+              class: `${ANCHOR_TAILWIND_STYLE} underline`
+            },
+            () => clusterNumber
+          )
+        )
       }))
     },
     enableSorting: false,
