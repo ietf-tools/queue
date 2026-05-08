@@ -14,7 +14,8 @@ import {
   parseIanaStatus,
   parseLabels,
   parseReferences,
-  parseFinalApprovalCounts
+  parseFinalApprovalCounts,
+  parseActionHolderSet
 } from '../utils/converters.ts'
 import { apiPubqClustersRetrieveCached, apiPubqQueueListCached } from './api.ts'
 
@@ -81,6 +82,7 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         stdLevel,
         references,
         rfcNumber,
+        actionholderSet,
         finalApproval: finalApprovals,
         approvalLogMessage: approvalLogMessages,
       } = queueItem
@@ -107,6 +109,7 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         group,
         rfcNumber: rfcNumber ?? undefined,
         groupName: groupName ?? undefined,
+        actionholderSet: parseActionHolderSet(actionholderSet),
         stdLevel,
         references: parseReferences(references),
         authors: authors.map((author) => {

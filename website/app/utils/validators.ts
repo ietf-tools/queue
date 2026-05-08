@@ -120,6 +120,24 @@ const FinalApprovalCommonSchema = z.object({
   total: z.number()
 })
 
+const BaseDatatrackerPersonSchema = z.object({
+  name: z.string().optional(),
+  email: z.string().optional(),
+  picture: z.string().optional(),
+  datatrackerUrl: z.string().optional(),
+})
+
+const ActionHolderSchema = z.object({
+  person: BaseDatatrackerPersonSchema.optional(),
+  deadlineIso: z.string().optional(),
+  sinceWhenIso: z.string().optional(),
+  completedIso: z.string().optional(),
+  comment: z.string().optional(),
+  body: z.string().optional(),
+})
+
+export type ActionHolder = z.infer<typeof ActionHolderSchema>
+
 export const QueueCommonItemSchema = z.object({
   name: z.string(),
   title: z.string(),
@@ -129,6 +147,7 @@ export const QueueCommonItemSchema = z.object({
   consensus: z.boolean().optional(),
   finalApprovals: FinalApprovalSchema.array().optional(),
   authors: AuthorCommonSchema.array(),
+  actionholderSet: ActionHolderSchema.array().optional(),
   disposition: DispositionCommonSchema,
   deadlineIso: z.string().optional(), // ISO date
   labels: LabelCommonSchema.array().optional(),

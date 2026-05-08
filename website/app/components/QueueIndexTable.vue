@@ -137,7 +137,10 @@ const columns = [
     header: 'Status',
     cell: data => {
       const value = data.getValue()
-      const ianaStatus = data.row.original.ianaStatus
+
+      // https://github.com/ietf-tools/queue/issues/29#issuecomment-4144104259
+      // const { ianaStatus } = data.row.original
+      // const firstEditorFinished = Boolean(value?.some(assignmentsByRole => assignmentsByRole.role === 'first_editor' && assignmentsByRole.blockingReasons))
 
       return renderAssignmentsAsRoles({
         assignmentsByRoles: value,

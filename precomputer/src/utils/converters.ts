@@ -9,7 +9,8 @@ import {
   type ClusterDocumentCommon,
   type DocumentReferenceCommon,
   type QueueCommonItem,
-  type ApprovalLogMessageCommon
+  type ApprovalLogMessageCommon,
+  type ActionHolder,
 } from '../../../website/app/utils/validators.ts'
 import { assertIsString, assertNever } from './typescript.ts'
 
@@ -91,6 +92,31 @@ export const parseLabels = (labels: QueueItem['labels']): QueueCommonItem['label
         isComplexity: Boolean(isComplexity)
       }
     })
+}
+
+
+export const parseActionHolderSet = (actionHolderSet: QueueItem['actionholderSet']): QueueCommonItem['actionholderSet'] => {
+  if (!actionHolderSet) {
+    return undefined
+  }
+
+  return actionHolderSet.map((actionHolder): ActionHolder => {
+    const { person, deadline, sinceWhen, completed, comment, body } = actionHolder
+
+    return {
+      person: person ? {
+        name: person.name,
+        email: person.email,
+        picture: person.picture,
+        datatrackerUrl: person.datatrackerUrl,
+      } : undefined,
+      deadlineIso: deadline ? DateTime.fromJSDate(deadline).toISO() ?? undefined : undefined,
+      sinceWhenIso: sinceWhen ? DateTime.fromJSDate(sinceWhen).toISO() ?? undefined : undefined,
+      completedIso: completed ? DateTime.fromJSDate(completed).toISO() ?? undefined : undefined,
+      comment,
+      body
+    }
+  })
 }
 
 export const parseRelationship = (relationship: string) => {
