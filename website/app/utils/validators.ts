@@ -95,8 +95,11 @@ const AuthorCommonSchema = z.object({
 
 const FinalApprovalSchema = z.object({
   approverName: z.string(),
-  approvedAtIso: z.string().optional()
+  approvedAtIso: z.string().optional(),
+  comment: z.string().optional()
 })
+
+export type FinalApproval = z.infer<typeof FinalApprovalSchema>
 
 const ClusterDocumentRelationshipCommonSchema = z.union([
   z.literal('refqueue'),

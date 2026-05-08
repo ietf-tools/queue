@@ -1,11 +1,12 @@
 import { groupBy, uniq } from 'es-toolkit'
 import { DateTime } from 'luxon'
-import { PurpleApi, type Cluster, type ApiPubqQueueListRequest } from '../../generated/purple_client/index.ts'
+import { PurpleApi, type Cluster, type ApiPubqQueueListRequest, QueueItem } from '../../generated/purple_client/index.ts'
 import {
   type QueueCommon,
   type QueueCommonItem,
   QueueCommonSchema,
-  type BlockingReason
+  type BlockingReason,
+  type FinalApproval
 } from '../../../website/app/utils/validators.ts'
 import { assertIsString } from '../utils/typescript.ts'
 import {
@@ -150,19 +151,21 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         ianaStatus: parseIanaStatus(ianaStatus),
         labels: parseLabels(labels),
         approvalLogMessages: parseApprovalLogMessages(approvalLogMessages),
-        finalApprovals: finalApprovals?.map((finalApproval) => {
-          const approverName = finalApproval.approver?.name
+        finalApprovals: finalApprovals?.map((finalApproval): FinalApproval => {
+          const { comment, approver, approved } = finalApproval
+          const approverName = approver?.name
           if (!approverName) {
             throw Error('Expected approver name')
           }
-          const approvedAtJSDate = finalApproval.approved
+          const approvedAtJSDate = approved
           const approvedAtIso = approvedAtJSDate
             ? DateTime.fromJSDate(approvedAtJSDate).toISO()
             : undefined
 
           return {
             approverName,
-            approvedAtIso: approvedAtIso ?? undefined
+            approvedAtIso: approvedAtIso ?? undefined,
+            comment
           }
         }),
         finalApprovalCounts: parseFinalApprovalCounts(finalApprovalCounts),
