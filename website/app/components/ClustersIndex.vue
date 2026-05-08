@@ -50,6 +50,7 @@ import {
 } from '@tanstack/vue-table'
 import { getVNodeText } from '../utils/vue'
 import { DateTime } from 'luxon'
+import type { ClusterDocumentCommon } from '../utils/validators'
 
 const origin = usePublicSiteUrlOrigin()
 
@@ -65,6 +66,39 @@ const {
     lazy: true
   }
 )
+
+const { data: queueData } = await useAsyncData(
+  'queue-index-for-clusters',
+  () => getQueueIndex(origin),
+  {
+    server: false,
+    lazy: true,
+  }
+)
+
+const notReceivedByCluster = computed(() => {
+  const map = new Map<number, ClusterDocumentCommon[]>()
+  if (!queueData.value) return map
+  for (const item of queueData.value.items) {
+    if (!item.clusters || !item.references) continue
+    const notReceivedRefs = item.references.filter(r => r.relationship === 'not-received')
+    if (notReceivedRefs.length === 0) continue
+    for (const clusterNumber of item.clusters) {
+      const existing = map.get(clusterNumber) ?? []
+      for (const ref of notReceivedRefs) {
+        if (!existing.some(d => d.name === ref.targetDraftName)) {
+          existing.push({
+            name: ref.targetDraftName,
+            isReceived: false,
+            references: [],
+          })
+        }
+      }
+      map.set(clusterNumber, existing)
+    }
+  }
+  return map
+})
 
 const generatedAt = computed(() => data.value?.timestampIso ? DateTime.fromISO(data.value.timestampIso) : undefined)
 
@@ -90,10 +124,12 @@ const columns = [
     header: 'Members',
     cell: data => {
       const docs = data.getValue()
-      if (data.row.original.allPublished) {
+      const notReceivedDocs = notReceivedByCluster.value.get(data.row.original.number) ?? []
+      if (data.row.original.allPublished && notReceivedDocs.length === 0) {
         return h('span', 'All published')
       }
-      return h('ul', { class: 'flex flex-col gap-2' }, docs.map(document => {
+      const allDocs = [...docs, ...notReceivedDocs]
+      return h('ul', { class: 'flex flex-col gap-2' }, allDocs.map(document => {
         return h('li', h(ClustersIndexItem, { document }))
       }))
     },
