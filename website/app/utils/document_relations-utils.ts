@@ -199,6 +199,12 @@ const makeTooltip = (node: NodeParam): string[] | undefined => {
   return tooltip.length > 0 ? tooltip : undefined
 }
 
+const makeText = (node: NodeParam): Line[] => {
+  if (node.rfcNumber) {
+    return wordsToLines(['RFC-to-be', String(node.rfcNumber)])
+  }
+  return wordsToLines([...splitDraftNameIntoWords(node.id)])
+}
 
 /**
  * based on https://docs.google.com/spreadsheets/d/1WoPNZiFf9Hx4Qc6N5UE1-RKhYYNybBeCYZM72wL5TSM/edit?gid=0#gid=0
@@ -210,7 +216,7 @@ export const getCircleTheme = (node: NodeParam): CircleTheme => {
       textColor: black,
       strokeWidth: 2,
       strokeStyle: 'solid',
-      text: wordsToLines([...splitDraftNameIntoWords(node.id)]),
+      text: makeText(node),
       tooltip: makeTooltip(node)
     }
   }
@@ -220,7 +226,7 @@ export const getCircleTheme = (node: NodeParam): CircleTheme => {
       textColor: black,
       strokeWidth: 2,
       strokeStyle: 'solid',
-      text: wordsToLines([...splitDraftNameIntoWords(node.id)]),
+      text: makeText(node),
       tooltip: makeTooltip(node)
     }
   }
@@ -236,7 +242,7 @@ export const getCircleTheme = (node: NodeParam): CircleTheme => {
       textColor: black,
       strokeWidth: 2,
       strokeStyle: 'solid',
-      text: wordsToLines([...splitDraftNameIntoWords(node.id)]),
+      text: makeText(node),
       tooltip: makeTooltip(node)
     }
   }
@@ -246,7 +252,7 @@ export const getCircleTheme = (node: NodeParam): CircleTheme => {
       textColor: black,
       strokeWidth: 1,
       strokeStyle: 'dotted',
-      text: wordsToLines([...splitDraftNameIntoWords(node.id)]),
+      text: makeText(node),
       tooltip: makeTooltip(node)
     }
   }
@@ -257,7 +263,7 @@ export const getCircleTheme = (node: NodeParam): CircleTheme => {
       textColor: black,
       strokeWidth: 0,
       strokeStyle: 'solid',
-      text: wordsToLines([...splitDraftNameIntoWords(node.id)]),
+      text: makeText(node),
       tooltip: makeTooltip(node)
     }
   }
@@ -267,7 +273,7 @@ export const getCircleTheme = (node: NodeParam): CircleTheme => {
     textColor: white,
     strokeWidth: 0,
     strokeStyle: 'solid',
-    text: wordsToLines([...splitDraftNameIntoWords(node.id)]),
+    text: makeText(node),
     tooltip: makeTooltip(node)
   }
 }
