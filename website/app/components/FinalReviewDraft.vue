@@ -2,17 +2,33 @@
   <div v-if="finalReview">
     <Heading :level="props.headingLevel" :style-level="headingLevelPlusTwo" class="mb-1" :id="props.id"
       has-internal-link>
-      <span class="font-mono">{{ props.draftName }}</span> final review
+      Final Review:
+      <template v-if="
+        finalReview.rfcNumber // all final reviews should have an RFC number, but the model doesn't require it so we'll conditionally render it
+      ">
+        <span>RFC-to-be{{ NBSP }}</span>
+        <span class="font-bold">{{ finalReview.rfcNumber }}</span>
+      </template>
+      <span class="font-mono">({{ props.draftName }})</span>
       <component :is="AssignmentsAsRolesComponent" />
     </Heading>
+
+    <p v-if="finalReview.clusters">This document is part of
+      <template v-for="(cluster, index) in finalReview.clusters">
+        <Anchor :href="clusterNumberPathBuilder(cluster)">
+          <Icon name="pajamas:group" class="h-5 w-5 inline-block mr-1" />{{ cluster }}
+        </Anchor>
+        <template v-if="index < finalReview.clusters.length - 1">{{ COMMA }} </template>
+      </template>, so may have additional holds before publication.
+    </p>
 
     <Heading :level="headingLevelPlusOne" class="mt-3 mb-1">Approval Status</Heading>
     <RpcTable v-if="finalReview.finalApprovals && finalReview.finalApprovals.length > 0" class="mx-auto">
       <RpcThead>
         <tr>
-          <RpcTh>Name</RpcTh>
-          <RpcTh text-align="center">Approved?</RpcTh>
-          <RpcTh>Date of Approval</RpcTh>
+          <RpcTh>Approver Name</RpcTh>
+          <RpcTh text-align="center">Approval Status</RpcTh>
+          <RpcTh>Date Approved</RpcTh>
         </tr>
       </RpcThead>
       <RpcTbody>
@@ -33,7 +49,7 @@
     </RpcTable>
     <p v-else class="italic">No final approvals available.</p>
 
-    <Heading :level="headingLevelPlusOne" class="mt-3 mb-1">Approval Logs</Heading>
+    <Heading :level="headingLevelPlusOne" class="mt-3 mb-1">Notes</Heading>
     <ol v-if="finalReview.renderableApprovalLogMessages && finalReview.renderableApprovalLogMessages.length > 0"
       class="flex flex-col gap-2">
       <li v-for="approvalLog in finalReview.renderableApprovalLogMessages">
@@ -51,6 +67,7 @@
 import { clamp } from 'es-toolkit'
 import { DateTime } from 'luxon'
 import { renderAssignmentsAsRoles } from '../utils/queue'
+import { COMMA, NBSP } from '../utils/strings'
 
 type Props = {
   id: string

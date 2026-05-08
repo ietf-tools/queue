@@ -16,7 +16,15 @@ export default defineNuxtConfig({
       // Possibly related to https://github.com/tailwindlabs/tailwindcss/issues/18802
       // possibly related to waiting for Nuxt/tailwincss to use Vite 6?
       tailwindcss()
-    ]
+    ],
+    optimizeDeps: {
+      include: [
+        'luxon',
+        '@tanstack/vue-table',
+        'es-toolkit',
+        'zod',
+      ]
+    }
   },
   app: {
     head: {
