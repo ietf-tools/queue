@@ -96,7 +96,7 @@ export const parseLabels = (labels: QueueItem['labels']): QueueCommonItem['label
 
 
 export const parseActionHolderSet = (actionHolderSet: QueueItem['actionholderSet'], idForDebug: string): QueueCommonItem['actionholderSet'] => {
-  if (!actionHolderSet) {
+  if (!actionHolderSet || actionHolderSet.length === 0) {
     return undefined
   }
 
