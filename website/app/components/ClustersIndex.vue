@@ -1,6 +1,8 @@
 <template>
   <div>
-    <p v-if="data?.list">Total Number of Active clusters: {{ data?.list.length }}</p>
+    <p v-if="data?.list" class="text-sm pl-2 pb-2">Total number of active clusters:
+      <b>{{ data.list.length }}</b>
+    </p>
     <RpcTable>
       <RpcThead>
         <tr v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
@@ -115,6 +117,7 @@ const columns = [
         href: clusterNumberPathBuilder(data.getValue()),
         'class': [ANCHOR_TAILWIND_STYLE, 'font-bold text-md whitespace-nowrap']
       }, () => [
+        h('span', { class: 'sr-only' }, 'Cluster '),
         h(Icon, { name: 'pajamas:group', class: 'h-5 w-5 inline-block mr-1' }),
         data.getValue(),
       ])

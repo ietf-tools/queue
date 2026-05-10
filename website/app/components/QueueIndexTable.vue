@@ -1,5 +1,8 @@
 <template>
   <div class="my-6">
+    <p v-if="data" class="text-sm pl-2 pb-2">Total number of queue items:
+      <b>{{ table.getRowCount() }}</b>
+    </p>
     <RpcTable>
       <RpcThead>
         <tr v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
@@ -30,6 +33,10 @@
         </tr>
       </RpcTfoot>
     </RpcTable>
+    <p v-if="data?.timestampIso" class="text-sm italic text-gray-600 dark:text-gray-400 mt-1">
+      Last updated
+      <TimeStamp :dateTimeIso="data.timestampIso" />
+    </p>
   </div>
 </template>
 

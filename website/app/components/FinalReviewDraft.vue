@@ -16,7 +16,8 @@
     <p v-if="finalReview.clusters" class="text-sm">This document is part of
       <template v-for="(cluster, index) in finalReview.clusters">
         <Anchor :href="clusterNumberPathBuilder(cluster)" :class="`${ANCHOR_TAILWIND_STYLE}`">
-          <Icon name="pajamas:group" class="h-5 w-5 align-middle inline-block mr-0.5" />{{ cluster }}
+          <span class="sr-only">Cluster </span>
+          <Icon name="pajamas:group" title="Cluster" class="h-5 w-5 align-middle inline-block mr-0.5" />{{ cluster }}
         </Anchor>
         <template v-if="index < finalReview.clusters.length - 1">{{ COMMA }} </template>
       </template>, so may have additional holds before publication.
@@ -71,25 +72,25 @@
             <template v-if="actionHolder.sinceWhenComponent">
               <Component :is="actionHolder.sinceWhenComponent" />
             </template>
-            <template v-else>
+            <i v-else>
               (unknown)
-            </template>
+            </i>
           </RpcTd>
           <RpcTd>
             <template v-if="actionHolder.completedComponent">
               <Component :is="actionHolder.completedComponent" />
             </template>
-            <template v-else>
+            <i v-else>
               (pending)
-            </template>
+            </i>
           </RpcTd>
           <RpcTd>
             <template v-if="actionHolder.deadlineComponent">
               <Component :is="actionHolder.deadlineComponent" />
             </template>
-            <template v-else>
+            <i v-else>
               (none)
-            </template>
+            </i>
           </RpcTd>
           <RpcTd>{{ actionHolder.body ?? '(none)' }}</RpcTd>
         </tr>

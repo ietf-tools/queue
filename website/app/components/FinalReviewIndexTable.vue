@@ -1,5 +1,8 @@
 <template>
   <div>
+    <p v-if="data" class="text-sm pl-2 pb-2">Total number of final reviews:
+      <b>{{ table.getRowCount() }}</b>
+    </p>
     <RpcTable>
       <RpcThead>
         <tr v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
