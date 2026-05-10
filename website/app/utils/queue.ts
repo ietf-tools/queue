@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { finalReviewPathBuilder } from './url'
 import { type QueueCommonItem } from './validators'
-import { Anchor, BaseBadge } from '#components'
+import { Anchor, BaseBadge, TimeStamp } from '#components'
 
 export const calculateEnqueuedAtData = (enqueuedAtJSDate: Date) => {
   const enqueuedAt = DateTime.fromJSDate(enqueuedAtJSDate)
@@ -135,4 +135,20 @@ export const sortIsoDateStrings = (aIsoDate: string | undefined, bIsoDate: strin
   const aDateTime = DateTime.fromISO(aIsoDate)
   const bDateTime = DateTime.fromISO(bIsoDate)
   return aDateTime.toMillis() - bDateTime.toMillis()
+}
+
+export const renderIsoDateComponent = (isoDate?: string) => {
+  if (!isoDate) {
+    return
+  }
+  const dateTime = DateTime.fromISO(isoDate)
+  const shortDate = dateTime.toLocaleString(DateTime.DATE_SHORT)
+  return h('time', { datetime: isoDate }, shortDate)
+}
+
+export const renderIsoDateAsTooltipComponent = (isoDate?: string) => {
+  if (!isoDate) {
+    return
+  }
+  return h(TimeStamp, { dateTimeIso: isoDate, mode: 'SHORT_DATE' })
 }

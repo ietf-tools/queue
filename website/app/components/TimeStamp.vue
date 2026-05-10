@@ -1,10 +1,15 @@
 <template>
   <HoverCardRoot v-model:open="isHoverCardOpen" v-if="theDateTime && fullDate && relativeDate">
     <HoverCardTrigger as-child>
-      <button class="-ml-1 px-1 py-1 border border-transparent focus:border focus:border-gray-400 rounded-md"
+      <button class="-ml-1 px-1 border border-transparent focus:border focus:border-gray-400 rounded-md"
         @focus="isHoverCardOpen = true" @mouseover="isHoverCardOpen = true" @blur="isHoverCardOpen = false">
         <time :datetime="theDateTime.toISO() ?? undefined">
-          {{ relativeDate }}
+          <template v-if="mode === 'TIME_AGO'">
+            {{ relativeDate }}
+          </template>
+          <template v-else>
+            {{ shortDate }}
+          </template>
         </time>
       </button>
     </HoverCardTrigger>
@@ -27,15 +32,16 @@ import { DateTime } from 'luxon'
 type Props = {
   dateTime?: DateTime
   dateTimeIso?: string
+  mode?: 'TIME_AGO' | 'SHORT_DATE'
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), { mode: 'TIME_AGO' })
 
 const theDateTime = computed(() => {
-  if(props.dateTime) {
+  if (props.dateTime) {
     return props.dateTime
   }
-  if(props.dateTimeIso) {
+  if (props.dateTimeIso) {
     return DateTime.fromISO(props.dateTimeIso)
   }
   return undefined
@@ -43,6 +49,8 @@ const theDateTime = computed(() => {
 
 // eg. X years ago
 const relativeDate = computed(() => theDateTime.value?.toRelativeCalendar())
+
+const shortDate = computed(() => theDateTime.value?.toLocaleString(DateTime.DATE_SHORT))
 
 const fullDate = computed(() => theDateTime.value?.toLocaleString(DateTime.DATETIME_FULL))
 

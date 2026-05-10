@@ -35,7 +35,9 @@
         <tr v-for="approverItem in finalReview.finalApprovals">
           <RpcTd>{{ approverItem.approverName }}</RpcTd>
           <RpcTd text-align="center">
-            <abbr v-if="Boolean(approverItem.approvedAtIso)" title="Yes" class="no-underline px-2 py-1">Y</abbr>
+            <abbr v-if="
+              Boolean(approverItem.approvedAtIso) // is there a timestamp            
+            " title="Yes" class="no-underline px-2 py-1">Y</abbr>
             <abbr v-else title="No" class="no-underline px-2 py-1">N</abbr>
           </RpcTd>
           <RpcTd>
@@ -48,6 +50,52 @@
       </RpcTbody>
     </RpcTable>
     <p v-else class="italic">No final approvals available.</p>
+
+    <Heading :level="headingLevelPlusOne" :style-level="headingLevelPlusTwo" class="mt-3 mb-1">Action Holders</Heading>
+    <RpcTable v-if="actionholderSet && actionholderSet.length > 0" class="mx-auto">
+      <RpcThead>
+        <tr>
+          <RpcTh>Action Holder Name</RpcTh>
+          <RpcTh>Comment</RpcTh>
+          <RpcTh>Date Requested</RpcTh>
+          <RpcTh>Approval Status</RpcTh>
+          <RpcTh>Deadline</RpcTh>
+          <RpcTh>Body</RpcTh>
+        </tr>
+      </RpcThead>
+      <RpcTbody>
+        <tr v-for="actionHolder in actionholderSet">
+          <RpcTd>{{ actionHolder.person?.name ?? '(unnamed)' }}</RpcTd>
+          <RpcTd>{{ actionHolder.comment ?? '(no comment)' }}</RpcTd>
+          <RpcTd>
+            <template v-if="actionHolder.sinceWhenComponent">
+              <Component :is="actionHolder.sinceWhenComponent" />
+            </template>
+            <template v-else>
+              (unknown)
+            </template>
+          </RpcTd>
+          <RpcTd>
+            <template v-if="actionHolder.completedComponent">
+              <Component :is="actionHolder.completedComponent" />
+            </template>
+            <template v-else>
+              (pending)
+            </template>
+          </RpcTd>
+          <RpcTd>
+            <template v-if="actionHolder.deadlineComponent">
+              <Component :is="actionHolder.deadlineComponent" />
+            </template>
+            <template v-else>
+              (none)
+            </template>
+          </RpcTd>
+          <RpcTd>{{ actionHolder.body ?? '(none)' }}</RpcTd>
+        </tr>
+      </RpcTbody>
+    </RpcTable>
+    <p v-else class="italic text-sm">No action holders available</p>
 
     <Heading :level="headingLevelPlusOne" :style-level="headingLevelPlusTwo" class="mt-3 mb-1">Notes</Heading>
     <ol v-if="finalReview.renderableApprovalLogMessages && finalReview.renderableApprovalLogMessages.length > 0"
@@ -68,7 +116,6 @@ import { clamp } from 'es-toolkit'
 import { DateTime } from 'luxon'
 import { renderAssignmentsAsRoles } from '../utils/queue'
 import { COMMA, NBSP } from '../utils/strings'
-import BaseBadge from './BaseBadge.vue'
 import Label from './Label.vue'
 
 type Props = {
@@ -162,6 +209,24 @@ const LabelsComponent = computed(() => {
   return h('ul', { class: 'inline-flex flex-wrap gap-2' }, item.labels.map(label => {
     return h('li', { class: 'inline' }, h(Label, { label }))
   }))
+})
+
+const actionholderSet = computed(() => {
+  if (!finalReview.value) {
+    return
+  }
+  const { actionholderSet } = finalReview.value
+  if (!actionholderSet) {
+    return undefined
+  }
+  return actionholderSet.map((actionHolder: ActionHolder) => {
+    return {
+      ...actionHolder,
+      sinceWhenComponent: renderIsoDateAsTooltipComponent(actionHolder.sinceWhenIso),
+      completedComponent: renderIsoDateAsTooltipComponent(actionHolder.completedIso),
+      deadlineComponent: renderIsoDateAsTooltipComponent(actionHolder.deadlineIso),
+    }
+  })
 })
 
 </script>

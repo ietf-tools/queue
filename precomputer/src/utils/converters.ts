@@ -100,8 +100,6 @@ export const parseActionHolderSet = (actionHolderSet: QueueItem['actionholderSet
     return undefined
   }
 
-  console.log(`[${idForDebug}]`, 'FOUND actionHolderSet')
-
   return actionHolderSet.map((actionHolder): ActionHolder => {
     const { person, deadline, sinceWhen, completed, comment, body } = actionHolder
 

@@ -44,7 +44,6 @@ const GRAPH_DOM_ID = 'cluster-graph'
 const router = useRouter()
 
 const containerDOMRef = useTemplateRef('container')
-
 const tooltipDOMRef = useTemplateRef('tooltip')
 
 type Tooltip = { text: string[] | undefined, position: [number, number] }
@@ -68,11 +67,20 @@ const setTooltip: SetTooltip = (props) => {
     tooltip.value.text = undefined
     return
   }
+
+  const MINIMUM_TOOLTIP_WIDTH_PX = 150
+  const bufferXPx = Math.max(
+    MINIMUM_TOOLTIP_WIDTH_PX,
+    tooltipDOM.offsetWidth // a detached element would have 0 width
+  )
+
+  const MINIMUM_TOOLTIP_HEIGHT_PX = 75
+  const bufferYPx = Math.max(
+    MINIMUM_TOOLTIP_HEIGHT_PX,
+    tooltipDOM.offsetHeight // a detached element would have 0 width
+  )
+
   const { position, text } = props
-
-  const bufferXPx = Math.max(150, tooltipDOM.offsetWidth)
-  const bufferYPx = Math.max(75, tooltipDOM.offsetHeight)
-
   const clampedPosition: Tooltip['position'] = [
     clamp(
       position[0],
@@ -85,8 +93,6 @@ const setTooltip: SetTooltip = (props) => {
       window.scrollY + window.outerHeight - bufferYPx
     ),
   ]
-
-  console.log('set tooltip', position, clampedPosition)
 
   tooltip.value = {
     text,
