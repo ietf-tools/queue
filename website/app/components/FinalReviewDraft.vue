@@ -28,7 +28,7 @@
       <RpcThead>
         <tr>
           <RpcTh>Approver Name</RpcTh>
-          <RpcTh>Approval Comment</RpcTh>
+          <RpcTh>Approver Comment</RpcTh>
           <RpcTh text-align="center">Approval Status</RpcTh>
           <RpcTh>Date Approved</RpcTh>
         </tr>
