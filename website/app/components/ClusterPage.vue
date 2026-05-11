@@ -10,7 +10,8 @@
       class="w-full mx-2 mb-2 md:mb-3 text-gray-600 dark:text-gray-200 font-semibold text-balance">
       Cluster {{ props.clusterNumber }}
     </Heading>
-    <QueueIndexTable :filter-by-cluster-number="props.clusterNumber" :show-final-approval-counts="true" class="mt-3" />
+    <QueueIndexTable :filter-by-cluster-number="props.clusterNumber" :show-final-approval-counts="true"
+      :show-clusters="false" class="mt-3" />
     <DocumentDependenciesGraph :cluster="clusterPackage.cluster" />
     <p v-if="generatedAt" class="text-sm italic text-gray-600 dark:text-gray-400">
       Last updated

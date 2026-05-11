@@ -61,10 +61,12 @@ import { datatrackerDraftUrlBuilder } from '~/utils/url'
 type Props = {
   filterByClusterNumber?: number,
   showFinalApprovalCounts?: boolean
+  showClusters?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  showFinalApprovalCounts: false
+  showFinalApprovalCounts: false,
+  showClusters: true,
 })
 
 const origin = usePublicSiteUrlOrigin()
@@ -214,40 +216,41 @@ const columns = [
       },
       enableSorting: false,
     })] : []),
-  columnHelper.accessor(
-    'clusters', {
-    header: 'Cluster',
-    cell: data => {
-      const clusters = data.getValue()
-      if (!clusters) return undefined
-      return h('span', clusters.map(cluster => {
-        return h(
-          Anchor,
-          {
-            href: `/clusters/${cluster}`,
-            class: `${ANCHOR_TAILWIND_STYLE}`
-          },
-          () => [
-            h(Icon, { name: 'pajamas:group', class: 'h-5 w-5 inline-block mr-1' }),
-            String(cluster)
-          ])
-      }))
-    },
-    sortingFn: (rowA, rowB, columnId) => {
-      const clustersA = rowA.getValue(columnId)
-      const clustersB = rowB.getValue(columnId)
-      const a = Array.isArray(clustersA) && clustersA.length > 0 ? clustersA[0] : undefined
-      const b = Array.isArray(clustersB) && clustersB.length > 0 ? clustersB[0] : undefined
-      if (a === undefined && b === undefined) {
-        return 1
-      } else if (a === undefined) {
-        return 1
-      } else if (b === undefined) {
-        return 1
-      }
-      return a - b
-    },
-  }),
+  ...(props.showClusters ? [
+    columnHelper.accessor(
+      'clusters', {
+      header: 'Cluster',
+      cell: data => {
+        const clusters = data.getValue()
+        if (!clusters) return undefined
+        return h('span', clusters.map(cluster => {
+          return h(
+            Anchor,
+            {
+              href: `/clusters/${cluster}`,
+              class: `${ANCHOR_TAILWIND_STYLE}`
+            },
+            () => [
+              h(Icon, { name: 'pajamas:group', class: 'h-5 w-5 inline-block mr-1' }),
+              String(cluster)
+            ])
+        }))
+      },
+      sortingFn: (rowA, rowB, columnId) => {
+        const clustersA = rowA.getValue(columnId)
+        const clustersB = rowB.getValue(columnId)
+        const a = Array.isArray(clustersA) && clustersA.length > 0 ? clustersA[0] : undefined
+        const b = Array.isArray(clustersB) && clustersB.length > 0 ? clustersB[0] : undefined
+        if (a === undefined && b === undefined) {
+          return 1
+        } else if (a === undefined) {
+          return 1
+        } else if (b === undefined) {
+          return 1
+        }
+        return a - b
+      },
+    })] : []),
 ]
 
 const emptyArray: QueueCommonItem[] = []
