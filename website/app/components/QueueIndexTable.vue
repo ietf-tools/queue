@@ -55,7 +55,7 @@ import { Anchor, Icon } from '#components'
 import Label from './Label.vue'
 import { getVNodeText } from '../utils/vue'
 import { getQueueIndex } from '../utils/api'
-import { calculateEnqueuedAtData, renderAssignmentsAsRoles, renderEnqueuedAt, sortIsoDateStrings } from '~/utils/queue'
+import { calculateEnqueuedAtData, renderAssignmentsByRoles, renderEnqueuedAt, sortIsoDateStrings } from '~/utils/queue'
 import { datatrackerDraftUrlBuilder } from '~/utils/url'
 
 type Props = {
@@ -145,7 +145,7 @@ const columns = [
       // const { ianaStatus } = data.row.original
       // const firstEditorFinished = Boolean(value?.some(assignmentsByRole => assignmentsByRole.role === 'first_editor' && assignmentsByRole.blockingReasons))
 
-      return renderAssignmentsAsRoles({
+      return renderAssignmentsByRoles({
         assignmentsByRoles: value,
         hideLinkDetails: false,
         linkFinalReviewsBy: data.row.original.rfcNumber ? {
@@ -166,7 +166,7 @@ const columns = [
       //      or;
       //   2) stringify the h() render output and sort as strings
       // The later has less maintenance burden so we'll try (2) until it doesn't work.
-      const nodesA = renderAssignmentsAsRoles({
+      const nodesA = renderAssignmentsByRoles({
         assignmentsByRoles: rowA.original.assignmentsByRoles,
         hideLinkDetails: false,
         linkFinalReviewsBy: rowA.original.rfcNumber ? {
@@ -179,7 +179,7 @@ const columns = [
       })
       const textA = getVNodeText(nodesA).replace(/\s+/g, '') // normalise whitespace
 
-      const nodesB = renderAssignmentsAsRoles({
+      const nodesB = renderAssignmentsByRoles({
         assignmentsByRoles: rowB.original.assignmentsByRoles,
         hideLinkDetails: false,
         linkFinalReviewsBy: rowB.original.rfcNumber ? {

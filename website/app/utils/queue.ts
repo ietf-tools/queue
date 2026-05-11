@@ -25,7 +25,7 @@ type AssignmentByRole = NonNullable<QueueCommonItem['assignmentsByRoles']>[numbe
 
 type BlockingReason = NonNullable<AssignmentByRole['blockingReasons']>[number]
 
-type RenderAssignmentsAsRolesProps = {
+type RenderAssignmentsByRolesProps = {
   assignmentsByRoles: QueueCommonItem['assignmentsByRoles']
   hideLinkDetails: boolean
   linkFinalReviewsBy:
@@ -33,11 +33,11 @@ type RenderAssignmentsAsRolesProps = {
   { type: 'DRAFTNAME', draftName: string }
 }
 
-export const renderAssignmentsAsRoles = ({
+export const renderAssignmentsByRoles = ({
   assignmentsByRoles,
   hideLinkDetails,
   linkFinalReviewsBy
-}: RenderAssignmentsAsRolesProps) => {
+}: RenderAssignmentsByRolesProps) => {
   if (!assignmentsByRoles) {
     return
   }
@@ -124,7 +124,7 @@ export const renderAssignmentsAsRoles = ({
   ])
 }
 
-const getRoleColor = (role: AssignmentByRole['role']): ThemeColorCommon => {
+export const getRoleColor = (role: AssignmentByRole['role']): ThemeColorCommon => {
   switch (role) {
     case 'blocked':
       return 'red'

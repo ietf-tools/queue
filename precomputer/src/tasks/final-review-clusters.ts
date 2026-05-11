@@ -39,6 +39,22 @@ export const getFinalReviewClusters = ({
         }
         return draft
       })
+      //
+      // https://github.com/ietf-tools/queue/issues/57
+      //
+      // .filter(draft => {
+      //   return draft.assignmentsByRoles?.some(assignmentsByRole => {
+      //     // https://github.com/ietf-tools/queue/issues/57
+      //     switch (assignmentsByRole.role) {
+      //       case 'publisher': // For Pub state
+      //       case 'first_editor': // 
+      //       case 'second_editor': //
+      //       case 'final_review_editor': // Final Review
+      //         return true
+      //     }
+      //     return false
+      //   }) ?? false
+      // })
     }
   })
 

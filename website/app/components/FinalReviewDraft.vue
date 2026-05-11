@@ -118,7 +118,7 @@
 <script setup lang="ts">
 import { clamp } from 'es-toolkit'
 import { DateTime } from 'luxon'
-import { renderAssignmentsAsRoles } from '../utils/queue'
+import { renderAssignmentsByRoles } from '../utils/queue'
 import { COMMA, NBSP } from '../utils/strings'
 import Label from './Label.vue'
 
@@ -192,7 +192,7 @@ const AssignmentsAsRolesComponent = computed(() => {
   const { assignmentsByRoles, name } = item
   if (!assignmentsByRoles) return
 
-  return renderAssignmentsAsRoles({
+  return renderAssignmentsByRoles({
     assignmentsByRoles,
     hideLinkDetails: true,
     linkFinalReviewsBy: item.rfcNumber ? {
