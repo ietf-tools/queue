@@ -96,7 +96,8 @@ const columns = [
         href: datatrackerDraftUrlBuilder(data.row.original.name),
         class: ANCHOR_TAILWIND_STYLE,
         rel: 'noopener',
-        target: '_blank'
+        target: '_blank',
+        id: data.row.original.name
       }, () => [
         data.getValue(),
         h(Icon, { name: 'fluent:window-new-20-regular', size: "1.25em", class: "text-gray-700 dark:text-neutral-300 ml-1 align-middle" }),
