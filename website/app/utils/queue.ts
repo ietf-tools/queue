@@ -126,8 +126,12 @@ const getRoleColor = (role: AssignmentByRole['role']): ThemeColorCommon => {
       return 'green'
     case 'formatting':
       return 'blue'
+    case 'second_editor_editor':
+    case 'publisher':
+    case 'ref_checker':
+      return 'gray'
   }
-  return 'gray'
+  assertNever(role)
 }
 
 export const sortIsoDateStrings = (aIsoDate: string | undefined, bIsoDate: string | undefined): number => {
