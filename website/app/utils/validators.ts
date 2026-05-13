@@ -133,7 +133,9 @@ const DocumentReferenceCommonSchema = z.object({
   sourceRfcNumber: z.number().optional(),
   targetDraftName: z.string(),
   targetRfcNumber: z.number().optional(),
-  targetDisposition: DispositionCommonSchema.optional()
+  targetDisposition: DispositionCommonSchema.optional(),
+  targetIsReceived: z.boolean().optional(),
+  targetIsBlocked: z.boolean().optional(),
 })
 
 const FinalApprovalCommonSchema = z.object({

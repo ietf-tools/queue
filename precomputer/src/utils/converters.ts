@@ -146,7 +146,7 @@ export const clusterMemberToClusterDocumentCommon = (
   clusterNumber: number,
   clusterMember: ClusterMember
 ): ClusterDocumentCommon => {
-  const { name, rfcNumber, disposition, references, isReceived, isBlocked } = clusterMember
+  const { name, rfcNumber, disposition, references, isReceived, isBlocked, isNormref } = clusterMember
 
   return {
     name,
@@ -154,7 +154,8 @@ export const clusterMemberToClusterDocumentCommon = (
     isReceived: Boolean(isReceived),
     rfcNumber: rfcNumber ?? undefined,
     references: parseReferences(references),
-    isBlocked: Boolean(isBlocked)
+    isBlocked: Boolean(isBlocked),
+    isNormRef: Boolean(isNormref)
   }
 }
 
@@ -167,7 +168,9 @@ export const parseReferences = (references?: RpcRelatedDocument[]): DocumentRefe
         targetDraftName,
         targetRfcNumber,
         sourceRfcNumber,
-        targetDisposition
+        targetDisposition,
+        targetIsReceived,
+        targetIsBlocked,
       } = reference
 
       assertIsString(draftName)
@@ -179,7 +182,9 @@ export const parseReferences = (references?: RpcRelatedDocument[]): DocumentRefe
         targetDraftName,
         targetRfcNumber,
         sourceRfcNumber,
-        targetDisposition: targetDisposition ? parseDisposition(targetDisposition) : undefined
+        targetDisposition: targetDisposition ? parseDisposition(targetDisposition) : undefined,
+        targetIsReceived,
+        targetIsBlocked,
       }
     }) ?? []
   )
