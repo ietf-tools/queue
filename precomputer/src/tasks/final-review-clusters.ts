@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 import { uniq } from 'es-toolkit'
-import { ClusterQueueCommonSchema, type ClusterQueueCommon, type ClusterIndexCommon, type QueueCommon, FinalReviewIndexCommon } from '../../../website/app/utils/validators.ts'
+import { ClusterQueueCommonSchema, type ClusterQueueCommon, type ClusterIndexCommon, type QueueCommon, type FinalReviewIndexCommon } from '../../../website/app/utils/validators.ts'
 
 type Props = {
   finalReviewIndex: FinalReviewIndexCommon,
