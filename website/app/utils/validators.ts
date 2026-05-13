@@ -219,7 +219,7 @@ export const ClusterDocumentCommonSchema = z.object({
   references: DocumentReferenceCommonSchema.array(),
   isReceived: z.boolean(),
   isBlocked: z.boolean().optional(),
-  isNormRef: z.boolean().optional(),
+  isNormref: z.boolean().optional(),
   finalApprovalCounts: FinalApprovalCommonSchema.optional()
 })
 

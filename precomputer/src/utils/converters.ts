@@ -155,7 +155,7 @@ export const clusterMemberToClusterDocumentCommon = (
     rfcNumber: rfcNumber ?? undefined,
     references: parseReferences(references),
     isBlocked: Boolean(isBlocked),
-    isNormRef: Boolean(isNormref)
+    isNormref: Boolean(isNormref)
   }
 }
 

@@ -9,5 +9,8 @@
   },
   "options": {
     "typeAware": true
+  },
+  "rules": {
+    "no-extra-boolean-cast": "off"
   }
 }
