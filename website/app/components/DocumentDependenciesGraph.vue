@@ -18,10 +18,17 @@
   <form class="text-right mt-1">
     <label class="cursor-pointer font-bold inline-block" :data-checked="showLegend">
       <input type="checkbox" name="showLegend" class="size-4 mr-1 align-middle" value="ok show the legend"
-        :v-model="showLegend" @change="handleChange" :aria-controls="GRAPH_DOM_ID" :aria-expanded="showLegend" />
+        :v-model="showLegend" @change="handleChangeLegend" :aria-controls="GRAPH_DOM_ID" :aria-expanded="showLegend" />
       Show legend?
     </label>
   </form>
+
+  <details>
+    <summary>show debug</summary>
+    <pre v-if="clusterGraphData">
+      {{ JSON.stringify(clusterGraphData, null, 2) }}
+    </pre>
+  </details>
 </template>
 
 <script setup lang="ts">
@@ -103,7 +110,7 @@ const setTooltip: SetTooltip = (props) => {
 /**
  * This will be shown visually, but it's mostly for screenreaders
  */
-const handleChange = (event: Event) => {
+const handleChangeLegend = (event: Event) => {
   const { target } = event
   if (!(target instanceof HTMLInputElement)) {
     const errorTitle = 'Expected native input[type=checkbox] but was'
@@ -124,119 +131,7 @@ const showLegend = ref(false)
 
 const hasMounted = ref(false)
 
-const clusterGraphData = computed(() => {
-  const newClusterGraphData: DataParam = {
-    links: [],
-    nodes: []
-  }
-
-  const isNodeParam = (data: unknown): data is NodeParam => {
-    const isANode = Boolean((data && typeof data === 'object' && 'id' in data))
-    if (!isANode) {
-      console.log("!IS A NODE", isANode, data)
-    }
-    return isANode
-  }
-
-  const isLinkParam = (data: unknown): data is LinkParam => {
-    return Boolean((data && typeof data === 'object' && 'source' in data && 'target' in data && 'rel' in data))
-  }
-
-  let referenceNodes: NodeParam[] = []
-
-  newClusterGraphData.nodes.push(
-    ...(clusterToUse.value.documents ?? []).flatMap((clusterMember): NodeParam[] | null => {
-      const { name, rfcNumber, disposition, references, isReceived, isBlocked } = clusterMember
-
-      const hasNormRef = references ? references.length > 0 : undefined
-      const hasNormRefInQueue = references ? references.some(reference => reference.relationship === 'refqueue') : undefined
-      const hasNormRefBlocked = references ? references.some(reference => {
-        if (!reference.targetDraftName || !clusterToUse.value.documents) {
-          return
-        }
-        const targetDocument = clusterToUse.value.documents.find(doc => doc.name === reference.targetDraftName)
-        if (!targetDocument) {
-          referenceNodes.push({
-            id: reference.targetDraftName,
-            url: datatrackerDraftUrlBuilder(reference.targetDraftName),
-            isNormRef: true,
-          })
-          return true
-        }
-        return Boolean(targetDocument.isBlocked)
-      }) : undefined
-
-      const rfcToBeToNodeParam = (rfcToBe: ClusterDocumentCommon, partialNodeParam: Partial<NodeParam>): NodeParam | undefined => {
-        const { name, disposition } = rfcToBe
-        if (!name) {
-          console.warn("rfcToBe had no name?", rfcToBe)
-          return
-        }
-
-        return {
-          id: name,
-          rfcNumber: rfcToBe.rfcNumber ?? undefined,
-          url: datatrackerDraftUrlBuilder(name),
-          disposition: parseDisposition(disposition),
-          ...partialNodeParam,
-        }
-      }
-
-      referenceNodes.push(...(references ?? []).flatMap(reference => {
-        const { draftName, targetDraftName } = reference
-        const draft = draftName ? clusterToUse.value.documents.find(doc => doc.name === draftName) : undefined
-        const target = targetDraftName ? clusterToUse.value.documents.find(doc => doc.name === targetDraftName) : undefined
-
-        return [
-          draft ? rfcToBeToNodeParam(draft, { isNormRef: false }) : draftName ? { id: draftName, url: datatrackerDraftUrlBuilder(draftName), isNormRef: false } : undefined,
-          target ? rfcToBeToNodeParam(target, {
-            isNormRef: true, // all targets are norm refs
-          }) : targetDraftName ? { id: targetDraftName, url: datatrackerDraftUrlBuilder(targetDraftName), isNormRef: true } : undefined,
-        ].filter(isNodeParam)
-      }))
-
-      return [{
-        id: name,
-        url: datatrackerDraftUrlBuilder(name),
-        rfcNumber,
-        isReceived,
-        disposition,
-        isBlocked,
-        isNormRef: false,
-        hasNormRef,
-        hasNormRefInQueue,
-        hasNormRefBlocked
-      }]
-    }).filter(isNodeParam)
-  )
-
-  referenceNodes = referenceNodes.filter(
-    // only include reference nodes if they weren't already mentioned
-    referenceNode => !newClusterGraphData.nodes.some(graphDataNode => graphDataNode.id === referenceNode.id)
-  )
-  newClusterGraphData.nodes.push(...referenceNodes)
-
-  newClusterGraphData.links.push(
-    ...(clusterToUse.value.documents ?? []).flatMap((clusterMember): LinkParam[] | null => {
-      const { references } = clusterMember
-
-      return references.map((reference): LinkParam => {
-        const { draftName, targetDraftName, relationship } = reference
-
-        return {
-          source: draftName,
-          target: targetDraftName,
-          rel: relationship,
-        }
-      })
-    }).filter(isLinkParam)
-  )
-
-  newClusterGraphData.nodes = uniqBy(newClusterGraphData.nodes, (node) => node.id)
-  newClusterGraphData.links = uniqBy(newClusterGraphData.links, (link) => JSON.stringify([link.source, link.target, link.rel]))
-
-  return newClusterGraphData
-})
+const clusterGraphData = computed(() => getClusterGraphData(clusterGraphData.value))
 
 const attemptToRenderGraph = () => {
   const { value: container } = containerDOMRef

@@ -34,7 +34,23 @@ export const getClusterPackage = async ({ api, clusterNumber }: Props): Promise<
             rfcNumber,
             disposition,
             references: references.map((reference): ClusterDocumentCommon["references"][number] => {
-              return reference
+              const {
+                relationship,
+                draftName,
+                targetDraftName,
+                sourceRfcNumber,
+                targetRfcNumber,
+                targetDisposition
+              } = reference
+
+              return {
+                relationship,
+                draftName,
+                targetDraftName,
+                sourceRfcNumber,
+                targetRfcNumber,
+                targetDisposition
+              }
             }),
             isReceived,
             isNormRef,
