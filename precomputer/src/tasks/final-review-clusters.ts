@@ -1,6 +1,12 @@
 import { DateTime } from 'luxon'
 import { uniq } from 'es-toolkit'
-import { ClusterQueueCommonSchema, type ClusterQueueCommon, type ClusterIndexCommon, type QueueCommon, type FinalReviewIndexCommon } from '../../../website/app/utils/validators.ts'
+import {
+  ClusterQueueCommonSchema,
+  type ClusterQueueCommon,
+  type ClusterIndexCommon,
+  type QueueCommon,
+  type FinalReviewIndexCommon,
+} from '../../../website/app/utils/validators.ts'
 
 type Props = {
   finalReviewIndex: FinalReviewIndexCommon,
@@ -40,11 +46,12 @@ export const getFinalReviewClusters = ({
       items: cluster.documents.map(clusterMember => {
         const draft = queueIndex.items.find(item => item.name === clusterMember.name)
         if (!draft) {
-          const errorTitle = `Expected to find draft ${clusterMember.name} in queueIndex`
-          console.error(errorTitle, `but only had drafts ${queueIndex.items.map(item => item.name).join(', ')}`)
-          throw Error(errorTitle)
+          console.log(`[Cluster ${clusterNumber}] draft ${JSON.stringify(clusterMember.name)} not found in queueIndex. Ignoring.`)
+          return undefined
         }
         return draft
+      }).filter(maybeDraft => {
+        return maybeDraft !== undefined
       })
       //
       // https://github.com/ietf-tools/queue/issues/57

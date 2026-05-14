@@ -1,4 +1,5 @@
 import { Configuration, PurpleApi, type ApiPubqQueueListRequest, type Cluster, type PublicQueueItem } from '../../generated/purple_client/index.ts'
+import { getCacheKey } from './cache.ts'
 
 type ApiMode = 'prod' | 'dev'
 
@@ -76,7 +77,7 @@ export const getApiClient = (mode?: ApiMode) => {
   return new PurpleApi(configuration)
 }
 
-const apiPubqClustersRetrieveCache: Record<number, Cluster> = {}
+const apiPubqClustersRetrieveCache: Record<string, Cluster> = {}
 
 type ApiPubqClustersRetrieveCachedProps = {
   api: PurpleApi
@@ -84,13 +85,15 @@ type ApiPubqClustersRetrieveCachedProps = {
 }
 
 export const apiPubqClustersRetrieveCached = async ({ api, clusterNumber }: ApiPubqClustersRetrieveCachedProps): Promise<Cluster> => {
-  if (!apiPubqClustersRetrieveCache[clusterNumber]) {
-    apiPubqClustersRetrieveCache[clusterNumber] = await api.apiPubqClustersRetrieve({ number: clusterNumber })
+  const cacheKey = getCacheKey(clusterNumber)
+  if (!apiPubqClustersRetrieveCache[cacheKey]) {
+    console.info('[apiPubqClustersRetrieveCached] cache miss', `cluster ${clusterNumber}`, { cacheKey })
+    apiPubqClustersRetrieveCache[cacheKey] = await api.apiPubqClustersRetrieve({ number: clusterNumber })
+  } else {
+    console.info('[apiPubqClustersRetrieveCached] cache hit', `cluster ${clusterNumber}`, { cacheKey })
   }
-  return apiPubqClustersRetrieveCache[clusterNumber]
+  return apiPubqClustersRetrieveCache[cacheKey]
 }
-
-
 
 const ApiPubqQueueListCache: Record<string, PublicQueueItem[]> = {}
 
@@ -100,10 +103,12 @@ type ApiPubqQueueListCachedProps = {
 }
 
 export const apiPubqQueueListCached = async ({ api, params }: ApiPubqQueueListCachedProps): Promise<PublicQueueItem[]> => {
-  const cacheKey = `${params?.pendingFinalApproval}|${params?.disposition}`
+  const cacheKey = getCacheKey(params)
   if (!ApiPubqQueueListCache[cacheKey]) {
+    console.info('[apiPubqQueueListCached] cache miss', JSON.stringify(params))
     ApiPubqQueueListCache[cacheKey] = await api.apiPubqQueueList(params)
+  } else {
+    console.info('[apiPubqQueueListCached] cache hit', JSON.stringify(params))
   }
   return ApiPubqQueueListCache[cacheKey]
 }
-

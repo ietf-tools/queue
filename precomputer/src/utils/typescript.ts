@@ -8,7 +8,7 @@ export const assertNever = (value: never) => {
   throw new Error('Unexpected value: ' + value)
 }
 
-export function assertIsString (
+export function assertIsString(
   val: unknown,
   errorMessage?: string
 ): asserts val is string {
@@ -17,9 +17,9 @@ export function assertIsString (
   }
 }
 
-export function assertIsNumber (
+export function assertIsNumber(
   val: unknown
-): asserts val is string {
+): asserts val is number {
   if (typeof val !== 'number') {
     throw new Error(`Not a number typeof=${typeof val}.`)
   }
