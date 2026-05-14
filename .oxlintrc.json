@@ -11,6 +11,7 @@
     "typeAware": true
   },
   "rules": {
-    "no-extra-boolean-cast": "off"
+    "no-extra-boolean-cast": "off",
+    "no-useless-spread": "off"
   }
 }

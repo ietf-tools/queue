@@ -29,8 +29,8 @@
     </p>
 
     <Heading :level="headingLevelPlusOne" :style-level="headingLevelPlusTwo"
-      class="mt-3 mb-1 text-gray-600 dark:text-gray-200 font-semibold text-balance">Approval Status</Heading>
-    <RpcTable v-if="finalReview.finalApprovals && finalReview.finalApprovals.length > 0" class="mt-1 mx-auto">
+      class="mt-3 mb-2 text-gray-600 dark:text-gray-200 font-semibold text-balance">Approval Status</Heading>
+    <RpcTable v-if="finalReview.finalApprovals && finalReview.finalApprovals.length > 0" class="mx-auto">
       <RpcThead>
         <tr>
           <RpcTh>Approver Name</RpcTh>
@@ -61,7 +61,7 @@
     <p v-else class="italic">No final approvals available.</p>
 
     <Heading :level="headingLevelPlusOne" :style-level="headingLevelPlusTwo"
-      class="mt-3 mb-1 text-gray-600 dark:text-gray-200 font-semibold text-balance">Action Holders</Heading>
+      class="mt-3 mb-2 text-gray-600 dark:text-gray-200 font-semibold text-balance">Action Holders</Heading>
     <RpcTable v-if="actionholderSet && actionholderSet.length > 0" class="mt-1 mx-auto">
       <RpcThead>
         <tr>
@@ -105,10 +105,10 @@
         </tr>
       </RpcTbody>
     </RpcTable>
-    <p v-else class="italic text-sm">No action holders available</p>
+    <p v-else class="italic text-sm">No action holders available.</p>
 
     <Heading :level="headingLevelPlusOne" :style-level="headingLevelPlusTwo"
-      class="mt-3 mb-1 text-gray-600 dark:text-gray-200 font-semibold text-balance">
+      class="mt-3 mb-2 text-gray-600 dark:text-gray-200 font-semibold text-balance">
       Notes
     </Heading>
     <ol v-if="finalReview.renderableApprovalLogMessages && finalReview.renderableApprovalLogMessages.length > 0"
@@ -120,8 +120,7 @@
         </p>
       </li>
     </ol>
-    <p v-else class="italic">No notes available</p>
-
+    <p v-else class="italic text-sm">No notes available.</p>
   </div>
 </template>
 

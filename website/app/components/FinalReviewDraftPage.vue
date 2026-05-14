@@ -1,7 +1,7 @@
 <template>
   <FinalReviewDraft v-if="draftQueue" :id="props.draftName" heading-level="1" :draft-name="props.draftName"
     :queue="draftQueue" />
-  <hr class="mt-12" />
+  <RpcHr class="mt-12" />
   <p v-if="queueIndex?.timestampIso" class="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
     Last updated
     <TimeStamp :dateTimeIso="queueIndex.timestampIso" />

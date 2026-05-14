@@ -5,7 +5,7 @@
     </Heading>
     <p class="text-sm pl-2 pb-3">Total number of final reviews in progress:
       <b v-if="data">{{ data.pendingFinalApproval.length }}</b>
-      <i v-else>loading</i>
+      <i v-else>loading</i>.
     </p>
     <FinalReviewIndexTable :queue-items="data?.pendingFinalApproval" :error="error" :status="status" />
 
@@ -19,7 +19,7 @@
     </Heading>
     <FinalReviewIndexTable :queue-items="queueItemsFilterPublisher" :error="error" :status="status" />
 
-    <p v-if="generatedAt" class="text-sm italic text-gray-600 dark:text-gray-400 mt-1">
+    <p v-if="generatedAt" class="mt-12 text-sm italic text-gray-600 dark:text-gray-400">
       Last updated
       <TimeStamp :dateTime="generatedAt" />
     </p>

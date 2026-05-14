@@ -1,14 +1,15 @@
 <template>
   <FinalReviewDraft v-if="queueItem && draftQueue" :id="`rfc${props.rfcNumber}`" heading-level="1"
     :draft-name="queueItem.name" :queue="draftQueue" />
-  <hr class="mt-12" />
-  <p v-if="queueIndex?.timestampIso" class="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
+  <RpcHr class="mt-12" />
+  <p v-if="queueIndex?.timestampIso" class="mt-8 text-sm italic text-gray-600 dark:text-gray-400">
     Last updated
     <TimeStamp :dateTimeIso="queueIndex.timestampIso" />
   </p>
 </template>
 
 <script setup lang="ts">
+import { DateTime } from 'luxon'
 
 type Props = {
   rfcNumber: number
@@ -73,10 +74,44 @@ if (
   })
 }
 
+const modifiedDateTime = computed(() => {
+  const { value: item } = queueItem
+  if (!item) {
+    return undefined
+  }
+  const timestampMillis = ([
+    ...(item.approvalLogMessages || []).map(
+      message =>
+        message.timeIso ?
+          DateTime.fromISO(message.timeIso).toMillis()
+          : undefined
+    ),
+    ...(item.actionholderSet || []).map(
+      actionholder =>
+        actionholder.deadlineIso ?
+          DateTime.fromISO(actionholder.deadlineIso).toMillis()
+          : undefined
+    )
+  ]).filter(
+    maybeTimestampMillis => typeof maybeTimestampMillis === 'number'
+  )
+  if (timestampMillis.length === 0) {
+    return undefined
+  }
+
+  const maxTimestampMilli = Math.max(...timestampMillis)
+  console.log('modifiedDateTime max', DateTime.fromMillis(maxTimestampMilli).toLocaleString(), timestampMillis.map(millis => DateTime.fromMillis(millis).toLocaleString()),)
+  if (!maxTimestampMilli) {
+    return undefined
+  }
+  return DateTime.fromMillis(maxTimestampMilli)
+})
+
 useQueueRfcEditorHead({
   title: `RFC-to-be ${props.rfcNumber} final review`,
   canonicalPath: canonicalPath.value,
-  contentType: 'article'
+  contentType: 'article',
+  modifiedDateTime: modifiedDateTime.value
 })
 
 </script>

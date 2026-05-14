@@ -27,7 +27,7 @@
       class="mb-6 mx-2">
       <FinalReviewDraft heading-level="2" :draft-name="draft.name" :queue="finalReviewCluster"
         :id="makeDomId(draft.name)" />
-      <hr v-if="index < finalReviewCluster.items.length" class="border-gray-400 dark:border-gray-600 mt-8" />
+      <RpcHr v-if="index < finalReviewCluster.items.length" class="mt-8" />
     </div>
 
     <p v-if="finalReviewCluster.timestampIso" class="mt-12 pl-2 text-sm italic text-gray-600 dark:text-gray-400">

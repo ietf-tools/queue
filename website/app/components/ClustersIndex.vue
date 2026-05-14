@@ -31,7 +31,7 @@
         </tr>
       </RpcTbody>
     </RpcTable>
-    <p v-if="generatedAt" class="mt-6 text-sm italic text-gray-600 dark:text-gray-400">
+    <p v-if="generatedAt" class="mt-12 text-sm italic text-gray-600 dark:text-gray-400">
       Last updated
       <TimeStamp :dateTime="generatedAt" />
     </p>

@@ -2,7 +2,7 @@
   <p class="text-sm pl-2 pb-3">
     Total number of queue items:
     <b v-if="data">{{ table.getRowCount() }}</b>
-    <i v-else>loading</i>
+    <i v-else>loading</i>.
   </p>
   <RpcTable>
     <RpcThead>
@@ -26,7 +26,7 @@
       </tr>
     </RpcTbody>
   </RpcTable>
-  <p v-if="props.showLastUpdated && data?.timestampIso" class="mt-6 text-sm italic text-gray-600 dark:text-gray-400">
+  <p v-if="props.showLastUpdated && data?.timestampIso" class="mt-12 text-sm italic text-gray-600 dark:text-gray-400">
     Last updated
     <TimeStamp :dateTimeIso="data.timestampIso" />
   </p>

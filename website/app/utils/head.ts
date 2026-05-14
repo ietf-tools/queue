@@ -63,7 +63,7 @@ export const useQueueRfcEditorHead = (props: UseQueueRfcEditorProps) => {
          **/
         'data-nosnippet': "true",
         tagPosition: 'bodyOpen',
-        innerHTML: 'JavaScript is disabled. Most of this site works without JS, but some features require it. If something seems broken please try enabling JavaScript and reloading the page.',
+        innerHTML: 'Your browser has JavaScript disabled. Most of this site works without JS, but some features require it. If something seems broken please try enabling JavaScript and reloading the page.',
       }
     ]
   })

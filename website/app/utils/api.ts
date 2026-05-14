@@ -5,9 +5,9 @@ import {
   API_FINAL_REVIEW_INDEX_PATH,
   apiFinalReviewCluster
 } from './url'
-import { ClusterPackageCommonSchema, ClusterQueueCommonSchema, FinalReviewIndexCommonSchema } from './validators'
+import { ClusterPackageCommonSchema, ClusterQueueCommonSchema, FinalReviewIndexCommonSchema, type QueueCommon } from './validators'
 
-export const getQueueIndex = async (origin: string) => {
+export const getQueueIndex = async (origin: string): Promise<QueueCommon> => {
   const path = API_QUEUE_INDEX_PATH
   const url = new URL(path, origin).toString()
   const unverifiedData = await $fetch(url)
