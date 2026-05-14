@@ -1,12 +1,13 @@
 <template>
   <div>
-    <p v-if="data?.list" class="text-sm pl-2 pb-1 mb-2">Total Number of Active clusters:
-      <b>{{ data.list.length }}</b>.
+    <p class="text-sm pl-2 pb-1 mb-2">Total Number of Active clusters:
+      <b v-if="data?.list">{{ data.list.length }}</b><i v-else>loading</i>.
     </p>
-    <p v-if="data?.list" class="text-sm pl-2 pb-2 mb-2">Number of clusters that contain one or more documents with
+    <p class="text-sm pl-2 pb-2 mb-3">Number of clusters that contain one or more documents with
       "Reference
       Not Received":
-      <b> {{ stats.totalClustersWithDocumentsReferenceNotReceived }} </b>.
+      <b v-if="data?.list"> {{ stats.totalClustersWithDocumentsReferenceNotReceived }} </b>
+      <i v-else>loading</i>.
     </p>
     <RpcTable>
       <RpcThead>
@@ -29,16 +30,8 @@
           </RpcTd>
         </tr>
       </RpcTbody>
-      <RpcTfoot>
-        <tr v-for="footerGroup in table.getFooterGroups()" :key="footerGroup.id">
-          <RpcTh v-for="header in footerGroup.headers" :key="header.id" :colSpan="header.colSpan">
-            <FlexRender v-if="!header.isPlaceholder" :render="header.column.columnDef.footer"
-              :props="header.getContext()" />
-          </RpcTh>
-        </tr>
-      </RpcTfoot>
     </RpcTable>
-    <p v-if="generatedAt" class="text-sm italic text-gray-600 dark:text-gray-400 mt-1">
+    <p v-if="generatedAt" class="mt-6 text-sm italic text-gray-600 dark:text-gray-400">
       Last updated
       <TimeStamp :dateTime="generatedAt" />
     </p>

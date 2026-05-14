@@ -27,11 +27,10 @@
       class="mb-6 mx-2">
       <FinalReviewDraft heading-level="2" :draft-name="draft.name" :queue="finalReviewCluster"
         :id="makeDomId(draft.name)" />
-      <hr v-if="index < (finalReviewCluster.items.length - 1)" class="bg-black dark:bg-white mt-6" />
+      <hr v-if="index < finalReviewCluster.items.length" class="border-gray-400 dark:border-gray-600 mt-8" />
     </div>
 
-    <hr class="mt-12" />
-    <p v-if="finalReviewCluster.timestampIso" class="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
+    <p v-if="finalReviewCluster.timestampIso" class="mt-12 pl-2 text-sm italic text-gray-600 dark:text-gray-400">
       Last updated
       <TimeStamp :dateTimeIso="finalReviewCluster.timestampIso" />
     </p>

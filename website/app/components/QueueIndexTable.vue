@@ -1,7 +1,8 @@
 <template>
-
-  <p v-if="data" class="text-sm pl-2 pb-2">Total number of queue items:
-    <b>{{ table.getRowCount() }}</b>
+  <p class="text-sm pl-2 pb-3">
+    Total number of queue items:
+    <b v-if="data">{{ table.getRowCount() }}</b>
+    <i v-else>loading</i>
   </p>
   <RpcTable>
     <RpcThead>
@@ -24,16 +25,8 @@
         </RpcTd>
       </tr>
     </RpcTbody>
-    <RpcTfoot>
-      <tr v-for="footerGroup in table.getFooterGroups()" :key="footerGroup.id">
-        <RpcTh v-for="header in footerGroup.headers" :key="header.id" :colSpan="header.colSpan">
-          <FlexRender v-if="!header.isPlaceholder" :render="header.column.columnDef.footer"
-            :props="header.getContext()" />
-        </RpcTh>
-      </tr>
-    </RpcTfoot>
   </RpcTable>
-  <p v-if="props.showLastUpdated && data?.timestampIso" class="mt-1 text-sm italic text-gray-600 dark:text-gray-400">
+  <p v-if="props.showLastUpdated && data?.timestampIso" class="mt-6 text-sm italic text-gray-600 dark:text-gray-400">
     Last updated
     <TimeStamp :dateTimeIso="data.timestampIso" />
   </p>

@@ -21,14 +21,6 @@
           </RpcTd>
         </tr>
       </RpcTbody>
-      <RpcTfoot>
-        <tr v-for="footerGroup in table.getFooterGroups()" :key="footerGroup.id">
-          <RpcTh v-for="header in footerGroup.headers" :key="header.id" :colSpan="header.colSpan">
-            <FlexRender v-if="!header.isPlaceholder" :render="header.column.columnDef.footer"
-              :props="header.getContext()" />
-          </RpcTh>
-        </tr>
-      </RpcTfoot>
     </RpcTable>
   </div>
 </template>

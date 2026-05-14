@@ -1,7 +1,7 @@
 <template>
   <div v-if="finalReview">
-    <Heading :level="props.headingLevel" :style-level="headingLevelPlusOne"
-      class="mt-8 mb-2 text-gray-600 dark:text-gray-200 font-semibold text-balance" :id="props.id" has-internal-link>
+    <Heading :level="props.headingLevel" class="mt-8 mb-2 text-gray-600 dark:text-gray-200 font-semibold text-balance"
+      :id="props.id" has-internal-link>
       <template v-if="
         finalReview.rfcNumber
       ">
@@ -30,7 +30,7 @@
 
     <Heading :level="headingLevelPlusOne" :style-level="headingLevelPlusTwo"
       class="mt-3 mb-1 text-gray-600 dark:text-gray-200 font-semibold text-balance">Approval Status</Heading>
-    <RpcTable v-if="finalReview.finalApprovals && finalReview.finalApprovals.length > 0" class="mx-auto">
+    <RpcTable v-if="finalReview.finalApprovals && finalReview.finalApprovals.length > 0" class="mt-1 mx-auto">
       <RpcThead>
         <tr>
           <RpcTh>Approver Name</RpcTh>
@@ -62,7 +62,7 @@
 
     <Heading :level="headingLevelPlusOne" :style-level="headingLevelPlusTwo"
       class="mt-3 mb-1 text-gray-600 dark:text-gray-200 font-semibold text-balance">Action Holders</Heading>
-    <RpcTable v-if="actionholderSet && actionholderSet.length > 0" class="mx-auto">
+    <RpcTable v-if="actionholderSet && actionholderSet.length > 0" class="mt-1 mx-auto">
       <RpcThead>
         <tr>
           <RpcTh>Action Holder Name</RpcTh>
@@ -108,7 +108,9 @@
     <p v-else class="italic text-sm">No action holders available</p>
 
     <Heading :level="headingLevelPlusOne" :style-level="headingLevelPlusTwo"
-      class="mt-3 mb-1 text-gray-600 dark:text-gray-200 font-semibold text-balance">Notes</Heading>
+      class="mt-3 mb-1 text-gray-600 dark:text-gray-200 font-semibold text-balance">
+      Notes
+    </Heading>
     <ol v-if="finalReview.renderableApprovalLogMessages && finalReview.renderableApprovalLogMessages.length > 0"
       class="flex flex-col gap-2 text-sm">
       <li v-for="approvalLog in finalReview.renderableApprovalLogMessages">
@@ -219,7 +221,7 @@ const LabelsComponent = computed(() => {
   const item = props.queue.items.find(queueCommonItem => queueCommonItem.name === props.draftName)
   if (!item || !item.labels) return null
 
-  return h('ul', { class: 'inline-flex flex-wrap gap-2' }, item.labels.map(label => {
+  return h('ul', { class: 'ml-2 inline-flex flex-wrap gap-2' }, item.labels.map(label => {
     return h('li', { class: 'inline' }, h(Label, { label }))
   }))
 })

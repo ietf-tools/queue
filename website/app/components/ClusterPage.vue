@@ -1,27 +1,19 @@
 <template>
-  <i v-if="status === 'pending'">
-    Loading...
-  </i>
-  <div v-else-if="status === 'error'">
-    {{ error }}
-  </div>
-  <div v-else-if="status === 'success' && clusterPackage">
+  <template v-if="status === 'success' && clusterPackage">
     <Heading level="1" style-level="1"
       class="w-full mx-2 mb-2 text-gray-600 dark:text-gray-200 font-semibold text-balance">
       Cluster {{ props.clusterNumber }}
     </Heading>
-    <QueueIndexTable :filter-by-cluster-number="props.clusterNumber" :show-final-approval-counts="true"
-      :show-clusters="false" class="mt-3" />
+    <div class="mt-3 mb-6">
+      <QueueIndexTable :filter-by-cluster-number="props.clusterNumber" :show-final-approval-counts="true"
+        :show-clusters="false" />
+    </div>
     <DocumentDependenciesGraph :cluster="clusterPackage.cluster" />
     <p v-if="generatedAt" class="text-sm italic text-gray-600 dark:text-gray-400">
       Last updated
       <TimeStamp :dateTime="generatedAt" />
     </p>
-  </div>
-  <div v-else>
-    <!-- 404 or unknown state -->
-    Unknown cluster
-  </div>
+  </template>
 </template>
 
 <script setup lang="ts">

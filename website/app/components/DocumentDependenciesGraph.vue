@@ -1,6 +1,6 @@
 <template>
   <div ref="container" :id="GRAPH_DOM_ID"
-    class="overflow-hidden h-[75vh] flex items-center justify-center border border-gray-700 dark:border-gray-200 rounded-md inset-shadow-sm text-center bg-white dark:bg-black">
+    class="overflow-hidden h-[75vh] flex items-center justify-center border border-gray-300 dark:border-gray-600 rounded-md inset-shadow-sm text-center bg-white dark:bg-black">
     <Icon name="ei:spinner-3" size="1.3rem" class="animate-spin" />
   </div>
 

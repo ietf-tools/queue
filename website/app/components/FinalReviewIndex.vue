@@ -3,8 +3,9 @@
     <Heading level="2" class="mx-2 mb-2 md:mb-3 text-gray-600 dark:text-gray-200 font-semibold text-balance">
       In progress
     </Heading>
-    <p v-if="data" class="text-sm pl-2 pb-2">Total number of final reviews in progress:
-      <b>{{ data.pendingFinalApproval.length }}</b>
+    <p class="text-sm pl-2 pb-3">Total number of final reviews in progress:
+      <b v-if="data">{{ data.pendingFinalApproval.length }}</b>
+      <i v-else>loading</i>
     </p>
     <FinalReviewIndexTable :queue-items="data?.pendingFinalApproval" :error="error" :status="status" />
 

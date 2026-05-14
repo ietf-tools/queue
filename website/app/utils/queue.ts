@@ -56,11 +56,13 @@ export const renderAssignmentsByRoles = ({
 
   // See https://github.com/ietf-tools/queue/issues/13#issue-4018981455
   const editorRoles: AssignmentByRole['role'][] = ['first_editor', 'second_editor', 'final_review_editor']
+  const assignmentsByRolesFilteredByEditorRole = assignmentsByRolesFiltered.filter((assignmentByRole) =>
+    editorRoles.includes(assignmentByRole.role)
+  )
+
   const isAwaitingEditorAssignment =
     assignmentsByRolesFiltered.every((assignmentByRole) => assignmentByRole.role !== 'blocked') &&
-    !assignmentsByRolesFiltered.some((assignmentByRole) =>
-      editorRoles.includes(assignmentByRole.role)
-    )
+    assignmentsByRolesFilteredByEditorRole.length === 0
 
   // https://github.com/ietf-tools/queue/issues/29#issuecomment-4144104259
   const isIANAHold = Boolean(ianaStatus?.slug === 'not_completed') && assignmentsByRoles.some(assignmentsByRole =>
@@ -96,7 +98,9 @@ export const renderAssignmentsByRoles = ({
         h(
           BaseBadge,
           { color: 'emerald' },
-          () => 'Awaiting Editor Assignment'
+          () => {
+            return 'Awaiting Editor Assignment'
+          }
         )
       )
       : undefined,
