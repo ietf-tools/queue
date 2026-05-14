@@ -159,15 +159,8 @@ const ActionHolderSchema = z.object({
   body: z.string().optional(),
 })
 
-export const PendingActivityCommonSlugSchema = z.union([
-  z.literal('formatter'),
-  z.literal('publisher'),
-  z.literal('final_review_editor'),
-  z.literal('second_editor')
-])
-
 const PendingActivityCommonSchema = z.object({
-  slug: PendingActivityCommonSlugSchema,
+  slug: AssignmentRoleSchema,
   name: z.string(),
   desc: z.string().optional(),
 })

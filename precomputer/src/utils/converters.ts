@@ -8,7 +8,7 @@ import {
 } from '../../generated/purple_client/index.ts'
 import {
   IanaStatusSlugSchema,
-  PendingActivityCommonSlugSchema,
+  AssignmentRoleSchema,
   type ClusterDocumentCommon,
   type DocumentReferenceCommon,
   type QueueCommonItem,
@@ -261,7 +261,7 @@ export const parsePendingActivities = (pendingActivities?: RpcRole[]): QueueComm
   return pendingActivities.map((pendingActivity): PendingActivityCommon => {
     const { slug: maybeSlug, name, desc } = pendingActivity
 
-    const { data: slug, error } = PendingActivityCommonSlugSchema.safeParse(maybeSlug)
+    const { data: slug, error } = AssignmentRoleSchema.safeParse(maybeSlug)
     if (error && !slug) {
       console.error(error)
       throw Error(`Unable to parse pendingActivity.slug: ${JSON.stringify(maybeSlug)} ${JSON.stringify(error)}`)
