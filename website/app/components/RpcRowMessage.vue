@@ -5,8 +5,8 @@
     </RpcTdMessage>
   </tr>
   <tr v-else-if="isMounted && statusArr.every(status => status === 'success') && props.rowCount === 0">
-    <RpcTdMessage :colspan="props.columnCount">
-      No rows found
+    <RpcTdMessage :colspan="props.columnCount" class="italic">
+      None
     </RpcTdMessage>
   </tr>
   <tr v-else-if="isMounted && errorArr.some(error => Boolean(error))">

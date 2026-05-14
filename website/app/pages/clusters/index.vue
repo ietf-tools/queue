@@ -2,8 +2,7 @@
   <div class="min-h-[100vh]">
     <NuxtLayout name="default">
       <div class="container mx-auto my-6">
-        <Heading level="1" style-level="3"
-          class="w-full mx-2 mb-2 md:mb-3 text-gray-600 dark:text-gray-200 font-semibold text-balance">
+        <Heading level="1" class="w-full mx-2 mb-2 text-gray-600 dark:text-gray-200 font-semibold text-balance">
           Clusters
         </Heading>
         <ClustersIndex />

@@ -1,43 +1,42 @@
 <template>
-  <div class="my-6">
-    <p v-if="data" class="text-sm pl-2 pb-2">Total number of queue items:
-      <b>{{ table.getRowCount() }}</b>
-    </p>
-    <RpcTable>
-      <RpcThead>
-        <tr v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
-          <RpcTh v-for="header in headerGroup.headers" :key="header.id" :colSpan="header.colSpan"
-            :is-sortable="header.column.getCanSort()" :sort-direction="header.column.getIsSorted()"
-            :column-name="getVNodeText(header.column.columnDef.header)"
-            @click="header.column.getToggleSortingHandler()?.($event)">
-            <FlexRender v-if="!header.isPlaceholder" :render="header.column.columnDef.header"
-              :props="header.getContext()" />
-          </RpcTh>
-        </tr>
-      </RpcThead>
-      <RpcTbody>
-        <RpcRowMessage :status="status" :error="error" :column-count="table.getAllColumns().length"
-          :row-count="table.getRowModel().rows.length" />
-        <tr v-for="row in table.getRowModel().rows" :key="row.id">
-          <RpcTd v-for="cell in row.getVisibleCells()" :key="cell.id">
-            <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
-          </RpcTd>
-        </tr>
-      </RpcTbody>
-      <RpcTfoot>
-        <tr v-for="footerGroup in table.getFooterGroups()" :key="footerGroup.id">
-          <RpcTh v-for="header in footerGroup.headers" :key="header.id" :colSpan="header.colSpan">
-            <FlexRender v-if="!header.isPlaceholder" :render="header.column.columnDef.footer"
-              :props="header.getContext()" />
-          </RpcTh>
-        </tr>
-      </RpcTfoot>
-    </RpcTable>
-    <p v-if="data?.timestampIso" class="mt-1 text-sm italic text-gray-600 dark:text-gray-400">
-      Last updated
-      <TimeStamp :dateTimeIso="data.timestampIso" />
-    </p>
-  </div>
+
+  <p v-if="data" class="text-sm pl-2 pb-2">Total number of queue items:
+    <b>{{ table.getRowCount() }}</b>
+  </p>
+  <RpcTable>
+    <RpcThead>
+      <tr v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
+        <RpcTh v-for="header in headerGroup.headers" :key="header.id" :colSpan="header.colSpan"
+          :is-sortable="header.column.getCanSort()" :sort-direction="header.column.getIsSorted()"
+          :column-name="getVNodeText(header.column.columnDef.header)"
+          @click="header.column.getToggleSortingHandler()?.($event)">
+          <FlexRender v-if="!header.isPlaceholder" :render="header.column.columnDef.header"
+            :props="header.getContext()" />
+        </RpcTh>
+      </tr>
+    </RpcThead>
+    <RpcTbody>
+      <RpcRowMessage :status="status" :error="error" :column-count="table.getAllColumns().length"
+        :row-count="table.getRowModel().rows.length" />
+      <tr v-for="row in table.getRowModel().rows" :key="row.id">
+        <RpcTd v-for="cell in row.getVisibleCells()" :key="cell.id">
+          <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
+        </RpcTd>
+      </tr>
+    </RpcTbody>
+    <RpcTfoot>
+      <tr v-for="footerGroup in table.getFooterGroups()" :key="footerGroup.id">
+        <RpcTh v-for="header in footerGroup.headers" :key="header.id" :colSpan="header.colSpan">
+          <FlexRender v-if="!header.isPlaceholder" :render="header.column.columnDef.footer"
+            :props="header.getContext()" />
+        </RpcTh>
+      </tr>
+    </RpcTfoot>
+  </RpcTable>
+  <p v-if="props.showLastUpdated && data?.timestampIso" class="mt-1 text-sm italic text-gray-600 dark:text-gray-400">
+    Last updated
+    <TimeStamp :dateTimeIso="data.timestampIso" />
+  </p>
 </template>
 
 <script setup lang="ts">
@@ -63,6 +62,7 @@ type Props = {
   filterByClusterNumber?: number,
   showFinalApprovalCounts?: boolean
   showClusters?: boolean
+  showLastUpdated?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {

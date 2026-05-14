@@ -1,21 +1,26 @@
 <template>
   <div v-if="finalReview">
-    <Heading :level="props.headingLevel" :style-level="headingLevelPlusOne" class="mt-8 mb-1" :id="props.id"
-      has-internal-link>
+    <Heading :level="props.headingLevel" :style-level="headingLevelPlusOne"
+      class="mt-8 mb-2 text-gray-600 dark:text-gray-200 font-semibold text-balance" :id="props.id" has-internal-link>
       <template v-if="
-        finalReview.rfcNumber // all final reviews should have an RFC number, but the model doesn't require it so we'll conditionally render it
+        finalReview.rfcNumber
       ">
         <span>RFC-to-be{{ NBSP }}</span>
         <span class="font-bold">{{ finalReview.rfcNumber }}</span>
+        {{ SPACE }}
+        <span class="font-mono mr-2">({{ props.draftName }})</span>
       </template>
-      <span class="font-mono">({{ props.draftName }})</span>
+      <template v-else>
+        <span class="font-mono mr-2">{{ props.draftName }}</span>
+      </template>
+
       <component :is="AssignmentsAsRolesComponent" />
       <component :is="LabelsComponent" />
     </Heading>
 
     <p v-if="finalReview.clusters" class="text-sm">This document is part of
       <template v-for="(cluster, index) in finalReview.clusters">
-        <Anchor :href="clusterNumberPathBuilder(cluster)" :class="`${ANCHOR_TAILWIND_STYLE}`">
+        <Anchor :href="clusterNumberPathBuilder(cluster)" :class="`${ANCHOR_TAILWIND_STYLE} font-bold`">
           <span class="sr-only">Cluster </span>
           <Icon name="pajamas:group" title="Cluster" class="h-5 w-5 align-middle inline-block mr-0.5" />{{ cluster }}
         </Anchor>
@@ -23,7 +28,8 @@
       </template>, so may have additional holds before publication.
     </p>
 
-    <Heading :level="headingLevelPlusOne" :style-level="headingLevelPlusTwo" class="mt-3 mb-1">Approval Status</Heading>
+    <Heading :level="headingLevelPlusOne" :style-level="headingLevelPlusTwo"
+      class="mt-3 mb-1 text-gray-600 dark:text-gray-200 font-semibold text-balance">Approval Status</Heading>
     <RpcTable v-if="finalReview.finalApprovals && finalReview.finalApprovals.length > 0" class="mx-auto">
       <RpcThead>
         <tr>
@@ -54,7 +60,8 @@
     </RpcTable>
     <p v-else class="italic">No final approvals available.</p>
 
-    <Heading :level="headingLevelPlusOne" :style-level="headingLevelPlusTwo" class="mt-3 mb-1">Action Holders</Heading>
+    <Heading :level="headingLevelPlusOne" :style-level="headingLevelPlusTwo"
+      class="mt-3 mb-1 text-gray-600 dark:text-gray-200 font-semibold text-balance">Action Holders</Heading>
     <RpcTable v-if="actionholderSet && actionholderSet.length > 0" class="mx-auto">
       <RpcThead>
         <tr>
@@ -100,7 +107,8 @@
     </RpcTable>
     <p v-else class="italic text-sm">No action holders available</p>
 
-    <Heading :level="headingLevelPlusOne" :style-level="headingLevelPlusTwo" class="mt-3 mb-1">Notes</Heading>
+    <Heading :level="headingLevelPlusOne" :style-level="headingLevelPlusTwo"
+      class="mt-3 mb-1 text-gray-600 dark:text-gray-200 font-semibold text-balance">Notes</Heading>
     <ol v-if="finalReview.renderableApprovalLogMessages && finalReview.renderableApprovalLogMessages.length > 0"
       class="flex flex-col gap-2 text-sm">
       <li v-for="approvalLog in finalReview.renderableApprovalLogMessages">

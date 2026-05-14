@@ -1,11 +1,12 @@
 <template>
   <div>
-    <p v-if="data?.list" class="text-sm pl-2 pb-1">Total Number of Active clusters:
-      <b>{{ data.list.length }}</b>
+    <p v-if="data?.list" class="text-sm pl-2 pb-1 mb-2">Total Number of Active clusters:
+      <b>{{ data.list.length }}</b>.
     </p>
-    <p v-if="data?.list" class="text-sm pl-2 pb-2">Number of clusters that contain one or more documents with "Reference
+    <p v-if="data?.list" class="text-sm pl-2 pb-2 mb-2">Number of clusters that contain one or more documents with
+      "Reference
       Not Received":
-      <b> {{ stats.totalClustersWithDocumentsReferenceNotReceived }} </b>
+      <b> {{ stats.totalClustersWithDocumentsReferenceNotReceived }} </b>.
     </p>
     <RpcTable>
       <RpcThead>

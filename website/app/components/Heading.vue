@@ -1,27 +1,18 @@
 <template>
-  <component
-    :is="`h${props.level}`"
-    :id="
-      // we always make an id. hasInternalLink only affects whether to show a '#' link
-      props.id ?? getAnchorId($slots.default)
-      "
-    :class="[
+  <component :is="`h${props.level}`" :id="
+    // we always make an id. hasInternalLink only affects whether to show a '#' link
+    props.id ?? getAnchorId($slots.default)
+    " :class="[
       headingStyles[`h${styleLevel || level}`],
       props.class,
       'group'
-    ]"
-  >
+    ]">
     <slot />
-    <a
-      v-if="hasInternalLink"
-      :href="hasInternalLink ?
-        `#${props.id ?? getAnchorId($slots.default)}`
-        : undefined
-        "
-      class="ml-1 opacity-0 transition-opacity no-underline group-hover:opacity-100 font-normal"
-      title="Link to this heading"
-      @click="hashClickHandler(`#${getAnchorId($slots.default)}`)"
-    >
+    <a v-if="hasInternalLink" :href="hasInternalLink ?
+      `#${props.id ?? getAnchorId($slots.default)}`
+      : undefined
+      " class="ml-1 opacity-0 transition-opacity no-underline group-hover:opacity-100 font-normal"
+      title="Link to this heading" @click="hashClickHandler(`#${getAnchorId($slots.default)}`)">
       &para;
     </a>
   </component>
@@ -86,12 +77,12 @@ const headingStyles: Record<`h${Props['level']}`, string> = {
    * Instead pass in the `class` prop for margins/padding, or make a wrapper component that passes
    * in the `class`
    */
-  h1: 'text-3xl lg:text-5xl font-semibold',
-  h2: 'text-2xl font-semibold',
-  h3: 'text-xl font-semibold',
-  h4: 'text-lg font-semibold',
-  h5: 'text-base font-semibold',
-  h6: 'text-base font-semibold'
+  h1: 'text-2xl lg:text-3xl font-semibold',
+  h2: 'text-xl lg:text-2xl font-semibold',
+  h3: 'text-lg lg:text-xl font-semibold',
+  h4: 'text-base lg:text-lg font-semibold',
+  h5: 'text-sm lg:text-base font-semibold',
+  h6: 'text-xs lg:text-sm font-semibold'
 }
 
 const props = defineProps<Props>()
