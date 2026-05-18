@@ -1,12 +1,12 @@
 <template>
-  <div v-if="finalReview">
+  <div v-if="finalReviewDraft">
     <Heading :level="props.headingLevel" class="mt-8 mb-2 text-gray-600 dark:text-gray-200 font-semibold text-balance"
       :id="props.id" has-internal-link>
       <template v-if="
-        finalReview.rfcNumber
+        finalReviewDraft.rfcNumber
       ">
         <span>RFC-to-be{{ NBSP }}</span>
-        <span class="font-bold">{{ finalReview.rfcNumber }}</span>
+        <span class="font-bold">{{ finalReviewDraft.rfcNumber }}</span>
         {{ SPACE }}
         <span class="font-mono mr-2">({{ props.draftName }})</span>
       </template>
@@ -18,102 +18,28 @@
       <component :is="LabelsComponent" />
     </Heading>
 
-    <p v-if="finalReview.clusters" class="text-sm">This document is part of
-      <template v-for="(cluster, index) in finalReview.clusters">
+    <p v-if="finalReviewDraft.clusters" class="text-sm">This document is part of
+      <template v-for="(cluster, index) in finalReviewDraft.clusters">
         <Anchor :href="clusterNumberPathBuilder(cluster)" :class="`${ANCHOR_TAILWIND_STYLE} font-bold`">
           <span class="sr-only">Cluster </span>
           <Icon name="pajamas:group" title="Cluster" class="h-5 w-5 align-middle inline-block mr-0.5" />{{ cluster }}
         </Anchor>
-        <template v-if="index < finalReview.clusters.length - 1">{{ COMMA }} </template>
+        <template v-if="index < finalReviewDraft.clusters.length - 1">{{ COMMA }} </template>
       </template>, so may have additional holds before publication.
     </p>
 
-    <Heading :level="headingLevelPlusOne" :style-level="headingLevelPlusTwo"
-      class="mt-3 mb-2 text-gray-600 dark:text-gray-200 font-semibold text-balance">Approval Status</Heading>
-    <RpcTable v-if="finalReview.finalApprovals && finalReview.finalApprovals.length > 0" class="mx-auto">
-      <RpcThead>
-        <tr>
-          <RpcTh>Approver Name</RpcTh>
-          <RpcTh>Approver Comment</RpcTh>
-          <RpcTh text-align="center">Approval Status</RpcTh>
-          <RpcTh>Date Approved</RpcTh>
-        </tr>
-      </RpcThead>
-      <RpcTbody>
-        <tr v-for="approverItem in finalReview.finalApprovals">
-          <RpcTd>{{ approverItem.approverName }}</RpcTd>
-          <RpcTd>{{ approverItem.comment }}</RpcTd>
-          <RpcTd text-align="center">
-            <abbr v-if="
-              Boolean(approverItem.approvedAtIso) // is there a timestamp            
-            " title="Yes" class="no-underline px-2 py-1">Y</abbr>
-            <abbr v-else title="No" class="no-underline px-2 py-1">N</abbr>
-          </RpcTd>
-          <RpcTd>
-            <time v-if="approverItem.approvedAtIso" :datetime="approverItem.approvedAtIso">
-              {{ approverItem.approvedAtIso.split("T")[0] }}
-            </time>
-            <span v-else>(not available)</span>
-          </RpcTd>
-        </tr>
-      </RpcTbody>
-    </RpcTable>
-    <p v-else class="italic">No final approvals available.</p>
+    <FinalReviewDraftApprovalStatus :heading-level="headingLevelPlusOne" :final-review-draft="finalReviewDraft" />
 
-    <Heading :level="headingLevelPlusOne" :style-level="headingLevelPlusTwo"
-      class="mt-3 mb-2 text-gray-600 dark:text-gray-200 font-semibold text-balance">Action Holders</Heading>
-    <RpcTable v-if="actionholderSet && actionholderSet.length > 0" class="mt-1 mx-auto">
-      <RpcThead>
-        <tr>
-          <RpcTh>Action Holder Name</RpcTh>
-          <RpcTh>Comment</RpcTh>
-          <RpcTh>Date Requested</RpcTh>
-          <RpcTh>Approval Status</RpcTh>
-          <RpcTh>Deadline</RpcTh>
-          <RpcTh>Body</RpcTh>
-        </tr>
-      </RpcThead>
-      <RpcTbody>
-        <tr v-for="actionHolder in actionholderSet">
-          <RpcTd>{{ actionHolder.person?.name ?? '(unnamed)' }}</RpcTd>
-          <RpcTd>{{ actionHolder.comment ?? '(no comment)' }}</RpcTd>
-          <RpcTd>
-            <template v-if="actionHolder.sinceWhenComponent">
-              <Component :is="actionHolder.sinceWhenComponent" />
-            </template>
-            <i v-else>
-              (unknown)
-            </i>
-          </RpcTd>
-          <RpcTd>
-            <template v-if="actionHolder.completedComponent">
-              <Component :is="actionHolder.completedComponent" />
-            </template>
-            <i v-else>
-              (pending)
-            </i>
-          </RpcTd>
-          <RpcTd>
-            <template v-if="actionHolder.deadlineComponent">
-              <Component :is="actionHolder.deadlineComponent" />
-            </template>
-            <i v-else>
-              (none)
-            </i>
-          </RpcTd>
-          <RpcTd>{{ actionHolder.body ?? '(none)' }}</RpcTd>
-        </tr>
-      </RpcTbody>
-    </RpcTable>
-    <p v-else class="italic text-sm">No action holders available.</p>
+    <FinalReviewDraftActionHolders :heading-level="headingLevelPlusOne" :final-review-draft="finalReviewDraft" />
 
     <Heading :level="headingLevelPlusOne" :style-level="headingLevelPlusTwo"
       class="mt-3 mb-2 text-gray-600 dark:text-gray-200 font-semibold text-balance">
       Notes
     </Heading>
-    <ol v-if="finalReview.renderableApprovalLogMessages && finalReview.renderableApprovalLogMessages.length > 0"
+    <ol
+      v-if="finalReviewDraft.renderableApprovalLogMessages && finalReviewDraft.renderableApprovalLogMessages.length > 0"
       class="flex flex-col gap-2 text-sm">
-      <li v-for="approvalLog in finalReview.renderableApprovalLogMessages">
+      <li v-for="approvalLog in finalReviewDraft.renderableApprovalLogMessages">
         <component :is="approvalLog.logMessageComponent" />
         <p v-if="approvalLog.time" class="text-xs italic text-gray-600 dark:text-gray-400 mt-1">Log posted
           <TimeStamp :dateTime="approvalLog.time" />
@@ -130,6 +56,7 @@ import { DateTime } from 'luxon'
 import { renderAssignmentsByRoles } from '../utils/queue'
 import { COMMA, NBSP } from '../utils/strings'
 import Label from './Label.vue'
+import type { FinalReviewDraft, RenderableApprovalLogMessage } from '~/utils/final-review'
 
 type Props = {
   id: string
@@ -160,14 +87,14 @@ const headingLevelPlusTwo = computed((): HeadingLevel => {
   ).toString() as HeadingLevel
 })
 
-const finalReview = computed(() => {
+const finalReviewDraft = computed((): FinalReviewDraft | null => {
   if (!props.queue) return null
-  const item = props.queue.items.find(queueCommonItem => queueCommonItem.name === props.draftName)
-  if (!item) return null
+  const finalReviewDraftData = props.queue.items.find(queueCommonItem => queueCommonItem.name === props.draftName)
+  if (!finalReviewDraftData) return null
   return {
-    ...item,
+    ...finalReviewDraftData,
     generatedAt: props.queue.timestampIso ? DateTime.fromISO(props.queue.timestampIso) : undefined,
-    renderableApprovalLogMessages: item?.approvalLogMessages?.map(approvalLogMessage => {
+    renderableApprovalLogMessages: finalReviewDraftData?.approvalLogMessages?.map((approvalLogMessage): RenderableApprovalLogMessage => {
       const time = approvalLogMessage.timeIso ? DateTime.fromISO(approvalLogMessage.timeIso) : undefined
       const timeAgo = time ? time.toRelativeCalendar() : undefined
 
@@ -185,7 +112,7 @@ const finalReview = computed(() => {
   }
 })
 
-if (!finalReview.value) {
+if (!finalReviewDraft.value) {
   console.error(`[404] ${props.draftName}`)
   throw createError({
     statusCode: 404,
@@ -225,23 +152,4 @@ const LabelsComponent = computed(() => {
     return h('li', { class: 'inline' }, h(Label, { label }))
   }))
 })
-
-const actionholderSet = computed(() => {
-  if (!finalReview.value) {
-    return
-  }
-  const { actionholderSet } = finalReview.value
-  if (!actionholderSet) {
-    return undefined
-  }
-  return actionholderSet.map((actionHolder: ActionHolder) => {
-    return {
-      ...actionHolder,
-      sinceWhenComponent: renderIsoDateAsTooltipComponent(actionHolder.sinceWhenIso),
-      completedComponent: renderIsoDateAsTooltipComponent(actionHolder.completedIso),
-      deadlineComponent: renderIsoDateAsTooltipComponent(actionHolder.deadlineIso),
-    }
-  })
-})
-
 </script>

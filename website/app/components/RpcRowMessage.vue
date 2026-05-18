@@ -27,20 +27,20 @@ type UseAsyncDataError = UseAsyncDataReturn['error']['value']
 type Props = {
   rowCount: number
   columnCount: number
-  status: UseAsyncDataStatus | UseAsyncDataStatus[]
-  error: UseAsyncDataError | UseAsyncDataError[]
+  status?: UseAsyncDataStatus | UseAsyncDataStatus[]
+  error?: UseAsyncDataError | UseAsyncDataError[]
 }
 
 const props = defineProps<Props>()
 
 const statusArr = computed(() => {
   const { status } = props
-  return Array.isArray(status) ? status : [status]
+  return status ? Array.isArray(status) ? status : [status] : []
 })
 
 const errorArr = computed(() => {
   const { error } = props
-  return Array.isArray(error) ? error : [error]
+  return error ? Array.isArray(error) ? error : [error] : []
 })
 
 const isMounted = ref(false)

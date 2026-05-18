@@ -52,8 +52,6 @@ import {
 } from '@tanstack/vue-table'
 import { getVNodeText } from '../utils/vue'
 import type { ClusterDocumentCommon } from '../utils/validators'
-import { uniqBy } from 'es-toolkit'
-import { cluster } from 'd3'
 
 const origin = usePublicSiteUrlOrigin()
 
