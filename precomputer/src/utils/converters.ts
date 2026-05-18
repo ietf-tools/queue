@@ -256,7 +256,7 @@ export const parsePendingActivities = (pendingActivities?: RpcRole[]): QueueComm
     return undefined
   }
 
-  console.log('slugs to parse', pendingActivities.map(pendingActivity => pendingActivity.slug))
+  // console.log('slugs to parse', pendingActivities.map(pendingActivity => pendingActivity.slug))
 
   return pendingActivities.map((pendingActivity): PendingActivityCommon => {
     const { slug: maybeSlug, name, desc } = pendingActivity
