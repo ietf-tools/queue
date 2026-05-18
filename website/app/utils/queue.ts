@@ -105,7 +105,10 @@ export const renderAssignmentsByRoles = ({
                 editorRoles.includes(pendingActivity.slug) ? 'emerald' : 'green'
             },
             () => {
-              return pendingActivity.name ?? slugToHumanReadable(pendingActivity.slug)
+              if ((pendingActivity.name)) {
+                return `Awaiting ${pendingActivity.name}`
+              }
+              return `Awaiting ${slugToHumanReadable(pendingActivity.slug)}`
             }
           )
         )
