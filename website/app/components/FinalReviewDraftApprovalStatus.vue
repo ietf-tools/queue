@@ -40,6 +40,7 @@ import {
 import type { FinalReviewDraft } from '~/utils/final-review'
 import type { FinalApproval } from '../utils/validators'
 import Header from './Header.vue'
+import Linkify from './Linkify.vue'
 
 type Props = {
   headingLevel: HeadingLevel
@@ -75,7 +76,7 @@ const columns = [
     header: 'Approver Comment',
     cell: data => {
       const value = data.getValue()
-      return value ?? h('i', '(no comment)')
+      return value ? h(Linkify, { html: value }) : h('i', '(no comment)')
     },
     enableSorting: false,
   }),

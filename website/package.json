@@ -32,6 +32,7 @@
     "better-sqlite3": "12.9.0",
     "d3": "7.9.0",
     "es-toolkit": "1.46.1",
+    "linkifyjs": "4.3.3",
     "luxon": "3.7.2",
     "nuxt": "4.4.4",
     "nuxt-vitalizer": "2.0.0",

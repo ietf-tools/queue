@@ -24,7 +24,8 @@ export default defineNuxtConfig({
         '@tanstack/vue-table',
         'es-toolkit',
         'zod',
-        '@iconify-json/uil'
+        '@iconify-json/uil',
+        'linkifyjs',
       ]
     }
   },

@@ -57,6 +57,7 @@ import { renderAssignmentsByRoles } from '../utils/queue'
 import { COMMA, NBSP } from '../utils/strings'
 import Label from './Label.vue'
 import type { FinalReviewDraft, RenderableApprovalLogMessage } from '~/utils/final-review'
+import Linkify from './Linkify.vue'
 
 type Props = {
   id: string
@@ -102,7 +103,7 @@ const finalReviewDraft = computed((): FinalReviewDraft | null => {
         ...approvalLogMessage,
         logMessageComponent: h('div', { class: 'font-mono flex flex-col gap-2' },
           approvalLogMessage.logMessage.split(/\n/g).map(
-            line => h('p', String(line))
+            line => h('p', h(Linkify, { html: line }))
           )
         ),
         time,
