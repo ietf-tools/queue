@@ -230,8 +230,18 @@ export const sortClusters = (aClusters: QueueCommonItem['clusters'], bClusters: 
   if (aClusters === undefined && bClusters !== undefined) {
     return 1
   }
-  const clustersToLocaleComparable = (clusters: QueueCommonItem['clusters']) => (clusters ?? []).join(', ')
-  return clustersToLocaleComparable(aClusters).localeCompare(clustersToLocaleComparable(bClusters))
+  // this only exists to narrow types for TS benefit
+  if (aClusters === undefined || bClusters === undefined) {
+    throw Error('internal error: Expected undefined clusters to be filtered by now')
+  }
+
+  for (let i = 0; i < Math.min(aClusters.length, bClusters.length); i++) {
+    const diff = (bClusters[i] ?? 0) - (aClusters[i] ?? 0)
+    if (diff !== 0) {
+      return diff
+    }
+  }
+  return aClusters.length - bClusters.length
 }
 
 export const renderIsoDateComponent = (isoDate?: string) => {

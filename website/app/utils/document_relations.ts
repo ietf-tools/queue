@@ -5,6 +5,7 @@ import * as d3 from "d3"
 import { black, font, getCircleTheme, getHumanReadableRelationshipName, green, line_height, normalizeData, orange, red, teal, type DataParam, type Line, type Link, type LinkParam, type Node, type Relationship } from "./document_relations-utils"
 import { getAncestors } from './dom'
 import { assertNever } from "./typescript"
+import { detectPrefersReducedMotion } from "./accessibility"
 
 const TOOLTIP_BUFFER_Y = 5
 
@@ -282,28 +283,12 @@ export function drawGraph({ data: _data, pushRouter, setTooltip }: Props) {
     // https://www.typescriptlang.org/docs/handbook/functions.html#this-parameters
     this: d3.Simulation<d3.SimulationNodeDatum, undefined>,
   ) {
+    const prefersReducedMotion = detectPrefersReducedMotion()
+    const ticksToSkip = prefersReducedMotion ? 1000 : 3
     // don't animate each tick
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < ticksToSkip; i++) {
       this.tick()
     }
-
-    // code for straight links:
-    // link.attr("d", function (d) {
-    //     const dx = d.target.x - d.source.x;
-    //     const dy = d.target.y - d.source.y;
-
-    //     const path_len = Math.sqrt((dx * dx) +
-    //         (dy * dy));
-
-    //     const offx = (dx * d.target.r) /
-    //         path_len;
-    //     const offy = (dy * d.target.r) /
-    //         path_len;
-    //     return `
-    //         M${d.source.x},${d.source.y}
-    //         L${d.target.x - offx},${d.target.y - offy}
-    //     `;
-    // });
 
     // code for arced links:
     link.attr("d", (d) => {
@@ -392,28 +377,30 @@ export function drawGraph({ data: _data, pushRouter, setTooltip }: Props) {
     ])
   }
 
+  const simulation = d3
+    .forceSimulation()
+    .nodes(data.nodes as Node[])
+    .force(
+      "link",
+      d3
+        .forceLink(data.links)
+        .id((d) => {
+          const dNode = d as Node
+          return dNode.id
+        })
+        .distance(0)
+        .strength(0.1)
+    )
+    .force("charge", d3.forceManyBody().strength(-max_r))
+    .force("collision", d3.forceCollide(1.25 * max_r))
+    .force("x", d3.forceX())
+    .force("y", d3.forceY())
+    .stop()
+    .on("tick", ticked)
+
   return [
     svg.node(),
-    d3
-      .forceSimulation()
-      .nodes(data.nodes as Node[])
-      .force(
-        "link",
-        d3
-          .forceLink(data.links)
-          .id((d) => {
-            const dNode = d as Node
-            return dNode.id
-          })
-          .distance(0)
-          .strength(0.1)
-      )
-      .force("charge", d3.forceManyBody().strength(-max_r))
-      .force("collision", d3.forceCollide(1.25 * max_r))
-      .force("x", d3.forceX())
-      .force("y", d3.forceY())
-      .stop()
-      .on("tick", ticked),
+    simulation,
   ]
 }
 

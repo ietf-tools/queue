@@ -120,7 +120,11 @@ const columns = [
         data.getValue(),
       ])
     },
-    sortingFn: 'alphanumeric',
+    sortingFn: (rowA, rowB) => {
+      const aClusters = rowA.original.number ? [rowA.original.number] : []
+      const bClusters = rowB.original.number ? [rowB.original.number] : []
+      return sortClusters(aClusters, bClusters)
+    },
   }),
   columnHelper.accessor('documents', {
     header: 'Documents',
