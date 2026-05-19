@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 import { finalReviewPathBuilder } from './url'
-import { type QueueCommonItem, type ThemeColorCommon } from './validators'
+import { type LabelCommon, type QueueCommonItem, type ThemeColorCommon } from './validators'
 import { Anchor, BaseBadge, TimeStamp } from '#components'
 
 export const calculateEnqueuedAtData = (enqueuedAtJSDate: Date) => {
@@ -181,13 +181,57 @@ export const sortIsoDateStrings = (aIsoDate: string | undefined, bIsoDate: strin
   if (aIsoDate === undefined && bIsoDate !== undefined) {
     return 1
   }
-  // this function only exists to narrow types for TS benefit
+  // this only exists to narrow types for TS benefit
   if (aIsoDate === undefined || bIsoDate === undefined) {
     throw Error('internal error: Expected undefined dates to be filtered by now')
   }
   const aDateTime = DateTime.fromISO(aIsoDate)
   const bDateTime = DateTime.fromISO(bIsoDate)
   return aDateTime.toMillis() - bDateTime.toMillis()
+}
+
+export const sortLabels = (aLabels: LabelCommon[] | undefined, bLabels: LabelCommon[] | undefined): number => {
+  if (aLabels === undefined && bLabels === undefined) {
+    return 0
+  }
+  if (aLabels !== undefined && bLabels === undefined) {
+    return -1
+  }
+  if (aLabels === undefined && bLabels !== undefined) {
+    return 1
+  }
+  // this only exists to narrow types for TS benefit
+  if (aLabels === undefined || bLabels === undefined) {
+    throw Error('internal error: Expected undefined dates to be filtered by now')
+  }
+
+  /**
+   * Custom `Label` stringify for use in String.localeCompare(), which:
+   *  * presumably sorts better on strings of human language not JSON.stringify()-syntax-tech-babble
+   *  * by manually stringifying Label we avoid JSON.stringify() key order instability affecting comparisons.
+   *    ES2015/ES6 stabilises this slightly but still has 'insertion order' affecting 'key order' criteria,
+   *    which seems a bad thing to rely on in a sort function.
+   * So that's why it's a custom stringify
+   */
+  const labelToLocaleComparable = (label: LabelCommon) => `${label.slug} (${label.isComplexity}) [${label.isException}]`
+
+  const aLabelsComparable = aLabels.map(labelToLocaleComparable).join('. ')
+  const bLabelsComparable = bLabels.map(labelToLocaleComparable).join('. ')
+  return aLabelsComparable.localeCompare(bLabelsComparable)
+}
+
+export const sortClusters = (aClusters: QueueCommonItem['clusters'], bClusters: QueueCommonItem['clusters']): number => {
+  if (aClusters === undefined && bClusters === undefined) {
+    return 0
+  }
+  if (aClusters !== undefined && bClusters === undefined) {
+    return -1
+  }
+  if (aClusters === undefined && bClusters !== undefined) {
+    return 1
+  }
+  const clustersToLocaleComparable = (clusters: QueueCommonItem['clusters']) => (clusters ?? []).join(', ')
+  return clustersToLocaleComparable(aClusters).localeCompare(clustersToLocaleComparable(bClusters))
 }
 
 export const renderIsoDateComponent = (isoDate?: string) => {

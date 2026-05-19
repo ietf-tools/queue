@@ -1,6 +1,6 @@
 <template>
   <DialogRoot v-model:open="isOpen">
-    <DialogTrigger aria-label="Menu" class="absolute top-0 right-0 block px-3 py-4.5 block lg:hidden">
+    <DialogTrigger aria-label="Menu" class="absolute cursor-pointer top-0 right-0 block px-3 py-4.5 block lg:hidden">
       <GraphicsHamburgerMenu />
     </DialogTrigger>
     <DialogPortal>
@@ -8,12 +8,12 @@
       <DialogContent :class="// needs overflow-y-scroll to force scrollbars, to ensure same page width as the main view
         'absolute inset-0 z-50 bg-blue-900 text-white dark:bg-blue-950 dark:text-white overflow-y-scroll h-full'">
         <DialogTitle>
-          <button type="button" class="flex justify-between w-full py-5 px-4 items-center">
+          <div class="flex justify-between w-full py-5 px-4 items-center">
             <GraphicsHeaderLogoMobileMenu />
             <DialogClose>
-              <GraphicsClose class="text-white" />
+              <GraphicsClose class="text-white cursor-pointer" />
             </DialogClose>
-          </button>
+          </div>
         </DialogTitle>
         <div class="flex flex-col">
           <Accordion>
@@ -30,7 +30,7 @@
                       {{ level0.label }}
                     </Anchor>
                     <button v-else-if="level0.click" type="button" :aria-label="level0.activeLabelFn?.()"
-                      :class="[MENU_ITEM_CLASS, 'flex items-center']" @click="
+                      :class="[MENU_ITEM_CLASS, 'flex items-center cursor-pointer']" @click="
                         (e: MouseEvent) => {
                           level0.click?.(e)
                           isOpen = false

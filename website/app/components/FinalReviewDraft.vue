@@ -22,7 +22,7 @@
       <template v-for="(cluster, index) in finalReviewDraft.clusters">
         <Anchor :href="clusterNumberPathBuilder(cluster)" :class="`${ANCHOR_TAILWIND_STYLE} font-bold`">
           <span class="sr-only">Cluster </span>
-          <Icon name="pajamas:group" title="Cluster" class="h-5 w-5 align-middle inline-block mr-0.5" />{{ cluster }}
+          <Icon name="pajamas:group" title="Cluster" class="h-4 w-4 align-middle inline-block mr-1" />{{ cluster }}
         </Anchor>
         <template v-if="index < finalReviewDraft.clusters.length - 1">{{ COMMA }} </template>
       </template>, so may have additional holds before publication.

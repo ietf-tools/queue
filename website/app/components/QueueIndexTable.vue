@@ -47,7 +47,7 @@ import { Anchor, Icon } from '#components'
 import Label from './Label.vue'
 import { getVNodeText } from '../utils/vue'
 import { getQueueIndex } from '../utils/api'
-import { calculateEnqueuedAtData, renderAssignmentsByRoles, renderEnqueuedAt, sortIsoDateStrings } from '~/utils/queue'
+import { calculateEnqueuedAtData, renderAssignmentsByRoles, renderEnqueuedAt, sortIsoDateStrings, sortLabels } from '~/utils/queue'
 import { datatrackerDraftUrlBuilder } from '~/utils/url'
 import { scrollToHashId } from '~/utils/scroll'
 
@@ -109,7 +109,11 @@ const columns = [
         return h('li', { class: 'inline' }, h(Label, { label }))
       }))
     },
-    enableSorting: false,
+    sortingFn: (rowA, rowB) => {
+      const aLabels = rowA.original.labels
+      const bLabels = rowB.original.labels
+      return sortLabels(aLabels, bLabels)
+    },
   }),
   columnHelper.accessor(
     'enqueuedAtIso', {
@@ -154,41 +158,34 @@ const columns = [
       // Keeping the sort function in sync with the render function is important
       // so that similarly rendered items are sorted together.
       //
-      // However because this column's render function is more complicated than usual
-      // (it's not just returning primitive values) we could either:
+      // However this column's render function is more complicated than usual,
+      // it returns h() render function with a lot of derived state, so we could
+      // either:
+      //
       //   1) manually keep custom sorting logic in sync with the visual rendering,
       //      or;
       //   2) stringify the h() render output and sort as strings
+      //
       // The later has less maintenance burden so we'll try (2) until it doesn't work.
-      const nodesA = renderAssignmentsByRoles({
-        assignmentsByRoles: rowA.original.assignmentsByRoles,
-        pendingActivities: rowA.original.pendingActivities,
-        ianaStatus: rowA.original.ianaStatus,
-        hideLinkDetails: false,
-        linkFinalReviewsBy: rowA.original.rfcNumber ? {
-          type: 'RFC_NUMBER',
-          rfcNumber: rowA.original.rfcNumber
-        } : {
-          type: 'DRAFTNAME',
-          draftName: rowA.original.name
-        }
-      })
-      const textA = getVNodeText(nodesA).replace(/\s+/g, ' ') // normalise whitespace
+      const stringifyRenderAssignmentsByRoles = (row: QueueCommonItem): string => {
+        const nodes = renderAssignmentsByRoles({
+          assignmentsByRoles: row.assignmentsByRoles,
+          pendingActivities: row.pendingActivities,
+          ianaStatus: row.ianaStatus,
+          hideLinkDetails: false,
+          linkFinalReviewsBy: row.rfcNumber ? {
+            type: 'RFC_NUMBER',
+            rfcNumber: row.rfcNumber
+          } : {
+            type: 'DRAFTNAME',
+            draftName: row.name
+          }
+        })
+        return getVNodeText(nodes).replace(/\s+/g, ' ') // normalise whitespace
+      }
 
-      const nodesB = renderAssignmentsByRoles({
-        assignmentsByRoles: rowB.original.assignmentsByRoles,
-        pendingActivities: rowB.original.pendingActivities,
-        ianaStatus: rowB.original.ianaStatus,
-        hideLinkDetails: false,
-        linkFinalReviewsBy: rowB.original.rfcNumber ? {
-          type: 'RFC_NUMBER',
-          rfcNumber: rowB.original.rfcNumber
-        } : {
-          type: 'DRAFTNAME',
-          draftName: rowB.original.name
-        }
-      })
-      const textB = getVNodeText(nodesB).replace(/\s+/g, ' ') // normalise whitespace
+      const textA = stringifyRenderAssignmentsByRoles(rowA.original)
+      const textB = stringifyRenderAssignmentsByRoles(rowB.original)
       const textComparison = textA.localeCompare(textB)
       if (textComparison !== 0) {
         return textComparison
@@ -229,24 +226,15 @@ const columns = [
               class: `${ANCHOR_TAILWIND_STYLE}`
             },
             () => [
-              h(Icon, { name: 'pajamas:group', class: 'h-5 w-5 inline-block mr-1' }),
+              h(Icon, { name: 'pajamas:group', class: 'h-4 w-4 inline-block align-middle mr-1' }),
               String(cluster)
             ])
         }))
       },
-      sortingFn: (rowA, rowB, columnId) => {
-        const clustersA = rowA.getValue(columnId)
-        const clustersB = rowB.getValue(columnId)
-        const a = Array.isArray(clustersA) && clustersA.length > 0 ? clustersA[0] : undefined
-        const b = Array.isArray(clustersB) && clustersB.length > 0 ? clustersB[0] : undefined
-        if (a === undefined && b === undefined) {
-          return 1
-        } else if (a === undefined) {
-          return 1
-        } else if (b === undefined) {
-          return 1
-        }
-        return a - b
+      sortingFn: (rowA, rowB) => {
+        const aClusters = rowA.original.clusters
+        const bClusters = rowB.original.clusters
+        return sortClusters(aClusters, bClusters)
       },
     })] : []),
 ]

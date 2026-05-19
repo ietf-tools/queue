@@ -116,7 +116,7 @@ const columns = [
         'class': [ANCHOR_TAILWIND_STYLE, 'font-bold text-md whitespace-nowrap']
       }, () => [
         h('span', { class: 'sr-only' }, 'Cluster '),
-        h(Icon, { name: 'pajamas:group', class: 'h-5 w-5 inline-block mr-1' }),
+        h(Icon, { name: 'pajamas:group', class: 'h-4 w-4 inline-block align-middle mr-1' }),
         data.getValue(),
       ])
     },

@@ -91,7 +91,11 @@ const columns = [
         return h('li', { class: 'inline' }, h(Label, { label }))
       }))
     },
-    enableSorting: false,
+    sortingFn: (rowA, rowB) => {
+      const aLabels = rowA.original.labels
+      const bLabels = rowB.original.labels
+      return sortLabels(aLabels, bLabels)
+    },
   }),
   columnHelper.accessor(
     'clusters', {
@@ -110,14 +114,18 @@ const columns = [
               class: `${ANCHOR_TAILWIND_STYLE} underline`
             },
             () => [
-              h(Icon, { name: 'pajamas:group', class: 'h-5 w-5 inline-block mr-1' }),
+              h(Icon, { name: 'pajamas:group', class: 'h-4 w-4 inline-block align-middle mr-1' }),
               clusterNumber
             ]
           )
         )
       }))
     },
-    enableSorting: false,
+    sortingFn: (rowA, rowB) => {
+      const aClusters = rowA.original.clusters
+      const bClusters = rowB.original.clusters
+      return sortClusters(aClusters, bClusters)
+    },
   }),
 ]
 
@@ -125,7 +133,7 @@ const emptyArray: QueueCommonItem[] = []
 
 const table = useVueTable({
   get data() {
-    return props.queueItems ?? emptyArray // Need a const emptyArray rather than a new array every data(){} to prevent unnecessary rerenders / freezing
+    return props.queueItems ?? emptyArray // Need a const emptyArray rather than a new array every data(){} to prevent unnecessary rerenders / CPU lock up churn / app freeze
   },
   columns,
   state: {
