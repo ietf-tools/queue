@@ -274,7 +274,7 @@ example().catch(console.error);
 
 ## apiPubqQueueList
 
-> Array&lt;PublicQueueItem&gt; apiPubqQueueList(disposition, pendingFinalApproval)
+> Array&lt;PublicQueueItem&gt; apiPubqQueueList(disposition, pendingFinalApproval, pendingFinalReview)
 
 
 
@@ -302,6 +302,8 @@ async function example() {
     disposition: disposition_example,
     // boolean | Filter by pending final approval status, true returns drafts with at least one pending final approval, false returns drafts where all final approvals are approved. (optional)
     pendingFinalApproval: true,
+    // boolean | Filter by pending final review status. True returns drafts with at least one pending author approval (FinalApproval) or at least one uncompleted action holder. False returns drafts where at least one author approval exists, all author approvals are done, and no action holders are uncompleted. (optional)
+    pendingFinalReview: true,
   } satisfies ApiPubqQueueListRequest;
 
   try {
@@ -323,6 +325,7 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **disposition** | `created`, `in_progress`, `published`, `withdrawn` | Filter queue items by disposition slug. | [Optional] [Defaults to `undefined`] [Enum: created, in_progress, published, withdrawn] |
 | **pendingFinalApproval** | `boolean` | Filter by pending final approval status, true returns drafts with at least one pending final approval, false returns drafts where all final approvals are approved. | [Optional] [Defaults to `undefined`] |
+| **pendingFinalReview** | `boolean` | Filter by pending final review status. True returns drafts with at least one pending author approval (FinalApproval) or at least one uncompleted action holder. False returns drafts where at least one author approval exists, all author approvals are done, and no action holders are uncompleted. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -7404,7 +7407,7 @@ This endpoint does not need any parameter.
 
 ## queueList
 
-> Array&lt;QueueItem&gt; queueList(disposition, pendingFinalApproval)
+> Array&lt;QueueItem&gt; queueList(disposition, pendingFinalApproval, pendingFinalReview)
 
 
 
@@ -7432,6 +7435,8 @@ async function example() {
     disposition: disposition_example,
     // boolean | Filter by pending final approval status, true returns drafts with at least one pending final approval, false returns drafts where all final approvals are approved. (optional)
     pendingFinalApproval: true,
+    // boolean | Filter by pending final review status. True returns drafts with at least one pending author approval (FinalApproval) or at least one uncompleted action holder. False returns drafts where at least one author approval exists, all author approvals are done, and no action holders are uncompleted. (optional)
+    pendingFinalReview: true,
   } satisfies QueueListRequest;
 
   try {
@@ -7453,6 +7458,7 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **disposition** | `created`, `in_progress`, `published`, `withdrawn` | Filter queue items by disposition slug. | [Optional] [Defaults to `undefined`] [Enum: created, in_progress, published, withdrawn] |
 | **pendingFinalApproval** | `boolean` | Filter by pending final approval status, true returns drafts with at least one pending final approval, false returns drafts where all final approvals are approved. | [Optional] [Defaults to `undefined`] |
+| **pendingFinalReview** | `boolean` | Filter by pending final review status. True returns drafts with at least one pending author approval (FinalApproval) or at least one uncompleted action holder. False returns drafts where at least one author approval exists, all author approvals are done, and no action holders are uncompleted. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

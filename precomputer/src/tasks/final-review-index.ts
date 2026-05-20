@@ -13,14 +13,14 @@ export const getFinalReviewIndex = async ({ api, params }: Props): Promise<Final
       api,
       params: {
         ...params,
-        pendingFinalApproval: true
+        pendingFinalReview: true
       }
     }),
     getQueueCommon({
       api,
       params: {
         ...params,
-        pendingFinalApproval: false
+        pendingFinalReview: false
       }
     })
   ])

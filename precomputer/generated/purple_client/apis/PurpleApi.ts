@@ -290,6 +290,7 @@ export interface ApiPubqClustersRetrieveRequest {
 export interface ApiPubqQueueListRequest {
     disposition?: ApiPubqQueueListDispositionEnum;
     pendingFinalApproval?: boolean;
+    pendingFinalReview?: boolean;
 }
 
 export interface AssignmentsCreateRequest {
@@ -761,6 +762,7 @@ export interface ProfileRetrieveDemoOnlyRequest {
 export interface QueueListRequest {
     disposition?: QueueListDispositionEnum;
     pendingFinalApproval?: boolean;
+    pendingFinalReview?: boolean;
 }
 
 export interface RpcPersonAssignmentsListRequest {
@@ -953,6 +955,10 @@ export class PurpleApi extends runtime.BaseAPI {
 
         if (requestParameters['pendingFinalApproval'] != null) {
             queryParameters['pending_final_approval'] = requestParameters['pendingFinalApproval'];
+        }
+
+        if (requestParameters['pendingFinalReview'] != null) {
+            queryParameters['pending_final_review'] = requestParameters['pendingFinalReview'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -5832,6 +5838,10 @@ export class PurpleApi extends runtime.BaseAPI {
 
         if (requestParameters['pendingFinalApproval'] != null) {
             queryParameters['pending_final_approval'] = requestParameters['pendingFinalApproval'];
+        }
+
+        if (requestParameters['pendingFinalReview'] != null) {
+            queryParameters['pending_final_review'] = requestParameters['pendingFinalReview'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
