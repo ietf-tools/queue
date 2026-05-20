@@ -56,6 +56,7 @@ export type BlockingReason = z.infer<typeof BlockingReasonSchema>
 
 export const AssignmentRoleSchema = z.union([
   z.literal('blocked'),
+  z.literal('enqueuer'),
   z.literal('first_editor'),
   z.literal('final_review_editor'),
   z.literal('second_editor'),
