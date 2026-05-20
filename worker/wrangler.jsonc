@@ -59,7 +59,7 @@
 			"r2_buckets": [
 				{
 					"binding": "QUEUE_BUCKET",
-					"bucket_name": "queue"
+					"bucket_name": "queue-prod"
 				}
 			]
 		}
