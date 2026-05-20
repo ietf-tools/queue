@@ -157,6 +157,8 @@ export const getRoleColor = (role: AssignmentByRole['role']): ThemeColorCommon =
   switch (role) {
     case 'blocked':
       return 'red'
+    case 'enqueuer':
+      return 'yellow'
     case 'first_editor':
     case 'second_editor':
     case 'final_review_editor':
