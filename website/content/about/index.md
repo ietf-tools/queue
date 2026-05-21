@@ -18,7 +18,7 @@ As streams approve documents for publication, they enter the [publication queue]
   - **Reference Not Received (3rd Generation)** - The document has a normative reference to a document that normatively references a document that normatively references an Internet-Draft that is not yet in the queue.
   - **IANA Hold** - The document has been edited and is awaiting completion of IANA actions. See [IANA's status page](https://www.iana.org/performance/ietf-draft-status).
   - **Stream Hold** - The document is being held per the request of the publication stream that approved it. See details on streams on [What is an RFC?](https://www.rfc-editor.org/series/rfc/).
-  - **Tool Issue** - The document is waiting for a fix of an issue with the software used to create the published documents.
+  - **Tools Issue** - The document is waiting for a fix of an issue with the software used to create the published documents.
   
 ## Labels
 
