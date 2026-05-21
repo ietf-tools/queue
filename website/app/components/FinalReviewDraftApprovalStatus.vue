@@ -1,7 +1,7 @@
 <template>
   <Heading :level="props.headingLevel" :style-level="headingLevelPlusOne"
     class="mt-3 mb-2 text-gray-600 dark:text-gray-200 font-semibold text-balance">Approval Status</Heading>
-  <RpcTable v-if="props.finalReviewDraft.actionholderSet">
+  <RpcTable v-if="props.finalReviewDraft.finalApprovals?.length">
     <RpcThead>
       <tr v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
         <RpcTh v-for="header in headerGroup.headers" :key="header.id" :colSpan="header.colSpan"
