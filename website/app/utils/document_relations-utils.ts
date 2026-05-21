@@ -369,7 +369,7 @@ export const getClusterGraphData = (cluster: ClusterPackageCommon["cluster"]) =>
         if (!targetDraftName) return []
         return [{
           id: targetDraftName,
-          url: `/docs/${targetDraftName}`,
+          url: datatrackerDraftUrlBuilder(targetDraftName),
           isNormRef: true,
           isReceived: targetIsReceived ?? false,
           rfcNumber: targetRfcNumber ?? undefined,
@@ -379,7 +379,7 @@ export const getClusterGraphData = (cluster: ClusterPackageCommon["cluster"]) =>
 
       return [{
         id: name,
-        url: `/docs/${name}`,
+        url: datatrackerDraftUrlBuilder(name),
         rfcNumber: rfcNumber ?? undefined,
         isReceived: isReceived ?? undefined,
         disposition: parseDisposition(disposition),
