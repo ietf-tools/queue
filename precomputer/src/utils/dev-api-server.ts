@@ -10,22 +10,22 @@ const fastify = Fastify({
   logger: true
 })
 
-fastify.get('/api/v1/queue.json', async () => {
+fastify.get('/api/v1/queue/index.json', async () => {
   const api = getApiClient('dev')
   const queueCommon = await getQueueIndex({ api })
   return queueCommon
 })
 
 fastify.get('/api/v1/clusters/:number.json', async (request, reply) => {
-  console.log("WHAT TEST", request.params)
+  console.log('WHAT TEST', request.params)
   if (request.params && typeof request.params === 'object' && 'number' in request.params) {
     const { number } = request.params
     const clusterNumber = parseFloat(String(number))
-    console.log("FOUND CLUSTER NUMBER", clusterNumber)
+    console.log('FOUND CLUSTER NUMBER', clusterNumber)
 
     if (!Number.isNaN(clusterNumber)) {
       const api = getApiClient('dev')
-      console.log("Get cluster", clusterNumber)
+      console.log('Get cluster', clusterNumber)
       try {
         const cluster = await getClusterPackage({ api, clusterNumber })
         if (cluster === null) {
@@ -57,19 +57,19 @@ fastify.get('/api/v1/queue.xml', async (request, reply) => {
   const api = getApiClient('dev')
   const queueXML = await getQueueXML({ api })
   console.log({ queueXML })
-  reply
-    .code(200)
-    .type('text/xml')
-    .send(queueXML)
+  reply.code(200).type('text/xml').send(queueXML)
 })
 
-fastify.listen({
-  port: 3001,
-  host: '0.0.0.0' // 0.0.0.0 needed to work in Docker 
-}, function (err, address) {
-  if (err) {
-    fastify.log.error(err)
-    process.exit(1)
+fastify.listen(
+  {
+    port: 3001,
+    host: '0.0.0.0' // 0.0.0.0 needed to work in Docker
+  },
+  function (err, address) {
+    if (err) {
+      fastify.log.error(err)
+      process.exit(1)
+    }
+    console.log(`Server is now listening on ${address}`)
   }
-  console.log(`Server is now listening on ${address}`)
-})
+)
