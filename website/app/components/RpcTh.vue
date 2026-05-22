@@ -1,5 +1,6 @@
 <template>
-  <th class="px-1 first:pl-3 last:pr-3 py-3.5 text-sm content-start font-semibold text-gray-900 dark:text-neutral-400"
+  <th
+    class="sticky top-0 bg-gray-50 z-10 dark:bg-neutral-800 border-b-gray-300 border-b-1 dark:border-b-neutral-700 px-1 first:pl-3 last:pr-3 py-3.5 text-sm content-start font-semibold text-gray-900 dark:text-neutral-400"
     :aria-sort="props.sortDirection ? props.sortDirection === 'asc' ? 'ascending' : 'descending' : undefined">
     <div :class="['flex flex-row',
       props.textAlign === 'left' ? 'text-left justify-start' : '',
