@@ -25,7 +25,6 @@
     "@iconify-json/uil": "1.2.3",
     "@nuxt/content": "3.13.0",
     "@nuxt/icon": "2.2.2",
-    "@nuxtjs/color-mode": "4.0.0",
     "@tailwindcss/vite": "4.3.0",
     "@tanstack/vue-table": "8.21.3",
     "@vueuse/core": "14.3.0",

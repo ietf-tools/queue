@@ -5,7 +5,13 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-08-05',
   typescript: { strict: true },
   devtools: { enabled: false },
-  modules: ['@nuxt/content', '@nuxt/icon', '@nuxtjs/color-mode', 'reka-ui/nuxt', 'nuxt-vitalizer'],
+  modules: [
+    '@nuxt/content',
+    '@nuxt/icon',
+    './modules/color-mode/module.ts',
+    'reka-ui/nuxt',
+    'nuxt-vitalizer'
+  ],
   css: ['~/assets/css/tailwind.css'],
   colorMode: {
     classSuffix: ''
