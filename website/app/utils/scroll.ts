@@ -15,7 +15,9 @@ const attemptToScrollToHashId = () => {
   }
   const target = document.getElementById(normalisedHash)
   if (!target) {
-    console.log(`Can't find # target ${JSON.stringify(normalisedHash)} (from ${JSON.stringify(hash)})`)
+    console.log(
+      `Can't find # target ${JSON.stringify(normalisedHash)} (from ${JSON.stringify(hash)})`
+    )
     return
   }
   try {
@@ -24,12 +26,14 @@ const attemptToScrollToHashId = () => {
     })
     target.focus()
   } catch (e) {
-    console.error(`Unable to scroll/focus to ${JSON.stringify(normalisedHash)} (from ${JSON.stringify(hash)})`, e)
+    console.error(
+      `Unable to scroll/focus to ${JSON.stringify(normalisedHash)} (from ${JSON.stringify(hash)})`,
+      e
+    )
   }
 }
 
 export const scrollToHashId = () => {
-  console.log('sdfsdf')
   if (typeof window === 'undefined') {
     console.log(`Can't scroll without 'window'`)
     return
