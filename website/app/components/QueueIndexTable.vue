@@ -88,7 +88,10 @@ const columns = [
     cell: data => {
       return h(Anchor, {
         href: datatrackerDraftUrlBuilder(data.row.original.name),
-        class: ANCHOR_TAILWIND_STYLE,
+        class: [
+          ANCHOR_TAILWIND_STYLE,
+          'scroll-m-20' // ensure link targets aren't obscured by sticky header https://mailarchive.ietf.org/arch/msg/tools-discuss/KYJF-QY2U4qXWS2UVL16vMO_qn4/
+        ],
         rel: 'noopener',
         target: '_blank',
         id: data.row.original.name
