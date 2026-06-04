@@ -168,6 +168,12 @@ export interface QueueItem {
     readonly enqueuedAt?: Date;
     /**
      * 
+     * @type {Date}
+     * @memberof QueueItem
+     */
+    readonly finalReviewStartedAt?: Date | null;
+    /**
+     * 
      * @type {Array<FinalApproval>}
      * @memberof QueueItem
      */
@@ -221,6 +227,7 @@ export function QueueItemFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'rfcNumber': json['rfc_number'] == null ? undefined : json['rfc_number'],
         'pages': json['pages'] == null ? undefined : json['pages'],
         'enqueuedAt': json['enqueued_at'] == null ? undefined : (new Date(json['enqueued_at'])),
+        'finalReviewStartedAt': json['final_review_started_at'] == null ? undefined : (new Date(json['final_review_started_at'])),
         'finalApproval': json['final_approval'] == null ? undefined : ((json['final_approval'] as Array<any>).map(FinalApprovalFromJSON)),
         'ianaStatus': json['iana_status'] == null ? undefined : IanaStatusFromJSON(json['iana_status']),
         'blockingReasons': json['blocking_reasons'] == null ? undefined : ((json['blocking_reasons'] as Array<any>).map(RfcToBeBlockingReasonFromJSON)),
@@ -231,7 +238,7 @@ export function QueueItemToJSON(json: any): QueueItem {
     return QueueItemToJSONTyped(json, false);
 }
 
-export function QueueItemToJSONTyped(value?: Omit<QueueItem, 'id'|'name'|'labels'|'cluster'|'assignment_set'|'actionholder_set'|'pending_activities'|'pages'|'enqueued_at'|'final_approval'|'iana_status'|'blocking_reasons'> | null, ignoreDiscriminator: boolean = false): any {
+export function QueueItemToJSONTyped(value?: Omit<QueueItem, 'id'|'name'|'labels'|'cluster'|'assignment_set'|'actionholder_set'|'pending_activities'|'pages'|'enqueued_at'|'final_review_started_at'|'final_approval'|'iana_status'|'blocking_reasons'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

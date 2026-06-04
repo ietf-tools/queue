@@ -46,6 +46,7 @@ import type {
   FinalApproval,
   FinalApprovalRequest,
   History,
+  IanaStatus,
   Label,
   LabelRequest,
   LabelStats,
@@ -167,6 +168,8 @@ import {
     FinalApprovalRequestToJSON,
     HistoryFromJSON,
     HistoryToJSON,
+    IanaStatusFromJSON,
+    IanaStatusToJSON,
     LabelFromJSON,
     LabelToJSON,
     LabelRequestFromJSON,
@@ -383,7 +386,7 @@ export interface DocumentMailSendRequest {
 
 export interface DocumentsActionHoldersCreateRequest {
     draftName: string;
-    createActionHolderRequest: CreateActionHolderRequest;
+    createActionHolderRequest?: CreateActionHolderRequest;
 }
 
 export interface DocumentsActionHoldersDestroyRequest {
@@ -542,6 +545,10 @@ export interface DocumentsCreateRequest {
 }
 
 export interface DocumentsDestroyRequest {
+    draftName: string;
+}
+
+export interface DocumentsEnqueueRequest {
     draftName: string;
 }
 
@@ -1933,13 +1940,6 @@ export class PurpleApi extends runtime.BaseAPI {
             throw new runtime.RequiredError(
                 'draftName',
                 'Required parameter "draftName" was null or undefined when calling documentsActionHoldersCreate().'
-            );
-        }
-
-        if (requestParameters['createActionHolderRequest'] == null) {
-            throw new runtime.RequiredError(
-                'createActionHolderRequest',
-                'Required parameter "createActionHolderRequest" was null or undefined when calling documentsActionHoldersCreate().'
             );
         }
 
@@ -3591,6 +3591,51 @@ export class PurpleApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for documentsEnqueue without sending the request
+     */
+    async documentsEnqueueRequestOpts(requestParameters: DocumentsEnqueueRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['draftName'] == null) {
+            throw new runtime.RequiredError(
+                'draftName',
+                'Required parameter "draftName" was null or undefined when calling documentsEnqueue().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/rpc/documents/{draft__name}/enqueue/`;
+        urlPath = urlPath.replace(`{${"draft__name"}}`, encodeURIComponent(String(requestParameters['draftName'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Move a draft from \'created\' to \'in_progress\' and mark its enqueuer assignment as DONE.
+     */
+    async documentsEnqueueRaw(requestParameters: DocumentsEnqueueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RfcToBe>> {
+        const requestOptions = await this.documentsEnqueueRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => RfcToBeFromJSON(jsonValue));
+    }
+
+    /**
+     * Move a draft from \'created\' to \'in_progress\' and mark its enqueuer assignment as DONE.
+     */
+    async documentsEnqueue(requestParameters: DocumentsEnqueueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RfcToBe> {
+        const response = await this.documentsEnqueueRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for documentsFinalApprovalsCreate without sending the request
      */
     async documentsFinalApprovalsCreateRequestOpts(requestParameters: DocumentsFinalApprovalsCreateRequest): Promise<runtime.RequestOpts> {
@@ -5202,6 +5247,43 @@ export class PurpleApi extends runtime.BaseAPI {
      */
     async documentsUpdate(requestParameters: DocumentsUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RfcToBe> {
         const response = await this.documentsUpdateRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for ianaStatusesList without sending the request
+     */
+    async ianaStatusesListRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/rpc/iana_statuses/`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * List all possible IANA status choices.
+     */
+    async ianaStatusesListRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<IanaStatus>>> {
+        const requestOptions = await this.ianaStatusesListRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(IanaStatusFromJSON));
+    }
+
+    /**
+     * List all possible IANA status choices.
+     */
+    async ianaStatusesList(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<IanaStatus>> {
+        const response = await this.ianaStatusesListRaw(initOverrides);
         return await response.value();
     }
 

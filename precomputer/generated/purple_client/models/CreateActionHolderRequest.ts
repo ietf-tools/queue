@@ -44,18 +44,17 @@ export interface CreateActionHolderRequest {
      */
     body?: string;
     /**
-     * Datatracker ID of the person to add as action holder
+     * Datatracker ID of the person to add as action holder. If omitted, body must be provided and the system person is used as default.
      * @type {number}
      * @memberof CreateActionHolderRequest
      */
-    personId: number;
+    personId?: number | null;
 }
 
 /**
  * Check if a given object implements the CreateActionHolderRequest interface.
  */
 export function instanceOfCreateActionHolderRequest(value: object): value is CreateActionHolderRequest {
-    if (!('personId' in value) || value['personId'] === undefined) return false;
     return true;
 }
 
@@ -73,7 +72,7 @@ export function CreateActionHolderRequestFromJSONTyped(json: any, ignoreDiscrimi
         'completed': json['completed'] == null ? undefined : (new Date(json['completed'])),
         'comment': json['comment'] == null ? undefined : json['comment'],
         'body': json['body'] == null ? undefined : json['body'],
-        'personId': json['person_id'],
+        'personId': json['person_id'] == null ? undefined : json['person_id'],
     };
 }
 

@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `id` | number
 `person` | [BaseDatatrackerPerson](BaseDatatrackerPerson.md)
+`displayName` | string
 `deadline` | Date
 `sinceWhen` | Date
 `completed` | Date
@@ -24,6 +25,7 @@ import type { CreateActionHolder } from ''
 const example = {
   "id": null,
   "person": null,
+  "displayName": null,
   "deadline": null,
   "sinceWhen": null,
   "completed": null,

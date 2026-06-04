@@ -41,6 +41,12 @@ export interface ActionHolder {
     readonly person?: BaseDatatrackerPerson;
     /**
      * 
+     * @type {string}
+     * @memberof ActionHolder
+     */
+    readonly displayName?: string;
+    /**
+     * 
      * @type {Date}
      * @memberof ActionHolder
      */
@@ -90,6 +96,7 @@ export function ActionHolderFromJSONTyped(json: any, ignoreDiscriminator: boolea
         
         'id': json['id'] == null ? undefined : json['id'],
         'person': json['person'] == null ? undefined : BaseDatatrackerPersonFromJSON(json['person']),
+        'displayName': json['display_name'] == null ? undefined : json['display_name'],
         'deadline': json['deadline'] == null ? undefined : (new Date(json['deadline'])),
         'sinceWhen': json['since_when'] == null ? undefined : (new Date(json['since_when'])),
         'completed': json['completed'] == null ? undefined : (new Date(json['completed'])),
@@ -102,7 +109,7 @@ export function ActionHolderToJSON(json: any): ActionHolder {
     return ActionHolderToJSONTyped(json, false);
 }
 
-export function ActionHolderToJSONTyped(value?: Omit<ActionHolder, 'id'|'person'|'since_when'> | null, ignoreDiscriminator: boolean = false): any {
+export function ActionHolderToJSONTyped(value?: Omit<ActionHolder, 'id'|'person'|'display_name'|'since_when'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

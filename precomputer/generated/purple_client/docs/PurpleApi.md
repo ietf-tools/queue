@@ -59,6 +59,7 @@ All URIs are relative to *http://localhost*
 | [**documentsCommentsUpdate**](PurpleApi.md#documentscommentsupdate) | **PUT** /api/rpc/documents/{draft_name}/comments/{id}/ |  |
 | [**documentsCreate**](PurpleApi.md#documentscreate) | **POST** /api/rpc/documents/ |  |
 | [**documentsDestroy**](PurpleApi.md#documentsdestroy) | **DELETE** /api/rpc/documents/{draft__name}/ |  |
+| [**documentsEnqueue**](PurpleApi.md#documentsenqueue) | **POST** /api/rpc/documents/{draft__name}/enqueue/ |  |
 | [**documentsFinalApprovalsCreate**](PurpleApi.md#documentsfinalapprovalscreate) | **POST** /api/rpc/documents/{draft_name}/final_approvals/ |  |
 | [**documentsFinalApprovalsDestroy**](PurpleApi.md#documentsfinalapprovalsdestroy) | **DELETE** /api/rpc/documents/{draft_name}/final_approvals/{id}/ |  |
 | [**documentsFinalApprovalsList**](PurpleApi.md#documentsfinalapprovalslist) | **GET** /api/rpc/documents/{draft_name}/final_approvals/ |  |
@@ -91,6 +92,7 @@ All URIs are relative to *http://localhost*
 | [**documentsSearch**](PurpleApi.md#documentssearch) | **GET** /api/rpc/documents/search/ |  |
 | [**documentsSyncMetadata**](PurpleApi.md#documentssyncmetadata) | **POST** /api/rpc/documents/{draft__name}/sync_metadata/ |  |
 | [**documentsUpdate**](PurpleApi.md#documentsupdate) | **PUT** /api/rpc/documents/{draft__name}/ |  |
+| [**ianaStatusesList**](PurpleApi.md#ianastatuseslist) | **GET** /api/rpc/iana_statuses/ |  |
 | [**labelsCreate**](PurpleApi.md#labelscreate) | **POST** /api/rpc/labels/ |  |
 | [**labelsDestroy**](PurpleApi.md#labelsdestroy) | **DELETE** /api/rpc/labels/{id}/ |  |
 | [**labelsList**](PurpleApi.md#labelslist) | **GET** /api/rpc/labels/ |  |
@@ -302,7 +304,7 @@ async function example() {
     disposition: disposition_example,
     // boolean | Filter by pending final approval status, true returns drafts with at least one pending final approval, false returns drafts where all final approvals are approved. (optional)
     pendingFinalApproval: true,
-    // boolean | Filter by pending final review status. True returns drafts with at least one pending author approval (FinalApproval) or at least one uncompleted action holder. False returns drafts where at least one author approval exists, all author approvals are done, and no action holders are uncompleted. (optional)
+    // boolean | Filter by pending final review status. First filter by existing final_review_editor assignment. Additional filters: True returns drafts with at least one pending author approval (FinalApproval) or at least one uncompleted action holder. False returns drafts where at least one author approval exists, all author approvals are done, and no action holders are uncompleted. (optional)
     pendingFinalReview: true,
   } satisfies ApiPubqQueueListRequest;
 
@@ -325,7 +327,7 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **disposition** | `created`, `in_progress`, `published`, `withdrawn` | Filter queue items by disposition slug. | [Optional] [Defaults to `undefined`] [Enum: created, in_progress, published, withdrawn] |
 | **pendingFinalApproval** | `boolean` | Filter by pending final approval status, true returns drafts with at least one pending final approval, false returns drafts where all final approvals are approved. | [Optional] [Defaults to `undefined`] |
-| **pendingFinalReview** | `boolean` | Filter by pending final review status. True returns drafts with at least one pending author approval (FinalApproval) or at least one uncompleted action holder. False returns drafts where at least one author approval exists, all author approvals are done, and no action holders are uncompleted. | [Optional] [Defaults to `undefined`] |
+| **pendingFinalReview** | `boolean` | Filter by pending final review status. First filter by existing final_review_editor assignment. Additional filters: True returns drafts with at least one pending author approval (FinalApproval) or at least one uncompleted action holder. False returns drafts where at least one author approval exists, all author approvals are done, and no action holders are uncompleted. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -1793,7 +1795,7 @@ async function example() {
   const body = {
     // string
     draftName: draftName_example,
-    // CreateActionHolderRequest
+    // CreateActionHolderRequest (optional)
     createActionHolderRequest: ...,
   } satisfies DocumentsActionHoldersCreateRequest;
 
@@ -1815,7 +1817,7 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **draftName** | `string` |  | [Defaults to `undefined`] |
-| **createActionHolderRequest** | [CreateActionHolderRequest](CreateActionHolderRequest.md) |  | |
+| **createActionHolderRequest** | [CreateActionHolderRequest](CreateActionHolderRequest.md) |  | [Optional] |
 
 ### Return type
 
@@ -4099,6 +4101,77 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | No response body |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## documentsEnqueue
+
+> RfcToBe documentsEnqueue(draftName)
+
+
+
+Move a draft from \&#39;created\&#39; to \&#39;in_progress\&#39; and mark its enqueuer assignment as DONE.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PurpleApi,
+} from '';
+import type { DocumentsEnqueueRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: cookieAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PurpleApi(config);
+
+  const body = {
+    // string
+    draftName: draftName_example,
+  } satisfies DocumentsEnqueueRequest;
+
+  try {
+    const data = await api.documentsEnqueue(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **draftName** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**RfcToBe**](RfcToBe.md)
+
+### Authorization
+
+[cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -6435,6 +6508,69 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## ianaStatusesList
+
+> Array&lt;IanaStatus&gt; ianaStatusesList()
+
+
+
+List all possible IANA status choices.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PurpleApi,
+} from '';
+import type { IanaStatusesListRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: cookieAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PurpleApi(config);
+
+  try {
+    const data = await api.ianaStatusesList();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**Array&lt;IanaStatus&gt;**](IanaStatus.md)
+
+### Authorization
+
+[cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## labelsCreate
 
 > Label labelsCreate(labelRequest)
@@ -7435,7 +7571,7 @@ async function example() {
     disposition: disposition_example,
     // boolean | Filter by pending final approval status, true returns drafts with at least one pending final approval, false returns drafts where all final approvals are approved. (optional)
     pendingFinalApproval: true,
-    // boolean | Filter by pending final review status. True returns drafts with at least one pending author approval (FinalApproval) or at least one uncompleted action holder. False returns drafts where at least one author approval exists, all author approvals are done, and no action holders are uncompleted. (optional)
+    // boolean | Filter by pending final review status. First filter by existing final_review_editor assignment. Additional filters: True returns drafts with at least one pending author approval (FinalApproval) or at least one uncompleted action holder. False returns drafts where at least one author approval exists, all author approvals are done, and no action holders are uncompleted. (optional)
     pendingFinalReview: true,
   } satisfies QueueListRequest;
 
@@ -7458,7 +7594,7 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **disposition** | `created`, `in_progress`, `published`, `withdrawn` | Filter queue items by disposition slug. | [Optional] [Defaults to `undefined`] [Enum: created, in_progress, published, withdrawn] |
 | **pendingFinalApproval** | `boolean` | Filter by pending final approval status, true returns drafts with at least one pending final approval, false returns drafts where all final approvals are approved. | [Optional] [Defaults to `undefined`] |
-| **pendingFinalReview** | `boolean` | Filter by pending final review status. True returns drafts with at least one pending author approval (FinalApproval) or at least one uncompleted action holder. False returns drafts where at least one author approval exists, all author approvals are done, and no action holders are uncompleted. | [Optional] [Defaults to `undefined`] |
+| **pendingFinalReview** | `boolean` | Filter by pending final review status. First filter by existing final_review_editor assignment. Additional filters: True returns drafts with at least one pending author approval (FinalApproval) or at least one uncompleted action holder. False returns drafts where at least one author approval exists, all author approvals are done, and no action holders are uncompleted. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

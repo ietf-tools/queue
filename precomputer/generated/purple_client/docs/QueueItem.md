@@ -22,6 +22,7 @@ Name | Type
 `rfcNumber` | number
 `pages` | number
 `enqueuedAt` | Date
+`finalReviewStartedAt` | Date
 `finalApproval` | [Array&lt;FinalApproval&gt;](FinalApproval.md)
 `ianaStatus` | [IanaStatus](IanaStatus.md)
 `blockingReasons` | [Array&lt;RfcToBeBlockingReason&gt;](RfcToBeBlockingReason.md)
@@ -48,6 +49,7 @@ const example = {
   "rfcNumber": null,
   "pages": null,
   "enqueuedAt": null,
+  "finalReviewStartedAt": null,
   "finalApproval": null,
   "ianaStatus": null,
   "blockingReasons": null,

@@ -68,10 +68,12 @@ paths:
         name: pending_final_review
         schema:
           type: boolean
-        description: Filter by pending final review status. True returns drafts with
-          at least one pending author approval (FinalApproval) or at least one uncompleted
-          action holder. False returns drafts where at least one author approval exists,
-          all author approvals are done, and no action holders are uncompleted.
+        description: 'Filter by pending final review status. First filter by existing
+          final_review_editor assignment. Additional filters: True returns drafts
+          with at least one pending author approval (FinalApproval) or at least one
+          uncompleted action holder. False returns drafts where at least one author
+          approval exists, all author approvals are done, and no action holders are
+          uncompleted.'
       tags:
       - purple
       security:
@@ -718,6 +720,30 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/rpc/documents/{draft__name}/enqueue/:
+    post:
+      operationId: documents_enqueue
+      description: |-
+        Move a draft from 'created' to 'in_progress' and mark its enqueuer
+        assignment as DONE.
+      parameters:
+      - in: path
+        name: draft__name
+        schema:
+          type: string
+          description: Name of draft
+        required: true
+      tags:
+      - purple
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RfcToBe'
+          description: ''
   /api/rpc/documents/{draft__name}/history/:
     get:
       operationId: documents_history_list
@@ -911,7 +937,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateActionHolderRequest'
-        required: true
       security:
       - cookieAuth: []
       responses:
@@ -2406,6 +2431,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedRfcToBeList'
           description: ''
+  /api/rpc/iana_statuses/:
+    get:
+      operationId: iana_statuses_list
+      description: List all possible IANA status choices.
+      tags:
+      - purple
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IanaStatus'
+          description: ''
   /api/rpc/labels/:
     get:
       operationId: labels_list
@@ -2633,10 +2675,12 @@ paths:
         name: pending_final_review
         schema:
           type: boolean
-        description: Filter by pending final review status. True returns drafts with
-          at least one pending author approval (FinalApproval) or at least one uncompleted
-          action holder. False returns drafts where at least one author approval exists,
-          all author approvals are done, and no action holders are uncompleted.
+        description: 'Filter by pending final review status. First filter by existing
+          final_review_editor assignment. Additional filters: True returns drafts
+          with at least one pending author approval (FinalApproval) or at least one
+          uncompleted action holder. False returns drafts where at least one author
+          approval exists, all author approvals are done, and no action holders are
+          uncompleted.'
       tags:
       - purple
       security:
@@ -3393,6 +3437,9 @@ components:
           allOf:
           - $ref: '#/components/schemas/BaseDatatrackerPerson'
           readOnly: true
+        display_name:
+          type: string
+          readOnly: true
         deadline:
           type: string
           format: date-time
@@ -3876,6 +3923,9 @@ components:
           allOf:
           - $ref: '#/components/schemas/BaseDatatrackerPerson'
           readOnly: true
+        display_name:
+          type: string
+          readOnly: true
         deadline:
           type: string
           format: date-time
@@ -3917,9 +3967,9 @@ components:
         person_id:
           type: integer
           writeOnly: true
-          description: Datatracker ID of the person to add as action holder
-      required:
-      - person_id
+          nullable: true
+          description: Datatracker ID of the person to add as action holder. If omitted,
+            body must be provided and the system person is used as default.
     CreateFinalApproval:
       type: object
       description: Serializer for creating FinalApproval instances
@@ -5404,6 +5454,11 @@ components:
           type: string
           format: date
           readOnly: true
+        final_review_started_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
         final_approval:
           type: array
           items:
