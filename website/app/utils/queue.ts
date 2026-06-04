@@ -145,7 +145,7 @@ export const renderAssignmentsByRoles = ({
             { class: 'text-xs text-gray-500 dark:text-neutral-400' },
             assignmentByRole.blockingReasons.map((blockingReason) =>
               humanFriendlyBlockingReason(blockingReason)
-            )
+            ).join(', ')
           )
           : null
       ])
