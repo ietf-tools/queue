@@ -52,10 +52,10 @@ export const useMenuData = (mode: Mode) => {
         hideLabelDesktop: false,
       },
       {
-        label: 'Docs',
+        label: 'About',
         children: [
           {
-            label: 'About',
+            label: 'About This Queue',
             href: '/about/'
           },
           {
