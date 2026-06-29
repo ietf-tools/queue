@@ -27,12 +27,12 @@ type BlockingReason = NonNullable<AssignmentByRole['blockingReasons']>[number]
 
 type RenderAssignmentsByRolesProps = {
   assignmentsByRoles: QueueCommonItem['assignmentsByRoles']
-  pendingActivities: QueueCommonItem['pendingActivities'],
-  ianaStatus: QueueCommonItem['ianaStatus'],
+  pendingActivities: QueueCommonItem['pendingActivities']
+  ianaStatus: QueueCommonItem['ianaStatus']
   hideLinkDetails: boolean
   linkFinalReviewsBy:
-  { type: 'RFC_NUMBER', rfcNumber: number } |
-  { type: 'DRAFTNAME', draftName: string }
+    | { type: 'RFC_NUMBER'; rfcNumber: number }
+    | { type: 'DRAFTNAME'; draftName: string }
 }
 
 export const renderAssignmentsByRoles = ({
@@ -57,15 +57,20 @@ export const renderAssignmentsByRoles = ({
   })
 
   // See https://github.com/ietf-tools/queue/issues/13#issue-4018981455
-  const editorRoles: AssignmentByRole['role'][] = ['first_editor', 'second_editor', 'final_review_editor']
+  const editorRoles: AssignmentByRole['role'][] = [
+    'first_editor',
+    'second_editor',
+    'final_review_editor'
+  ]
 
-  const isBlocked =
-    assignmentsByRolesFiltered.some((assignmentByRole) => assignmentByRole.role === 'blocked')
+  const isBlocked = assignmentsByRolesFiltered.some(
+    (assignmentByRole) => assignmentByRole.role === 'blocked'
+  )
 
   // https://github.com/ietf-tools/queue/issues/29#issuecomment-4144104259
-  const isIANAHold = Boolean(ianaStatus?.slug === 'not_completed') && assignmentsByRoles.some(assignmentsByRole =>
-    assignmentsByRole.role === 'first_editor'
-  )
+  const isIANAHold =
+    Boolean(ianaStatus?.slug === 'not_completed') &&
+    assignmentsByRoles.some((assignmentsByRole) => assignmentsByRole.role === 'first_editor')
 
   const humanFriendlyRole = (assignmentByRole: AssignmentByRole): string => {
     switch (assignmentByRole.role) {
@@ -95,58 +100,63 @@ export const renderAssignmentsByRoles = ({
     isIANAHold ? 'IANA hold' : undefined,
     !isBlocked && pendingActivities
       ? pendingActivities
-        .filter(pendingActivity => {
-          // If both CURRENT and PENDING assignments are present, the queue should just show the CURRENT assignment.
-          const isAlsoCurrent = assignmentsByRoles.some(assignmentsByRole => assignmentsByRole.role === pendingActivity.slug)
-
-          return !isAlsoCurrent
-        })
-        .map(pendingActivity => {
-          return h(
-            'li',
-            { class: 'inline-flex flex-wrap items-center gap-1' },
-            h(
-              BaseBadge,
-              {
-                color:
-                  editorRoles.includes(pendingActivity.slug) ? 'emerald' : 'green'
-              },
-              () => {
-                if ((pendingActivity.name)) {
-                  return `Awaiting ${pendingActivity.name}`
-                }
-                return `Awaiting ${slugToHumanReadable(pendingActivity.slug)}`
-              }
+          .filter((pendingActivity) => {
+            // If both CURRENT and PENDING assignments are present, the queue should just show the CURRENT assignment.
+            const isAlsoCurrent = assignmentsByRoles.some(
+              (assignmentsByRole) => assignmentsByRole.role === pendingActivity.slug
             )
-          )
-        })
+
+            return !isAlsoCurrent
+          })
+          .map((pendingActivity) => {
+            return h(
+              'li',
+              { class: 'inline-flex flex-wrap items-center gap-1' },
+              h(
+                BaseBadge,
+                {
+                  color: editorRoles.includes(pendingActivity.slug) ? 'emerald' : 'green'
+                },
+                () => {
+                  if (pendingActivity.name) {
+                    return `${
+                      NBSP // needs an NBSP for screenreaders whitespace between badge and this label
+                    }Awaiting ${pendingActivity.name}`
+                  }
+                  return `${
+                    NBSP // needs an NBSP for screenreaders whitespace between badge and this label
+                  }Awaiting ${slugToHumanReadable(pendingActivity.slug)}`
+                }
+              )
+            )
+          })
       : undefined,
     ...assignmentsByRolesFiltered.map((assignmentByRole) => {
-      const badge = h(
-        BaseBadge,
-        { color: getRoleColor(assignmentByRole.role) },
-        () => humanFriendlyRole(assignmentByRole)
+      const badge = h(BaseBadge, { color: getRoleColor(assignmentByRole.role) }, () =>
+        humanFriendlyRole(assignmentByRole)
       )
 
       return h('li', { class: 'inline-flex flex-wrap items-center gap-1' }, [
         hideLinkDetails !== true && assignmentByRole.role === 'final_review_editor'
-          ? h(Anchor, {
-            href: linkFinalReviewsBy.type === 'RFC_NUMBER'
-              ? rfcFinalReviewPathBuilder(linkFinalReviewsBy.rfcNumber)
-              : finalReviewPathBuilder(linkFinalReviewsBy.draftName)
-          }, () => [
-            badge,
-            h('span', { class: 'underline text-xs ml-1' }, 'more details')
-          ])
+          ? h(
+              Anchor,
+              {
+                href:
+                  linkFinalReviewsBy.type === 'RFC_NUMBER'
+                    ? rfcFinalReviewPathBuilder(linkFinalReviewsBy.rfcNumber)
+                    : finalReviewPathBuilder(linkFinalReviewsBy.draftName)
+              },
+              () => [badge, h('span', { class: 'underline text-xs ml-1' }, 'more details')]
+            )
           : badge,
         assignmentByRole.blockingReasons
           ? h(
-            'span',
-            { class: 'text-xs text-gray-500 dark:text-neutral-400' },
-            assignmentByRole.blockingReasons.map((blockingReason) =>
-              humanFriendlyBlockingReason(blockingReason)
-            ).join(', ')
-          )
+              'span',
+              { class: 'text-xs text-gray-500 dark:text-neutral-400' },
+              assignmentByRole.blockingReasons
+                .map((blockingReason) => humanFriendlyBlockingReason(blockingReason))
+                .join(', ')
+            )
           : null
       ])
     })
@@ -173,7 +183,10 @@ export const getRoleColor = (role: AssignmentByRole['role']): ThemeColorCommon =
   assertNever(role)
 }
 
-export const sortIsoDateStrings = (aIsoDate: string | undefined, bIsoDate: string | undefined): number => {
+export const sortIsoDateStrings = (
+  aIsoDate: string | undefined,
+  bIsoDate: string | undefined
+): number => {
   if (aIsoDate === undefined && bIsoDate === undefined) {
     return 0
   }
@@ -192,7 +205,10 @@ export const sortIsoDateStrings = (aIsoDate: string | undefined, bIsoDate: strin
   return aDateTime.toMillis() - bDateTime.toMillis()
 }
 
-export const sortLabels = (aLabels: LabelCommon[] | undefined, bLabels: LabelCommon[] | undefined): number => {
+export const sortLabels = (
+  aLabels: LabelCommon[] | undefined,
+  bLabels: LabelCommon[] | undefined
+): number => {
   if (aLabels === undefined && bLabels === undefined) {
     return 0
   }
@@ -215,14 +231,18 @@ export const sortLabels = (aLabels: LabelCommon[] | undefined, bLabels: LabelCom
    *    which seems a bad thing to rely on in a sort function.
    * So that's why it's a custom stringify
    */
-  const labelToLocaleComparable = (label: LabelCommon) => `${label.slug} (${label.isComplexity}) [${label.isException}]`
+  const labelToLocaleComparable = (label: LabelCommon) =>
+    `${label.slug} (${label.isComplexity}) [${label.isException}]`
 
   const aLabelsComparable = aLabels.map(labelToLocaleComparable).join('. ')
   const bLabelsComparable = bLabels.map(labelToLocaleComparable).join('. ')
   return aLabelsComparable.localeCompare(bLabelsComparable)
 }
 
-export const sortClusters = (aClusters: QueueCommonItem['clusters'], bClusters: QueueCommonItem['clusters']): number => {
+export const sortClusters = (
+  aClusters: QueueCommonItem['clusters'],
+  bClusters: QueueCommonItem['clusters']
+): number => {
   if (aClusters === undefined && bClusters === undefined) {
     return 0
   }

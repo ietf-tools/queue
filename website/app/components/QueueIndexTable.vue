@@ -129,7 +129,7 @@ const columns = [
     header: 'Labels',
     cell: (data) => {
       const labels = data.getValue()
-      if (!labels) return undefined
+      if (!labels || labels.length === 0) return undefined
       return h(
         'ul',
         { class: 'inline-flex flex-wrap gap-2' },
