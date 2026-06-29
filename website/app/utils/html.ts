@@ -12,3 +12,23 @@ export const TARGET_NEW_WINDOW = '_blank'
  * it's intentional to not have `noreferrer` here. referrers are ok.
  **/
 export const EXTERNAL_LINK_REL = 'noopener'
+
+const htmlEscapeMapping = {
+  '<': '&lt;',
+  '>': '&gt;',
+  "'": '&apos;',
+  '"': '&quot;',
+  '&': '&amp;'
+}
+
+/**
+ * Escapes HTML to text html with character entities, ie exposing <>'"& chars
+ * Useful for <noscript> HTML string generation
+ */
+export const htmlEscapeToText = (html: string): string =>
+  html.replace(/([<>'"&])/g, (match, key) => {
+    if (key in htmlEscapeMapping) {
+      return htmlEscapeMapping[key as keyof typeof htmlEscapeMapping]
+    }
+    return match
+  })

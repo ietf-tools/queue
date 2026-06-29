@@ -58,7 +58,7 @@ import {
   getSortedRowModel
 } from '@tanstack/vue-table'
 import type { SortingState } from '@tanstack/vue-table'
-import { Anchor, Icon } from '#components'
+import { Anchor, GraphicsNewWindowIcon, Icon } from '#components'
 import Label from './Label.vue'
 import { getVNodeText } from '../utils/vue'
 import { getQueueIndex } from '../utils/api'
@@ -109,17 +109,12 @@ const columns = [
             ANCHOR_TAILWIND_STYLE,
             'scroll-m-20' // ensure link targets aren't obscured by sticky header https://mailarchive.ietf.org/arch/msg/tools-discuss/KYJF-QY2U4qXWS2UVL16vMO_qn4/
           ],
-          rel: 'noopener',
-          target: '_blank',
           id: data.row.original.name
         },
         () => [
           data.getValue(),
-          h(Icon, {
-            name: 'fluent:window-new-20-regular',
-            size: '1.25em',
-            class: 'text-gray-700 dark:text-neutral-300 ml-1 align-middle'
-          })
+          SPACE,
+          h(GraphicsNewWindowIcon)
         ]
       )
     },

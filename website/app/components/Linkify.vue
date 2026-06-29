@@ -3,7 +3,8 @@
     <template v-for="(token, i) in tokens" :key="i">
       <Anchor v-if="token.isLink" :href="token.toHref()" :class="ANCHOR_TAILWIND_STYLE">
         {{ token.v }}
-        <Icon v-if="!isInternalLink(token.toHref())" name="fluent:window-new-20-regular" class="text-md align-middle" />
+        {{ NBSP }}
+        <GraphicsNewWindowIcon v-if="!isInternalLink(token.toHref())" class="align-middle" />
       </Anchor>
       <span v-else>{{ token.v }}</span>
     </template>

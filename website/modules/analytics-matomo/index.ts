@@ -3,6 +3,7 @@ import { defineNuxtModule, createResolver, addPlugin } from 'nuxt/kit'
 
 export default defineNuxtModule({
   setup(_options, nuxt) {
+    // eslint-disable-next-line typescript-eslint/unbound-method -- createResolver returns a plain object; `resolve` does not reference `this`
     const { resolve } = createResolver(import.meta.url)
 
     nuxt.options.build.transpile.push(resolve('runtime'))

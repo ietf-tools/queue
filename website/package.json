@@ -12,7 +12,7 @@
     "dev": "nuxt dev",
     "test": "npm run test:types",
     "test:types": "vue-tsc -b --noEmit",
-    "test:lint": "oxlint",
+    "test:lint": "oxlint -c ../.oxlintrc.json",
     "generate": "nuxt generate",
     "preview": "npm run build:nuxt && nuxt preview",
     "preview:dev": "npm run build:nuxt:dev && nuxt preview",

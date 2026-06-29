@@ -6,13 +6,14 @@
           Looking for published RFCs? Go to
           <Anchor :href="redSiteUrlOrigin" class="text-blue-300 dark:text-blue-100">
             {{ redSiteUrlOrigin }}
-            <Icon name="fluent:window-new-20-regular" size="1.25em"
-              class="text-gray-700 dark:text-neutral-300 ml-1 align-middle" />
+            <GraphicsNewWindowIcon class="align-middle" />
           </Anchor>
         </p>
       </div>
       <div class="container mx-auto">
-        <Heading level="1" class="w-full mx-2 mb-2 text-gray-600 dark:text-gray-200 font-semibold text-balance">
+        <Heading
+          level="1"
+          class="w-full mx-2 mb-2 text-gray-600 dark:text-gray-200 font-semibold text-balance">
           RFC Editor Queue
         </Heading>
         <QueueIndexTable :show-last-updated="true" />
@@ -22,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { useQueueRfcEditorHead } from '~/utils/head';
+import { useQueueRfcEditorHead } from '~/utils/head'
 import { useRedSiteUrlOrigin } from '~/utils/url'
 
 definePageMeta({
