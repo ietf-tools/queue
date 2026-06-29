@@ -1,24 +1,50 @@
 <template>
   <th
-    class="sticky top-0 bg-gray-50 z-10 dark:bg-neutral-800 border-b-gray-300 border-b-1 dark:border-b-neutral-700 px-1 first:pl-3 last:pr-3 py-3.5 text-sm content-start font-semibold text-gray-900 dark:text-neutral-400"
-    :aria-sort="props.sortDirection ? props.sortDirection === 'asc' ? 'ascending' : 'descending' : undefined">
-    <div :class="['flex flex-row',
-      props.textAlign === 'left' ? 'text-left justify-start' : '',
-      props.textAlign === 'center' ? 'text-center justify-center' : '',
-      props.textAlign === 'right' ? 'text-right justify-end' : '',
-    ]">
-      <div class="text-gray-800 dark:text-gray-200">
+    class="h-full sticky top-0 bg-gray-50 z-10 dark:bg-neutral-800 border-b-gray-300 border-b-1 dark:border-b-neutral-700 content-start "
+    :aria-sort="
+      props.sortDirection ? (props.sortDirection === 'asc' ? 'ascending' : 'descending') : undefined
+    ">
+    <div
+      :class="[
+        'flex h-full',
+        {
+          'text-left justify-start': props.textAlign === 'left',
+          'text-center justify-center': props.textAlign === 'center',
+          'text-right justify-end': props.textAlign === 'right'
+        }
+      ]">
+      <span
+        v-if="props.isSortable === undefined || props.isSortable === false"
+s        class="text-gray-800 dark:text-gray-200">
         <slot />
-      </div>
-      <button v-if="props.isSortable" type="button" :class="[
-        '-mt-1 inline-block flex items-center justify-center w-[2em] h-[2em] rounded-md ml-2 cursor-pointer text-gray-400 dark:text-neutral-400 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 dark:hover:text-gray-200 dark:focus:text-gray-200 px-1 py-1',
-        props.sortDirection === 'asc' || props.sortDirection === 'desc' ? 'inset-shadow-sm inset-shadow-gray-300 dark:inset-shadow-black bg-gray-200 dark:bg-neutral-900' : ''
-      ]" :title="`Sort by ${columnName}`">
-        <Icon v-if="props.sortDirection === 'asc'" name="uil:arrow-up"
-          class="inline-block text-gray-900 dark:text-gray-100 text-lg" size="1.2em" />
-        <Icon v-else-if="props.sortDirection === 'desc'" name="uil:arrow-down"
-          class="inline-block text-gray-900 dark:text-gray-100 text-lg  mt-1" size="1.2em" />
-        <Icon v-else name="heroicons:arrows-up-down" class="inline-block text-lg mt-0.5" size="1.2em" />
+      </span>
+      <button
+        v-else
+        type="button"
+        :class="[
+          'w-full h-full cursor-pointer rounded-md px-1 py-1 flex items-center justify-center text-gray-800 dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 dark:hover:text-gray-200 dark:focus:text-gray-200',
+          {
+            'text-shadow-sm text-shadow-white dark:text-shadow-black':
+              props.sortDirection === 'asc' || props.sortDirection === 'desc'
+          }
+        ]"
+        :title="`Sort by ${columnName}`">
+        <slot />
+        <Icon
+          v-if="props.sortDirection === 'asc'"
+          name="uil:arrow-up"
+          class="inline-block  ml-2"
+          size="1.3em" />
+        <Icon
+          v-else-if="props.sortDirection === 'desc'"
+          name="uil:arrow-down"
+          class="inline-block  mt-1 ml-2 "
+          size="1.3em" />
+        <Icon
+          v-else
+          name="heroicons:arrows-up-down"
+          class="inline-block  mt-0.5 ml-2 "
+          size="1.3em" />
       </button>
     </div>
   </th>
@@ -28,7 +54,7 @@
 type Props = {
   columnName?: string
   isSortable?: boolean
-  sortDirection?: false | "desc" | "asc"
+  sortDirection?: false | 'desc' | 'asc'
   textAlign?: 'left' | 'center' | 'right'
 }
 
