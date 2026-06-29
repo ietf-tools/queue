@@ -29,7 +29,7 @@
             props.sortDirection === 'asc' || props.sortDirection === 'desc'
         }
       ]"
-      :title="`Sort by ${columnName}`">
+      >
       <slot />
       <Icon
         v-if="props.sortDirection === 'asc'"
