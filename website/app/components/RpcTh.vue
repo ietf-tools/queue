@@ -15,7 +15,7 @@
       ]">
       <span
         v-if="props.isSortable === undefined || props.isSortable === false"
-s        class="text-gray-800 dark:text-gray-200">
+s        class="w-full h-full rounded-md px-1 py-1 flex items-center justify-center text-gray-800 dark:text-gray-200">
         <slot />
       </span>
       <button
