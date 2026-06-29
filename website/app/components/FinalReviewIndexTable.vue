@@ -6,7 +6,9 @@
           <RpcTh v-for="header in headerGroup.headers" :key="header.id" :colSpan="header.colSpan"
             :is-sortable="header.column.getCanSort()" :sort-direction="header.column.getIsSorted()"
             :column-name="getVNodeText(header.column.columnDef.header)"
-            @click="header.column.getToggleSortingHandler()?.($event)">
+            @click="header.column.getToggleSortingHandler()?.($event)"
+            :text-align="sortLeft.includes(header.id) ? 'left' : undefined"
+            >
             <FlexRender v-if="!header.isPlaceholder" :render="header.column.columnDef.header"
               :props="header.getContext()" />
           </RpcTh>
@@ -56,6 +58,8 @@ const props = defineProps<Props>()
 const columnHelper = createColumnHelper<QueueCommonItem>()
 
 const sorting = ref<SortingState>([])
+
+const sortLeft = ['rfcNumber', 'name', 'labels', 'clusters']
 
 const columns = [
   columnHelper.accessor('rfcNumber', {

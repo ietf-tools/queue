@@ -9,7 +9,6 @@
 </template>
 
 <script setup lang="ts">
-
 type Props = {
   id: string
   headingLevel: HeadingLevel

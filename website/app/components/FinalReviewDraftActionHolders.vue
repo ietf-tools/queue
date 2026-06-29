@@ -7,7 +7,9 @@
         <RpcTh v-for="header in headerGroup.headers" :key="header.id" :colSpan="header.colSpan"
           :is-sortable="header.column.getCanSort()" :sort-direction="header.column.getIsSorted()"
           :column-name="getVNodeText(header.column.columnDef.header)"
-          @click="header.column.getToggleSortingHandler()?.($event)">
+          @click="header.column.getToggleSortingHandler()?.($event)"
+          :text-align="header.id === 'approvalStatus' ? 'center' : 'left'"
+          >
           <FlexRender v-if="!header.isPlaceholder" :render="header.column.columnDef.header"
             :props="header.getContext()" />
         </RpcTh>
