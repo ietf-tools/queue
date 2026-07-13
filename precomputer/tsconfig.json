@@ -10,7 +10,6 @@
     "noImplicitAny": true,
     "allowImportingTsExtensions": true,
     "noEmit": true,
-    "outDir": "./dist",
     "lib": ["ESNext", "DOM"]
   },
   "include": ["./src/**/*.ts"],

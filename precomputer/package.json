@@ -19,25 +19,25 @@
     "url": "git+https://github.com/ietf-tools/queue.git"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.993.0",
-    "@openapitools/openapi-generator-cli": "2.29.0",
-    "@supercharge/promise-pool": "3.2.0",
-    "es-toolkit": "1.44.0",
-    "jsdom": "28.1.0",
+    "@aws-sdk/client-s3": "3.1084.0",
+    "@openapitools/openapi-generator-cli": "2.39.1",
+    "@supercharge/promise-pool": "3.3.0",
+    "es-toolkit": "1.49.0",
+    "jsdom": "29.1.1",
     "libxml2-wasm": "0.7.1",
     "luxon": "3.7.2",
-    "sharp": "0.34.5",
+    "sharp": "0.35.3",
     "sitemap": "9.0.1",
     "zod": "4.4.3"
   },
   "devDependencies": {
-    "@types/jsdom": "28.0.1",
-    "@types/luxon": "3.7.1",
-    "@types/node": "25.6.2",
-    "fastify": "5.7.4",
-    "typescript": "5.8.3",
+    "@types/jsdom": "28.0.3",
+    "@types/luxon": "3.7.2",
+    "@types/node": "26.1.1",
+    "fastify": "5.10.0",
+    "typescript": "6.0.3",
     "vite-plugin-top-level-await": "1.6.0",
-    "vitest": "4.0.18",
-    "vue-tsc": "3.2.5"
+    "vitest": "4.1.10",
+    "vue-tsc": "3.3.7"
   }
 }

@@ -9,10 +9,10 @@
 		"cf-typegen": "wrangler types --env staging"
 	},
 	"devDependencies": {
-		"typescript": "5.5.2",
-		"wrangler": "4.61.1"
+		"typescript": "7.0.2",
+		"wrangler": "4.110.0"
 	},
 	"dependencies": {
-		"itty-router": "5.0.22"
+		"itty-router": "5.0.24"
 	}
 }
