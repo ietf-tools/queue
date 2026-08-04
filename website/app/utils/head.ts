@@ -34,6 +34,7 @@ type UseQueueRfcEditorProps = {
   keywords?: string[]
   resourceTimestamps?: ResourceTimestamp[]
   googleScholarMetadata?: GoogleScholarMetadata
+  noIndex?: boolean
 }
 
 export const useQueueRfcEditorHead = (props: UseQueueRfcEditorProps) => {
@@ -49,6 +50,7 @@ export const useQueueRfcEditorHead = (props: UseQueueRfcEditorProps) => {
       ...buildOpenGraphMetaTags(newProps, publicSiteOrigin),
       ...buildResourceTimestamps(newProps),
       ...buildGoogleScholarMetaTags(newProps),
+      ...buildNoIndex(newProps)
     ].map(allowDuplicateNames),
     link: [
       ...buildCanonical(newProps, publicSiteOrigin),
@@ -354,6 +356,10 @@ type GoogleScholarMetadata = {
   citation_issn?: string // eg "2070-1721"
   citation_technical_report_number: `rfc${number}` // eg "rfc6376"
   citation_pdf_url?: string // eg "https://www.rfc-editor.org/rfc/pdfrfc/rfc6376.txt.pdf"
+}
+
+const buildNoIndex = ({ noIndex }: UseQueueRfcEditorProps): MetaTag[] => {
+  return noIndex ? [{ name: 'robots', content: 'noindex, nofollow' }] : []
 }
 
 const buildCanonical = ({ canonicalPath }: UseQueueRfcEditorProps, publicSiteOrigin: string): LinkTag[] => {

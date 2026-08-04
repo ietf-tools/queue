@@ -35,11 +35,6 @@ export const getSiteMapXmls = async ({ websiteOrigin, clusterIndex, finalReviewI
       changefreq: EnumChangefreq.DAILY,
       priority: 0.3
     },
-    {
-      url: `${websiteOrigin}${FINAL_REVIEW_INDEX_PATH}`,
-      changefreq: EnumChangefreq.DAILY,
-      priority: 0.3
-    },
     ...markdownPaths.map((markdownPath): SitemapItemLoose => {
       return {
         url: `${websiteOrigin}${markdownPath}`,
@@ -56,24 +51,6 @@ export const getSiteMapXmls = async ({ websiteOrigin, clusterIndex, finalReviewI
         }
       ]
     }),
-    ...finalReviewIndexPendingFinalReview.flatMap((queueItem): SitemapItemLoose[] => {
-      return [
-        ...(queueItem.clusters ?? []).map(cluster => {
-          return {
-            url: `${websiteOrigin}${finalReviewClusterPathBuilder(cluster)}`,
-            changefreq: EnumChangefreq.WEEKLY,
-            priority: 0.3
-          }
-        }),
-        {
-          url: `${websiteOrigin}${queueItem.rfcNumber
-            ? finalReviewRfcPathBuilder(queueItem.rfcNumber)
-            : finalReviewDraftPathBuilder(queueItem.name)}`,
-          changefreq: EnumChangefreq.WEEKLY,
-          priority: 0.3
-        }
-      ]
-    })
   ];
 
   const sitemapFiles: S3UploadTask[] = [];

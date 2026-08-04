@@ -14,6 +14,7 @@ import { FINAL_REVIEW_PATH } from '~/utils/url';
 useQueueRfcEditorHead({
   title: 'Final Review of upcoming RFCs',
   canonicalPath: FINAL_REVIEW_PATH,
-  contentType: 'article'
+  contentType: 'article',
+  noIndex: true
 })
 </script>

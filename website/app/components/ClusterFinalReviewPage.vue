@@ -87,6 +87,7 @@ if (
 useQueueRfcEditorHead({
   title: `Cluster ${props.cluster} final review`,
   canonicalPath: canonicalPath.value,
-  contentType: 'article'
+  contentType: 'article',
+  noIndex: true,
 })
 </script>

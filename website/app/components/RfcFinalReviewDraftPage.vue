@@ -111,7 +111,8 @@ useQueueRfcEditorHead({
   title: `RFC-to-be ${props.rfcNumber} final review`,
   canonicalPath: canonicalPath.value,
   contentType: 'article',
-  modifiedDateTime: modifiedDateTime.value
+  modifiedDateTime: modifiedDateTime.value,
+  noIndex: true,
 })
 
 </script>
