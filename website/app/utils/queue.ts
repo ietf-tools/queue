@@ -23,8 +23,6 @@ export const renderEnqueuedAt = ({
 
 type AssignmentByRole = NonNullable<QueueCommonItem['assignmentsByRoles']>[number]
 
-type BlockingReason = NonNullable<AssignmentByRole['blockingReasons']>[number]
-
 type RenderAssignmentsByRolesProps = {
   assignmentsByRoles: QueueCommonItem['assignmentsByRoles']
   pendingActivities: QueueCommonItem['pendingActivities']
@@ -88,14 +86,6 @@ export const renderAssignmentsByRoles = ({
     return slug.replace(/_/g, ' ')
   }
 
-  const humanFriendlyBlockingReason = (blockingReason: BlockingReason): string => {
-    switch (blockingReason.reason.name) {
-      case 'Reference: First Edit Incomplete':
-        return 'Author Input Required'
-    }
-    return slugToHumanReadable(blockingReason.reason.name)
-  }
-
   return h('ul', { class: 'inline-flex flex-wrap items-center gap-1' }, [
     isIANAHold ? 'IANA hold' : undefined,
     !isBlocked && pendingActivities
@@ -154,7 +144,7 @@ export const renderAssignmentsByRoles = ({
               'span',
               { class: 'text-xs text-gray-500 dark:text-neutral-400' },
               assignmentByRole.blockingReasons
-                .map((blockingReason) => humanFriendlyBlockingReason(blockingReason))
+                .map((blockingReason) => blockingReason.reason.name)
                 .join(', ')
             )
           : null
