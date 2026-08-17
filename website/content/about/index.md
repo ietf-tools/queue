@@ -19,6 +19,8 @@ As streams approve documents for publication, they enter the [publication queue]
    - **Reference Not Received**: The document has a normative reference to an Internet-Draft that is not yet in the queue.
    - **Reference Not Received (2nd Generation)**: The document has a normative reference to a document that normatively references an Internet-Draft that is not yet in the queue.
    - **Reference Not Received (3rd Generation)**: The document has a normative reference to a document that normatively references a document that normatively references an Internet-Draft that is not yet in the queue.
+   - **Reference First Edit Incomplete**: The document has a normative reference to a document that is still in First Edit.
+   - **Reference Second Edit Incomplete**: The document has a normative reference to a document that is still in Second Edit.
    - **IANA Hold**: The document has been edited and is awaiting completion of IANA actions. See [IANA's status page](https://www.iana.org/performance/ietf-draft-status).
    - **Stream Hold**: The document is being held per the request of the publication stream that approved it. See details on streams on [What is an RFC?](https://www.rfc-editor.org/series/rfc/).
    - **Tools Issue**: The document is waiting for a fix to an editing or publishing tool.
