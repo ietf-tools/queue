@@ -218,6 +218,24 @@ export interface PublicQueueItem {
      */
     stream: string;
     /**
+     * 
+     * @type {string}
+     * @memberof PublicQueueItem
+     */
+    readonly streamName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicQueueItem
+     */
+    readonly stdLevelName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicQueueItem
+     */
+    readonly dispositionName?: string;
+    /**
      * Acronym of datatracker group where this document originated, if any
      * @type {string}
      * @memberof PublicQueueItem
@@ -247,6 +265,12 @@ export interface PublicQueueItem {
      * @memberof PublicQueueItem
      */
     readonly rev?: string | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof PublicQueueItem
+     */
+    readonly finalReviewStartedAt?: Date | null;
 }
 
 /**
@@ -293,11 +317,15 @@ export function PublicQueueItemFromJSONTyped(json: any, ignoreDiscriminator: boo
         'authors': ((json['authors'] as Array<any>).map(PublicQueueAuthorFromJSON)),
         'approvalLogMessage': json['approval_log_message'] == null ? undefined : ((json['approval_log_message'] as Array<any>).map(ApprovalLogMessageFromJSON)),
         'stream': json['stream'],
+        'streamName': json['stream_name'] == null ? undefined : json['stream_name'],
+        'stdLevelName': json['std_level_name'] == null ? undefined : json['std_level_name'],
+        'dispositionName': json['disposition_name'] == null ? undefined : json['disposition_name'],
         'group': json['group'] == null ? undefined : json['group'],
         'groupName': json['group_name'] == null ? undefined : json['group_name'],
         'stdLevel': json['std_level'],
         'references': json['references'] == null ? undefined : ((json['references'] as Array<any>).map(RpcRelatedDocumentFromJSON)),
         'rev': json['rev'] == null ? undefined : json['rev'],
+        'finalReviewStartedAt': json['final_review_started_at'] == null ? undefined : (new Date(json['final_review_started_at'])),
     };
 }
 
@@ -305,7 +333,7 @@ export function PublicQueueItemToJSON(json: any): PublicQueueItem {
     return PublicQueueItemToJSONTyped(json, false);
 }
 
-export function PublicQueueItemToJSONTyped(value?: Omit<PublicQueueItem, 'id'|'name'|'labels'|'cluster'|'assignment_set'|'actionholder_set'|'pending_activities'|'pages'|'final_approval'|'iana_status'|'blocking_reasons'|'approval_log_message'|'group_name'|'references'|'rev'> | null, ignoreDiscriminator: boolean = false): any {
+export function PublicQueueItemToJSONTyped(value?: Omit<PublicQueueItem, 'id'|'name'|'labels'|'cluster'|'assignment_set'|'actionholder_set'|'pending_activities'|'pages'|'final_approval'|'iana_status'|'blocking_reasons'|'approval_log_message'|'stream_name'|'std_level_name'|'disposition_name'|'group_name'|'references'|'rev'|'final_review_started_at'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

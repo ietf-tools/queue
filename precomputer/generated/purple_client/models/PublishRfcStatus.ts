@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime.ts';
-import type { StatusEnum } from './StatusEnum.ts';
+import type { PublishRfcStatusStatusEnum } from './PublishRfcStatusStatusEnum.ts';
 import {
-    StatusEnumFromJSON,
-    StatusEnumFromJSONTyped,
-    StatusEnumToJSON,
-    StatusEnumToJSONTyped,
-} from './StatusEnum.ts';
+    PublishRfcStatusStatusEnumFromJSON,
+    PublishRfcStatusStatusEnumFromJSONTyped,
+    PublishRfcStatusStatusEnumToJSON,
+    PublishRfcStatusStatusEnumToJSONTyped,
+} from './PublishRfcStatusStatusEnum.ts';
 
 /**
  * 
@@ -29,10 +29,10 @@ import {
 export interface PublishRfcStatus {
     /**
      * 
-     * @type {StatusEnum}
+     * @type {PublishRfcStatusStatusEnum}
      * @memberof PublishRfcStatus
      */
-    status: StatusEnum;
+    status: PublishRfcStatusStatusEnum;
     /**
      * 
      * @type {string}
@@ -62,7 +62,7 @@ export function PublishRfcStatusFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
-        'status': StatusEnumFromJSON(json['status']),
+        'status': PublishRfcStatusStatusEnumFromJSON(json['status']),
         'detail': json['detail'],
     };
 }
@@ -78,7 +78,7 @@ export function PublishRfcStatusToJSONTyped(value?: PublishRfcStatus | null, ign
 
     return {
         
-        'status': StatusEnumToJSON(value['status']),
+        'status': PublishRfcStatusStatusEnumToJSON(value['status']),
         'detail': value['detail'],
     };
 }

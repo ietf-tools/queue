@@ -10,7 +10,7 @@ Name | Type
 `rev` | string
 `title` | string
 `pages` | number
-`intendedStdLevel` | string
+`intendedStdLevel` | [Name](Name.md)
 
 ## Example
 

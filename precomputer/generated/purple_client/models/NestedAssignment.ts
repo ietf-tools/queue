@@ -76,6 +76,18 @@ export interface NestedAssignment {
      * @memberof NestedAssignment
      */
     timeSpent?: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof NestedAssignment
+     */
+    readonly enqueuedAt?: Date | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof NestedAssignment
+     */
+    readonly assignedAt?: Date | null;
 }
 
 
@@ -105,6 +117,8 @@ export function NestedAssignmentFromJSONTyped(json: any, ignoreDiscriminator: bo
         'state': json['state'] == null ? undefined : StateEnumFromJSON(json['state']),
         'comment': json['comment'] == null ? undefined : json['comment'],
         'timeSpent': json['time_spent'] == null ? undefined : json['time_spent'],
+        'enqueuedAt': json['enqueued_at'] == null ? undefined : (new Date(json['enqueued_at'])),
+        'assignedAt': json['assigned_at'] == null ? undefined : (new Date(json['assigned_at'])),
     };
 }
 
@@ -112,7 +126,7 @@ export function NestedAssignmentToJSON(json: any): NestedAssignment {
     return NestedAssignmentToJSONTyped(json, false);
 }
 
-export function NestedAssignmentToJSONTyped(value?: Omit<NestedAssignment, 'id'|'rfc_to_be'> | null, ignoreDiscriminator: boolean = false): any {
+export function NestedAssignmentToJSONTyped(value?: Omit<NestedAssignment, 'id'|'rfc_to_be'|'enqueued_at'|'assigned_at'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

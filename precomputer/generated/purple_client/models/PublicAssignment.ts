@@ -47,6 +47,12 @@ export interface PublicAssignment {
     role: string;
     /**
      * 
+     * @type {string}
+     * @memberof PublicAssignment
+     */
+    readonly roleName?: string;
+    /**
+     * 
      * @type {StateEnum}
      * @memberof PublicAssignment
      */
@@ -77,6 +83,7 @@ export function PublicAssignmentFromJSONTyped(json: any, ignoreDiscriminator: bo
         'id': json['id'] == null ? undefined : json['id'],
         'rfcToBe': json['rfc_to_be'],
         'role': json['role'],
+        'roleName': json['role_name'] == null ? undefined : json['role_name'],
         'state': json['state'] == null ? undefined : StateEnumFromJSON(json['state']),
     };
 }
@@ -85,7 +92,7 @@ export function PublicAssignmentToJSON(json: any): PublicAssignment {
     return PublicAssignmentToJSONTyped(json, false);
 }
 
-export function PublicAssignmentToJSONTyped(value?: Omit<PublicAssignment, 'id'> | null, ignoreDiscriminator: boolean = false): any {
+export function PublicAssignmentToJSONTyped(value?: Omit<PublicAssignment, 'id'|'role_name'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

@@ -27,11 +27,15 @@ Name | Type
 `authors` | [Array&lt;PublicQueueAuthor&gt;](PublicQueueAuthor.md)
 `approvalLogMessage` | [Array&lt;ApprovalLogMessage&gt;](ApprovalLogMessage.md)
 `stream` | string
+`streamName` | string
+`stdLevelName` | string
+`dispositionName` | string
 `group` | string
 `groupName` | string
 `stdLevel` | string
 `references` | [Array&lt;RpcRelatedDocument&gt;](RpcRelatedDocument.md)
 `rev` | string
+`finalReviewStartedAt` | Date
 
 ## Example
 
@@ -60,11 +64,15 @@ const example = {
   "authors": null,
   "approvalLogMessage": null,
   "stream": null,
+  "streamName": null,
+  "stdLevelName": null,
+  "dispositionName": null,
   "group": null,
   "groupName": null,
   "stdLevel": null,
   "references": null,
   "rev": null,
+  "finalReviewStartedAt": null,
 } satisfies PublicQueueItem
 
 console.log(example)

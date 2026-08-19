@@ -10,18 +10,16 @@ Name | Type
 `title` | string
 `_abstract` | string
 `group` | string
-`disposition` | string
+`dispositionSlug` | string
 `externalDeadline` | Date
 `internalGoal` | Date
 `labels` | Array&lt;number&gt;
-`submittedFormat` | string
+`submittedFormatSlug` | string
 `pages` | number
 `keywords` | string
-`boilerplate` | string
-`stdLevel` | string
-`publicationStdLevel` | string
-`stream` | string
-`publicationStream` | string
+`boilerplateSlug` | string
+`stdLevelSlug` | string
+`streamSlug` | string
 `authors` | [Array&lt;RfcAuthorRequest&gt;](RfcAuthorRequest.md)
 `shepherdId` | number
 `iesgContactId` | number
@@ -31,6 +29,7 @@ Name | Type
 `repository` | string
 `streamManagerId` | number
 `isAprilFirstRfc` | boolean
+`rev` | string
 
 ## Example
 
@@ -42,18 +41,16 @@ const example = {
   "title": null,
   "_abstract": null,
   "group": null,
-  "disposition": null,
+  "dispositionSlug": null,
   "externalDeadline": null,
   "internalGoal": null,
   "labels": null,
-  "submittedFormat": null,
+  "submittedFormatSlug": null,
   "pages": null,
   "keywords": null,
-  "boilerplate": null,
-  "stdLevel": null,
-  "publicationStdLevel": null,
-  "stream": null,
-  "publicationStream": null,
+  "boilerplateSlug": null,
+  "stdLevelSlug": null,
+  "streamSlug": null,
   "authors": null,
   "shepherdId": null,
   "iesgContactId": null,
@@ -63,6 +60,7 @@ const example = {
   "repository": null,
   "streamManagerId": null,
   "isAprilFirstRfc": null,
+  "rev": null,
 } satisfies RfcToBeRequest
 
 console.log(example)

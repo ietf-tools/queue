@@ -26,6 +26,7 @@ All URIs are relative to *http://localhost*
 | [**clustersUpdate**](PurpleApi.md#clustersupdate) | **PUT** /api/rpc/clusters/{number}/ |  |
 | [**docRelationshipNamesList**](PurpleApi.md#docrelationshipnameslist) | **GET** /api/rpc/doc_relationship_names/ |  |
 | [**docRelationshipNamesRetrieve**](PurpleApi.md#docrelationshipnamesretrieve) | **GET** /api/rpc/doc_relationship_names/{slug}/ |  |
+| [**documentAssignmentTimeline**](PurpleApi.md#documentassignmenttimeline) | **GET** /api/rpc/documents/{draft_name}/assignment-timeline/ |  |
 | [**documentMailSend**](PurpleApi.md#documentmailsend) | **POST** /api/rpc/documents/{draft_name}/mail |  |
 | [**documentsActionHoldersCreate**](PurpleApi.md#documentsactionholderscreate) | **POST** /api/rpc/documents/{draft_name}/action_holders/ |  |
 | [**documentsActionHoldersDestroy**](PurpleApi.md#documentsactionholdersdestroy) | **DELETE** /api/rpc/documents/{draft_name}/action_holders/{id}/ |  |
@@ -117,6 +118,9 @@ All URIs are relative to *http://localhost*
 | [**sourceFormatNamesList**](PurpleApi.md#sourceformatnameslist) | **GET** /api/rpc/source_format_names/ |  |
 | [**sourceFormatNamesRetrieve**](PurpleApi.md#sourceformatnamesretrieve) | **GET** /api/rpc/source_format_names/{slug}/ |  |
 | [**statsLabels**](PurpleApi.md#statslabels) | **GET** /api/rpc/stats/label/ |  |
+| [**statsQueue**](PurpleApi.md#statsqueue) | **GET** /api/rpc/stats/queue/ |  |
+| [**statsQueueCounts**](PurpleApi.md#statsqueuecounts) | **GET** /api/rpc/stats/queue-counts/ |  |
+| [**statsQueuePublished**](PurpleApi.md#statsqueuepublished) | **GET** /api/rpc/stats/queue-published/ |  |
 | [**stdLevelNamesList**](PurpleApi.md#stdlevelnameslist) | **GET** /api/rpc/std_level_names/ |  |
 | [**stdLevelNamesRetrieve**](PurpleApi.md#stdlevelnamesretrieve) | **GET** /api/rpc/std_level_names/{slug}/ |  |
 | [**streamNamesList**](PurpleApi.md#streamnameslist) | **GET** /api/rpc/stream_names/ |  |
@@ -1676,6 +1680,77 @@ example().catch(console.error);
 ### Return type
 
 [**Name**](Name.md)
+
+### Authorization
+
+[cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## documentAssignmentTimeline
+
+> AssignmentTimeline documentAssignmentTimeline(draftName)
+
+
+
+Assignment/blocked timeline for a single document over time.  Combines post-transition Assignment/Blocked history with pre-transition label-derived states (see rpc.stats.timeline).
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PurpleApi,
+} from '';
+import type { DocumentAssignmentTimelineRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: cookieAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PurpleApi(config);
+
+  const body = {
+    // string
+    draftName: draftName_example,
+  } satisfies DocumentAssignmentTimelineRequest;
+
+  try {
+    const data = await api.documentAssignmentTimeline(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **draftName** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**AssignmentTimeline**](AssignmentTimeline.md)
 
 ### Authorization
 
@@ -8206,6 +8281,228 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**LabelStats**](LabelStats.md)
+
+### Authorization
+
+[cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## statsQueue
+
+> QueueStats statsQueue(count, period)
+
+
+
+Queue-wide time-in-assignment summary, split blocked vs not-blocked, grouped into selectable past periods.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PurpleApi,
+} from '';
+import type { StatsQueueRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: cookieAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PurpleApi(config);
+
+  const body = {
+    // number | How many past segments to report (1-52). (optional)
+    count: 56,
+    // 'ietf' | 'month' | 'quarter' | 'week' | 'year' | Length of each past segment. (optional)
+    period: period_example,
+  } satisfies StatsQueueRequest;
+
+  try {
+    const data = await api.statsQueue(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **count** | `number` | How many past segments to report (1-52). | [Optional] [Defaults to `undefined`] |
+| **period** | `ietf`, `month`, `quarter`, `week`, `year` | Length of each past segment. | [Optional] [Defaults to `undefined`] [Enum: ietf, month, quarter, week, year] |
+
+### Return type
+
+[**QueueStats**](QueueStats.md)
+
+### Authorization
+
+[cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## statsQueueCounts
+
+> QueueCountStats statsQueueCounts(count, period)
+
+
+
+Queue-wide document/page counts, grouped into selectable past periods.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PurpleApi,
+} from '';
+import type { StatsQueueCountsRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: cookieAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PurpleApi(config);
+
+  const body = {
+    // number | How many past segments to report (1-52). (optional)
+    count: 56,
+    // 'ietf' | 'month' | 'quarter' | 'week' | 'year' | Length of each past segment. (optional)
+    period: period_example,
+  } satisfies StatsQueueCountsRequest;
+
+  try {
+    const data = await api.statsQueueCounts(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **count** | `number` | How many past segments to report (1-52). | [Optional] [Defaults to `undefined`] |
+| **period** | `ietf`, `month`, `quarter`, `week`, `year` | Length of each past segment. | [Optional] [Defaults to `undefined`] [Enum: ietf, month, quarter, week, year] |
+
+### Return type
+
+[**QueueCountStats**](QueueCountStats.md)
+
+### Authorization
+
+[cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## statsQueuePublished
+
+> QueuePublishedStats statsQueuePublished(count, period)
+
+
+
+RFCs published by stream and status, grouped into selectable periods.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PurpleApi,
+} from '';
+import type { StatsQueuePublishedRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: cookieAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PurpleApi(config);
+
+  const body = {
+    // number | How many past segments to report (1-52). (optional)
+    count: 56,
+    // 'ietf' | 'month' | 'quarter' | 'week' | 'year' | Length of each past segment. (optional)
+    period: period_example,
+  } satisfies StatsQueuePublishedRequest;
+
+  try {
+    const data = await api.statsQueuePublished(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **count** | `number` | How many past segments to report (1-52). | [Optional] [Defaults to `undefined`] |
+| **period** | `ietf`, `month`, `quarter`, `week`, `year` | Length of each past segment. | [Optional] [Defaults to `undefined`] [Enum: ietf, month, quarter, week, year] |
+
+### Return type
+
+[**QueuePublishedStats**](QueuePublishedStats.md)
 
 ### Authorization
 

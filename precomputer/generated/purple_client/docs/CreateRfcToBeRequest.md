@@ -20,6 +20,7 @@ Name | Type
 `shepherd` | number
 `iesgContact` | number
 `pages` | number
+`rev` | string
 `keywords` | string
 `ianaStatusSlug` | [IanaStatusSlugEnum](IanaStatusSlugEnum.md)
 `consensus` | boolean
@@ -44,6 +45,7 @@ const example = {
   "shepherd": null,
   "iesgContact": null,
   "pages": null,
+  "rev": null,
   "keywords": null,
   "ianaStatusSlug": null,
   "consensus": null,

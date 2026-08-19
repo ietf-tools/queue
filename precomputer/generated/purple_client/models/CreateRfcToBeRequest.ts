@@ -106,6 +106,12 @@ export interface CreateRfcToBeRequest {
      */
     pages?: number | null;
     /**
+     * Revision of draft being worked on.
+     * @type {string}
+     * @memberof CreateRfcToBeRequest
+     */
+    rev?: string;
+    /**
      * Comma-separated list of keywords
      * @type {string}
      * @memberof CreateRfcToBeRequest
@@ -169,6 +175,7 @@ export function CreateRfcToBeRequestFromJSONTyped(json: any, ignoreDiscriminator
         'shepherd': json['shepherd'] == null ? undefined : json['shepherd'],
         'iesgContact': json['iesg_contact'] == null ? undefined : json['iesg_contact'],
         'pages': json['pages'] == null ? undefined : json['pages'],
+        'rev': json['rev'] == null ? undefined : json['rev'],
         'keywords': json['keywords'] == null ? undefined : json['keywords'],
         'ianaStatusSlug': json['iana_status_slug'] == null ? undefined : IanaStatusSlugEnumFromJSON(json['iana_status_slug']),
         'consensus': json['consensus'] == null ? undefined : json['consensus'],
@@ -199,6 +206,7 @@ export function CreateRfcToBeRequestToJSONTyped(value?: CreateRfcToBeRequest | n
         'shepherd': value['shepherd'],
         'iesg_contact': value['iesgContact'],
         'pages': value['pages'],
+        'rev': value['rev'],
         'keywords': value['keywords'],
         'iana_status_slug': IanaStatusSlugEnumToJSON(value['ianaStatusSlug']),
         'consensus': value['consensus'],

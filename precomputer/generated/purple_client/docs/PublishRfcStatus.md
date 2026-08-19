@@ -6,7 +6,7 @@
 
 Name | Type
 ------------ | -------------
-`status` | [StatusEnum](StatusEnum.md)
+`status` | [PublishRfcStatusStatusEnum](PublishRfcStatusStatusEnum.md)
 `detail` | string
 
 ## Example

@@ -14,6 +14,8 @@ Name | Type
 `state` | [StateEnum](StateEnum.md)
 `comment` | string
 `timeSpent` | string
+`enqueuedAt` | Date
+`assignedAt` | Date
 
 ## Example
 
@@ -29,6 +31,8 @@ const example = {
   "state": null,
   "comment": null,
   "timeSpent": null,
+  "enqueuedAt": null,
+  "assignedAt": null,
 } satisfies NestedAssignment
 
 console.log(example)

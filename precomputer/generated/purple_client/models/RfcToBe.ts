@@ -90,6 +90,13 @@ import {
     BaseDatatrackerPersonToJSON,
     BaseDatatrackerPersonToJSONTyped,
 } from './BaseDatatrackerPerson.ts';
+import type { Name } from './Name.ts';
+import {
+    NameFromJSON,
+    NameFromJSONTyped,
+    NameToJSON,
+    NameToJSONTyped,
+} from './Name.ts';
 
 /**
  * RfcToBeSerializer suitable for displaying full details of a single instance
@@ -135,10 +142,10 @@ export interface RfcToBe {
     readonly draft?: Draft;
     /**
      * 
-     * @type {string}
+     * @type {Name}
      * @memberof RfcToBe
      */
-    disposition: string;
+    readonly disposition?: Name;
     /**
      * 
      * @type {Date}
@@ -165,10 +172,10 @@ export interface RfcToBe {
     readonly cluster?: SimpleCluster;
     /**
      * 
-     * @type {string}
+     * @type {Name}
      * @memberof RfcToBe
      */
-    submittedFormat: string;
+    readonly submittedFormat?: Name;
     /**
      * Page count
      * @type {number}
@@ -183,34 +190,28 @@ export interface RfcToBe {
     keywords?: string;
     /**
      * TLP IPR boilerplate option
-     * @type {string}
+     * @type {Name}
      * @memberof RfcToBe
      */
-    boilerplate: string;
+    readonly boilerplate?: Name;
     /**
      * Current StdLevel
-     * @type {string}
+     * @type {Name}
      * @memberof RfcToBe
      */
-    stdLevel: string;
+    readonly stdLevel?: Name;
     /**
      * StdLevel at publication (blank until published)
-     * @type {string}
+     * @type {Name}
      * @memberof RfcToBe
      */
-    publicationStdLevel?: string | null;
+    readonly publicationStdLevel?: Name;
     /**
      * Current stream
-     * @type {string}
+     * @type {Name}
      * @memberof RfcToBe
      */
-    stream: string;
-    /**
-     * Stream at publication (blank until published)
-     * @type {string}
-     * @memberof RfcToBe
-     */
-    publicationStream?: string | null;
+    readonly stream?: Name;
     /**
      * 
      * @type {Array<RfcAuthor>}
@@ -313,6 +314,12 @@ export interface RfcToBe {
      * @memberof RfcToBe
      */
     isAprilFirstRfc?: boolean;
+    /**
+     * Revision of draft being worked on.
+     * @type {string}
+     * @memberof RfcToBe
+     */
+    rev?: string;
 }
 
 /**
@@ -320,12 +327,7 @@ export interface RfcToBe {
  */
 export function instanceOfRfcToBe(value: object): value is RfcToBe {
     if (!('title' in value) || value['title'] === undefined) return false;
-    if (!('disposition' in value) || value['disposition'] === undefined) return false;
     if (!('labels' in value) || value['labels'] === undefined) return false;
-    if (!('submittedFormat' in value) || value['submittedFormat'] === undefined) return false;
-    if (!('boilerplate' in value) || value['boilerplate'] === undefined) return false;
-    if (!('stdLevel' in value) || value['stdLevel'] === undefined) return false;
-    if (!('stream' in value) || value['stream'] === undefined) return false;
     if (!('authors' in value) || value['authors'] === undefined) return false;
     return true;
 }
@@ -346,19 +348,18 @@ export function RfcToBeFromJSONTyped(json: any, ignoreDiscriminator: boolean): R
         '_abstract': json['abstract'] == null ? undefined : json['abstract'],
         'group': json['group'] == null ? undefined : json['group'],
         'draft': json['draft'] == null ? undefined : DraftFromJSON(json['draft']),
-        'disposition': json['disposition'],
+        'disposition': json['disposition'] == null ? undefined : NameFromJSON(json['disposition']),
         'externalDeadline': json['external_deadline'] == null ? undefined : (new Date(json['external_deadline'])),
         'internalGoal': json['internal_goal'] == null ? undefined : (new Date(json['internal_goal'])),
         'labels': json['labels'],
         'cluster': json['cluster'] == null ? undefined : SimpleClusterFromJSON(json['cluster']),
-        'submittedFormat': json['submitted_format'],
+        'submittedFormat': json['submitted_format'] == null ? undefined : NameFromJSON(json['submitted_format']),
         'pages': json['pages'] == null ? undefined : json['pages'],
         'keywords': json['keywords'] == null ? undefined : json['keywords'],
-        'boilerplate': json['boilerplate'],
-        'stdLevel': json['std_level'],
-        'publicationStdLevel': json['publication_std_level'] == null ? undefined : json['publication_std_level'],
-        'stream': json['stream'],
-        'publicationStream': json['publication_stream'] == null ? undefined : json['publication_stream'],
+        'boilerplate': json['boilerplate'] == null ? undefined : NameFromJSON(json['boilerplate']),
+        'stdLevel': json['std_level'] == null ? undefined : NameFromJSON(json['std_level']),
+        'publicationStdLevel': json['publication_std_level'] == null ? undefined : NameFromJSON(json['publication_std_level']),
+        'stream': json['stream'] == null ? undefined : NameFromJSON(json['stream']),
         'authors': ((json['authors'] as Array<any>).map(RfcAuthorFromJSON)),
         'shepherd': json['shepherd'] == null ? undefined : BaseDatatrackerPersonFromJSON(json['shepherd']),
         'iesgContact': json['iesg_contact'] == null ? undefined : BaseDatatrackerPersonFromJSON(json['iesg_contact']),
@@ -376,6 +377,7 @@ export function RfcToBeFromJSONTyped(json: any, ignoreDiscriminator: boolean): R
         'blockingReasons': json['blocking_reasons'] == null ? undefined : ((json['blocking_reasons'] as Array<any>).map(RfcToBeBlockingReasonFromJSON)),
         'streamManager': json['stream_manager'] == null ? undefined : BaseDatatrackerPersonFromJSON(json['stream_manager']),
         'isAprilFirstRfc': json['is_april_first_rfc'] == null ? undefined : json['is_april_first_rfc'],
+        'rev': json['rev'] == null ? undefined : json['rev'],
     };
 }
 
@@ -383,7 +385,7 @@ export function RfcToBeToJSON(json: any): RfcToBe {
     return RfcToBeToJSONTyped(json, false);
 }
 
-export function RfcToBeToJSONTyped(value?: Omit<RfcToBe, 'id'|'name'|'draft'|'cluster'|'shepherd'|'iesg_contact'|'assignment_set'|'actionholder_set'|'pending_activities'|'published_at'|'pub_owner'|'subseries'|'iana_status'|'additional_emails'|'blocking_reasons'|'stream_manager'> | null, ignoreDiscriminator: boolean = false): any {
+export function RfcToBeToJSONTyped(value?: Omit<RfcToBe, 'id'|'name'|'draft'|'disposition'|'cluster'|'submitted_format'|'boilerplate'|'std_level'|'publication_std_level'|'stream'|'shepherd'|'iesg_contact'|'assignment_set'|'actionholder_set'|'pending_activities'|'published_at'|'pub_owner'|'subseries'|'iana_status'|'additional_emails'|'blocking_reasons'|'stream_manager'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
@@ -393,23 +395,17 @@ export function RfcToBeToJSONTyped(value?: Omit<RfcToBe, 'id'|'name'|'draft'|'cl
         'title': value['title'],
         'abstract': value['_abstract'],
         'group': value['group'],
-        'disposition': value['disposition'],
         'external_deadline': value['externalDeadline'] == null ? value['externalDeadline'] : value['externalDeadline'].toISOString(),
         'internal_goal': value['internalGoal'] == null ? value['internalGoal'] : value['internalGoal'].toISOString(),
         'labels': value['labels'],
-        'submitted_format': value['submittedFormat'],
         'pages': value['pages'],
         'keywords': value['keywords'],
-        'boilerplate': value['boilerplate'],
-        'std_level': value['stdLevel'],
-        'publication_std_level': value['publicationStdLevel'],
-        'stream': value['stream'],
-        'publication_stream': value['publicationStream'],
         'authors': ((value['authors'] as Array<any>).map(RfcAuthorToJSON)),
         'rfc_number': value['rfcNumber'],
         'consensus': value['consensus'],
         'repository': value['repository'],
         'is_april_first_rfc': value['isAprilFirstRfc'],
+        'rev': value['rev'],
     };
 }
 

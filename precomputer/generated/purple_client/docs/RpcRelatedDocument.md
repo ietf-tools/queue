@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `id` | number
 `relationship` | string
+`relationshipName` | string
 `draftName` | string
 `targetDraftName` | string
 `targetRfcNumber` | number
@@ -26,6 +27,7 @@ import type { RpcRelatedDocument } from ''
 const example = {
   "id": null,
   "relationship": null,
+  "relationshipName": null,
   "draftName": null,
   "targetDraftName": null,
   "targetRfcNumber": null,

@@ -47,7 +47,6 @@ export const renderAssignmentsByRoles = ({
   const assignmentsByRolesFiltered = assignmentsByRoles.filter((assignmentsByRole) => {
     // Filter per https://github.com/ietf-tools/queue/issues/13#issuecomment-4027164633
     switch (assignmentsByRole.role) {
-      case 'ref_checker':
       case 'publisher':
         return false
     }
@@ -71,15 +70,13 @@ export const renderAssignmentsByRoles = ({
     assignmentsByRoles.some((assignmentsByRole) => assignmentsByRole.role === 'first_editor')
 
   const humanFriendlyRole = (assignmentByRole: AssignmentByRole): string => {
-    switch (assignmentByRole.role) {
-      case 'first_editor':
-        return 'In Progress (First Edit)'
-      case 'second_editor':
-        return 'In Progress (Second Edit)'
-      case 'final_review_editor':
-        return 'In Final Review'
+    if (assignmentByRole.role === 'blocked') {
+      return 'blocked'
     }
-    return assignmentByRole.role.replace(/_/g, ' ')
+    if (assignmentByRole.role === 'final_review_editor') {
+      return 'In Final Review'
+    }
+    return `In Progress (${assignmentByRole.roleName ?? assignmentByRole.role.replace(/_/g, ' ')})`
   }
 
   const slugToHumanReadable = (slug: string): string => {
