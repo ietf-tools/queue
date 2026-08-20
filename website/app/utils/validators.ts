@@ -63,11 +63,12 @@ export const AssignmentRoleSchema = z.union([
   z.literal('second_editor_editor'),
   z.literal('publisher'),
   z.literal('ref_checker'),
-  z.literal('formatting'),
+  z.literal('formatting')
 ])
 
 const AssignmentsByRoleSchema = z.object({
   role: AssignmentRoleSchema,
+  roleName: z.string().optional(),
   blockingReasons: BlockingReasonSchema.array().optional()
   // assignments: AssignmentSchema.array(),
 })
@@ -136,7 +137,7 @@ const DocumentReferenceCommonSchema = z.object({
   targetRfcNumber: z.number().optional(),
   targetDisposition: DispositionCommonSchema.optional(),
   targetIsReceived: z.boolean().optional(),
-  targetIsBlocked: z.boolean().optional(),
+  targetIsBlocked: z.boolean().optional()
 })
 
 const FinalApprovalCommonSchema = z.object({
@@ -148,7 +149,7 @@ const BaseDatatrackerPersonSchema = z.object({
   name: z.string().optional(),
   email: z.string().optional(),
   picture: z.string().optional(),
-  datatrackerUrl: z.string().optional(),
+  datatrackerUrl: z.string().optional()
 })
 
 const ActionHolderSchema = z.object({
@@ -157,13 +158,13 @@ const ActionHolderSchema = z.object({
   sinceWhenIso: z.string().optional(),
   completedIso: z.string().optional(),
   comment: z.string().optional(),
-  body: z.string().optional(),
+  body: z.string().optional()
 })
 
 const PendingActivityCommonSchema = z.object({
   slug: AssignmentRoleSchema,
   name: z.string(),
-  desc: z.string().optional(),
+  desc: z.string().optional()
 })
 
 export type PendingActivityCommon = z.infer<typeof PendingActivityCommonSchema>
@@ -207,7 +208,7 @@ export const QueueCommonSchema = z.object({
 export type QueueCommon = z.infer<typeof QueueCommonSchema>
 
 export const ClusterQueueCommonSchema = QueueCommonSchema.extend({
-  clusterNumber: z.number(),
+  clusterNumber: z.number()
 })
 
 export const FinalReviewIndexCommonSchema = z.object({

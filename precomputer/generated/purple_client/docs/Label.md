@@ -12,6 +12,7 @@ Name | Type
 `isComplexity` | boolean
 `color` | [ColorEnum](ColorEnum.md)
 `used` | boolean
+`isPublic` | boolean
 
 ## Example
 
@@ -26,6 +27,7 @@ const example = {
   "isComplexity": null,
   "color": null,
   "used": null,
+  "isPublic": null,
 } satisfies Label
 
 console.log(example)

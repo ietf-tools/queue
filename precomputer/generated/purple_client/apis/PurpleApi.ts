@@ -23,6 +23,7 @@ import type {
   ApprovalLogMessageRequest,
   Assignment,
   AssignmentRequest,
+  AssignmentTimeline,
   AuthorOrderRequest,
   AuthorOrderStatus,
   Capability,
@@ -81,8 +82,11 @@ import type {
   PublishRfcRequest,
   PublishRfcStatus,
   PublishValidationError,
+  QueueCountStats,
   QueueCounts,
   QueueItem,
+  QueuePublishedStats,
+  QueueStats,
   RfcAuthor,
   RfcAuthorRequest,
   RfcToBe,
@@ -122,6 +126,8 @@ import {
     AssignmentToJSON,
     AssignmentRequestFromJSON,
     AssignmentRequestToJSON,
+    AssignmentTimelineFromJSON,
+    AssignmentTimelineToJSON,
     AuthorOrderRequestFromJSON,
     AuthorOrderRequestToJSON,
     AuthorOrderStatusFromJSON,
@@ -238,10 +244,16 @@ import {
     PublishRfcStatusToJSON,
     PublishValidationErrorFromJSON,
     PublishValidationErrorToJSON,
+    QueueCountStatsFromJSON,
+    QueueCountStatsToJSON,
     QueueCountsFromJSON,
     QueueCountsToJSON,
     QueueItemFromJSON,
     QueueItemToJSON,
+    QueuePublishedStatsFromJSON,
+    QueuePublishedStatsToJSON,
+    QueueStatsFromJSON,
+    QueueStatsToJSON,
     RfcAuthorFromJSON,
     RfcAuthorToJSON,
     RfcAuthorRequestFromJSON,
@@ -377,6 +389,10 @@ export interface DocRelationshipNamesListRequest {
 export interface DocRelationshipNamesRetrieveRequest {
     slug: string;
     refs?: boolean;
+}
+
+export interface DocumentAssignmentTimelineRequest {
+    draftName: string;
 }
 
 export interface DocumentMailSendRequest {
@@ -796,6 +812,21 @@ export interface SearchDatatrackerpersonsRequest {
 
 export interface SourceFormatNamesRetrieveRequest {
     slug: string;
+}
+
+export interface StatsQueueRequest {
+    count?: number;
+    period?: StatsQueuePeriodEnum;
+}
+
+export interface StatsQueueCountsRequest {
+    count?: number;
+    period?: StatsQueueCountsPeriodEnum;
+}
+
+export interface StatsQueuePublishedRequest {
+    count?: number;
+    period?: StatsQueuePublishedPeriodEnum;
 }
 
 export interface StdLevelNamesRetrieveRequest {
@@ -1876,6 +1907,51 @@ export class PurpleApi extends runtime.BaseAPI {
      */
     async docRelationshipNamesRetrieve(requestParameters: DocRelationshipNamesRetrieveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Name> {
         const response = await this.docRelationshipNamesRetrieveRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for documentAssignmentTimeline without sending the request
+     */
+    async documentAssignmentTimelineRequestOpts(requestParameters: DocumentAssignmentTimelineRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['draftName'] == null) {
+            throw new runtime.RequiredError(
+                'draftName',
+                'Required parameter "draftName" was null or undefined when calling documentAssignmentTimeline().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/rpc/documents/{draft_name}/assignment-timeline/`;
+        urlPath = urlPath.replace(`{${"draft_name"}}`, encodeURIComponent(String(requestParameters['draftName'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Assignment/blocked timeline for a single document over time.  Combines post-transition Assignment/Blocked history with pre-transition label-derived states (see rpc.stats.timeline).
+     */
+    async documentAssignmentTimelineRaw(requestParameters: DocumentAssignmentTimelineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AssignmentTimeline>> {
+        const requestOptions = await this.documentAssignmentTimelineRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AssignmentTimelineFromJSON(jsonValue));
+    }
+
+    /**
+     * Assignment/blocked timeline for a single document over time.  Combines post-transition Assignment/Blocked history with pre-transition label-derived states (see rpc.stats.timeline).
+     */
+    async documentAssignmentTimeline(requestParameters: DocumentAssignmentTimelineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AssignmentTimeline> {
+        const response = await this.documentAssignmentTimelineRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -6325,6 +6401,141 @@ export class PurpleApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for statsQueue without sending the request
+     */
+    async statsQueueRequestOpts(requestParameters: StatsQueueRequest): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        if (requestParameters['count'] != null) {
+            queryParameters['count'] = requestParameters['count'];
+        }
+
+        if (requestParameters['period'] != null) {
+            queryParameters['period'] = requestParameters['period'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/rpc/stats/queue/`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Queue-wide time-in-assignment summary, split blocked vs not-blocked, grouped into selectable past periods.
+     */
+    async statsQueueRaw(requestParameters: StatsQueueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<QueueStats>> {
+        const requestOptions = await this.statsQueueRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => QueueStatsFromJSON(jsonValue));
+    }
+
+    /**
+     * Queue-wide time-in-assignment summary, split blocked vs not-blocked, grouped into selectable past periods.
+     */
+    async statsQueue(requestParameters: StatsQueueRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<QueueStats> {
+        const response = await this.statsQueueRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for statsQueueCounts without sending the request
+     */
+    async statsQueueCountsRequestOpts(requestParameters: StatsQueueCountsRequest): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        if (requestParameters['count'] != null) {
+            queryParameters['count'] = requestParameters['count'];
+        }
+
+        if (requestParameters['period'] != null) {
+            queryParameters['period'] = requestParameters['period'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/rpc/stats/queue-counts/`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Queue-wide document/page counts, grouped into selectable past periods.
+     */
+    async statsQueueCountsRaw(requestParameters: StatsQueueCountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<QueueCountStats>> {
+        const requestOptions = await this.statsQueueCountsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => QueueCountStatsFromJSON(jsonValue));
+    }
+
+    /**
+     * Queue-wide document/page counts, grouped into selectable past periods.
+     */
+    async statsQueueCounts(requestParameters: StatsQueueCountsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<QueueCountStats> {
+        const response = await this.statsQueueCountsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for statsQueuePublished without sending the request
+     */
+    async statsQueuePublishedRequestOpts(requestParameters: StatsQueuePublishedRequest): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        if (requestParameters['count'] != null) {
+            queryParameters['count'] = requestParameters['count'];
+        }
+
+        if (requestParameters['period'] != null) {
+            queryParameters['period'] = requestParameters['period'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/rpc/stats/queue-published/`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * RFCs published by stream and status, grouped into selectable periods.
+     */
+    async statsQueuePublishedRaw(requestParameters: StatsQueuePublishedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<QueuePublishedStats>> {
+        const requestOptions = await this.statsQueuePublishedRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => QueuePublishedStatsFromJSON(jsonValue));
+    }
+
+    /**
+     * RFCs published by stream and status, grouped into selectable periods.
+     */
+    async statsQueuePublished(requestParameters: StatsQueuePublishedRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<QueuePublishedStats> {
+        const response = await this.statsQueuePublishedRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for stdLevelNamesList without sending the request
      */
     async stdLevelNamesListRequestOpts(): Promise<runtime.RequestOpts> {
@@ -7382,3 +7593,36 @@ export const QueueListDispositionEnum = {
     Withdrawn: 'withdrawn'
 } as const;
 export type QueueListDispositionEnum = typeof QueueListDispositionEnum[keyof typeof QueueListDispositionEnum];
+/**
+ * @export
+ */
+export const StatsQueuePeriodEnum = {
+    Ietf: 'ietf',
+    Month: 'month',
+    Quarter: 'quarter',
+    Week: 'week',
+    Year: 'year'
+} as const;
+export type StatsQueuePeriodEnum = typeof StatsQueuePeriodEnum[keyof typeof StatsQueuePeriodEnum];
+/**
+ * @export
+ */
+export const StatsQueueCountsPeriodEnum = {
+    Ietf: 'ietf',
+    Month: 'month',
+    Quarter: 'quarter',
+    Week: 'week',
+    Year: 'year'
+} as const;
+export type StatsQueueCountsPeriodEnum = typeof StatsQueueCountsPeriodEnum[keyof typeof StatsQueueCountsPeriodEnum];
+/**
+ * @export
+ */
+export const StatsQueuePublishedPeriodEnum = {
+    Ietf: 'ietf',
+    Month: 'month',
+    Quarter: 'quarter',
+    Week: 'week',
+    Year: 'year'
+} as const;
+export type StatsQueuePublishedPeriodEnum = typeof StatsQueuePublishedPeriodEnum[keyof typeof StatsQueuePublishedPeriodEnum];

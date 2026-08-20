@@ -57,6 +57,12 @@ export interface LabelRequest {
      * @memberof LabelRequest
      */
     used?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof LabelRequest
+     */
+    isPublic?: boolean;
 }
 
 
@@ -84,6 +90,7 @@ export function LabelRequestFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'isComplexity': json['is_complexity'] == null ? undefined : json['is_complexity'],
         'color': json['color'] == null ? undefined : ColorEnumFromJSON(json['color']),
         'used': json['used'] == null ? undefined : json['used'],
+        'isPublic': json['is_public'] == null ? undefined : json['is_public'],
     };
 }
 
@@ -103,6 +110,7 @@ export function LabelRequestToJSONTyped(value?: LabelRequest | null, ignoreDiscr
         'is_complexity': value['isComplexity'],
         'color': ColorEnumToJSON(value['color']),
         'used': value['used'],
+        'is_public': value['isPublic'],
     };
 }
 

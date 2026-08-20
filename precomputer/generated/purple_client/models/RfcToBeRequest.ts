@@ -57,7 +57,7 @@ export interface RfcToBeRequest {
      * @type {string}
      * @memberof RfcToBeRequest
      */
-    disposition: string;
+    dispositionSlug?: string;
     /**
      * 
      * @type {Date}
@@ -81,7 +81,7 @@ export interface RfcToBeRequest {
      * @type {string}
      * @memberof RfcToBeRequest
      */
-    submittedFormat: string;
+    submittedFormatSlug?: string;
     /**
      * Page count
      * @type {number}
@@ -95,35 +95,23 @@ export interface RfcToBeRequest {
      */
     keywords?: string;
     /**
-     * TLP IPR boilerplate option
+     * 
      * @type {string}
      * @memberof RfcToBeRequest
      */
-    boilerplate: string;
+    boilerplateSlug?: string;
     /**
-     * Current StdLevel
+     * 
      * @type {string}
      * @memberof RfcToBeRequest
      */
-    stdLevel: string;
+    stdLevelSlug?: string;
     /**
-     * StdLevel at publication (blank until published)
+     * 
      * @type {string}
      * @memberof RfcToBeRequest
      */
-    publicationStdLevel?: string | null;
-    /**
-     * Current stream
-     * @type {string}
-     * @memberof RfcToBeRequest
-     */
-    stream: string;
-    /**
-     * Stream at publication (blank until published)
-     * @type {string}
-     * @memberof RfcToBeRequest
-     */
-    publicationStream?: string | null;
+    streamSlug?: string;
     /**
      * 
      * @type {Array<RfcAuthorRequest>}
@@ -184,6 +172,12 @@ export interface RfcToBeRequest {
      * @memberof RfcToBeRequest
      */
     isAprilFirstRfc?: boolean;
+    /**
+     * Revision of draft being worked on.
+     * @type {string}
+     * @memberof RfcToBeRequest
+     */
+    rev?: string;
 }
 
 
@@ -193,12 +187,7 @@ export interface RfcToBeRequest {
  */
 export function instanceOfRfcToBeRequest(value: object): value is RfcToBeRequest {
     if (!('title' in value) || value['title'] === undefined) return false;
-    if (!('disposition' in value) || value['disposition'] === undefined) return false;
     if (!('labels' in value) || value['labels'] === undefined) return false;
-    if (!('submittedFormat' in value) || value['submittedFormat'] === undefined) return false;
-    if (!('boilerplate' in value) || value['boilerplate'] === undefined) return false;
-    if (!('stdLevel' in value) || value['stdLevel'] === undefined) return false;
-    if (!('stream' in value) || value['stream'] === undefined) return false;
     if (!('authors' in value) || value['authors'] === undefined) return false;
     return true;
 }
@@ -216,18 +205,16 @@ export function RfcToBeRequestFromJSONTyped(json: any, ignoreDiscriminator: bool
         'title': json['title'],
         '_abstract': json['abstract'] == null ? undefined : json['abstract'],
         'group': json['group'] == null ? undefined : json['group'],
-        'disposition': json['disposition'],
+        'dispositionSlug': json['disposition_slug'] == null ? undefined : json['disposition_slug'],
         'externalDeadline': json['external_deadline'] == null ? undefined : (new Date(json['external_deadline'])),
         'internalGoal': json['internal_goal'] == null ? undefined : (new Date(json['internal_goal'])),
         'labels': json['labels'],
-        'submittedFormat': json['submitted_format'],
+        'submittedFormatSlug': json['submitted_format_slug'] == null ? undefined : json['submitted_format_slug'],
         'pages': json['pages'] == null ? undefined : json['pages'],
         'keywords': json['keywords'] == null ? undefined : json['keywords'],
-        'boilerplate': json['boilerplate'],
-        'stdLevel': json['std_level'],
-        'publicationStdLevel': json['publication_std_level'] == null ? undefined : json['publication_std_level'],
-        'stream': json['stream'],
-        'publicationStream': json['publication_stream'] == null ? undefined : json['publication_stream'],
+        'boilerplateSlug': json['boilerplate_slug'] == null ? undefined : json['boilerplate_slug'],
+        'stdLevelSlug': json['std_level_slug'] == null ? undefined : json['std_level_slug'],
+        'streamSlug': json['stream_slug'] == null ? undefined : json['stream_slug'],
         'authors': ((json['authors'] as Array<any>).map(RfcAuthorRequestFromJSON)),
         'shepherdId': json['shepherd_id'] == null ? undefined : json['shepherd_id'],
         'iesgContactId': json['iesg_contact_id'] == null ? undefined : json['iesg_contact_id'],
@@ -237,6 +224,7 @@ export function RfcToBeRequestFromJSONTyped(json: any, ignoreDiscriminator: bool
         'repository': json['repository'] == null ? undefined : json['repository'],
         'streamManagerId': json['stream_manager_id'] == null ? undefined : json['stream_manager_id'],
         'isAprilFirstRfc': json['is_april_first_rfc'] == null ? undefined : json['is_april_first_rfc'],
+        'rev': json['rev'] == null ? undefined : json['rev'],
     };
 }
 
@@ -254,18 +242,16 @@ export function RfcToBeRequestToJSONTyped(value?: RfcToBeRequest | null, ignoreD
         'title': value['title'],
         'abstract': value['_abstract'],
         'group': value['group'],
-        'disposition': value['disposition'],
+        'disposition_slug': value['dispositionSlug'],
         'external_deadline': value['externalDeadline'] == null ? value['externalDeadline'] : value['externalDeadline'].toISOString(),
         'internal_goal': value['internalGoal'] == null ? value['internalGoal'] : value['internalGoal'].toISOString(),
         'labels': value['labels'],
-        'submitted_format': value['submittedFormat'],
+        'submitted_format_slug': value['submittedFormatSlug'],
         'pages': value['pages'],
         'keywords': value['keywords'],
-        'boilerplate': value['boilerplate'],
-        'std_level': value['stdLevel'],
-        'publication_std_level': value['publicationStdLevel'],
-        'stream': value['stream'],
-        'publication_stream': value['publicationStream'],
+        'boilerplate_slug': value['boilerplateSlug'],
+        'std_level_slug': value['stdLevelSlug'],
+        'stream_slug': value['streamSlug'],
         'authors': ((value['authors'] as Array<any>).map(RfcAuthorRequestToJSON)),
         'shepherd_id': value['shepherdId'],
         'iesg_contact_id': value['iesgContactId'],
@@ -275,6 +261,7 @@ export function RfcToBeRequestToJSONTyped(value?: RfcToBeRequest | null, ignoreD
         'repository': value['repository'],
         'stream_manager_id': value['streamManagerId'],
         'is_april_first_rfc': value['isAprilFirstRfc'],
+        'rev': value['rev'],
     };
 }
 

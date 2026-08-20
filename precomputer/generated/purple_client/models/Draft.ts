@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime.ts';
+import type { Name } from './Name.ts';
+import {
+    NameFromJSON,
+    NameFromJSONTyped,
+    NameToJSON,
+    NameToJSONTyped,
+} from './Name.ts';
+
 /**
  * 
  * @export
@@ -45,10 +53,10 @@ export interface Draft {
     readonly pages?: number;
     /**
      * 
-     * @type {string}
+     * @type {Name}
      * @memberof Draft
      */
-    readonly intendedStdLevel?: string;
+    readonly intendedStdLevel?: Name | null;
 }
 
 /**
@@ -72,7 +80,7 @@ export function DraftFromJSONTyped(json: any, ignoreDiscriminator: boolean): Dra
         'rev': json['rev'] == null ? undefined : json['rev'],
         'title': json['title'] == null ? undefined : json['title'],
         'pages': json['pages'] == null ? undefined : json['pages'],
-        'intendedStdLevel': json['intended_std_level'] == null ? undefined : json['intended_std_level'],
+        'intendedStdLevel': json['intended_std_level'] == null ? undefined : NameFromJSON(json['intended_std_level']),
     };
 }
 

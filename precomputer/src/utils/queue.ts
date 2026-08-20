@@ -1,6 +1,10 @@
 import { groupBy, uniq } from 'es-toolkit'
 import { DateTime } from 'luxon'
-import { PurpleApi, type Cluster, type ApiPubqQueueListRequest } from '../../generated/purple_client/index.ts'
+import {
+  PurpleApi,
+  type Cluster,
+  type ApiPubqQueueListRequest
+} from '../../generated/purple_client/index.ts'
 import {
   type QueueCommon,
   type QueueCommonItem,
@@ -29,36 +33,39 @@ type Props = {
 
 type AssignmentsByRole = NonNullable<QueueCommonItem['assignmentsByRoles']>[number]
 
-type FinalApprovalCounts = NonNullable<Cluster["documents"]>[number]['finalApprovalCounts']
+type FinalApprovalCounts = NonNullable<Cluster['documents']>[number]['finalApprovalCounts']
 
 type FinalApprovalCountsByQueueItemName = Record<string, FinalApprovalCounts>
 
 export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommon> => {
   const list = await apiPubqQueueListCached({ api, params })
 
-  const uniqueClusterNumbers = uniq(list
-    .map((queueItem): number | undefined => queueItem.cluster?.number)
-    .filter(maybeClusterNumber => typeof maybeClusterNumber === 'number')
+  const uniqueClusterNumbers = uniq(
+    list
+      .map((queueItem): number | undefined => queueItem.cluster?.number)
+      .filter((maybeClusterNumber) => typeof maybeClusterNumber === 'number')
   )
 
   const clusters = await Promise.all(
-    uniqueClusterNumbers
-      .map(
-        clusterNumber => apiPubqClustersRetrieveCached({ api, clusterNumber })
-      )
+    uniqueClusterNumbers.map((clusterNumber) =>
+      apiPubqClustersRetrieveCached({ api, clusterNumber })
+    )
   )
 
   const finalApprovalCountsByQueueItemName = clusters.reduce((acc, cluster) => {
-    const byName: FinalApprovalCountsByQueueItemName = (cluster.documents ?? []).reduce((acc, item) => {
-      return {
-        ...acc,
-        [item.name]: item.finalApprovalCounts
-      }
-    }, {} as FinalApprovalCountsByQueueItemName)
+    const byName: FinalApprovalCountsByQueueItemName = (cluster.documents ?? []).reduce(
+      (acc, item) => {
+        return {
+          ...acc,
+          [item.name]: item.finalApprovalCounts
+        }
+      },
+      {} as FinalApprovalCountsByQueueItemName
+    )
 
     return {
       ...acc,
-      ...byName,
+      ...byName
     }
   }, {} as FinalApprovalCountsByQueueItemName)
 
@@ -88,7 +95,7 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         rfcNumber,
         actionholderSet,
         finalApproval: finalApprovals,
-        approvalLogMessage: approvalLogMessages,
+        approvalLogMessage: approvalLogMessages
       } = queueItem
       assertIsString(name)
       assertIsString(rev)
@@ -113,7 +120,10 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         group,
         rfcNumber: rfcNumber ?? undefined,
         groupName: groupName ?? undefined,
-        actionholderSet: parseActionHolderSet(actionholderSet, rfcNumber ? `RFC ${rfcNumber}` : name),
+        actionholderSet: parseActionHolderSet(
+          actionholderSet,
+          rfcNumber ? `RFC ${rfcNumber}` : name
+        ),
         stdLevel,
         references: parseReferences(references),
         authors: authors.map((author) => {
@@ -123,13 +133,13 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
             isEditor: Boolean(isEditor)
           }
         }),
-        assignmentsByRoles: assignmentsByRole.map(([_role]): AssignmentsByRole => {
+        assignmentsByRoles: assignmentsByRole.map(([roleKey]): AssignmentsByRole => {
           let blockingReasons: BlockingReason[] | undefined = undefined
 
-          const { data: role, error } = AssignmentRoleSchema.safeParse(_role)
+          const { data: role, error } = AssignmentRoleSchema.safeParse(roleKey)
 
           if (!role && error) {
-            const errorTitle = `Unknown role ${JSON.stringify(_role)} failed validation. Please add it to the schema and try again.`
+            const errorTitle = `Unknown role ${JSON.stringify(roleKey)} failed validation. Please add it to the schema and try again.`
             console.error(errorTitle, error)
             throw Error(errorTitle)
           }
@@ -152,6 +162,7 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
 
           return {
             role,
+            roleName: publicAssignments.find((assignment) => assignment.role === roleKey)?.roleName,
             blockingReasons
           }
         }),

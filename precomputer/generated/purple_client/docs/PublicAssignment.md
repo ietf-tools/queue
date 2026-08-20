@@ -10,6 +10,7 @@ Name | Type
 `id` | number
 `rfcToBe` | number
 `role` | string
+`roleName` | string
 `state` | [StateEnum](StateEnum.md)
 
 ## Example
@@ -22,6 +23,7 @@ const example = {
   "id": null,
   "rfcToBe": null,
   "role": null,
+  "roleName": null,
   "state": null,
 } satisfies PublicAssignment
 

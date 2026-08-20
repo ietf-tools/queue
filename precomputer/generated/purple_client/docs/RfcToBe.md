@@ -13,19 +13,18 @@ Name | Type
 `_abstract` | string
 `group` | string
 `draft` | [Draft](Draft.md)
-`disposition` | string
+`disposition` | [Name](Name.md)
 `externalDeadline` | Date
 `internalGoal` | Date
 `labels` | Array&lt;number&gt;
 `cluster` | [SimpleCluster](SimpleCluster.md)
-`submittedFormat` | string
+`submittedFormat` | [Name](Name.md)
 `pages` | number
 `keywords` | string
-`boilerplate` | string
-`stdLevel` | string
-`publicationStdLevel` | string
-`stream` | string
-`publicationStream` | string
+`boilerplate` | [Name](Name.md)
+`stdLevel` | [Name](Name.md)
+`publicationStdLevel` | [Name](Name.md)
+`stream` | [Name](Name.md)
 `authors` | [Array&lt;RfcAuthor&gt;](RfcAuthor.md)
 `shepherd` | [BaseDatatrackerPerson](BaseDatatrackerPerson.md)
 `iesgContact` | [BaseDatatrackerPerson](BaseDatatrackerPerson.md)
@@ -43,6 +42,7 @@ Name | Type
 `blockingReasons` | [Array&lt;RfcToBeBlockingReason&gt;](RfcToBeBlockingReason.md)
 `streamManager` | [BaseDatatrackerPerson](BaseDatatrackerPerson.md)
 `isAprilFirstRfc` | boolean
+`rev` | string
 
 ## Example
 
@@ -69,7 +69,6 @@ const example = {
   "stdLevel": null,
   "publicationStdLevel": null,
   "stream": null,
-  "publicationStream": null,
   "authors": null,
   "shepherd": null,
   "iesgContact": null,
@@ -87,6 +86,7 @@ const example = {
   "blockingReasons": null,
   "streamManager": null,
   "isAprilFirstRfc": null,
+  "rev": null,
 } satisfies RfcToBe
 
 console.log(example)

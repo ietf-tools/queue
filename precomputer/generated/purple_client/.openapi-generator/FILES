@@ -9,6 +9,7 @@ docs/ApprovalLogMessageRequest.md
 docs/Assignment.md
 docs/AssignmentHistory.md
 docs/AssignmentRequest.md
+docs/AssignmentTimeline.md
 docs/AuthorOrderRequest.md
 docs/AuthorOrderStatus.md
 docs/BaseDatatrackerPerson.md
@@ -48,6 +49,7 @@ docs/HistoryLastEdit.md
 docs/IanaStatus.md
 docs/IanaStatusRequest.md
 docs/IanaStatusSlugEnum.md
+docs/KindEnum.md
 docs/Label.md
 docs/LabelRequest.md
 docs/LabelStat.md
@@ -64,6 +66,7 @@ docs/MinimalRfcToBe.md
 docs/MinimalRfcToBeRequest.md
 docs/MsgtypeEnum.md
 docs/Name.md
+docs/NameRequest.md
 docs/NestedAssignment.md
 docs/PaginatedBaseDatatrackerPersonList.md
 docs/PaginatedClusterMemberHistoryList.md
@@ -91,10 +94,21 @@ docs/PublicQueueItem.md
 docs/PublishPermissionDenied.md
 docs/PublishRfcRequest.md
 docs/PublishRfcStatus.md
+docs/PublishRfcStatusStatusEnum.md
 docs/PublishValidationError.md
+docs/PublishedStatusEnum.md
+docs/PublishedStreamEnum.md
+docs/PublishedStreamStatusCount.md
 docs/PurpleApi.md
+docs/QueueCountStatPeriod.md
+docs/QueueCountStats.md
 docs/QueueCounts.md
 docs/QueueItem.md
+docs/QueuePeriodStat.md
+docs/QueuePublishedStatPeriod.md
+docs/QueuePublishedStats.md
+docs/QueueRoleTime.md
+docs/QueueStats.md
 docs/RfcAuthor.md
 docs/RfcAuthorRequest.md
 docs/RfcToBe.md
@@ -109,7 +123,6 @@ docs/RpcRoleRequest.md
 docs/SimpleCluster.md
 docs/SimpleClusterRequest.md
 docs/StateEnum.md
-docs/StatusEnum.md
 docs/Submission.md
 docs/SubmissionAuthor.md
 docs/SubmissionListItem.md
@@ -120,6 +133,9 @@ docs/SubseriesTypeName.md
 docs/SyncMetadataBadRequestResponse.md
 docs/SyncMetadataNotFoundResponse.md
 docs/SyncMetadataRequestRequest.md
+docs/TimelineBand.md
+docs/TimelineSegment.md
+docs/TimelineTrack.md
 docs/TypeEnum.md
 docs/UnusableRfcNumber.md
 docs/UnusableRfcNumberRequest.md
@@ -134,6 +150,7 @@ models/ApprovalLogMessageRequest.ts
 models/Assignment.ts
 models/AssignmentHistory.ts
 models/AssignmentRequest.ts
+models/AssignmentTimeline.ts
 models/AuthorOrderRequest.ts
 models/AuthorOrderStatus.ts
 models/BaseDatatrackerPerson.ts
@@ -173,6 +190,7 @@ models/HistoryLastEdit.ts
 models/IanaStatus.ts
 models/IanaStatusRequest.ts
 models/IanaStatusSlugEnum.ts
+models/KindEnum.ts
 models/Label.ts
 models/LabelRequest.ts
 models/LabelStat.ts
@@ -189,6 +207,7 @@ models/MinimalRfcToBe.ts
 models/MinimalRfcToBeRequest.ts
 models/MsgtypeEnum.ts
 models/Name.ts
+models/NameRequest.ts
 models/NestedAssignment.ts
 models/PaginatedBaseDatatrackerPersonList.ts
 models/PaginatedClusterMemberHistoryList.ts
@@ -216,9 +235,20 @@ models/PublicQueueItem.ts
 models/PublishPermissionDenied.ts
 models/PublishRfcRequest.ts
 models/PublishRfcStatus.ts
+models/PublishRfcStatusStatusEnum.ts
 models/PublishValidationError.ts
+models/PublishedStatusEnum.ts
+models/PublishedStreamEnum.ts
+models/PublishedStreamStatusCount.ts
+models/QueueCountStatPeriod.ts
+models/QueueCountStats.ts
 models/QueueCounts.ts
 models/QueueItem.ts
+models/QueuePeriodStat.ts
+models/QueuePublishedStatPeriod.ts
+models/QueuePublishedStats.ts
+models/QueueRoleTime.ts
+models/QueueStats.ts
 models/RfcAuthor.ts
 models/RfcAuthorRequest.ts
 models/RfcToBe.ts
@@ -233,7 +263,6 @@ models/RpcRoleRequest.ts
 models/SimpleCluster.ts
 models/SimpleClusterRequest.ts
 models/StateEnum.ts
-models/StatusEnum.ts
 models/Submission.ts
 models/SubmissionAuthor.ts
 models/SubmissionListItem.ts
@@ -244,6 +273,9 @@ models/SubseriesTypeName.ts
 models/SyncMetadataBadRequestResponse.ts
 models/SyncMetadataNotFoundResponse.ts
 models/SyncMetadataRequestRequest.ts
+models/TimelineBand.ts
+models/TimelineSegment.ts
+models/TimelineTrack.ts
 models/TypeEnum.ts
 models/UnusableRfcNumber.ts
 models/UnusableRfcNumberRequest.ts

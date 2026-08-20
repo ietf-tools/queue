@@ -63,6 +63,12 @@ export interface Label {
      * @memberof Label
      */
     used?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Label
+     */
+    isPublic?: boolean;
 }
 
 
@@ -91,6 +97,7 @@ export function LabelFromJSONTyped(json: any, ignoreDiscriminator: boolean): Lab
         'isComplexity': json['is_complexity'] == null ? undefined : json['is_complexity'],
         'color': json['color'] == null ? undefined : ColorEnumFromJSON(json['color']),
         'used': json['used'] == null ? undefined : json['used'],
+        'isPublic': json['is_public'] == null ? undefined : json['is_public'],
     };
 }
 
@@ -110,6 +117,7 @@ export function LabelToJSONTyped(value?: Omit<Label, 'id'> | null, ignoreDiscrim
         'is_complexity': value['isComplexity'],
         'color': ColorEnumToJSON(value['color']),
         'used': value['used'],
+        'is_public': value['isPublic'],
     };
 }
 
