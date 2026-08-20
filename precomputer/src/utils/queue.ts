@@ -133,13 +133,13 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
             isEditor: Boolean(isEditor)
           }
         }),
-        assignmentsByRoles: assignmentsByRole.map(([_role]): AssignmentsByRole => {
+        assignmentsByRoles: assignmentsByRole.map(([roleKey]): AssignmentsByRole => {
           let blockingReasons: BlockingReason[] | undefined = undefined
 
-          const { data: role, error } = AssignmentRoleSchema.safeParse(_role)
+          const { data: role, error } = AssignmentRoleSchema.safeParse(roleKey)
 
           if (!role && error) {
-            const errorTitle = `Unknown role ${JSON.stringify(_role)} failed validation. Please add it to the schema and try again.`
+            const errorTitle = `Unknown role ${JSON.stringify(roleKey)} failed validation. Please add it to the schema and try again.`
             console.error(errorTitle, error)
             throw Error(errorTitle)
           }
@@ -162,7 +162,7 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
 
           return {
             role,
-            roleName: publicAssignments.find((assignment) => assignment.role === _role)?.roleName,
+            roleName: publicAssignments.find((assignment) => assignment.role === roleKey)?.roleName,
             blockingReasons
           }
         }),
