@@ -95,7 +95,7 @@ const columns = [
     cell: (data) => {
       const value = data.getValue()
       if (!value) {
-        return h('i', '(pending])')
+        return h('i', '(pending)')
       }
       return renderIsoDateAsTooltipComponent(value)
     },
