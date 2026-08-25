@@ -27,9 +27,14 @@ As streams approve documents for publication, they enter the [publication queue]
   
 ## Labels
 
-- **github**: GitHub will be used for Final Review, per the authors' request. (See details on [GitHub Pilot](https://rpc-wiki.rfc-editor.org/doku.php?id=rpc-github-phase-0-pilot-test)).
-- **markdown**: The author-provided markdown file is being edited, per the authors' request. (See details on [kramdown-rfc Pilot](https://rpc-wiki.rfc-editor.org/doku.php?id=pilot_test_kramdown_rfc)).
+- **GitHub**: GitHub will be used for Final Review, per the authors' request. (See details on [GitHub Pilot](https://rpc-wiki.rfc-editor.org/doku.php?id=rpc-github-phase-0-pilot-test)).
+- **Markdown**: The author-provided markdown file is being edited, per the authors' request. (See details on [kramdown-rfc Pilot](https://rpc-wiki.rfc-editor.org/doku.php?id=pilot_test_kramdown_rfc)).
 - **Expedited**: The processing of this document is being expedited per the request of the publication stream.
+- **Code**: These labels indicate that the document contains source code such as YANG, XML, ABNF, or MIB.
+- **Bis**: A bis document will replace a published RFC.
+- **Status Change**: This document is changing the Status of another RFC (e.g., moving the other RFC to Historic).
+
+Other labels may be used with documents to indicate the editing work level (e.g., **Formatting: Hard**).
 
 ## More Details on Final Review
 
