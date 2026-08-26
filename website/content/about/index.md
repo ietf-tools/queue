@@ -12,7 +12,6 @@ As streams approve documents for publication, they enter the [publication queue]
   - **In Progress (Second Editor)**: The document is getting a second review with a focus on any complex issues, source code, or text regarding IANA actions.
   - **In Final Review**: Awaiting final approval(s) from authors and/or action holders; click "more details" to see the Final Review status.
 
-
 * **Blocked**: The document is not moving forward. This can be for various reasons.
    - **Author Input Required**: The RPC is awaiting a reply from the author.
    - **Waiting for Action Holder**: The RPC is awaiting a reply from an action holder (for example, an Area Director).
