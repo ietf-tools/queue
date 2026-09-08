@@ -44,7 +44,7 @@ export interface SubmissionListItem {
      * @type {Date}
      * @memberof SubmissionListItem
      */
-    submitted: Date;
+    submitted?: Date | null;
 }
 
 /**
@@ -54,7 +54,6 @@ export function instanceOfSubmissionListItem(value: object): value is Submission
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('stream' in value) || value['stream'] === undefined) return false;
-    if (!('submitted' in value) || value['submitted'] === undefined) return false;
     return true;
 }
 
@@ -71,7 +70,7 @@ export function SubmissionListItemFromJSONTyped(json: any, ignoreDiscriminator: 
         'id': json['id'],
         'name': json['name'],
         'stream': json['stream'],
-        'submitted': (new Date(json['submitted'])),
+        'submitted': json['submitted'] == null ? undefined : (new Date(json['submitted'])),
     };
 }
 
@@ -89,7 +88,7 @@ export function SubmissionListItemToJSONTyped(value?: SubmissionListItem | null,
         'id': value['id'],
         'name': value['name'],
         'stream': value['stream'],
-        'submitted': value['submitted'].toISOString(),
+        'submitted': value['submitted'] == null ? value['submitted'] : value['submitted'].toISOString(),
     };
 }
 

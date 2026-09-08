@@ -262,8 +262,8 @@ paths:
           name: is_active
           schema:
             type: boolean
-          description: Filter by active status. A cluster is considered active if at
-            least one of its documents is not in terminal state (published/withdrawn).
+          description: Filter by active status. A cluster is considered active if more
+            than one of its documents is not in terminal state (published/withdrawn).
         - name: ordering
           required: false
           in: query
@@ -3890,9 +3890,7 @@ components:
           readOnly: true
         is_active:
           type: boolean
-          description: |-
-            A cluster is considered active if at least one of its documents is
-            in_progress.
+          description: Active only while more than one document is still unpublished.
           readOnly: true
       required:
         - number
@@ -4624,7 +4622,15 @@ components:
           readOnly: true
         slug:
           type: string
+          description: Stable machine key, auto-generated from text; referenced in
+            code.
           maxLength: 64
+        text:
+          type: string
+          description: Display text shown on the label.
+          maxLength: 255
+        description:
+          type: string
         is_exception:
           type: boolean
         is_complexity:
@@ -4637,13 +4643,23 @@ components:
           type: boolean
       required:
         - slug
+        - text
     LabelRequest:
       type: object
       properties:
         slug:
           type: string
           minLength: 1
+          description: Stable machine key, auto-generated from text; referenced in
+            code.
           maxLength: 64
+        text:
+          type: string
+          minLength: 1
+          description: Display text shown on the label.
+          maxLength: 255
+        description:
+          type: string
         is_exception:
           type: boolean
         is_complexity:
@@ -4656,6 +4672,7 @@ components:
           type: boolean
       required:
         - slug
+        - text
     LabelStat:
       type: object
       properties:
@@ -4927,7 +4944,6 @@ components:
           type: string
           format: date-time
           readOnly: true
-          nullable: true
         assigned_at:
           type: string
           format: date-time
@@ -5129,7 +5145,16 @@ components:
         slug:
           type: string
           minLength: 1
+          description: Stable machine key, auto-generated from text; referenced in
+            code.
           maxLength: 64
+        text:
+          type: string
+          minLength: 1
+          description: Display text shown on the label.
+          maxLength: 255
+        description:
+          type: string
         is_exception:
           type: boolean
         is_complexity:
@@ -5359,9 +5384,7 @@ components:
           readOnly: true
         is_active:
           type: boolean
-          description: |-
-            A cluster is considered active if at least one of its documents is
-            in_progress.
+          description: Active only while more than one document is still unpublished.
           readOnly: true
       required:
         - number
@@ -5453,6 +5476,7 @@ components:
         cluster:
           allOf:
             - $ref: "#/components/schemas/SimpleCluster"
+          nullable: true
           readOnly: true
         assignment_set:
           type: array
@@ -5775,6 +5799,7 @@ components:
           allOf:
             - $ref: "#/components/schemas/SimpleCluster"
           readOnly: true
+          nullable: true
         assignment_set:
           type: array
           items:
@@ -6027,6 +6052,7 @@ components:
           allOf:
             - $ref: "#/components/schemas/SimpleCluster"
           readOnly: true
+          nullable: true
         submitted_format:
           allOf:
             - $ref: "#/components/schemas/Name"
@@ -6509,11 +6535,11 @@ components:
         submitted:
           type: string
           format: date-time
+          nullable: true
       required:
         - id
         - name
         - stream
-        - submitted
     SubseriesDoc:
       type: object
       properties:

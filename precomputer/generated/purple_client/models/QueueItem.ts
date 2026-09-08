@@ -129,7 +129,7 @@ export interface QueueItem {
      * @type {SimpleCluster}
      * @memberof QueueItem
      */
-    readonly cluster?: SimpleCluster;
+    readonly cluster?: SimpleCluster | null;
     /**
      * 
      * @type {Array<Assignment>}

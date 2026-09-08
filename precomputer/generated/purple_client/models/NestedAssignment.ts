@@ -81,7 +81,7 @@ export interface NestedAssignment {
      * @type {Date}
      * @memberof NestedAssignment
      */
-    readonly enqueuedAt?: Date | null;
+    readonly enqueuedAt?: Date;
     /**
      * 
      * @type {Date}

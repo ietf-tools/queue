@@ -169,7 +169,7 @@ export interface RfcToBe {
      * @type {SimpleCluster}
      * @memberof RfcToBe
      */
-    readonly cluster?: SimpleCluster;
+    readonly cluster?: SimpleCluster | null;
     /**
      * 
      * @type {Name}

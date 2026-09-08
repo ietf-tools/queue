@@ -7,6 +7,8 @@
 Name | Type
 ------------ | -------------
 `slug` | string
+`text` | string
+`description` | string
 `isException` | boolean
 `isComplexity` | boolean
 `color` | [ColorEnum](ColorEnum.md)
@@ -21,6 +23,8 @@ import type { PatchedLabelRequest } from ''
 // TODO: Update the object below with actual values
 const example = {
   "slug": null,
+  "text": null,
+  "description": null,
   "isException": null,
   "isComplexity": null,
   "color": null,

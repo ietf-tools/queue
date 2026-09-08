@@ -144,7 +144,7 @@ export interface PublicQueueItem {
      * @type {SimpleCluster}
      * @memberof PublicQueueItem
      */
-    readonly cluster?: SimpleCluster;
+    readonly cluster?: SimpleCluster | null;
     /**
      * 
      * @type {Array<PublicAssignment>}

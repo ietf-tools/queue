@@ -969,7 +969,6 @@ export class PurpleApi extends runtime.BaseAPI {
      */
     async apiPubqClustersRetrieveRaw(requestParameters: ApiPubqClustersRetrieveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicCluster>> {
         const requestOptions = await this.apiPubqClustersRetrieveRequestOpts(requestParameters);
-        console.log("[apiPubqClustersRetrieveRaw] request options", JSON.stringify(requestOptions))
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => PublicClusterFromJSON(jsonValue));
@@ -1018,7 +1017,6 @@ export class PurpleApi extends runtime.BaseAPI {
      */
     async apiPubqQueueListRaw(requestParameters: ApiPubqQueueListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<PublicQueueItem>>> {
         const requestOptions = await this.apiPubqQueueListRequestOpts(requestParameters);
-        console.log("[apiPubqQueueListRaw] request options", JSON.stringify(requestOptions))
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(PublicQueueItemFromJSON));

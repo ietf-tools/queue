@@ -75,6 +75,12 @@ const AssignmentsByRoleSchema = z.object({
 
 const LabelCommonSchema = z.object({
   slug: z.string(),
+  // What the label reads as. Required, because Purple requires it: the slug is the
+  // machine key that code references, and it is not what a reader should be reading.
+  text: z.string(),
+  // Optional, and omitted rather than empty when a label has none, so that "has a
+  // description" is a question about the data rather than about the length of a string.
+  description: z.string().optional(),
   themeColor: ThemeColorCommonSchema,
   isException: z.boolean(),
   isComplexity: z.boolean()

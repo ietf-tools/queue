@@ -8,6 +8,8 @@ Name | Type
 ------------ | -------------
 `id` | number
 `slug` | string
+`text` | string
+`description` | string
 `isException` | boolean
 `isComplexity` | boolean
 `color` | [ColorEnum](ColorEnum.md)
@@ -23,6 +25,8 @@ import type { Label } from ''
 const example = {
   "id": null,
   "slug": null,
+  "text": null,
+  "description": null,
   "isException": null,
   "isComplexity": null,
   "color": null,

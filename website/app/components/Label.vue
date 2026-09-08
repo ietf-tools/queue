@@ -1,7 +1,7 @@
 <template>
-  <BaseBadge :color="props.label.themeColor">
+  <BaseBadge :color="props.label.themeColor" :title="props.label.description">
     <Icon v-if="props.label.isException" class="mr-2" name="pajamas:warning"/>
-    {{ props.label.slug }}
+    {{ props.label.text }}
   </BaseBadge>
 </template>
 

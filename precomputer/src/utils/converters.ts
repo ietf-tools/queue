@@ -96,9 +96,14 @@ export const parseLabels = (labels: QueueItem['labels']): QueueCommonItem['label
   return labels
     .filter((label) => label.used)
     .map((label): LabelsCommon[number] => {
-      const { slug, color, isException, isComplexity } = label
+      const { slug, text, description, color, isException, isComplexity } = label
       return {
         slug,
+        text,
+        // Purple stores an absent description as an empty string, so this is where that
+        // becomes an absent key: the site asks whether there is a description, and an
+        // empty string would answer yes.
+        ...(description ? { description } : {}),
         themeColor: parseColor(color),
         isException: Boolean(isException),
         isComplexity: Boolean(isComplexity)

@@ -1149,7 +1149,7 @@ async function example() {
   const api = new PurpleApi(config);
 
   const body = {
-    // boolean | Filter by active status. A cluster is considered active if at least one of its documents is not in terminal state (published/withdrawn). (optional)
+    // boolean | Filter by active status. A cluster is considered active if more than one of its documents is not in terminal state (published/withdrawn). (optional)
     isActive: true,
     // string | Which field to use when ordering the results. (optional)
     ordering: ordering_example,
@@ -1172,7 +1172,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **isActive** | `boolean` | Filter by active status. A cluster is considered active if at least one of its documents is not in terminal state (published/withdrawn). | [Optional] [Defaults to `undefined`] |
+| **isActive** | `boolean` | Filter by active status. A cluster is considered active if more than one of its documents is not in terminal state (published/withdrawn). | [Optional] [Defaults to `undefined`] |
 | **ordering** | `string` | Which field to use when ordering the results. | [Optional] [Defaults to `undefined`] |
 
 ### Return type

@@ -28,11 +28,23 @@ import {
  */
 export interface PatchedLabelRequest {
     /**
-     * 
+     * Stable machine key, auto-generated from text; referenced in code.
      * @type {string}
      * @memberof PatchedLabelRequest
      */
     slug?: string;
+    /**
+     * Display text shown on the label.
+     * @type {string}
+     * @memberof PatchedLabelRequest
+     */
+    text?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PatchedLabelRequest
+     */
+    description?: string;
     /**
      * 
      * @type {boolean}
@@ -85,6 +97,8 @@ export function PatchedLabelRequestFromJSONTyped(json: any, ignoreDiscriminator:
     return {
         
         'slug': json['slug'] == null ? undefined : json['slug'],
+        'text': json['text'] == null ? undefined : json['text'],
+        'description': json['description'] == null ? undefined : json['description'],
         'isException': json['is_exception'] == null ? undefined : json['is_exception'],
         'isComplexity': json['is_complexity'] == null ? undefined : json['is_complexity'],
         'color': json['color'] == null ? undefined : ColorEnumFromJSON(json['color']),
@@ -105,6 +119,8 @@ export function PatchedLabelRequestToJSONTyped(value?: PatchedLabelRequest | nul
     return {
         
         'slug': value['slug'],
+        'text': value['text'],
+        'description': value['description'],
         'is_exception': value['isException'],
         'is_complexity': value['isComplexity'],
         'color': ColorEnumToJSON(value['color']),

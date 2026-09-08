@@ -107,7 +107,8 @@ test('Render queue.xml, validates against XSD schema', async () => {
         disposition: 'in_progress',
         labels: [
           {
-            slug: 'Stream Hold',
+            slug: 'stream_hold',
+            text: 'Stream Hold',
             themeColor: 'red',
             isException: false,
             isComplexity: false
@@ -284,6 +285,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
         labels: [
           {
             slug: 'markdown',
+            text: 'Markdown',
             themeColor: 'amber',
             isException: false,
             isComplexity: false
@@ -420,6 +422,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
         labels: [
           {
             slug: 'markdown',
+            text: 'Markdown',
             themeColor: 'amber',
             isException: false,
             isComplexity: false
@@ -730,7 +733,8 @@ test('Render queue.xml, validates against XSD schema', async () => {
         disposition: 'in_progress',
         labels: [
           {
-            slug: 'Author Input Required',
+            slug: 'author_input_required',
+            text: 'Author Input Required',
             themeColor: 'slate',
             isException: false,
             isComplexity: false
@@ -779,6 +783,7 @@ test('Render queue.xml, validates against XSD schema', async () => {
         labels: [
           {
             slug: 'github',
+            text: 'github',
             themeColor: 'slate',
             isException: false,
             isComplexity: false
@@ -1167,7 +1172,8 @@ test('Render queue.xml, validates against XSD schema', async () => {
         disposition: 'in_progress',
         labels: [
           {
-            slug: 'Author Input Required',
+            slug: 'author_input_required',
+            text: 'Author Input Required',
             themeColor: 'slate',
             isException: false,
             isComplexity: false
@@ -1340,7 +1346,8 @@ test('Render queue.xml, validates against XSD schema', async () => {
         disposition: 'in_progress',
         labels: [
           {
-            slug: 'Author Input Required',
+            slug: 'author_input_required',
+            text: 'Author Input Required',
             themeColor: 'slate',
             isException: false,
             isComplexity: false
@@ -1415,7 +1422,8 @@ test('Render queue.xml, validates against XSD schema', async () => {
         disposition: 'in_progress',
         labels: [
           {
-            slug: 'Author Input Required',
+            slug: 'author_input_required',
+            text: 'Author Input Required',
             themeColor: 'slate',
             isException: false,
             isComplexity: false
@@ -1465,12 +1473,14 @@ test('Render queue.xml, validates against XSD schema', async () => {
         labels: [
           {
             slug: 'markdown',
+            text: 'Markdown',
             themeColor: 'amber',
             isException: false,
             isComplexity: false
           },
           {
             slug: 'github',
+            text: 'github',
             themeColor: 'slate',
             isException: false,
             isComplexity: false

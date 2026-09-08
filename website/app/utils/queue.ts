@@ -219,7 +219,7 @@ export const sortLabels = (
    * So that's why it's a custom stringify
    */
   const labelToLocaleComparable = (label: LabelCommon) =>
-    `${label.slug} (${label.isComplexity}) [${label.isException}]`
+    `${label.text} (${label.isComplexity}) [${label.isException}]`
 
   const aLabelsComparable = aLabels.map(labelToLocaleComparable).join('. ')
   const bLabelsComparable = bLabels.map(labelToLocaleComparable).join('. ')
