@@ -8,7 +8,7 @@
     <div class="mt-4 mb-8 pt-2 pb-3 px-2 sm:rounded-lg bg-gray-200 dark:bg-gray-800 text-sm max-w-md">
       <p class="font-bold px-1">Table of contents:</p>
       <ul class="leading-6 md:leading-7 mt-1 list-disc pl-6 text-black dark:text-white">
-        <li v-for="draft in finalReviewCluster.items" :key="draft.name">
+        <li v-for="draft in sortedItems" :key="draft.name">
           <a :href="`#${makeDomId(draft.name)}`" :class="[ANCHOR_TAILWIND_STYLE, 'wrap-anywhere']">
             <template v-if="draft.rfcNumber">
               <span>RFC-to-be{{ NBSP }}</span>
@@ -23,11 +23,11 @@
         </li>
       </ul>
     </div>
-    <div v-if="finalReviewCluster" v-for="(draft, index) in finalReviewCluster.items" :key="draft.name"
+    <div v-if="finalReviewCluster" v-for="(draft, index) in sortedItems" :key="draft.name"
       class="mb-6 mx-2">
       <FinalReviewDraft heading-level="2" :draft-name="draft.name" :queue="finalReviewCluster"
         :id="makeDomId(draft.name)" />
-      <RpcHr v-if="index < finalReviewCluster.items.length" class="mt-8" />
+      <RpcHr v-if="index < sortedItems.length" class="mt-8" />
     </div>
 
     <p v-if="finalReviewCluster.timestampIso" class="mt-12 pl-2 text-sm italic text-gray-600 dark:text-gray-400">
@@ -70,6 +70,10 @@ if (!finalReviewCluster.value || typeof finalReviewCluster.value.clusterNumber !
     fatal: true
   })
 }
+
+const sortedItems = computed(() =>
+  [...(finalReviewCluster.value?.items ?? [])].sort(sortClusterDocuments)
+)
 
 const route = useRoute()
 
