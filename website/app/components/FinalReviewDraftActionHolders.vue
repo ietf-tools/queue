@@ -63,8 +63,10 @@ const columnHelper = createColumnHelper<ActionHolder>()
 const sorting = ref<SortingState>([])
 
 const columns = [
-  columnHelper.accessor('person.name', {
-    header: 'Action Holder Name',
+  // Show body if available, otherwise the person (the individual responsible)
+  columnHelper.accessor((actionHolder) => actionHolder.body || actionHolder.person?.name, {
+    id: 'actionHolder',
+    header: 'Action Holder',
     cell: (data) => {
       const value = data.getValue()
       return value ?? h('i', '(unnamed)')
@@ -109,17 +111,6 @@ const columns = [
         return h('i', '(no date)')
       }
       return renderIsoDateAsTooltipComponent(value)
-    },
-    sortingFn: 'alphanumeric',
-  }),
-  columnHelper.accessor('body', {
-    header: 'Body',
-    cell: (data) => {
-      const value = data.getValue()
-      if (!value) {
-        return h('i', '(no body)')
-      }
-      return value
     },
     sortingFn: 'alphanumeric',
   }),
