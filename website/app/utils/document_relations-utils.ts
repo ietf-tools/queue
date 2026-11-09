@@ -317,24 +317,6 @@ export type DataParam = {
   nodes: NodeParam[]
 }
 
-export const legendData: DataParam = {
-  links: [
-    { source: "draft-has-normrefs-inqueue", target: 'draft-no-normref', rel: 'refqueue' },
-    { source: "draft-has-normrefs-inqueue", target: 'draft-blocked-normref', rel: 'refqueue' },
-    { source: "draft-blocked-normref", target: 'draft-not-received-2g', rel: 'not-received-2g' },
-    { source: "draft-blocked-normref", target: 'draft-not-received-3g', rel: 'not-received-3g' },
-    { source: "draft-has-normrefs-inqueue", target: "draft-not-received-normref", rel: 'not-received' },
-  ],
-  nodes: [
-    { id: 'draft-no-normref', isReceived: true, isNormRef: true, hasNormRef: false, isBlocked: false, disposition: 'in_progress' }, // Normative reference, in progress
-    { id: 'draft-has-normrefs-inqueue', isReceived: true, hasNormRef: true, hasNormRefInQueue: true, hasNormRefBlocked: false, isBlocked: false, disposition: "in_progress" }, // Has normative ref in queue
-    { id: 'draft-blocked-normref', isReceived: true, isBlocked: true, isNormRef: true, hasNormRef: false }, // Blocked normative reference
-    { id: 'draft-not-received-normref', isReceived: false, isNormRef: true }, // Not received, normative reference
-    { id: 'draft-not-received-2g', isReceived: false, isNormRef: true }, // Not received, 2g
-    { id: 'draft-not-received-3g', isReceived: false, isNormRef: true }, // Not received, 3g
-  ],
-};
-
 export const getClusterGraphData = (cluster: ClusterPackageCommon["cluster"]) => {
   const newClusterGraphData: DataParam = {
     links: [],

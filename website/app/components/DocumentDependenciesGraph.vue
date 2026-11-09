@@ -15,19 +15,30 @@
     </div>
   </div>
 
-  <form class="text-right mt-1">
-    <label class="cursor-pointer font-bold inline-block" :data-checked="showLegend">
-      <input type="checkbox" name="showLegend" class="size-4 mr-1 align-middle" value="ok show the legend"
-        :v-model="showLegend" @change="handleChange" :aria-controls="GRAPH_DOM_ID" :aria-expanded="showLegend" />
-      Show legend?
-    </label>
-  </form>
+  <div class="mt-3 mb-6 text-sm">
+    <p class="font-bold">Legend</p>
+    <ul class="mt-2 flex flex-col gap-1">
+      <li v-for="item in legend" :key="item.label">
+        <span
+          class="inline-block size-3 rounded-full mr-1 align-middle"
+          :style="{ backgroundColor: item.color }"
+          aria-hidden="true" />
+        <b>{{ item.label }}</b> &ndash; {{ item.description }}
+        <template v-if="item.blockingConditionsLink">
+          For a list of blocking conditions, see
+          <Anchor href="/about/#status" :class="ANCHOR_TAILWIND_STYLE">About</Anchor>.
+        </template>
+      </li>
+    </ul>
+    <p class="mt-2">An arrow points from a document to its normative reference.</p>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { clamp } from 'es-toolkit';
 import { drawGraph, type DrawGraphParameters, type SetTooltip } from '~/utils/document_relations';
-import { getClusterGraphData, legendData } from '~/utils/document_relations-utils'
+import { blue, getClusterGraphData, green, orange, pink } from '~/utils/document_relations-utils'
+import { ANCHOR_TAILWIND_STYLE } from '~/utils/theme'
 import { type ClusterPackageCommon } from '../utils/validators'
 
 type Props = {
@@ -99,27 +110,31 @@ const setTooltip: SetTooltip = (props) => {
   }
 }
 
-/**
- * This will be shown visually, but it's mostly for screenreaders
- */
-const handleChange = (event: Event) => {
-  const { target } = event
-  if (!(target instanceof HTMLInputElement)) {
-    const errorTitle = 'Expected native input[type=checkbox] but was'
-    console.error(errorTitle, target)
-    throw Error(`${errorTitle} (see console) ${target}`)
+const legend = [
+  {
+    color: blue,
+    label: 'Blue',
+    description:
+      'doc is In Progress and can move on its own through the queue (i.e., does not have a normative reference to an I-D)'
+  },
+  {
+    color: green,
+    label: 'Green',
+    description: 'doc is In Progress because its normative reference is in the queue'
+  },
+  {
+    color: pink,
+    label: 'Pink',
+    description: 'doc is blocked itself or its normative reference is blocked.',
+    blockingConditionsLink: true
+  },
+  {
+    color: orange,
+    label: 'Orange',
+    description:
+      'a referenced doc that is not in the queue. This doc needs to be in the queue for blocked docs in the cluster to move.'
   }
-  const { checked: isChecked } = target
-  showLegend.value = isChecked
-  console.log({ isChecked })
-  setTooltip({
-    position: tooltip.value.position,
-    text: isChecked ? ['Graph shows legend'] : [`Graph shows cluster ${props.cluster.number}`]
-  })
-  attemptToRenderGraph()
-}
-
-const showLegend = ref(false)
+]
 
 const hasMounted = ref(false)
 
@@ -139,10 +154,8 @@ const attemptToRenderGraph = () => {
   }
 
   const chosenGraphData: DrawGraphParameters[0]["data"] = structuredClone(
-    // d3 graph code will mutate the data so make a copy  
-    showLegend.value
-      ? legendData
-      : clusterGraphData.value
+    // d3 graph code will mutate the data so make a copy
+    clusterGraphData.value
   )
 
   let [leg_el, leg_sim] = drawGraph({
@@ -185,6 +198,4 @@ const colorMode = useColorMode()
 watch(() => colorMode.value, attemptToRenderGraph)
 
 watch(clusterGraphData, attemptToRenderGraph)
-
-watch(showLegend, attemptToRenderGraph)
 </script>
