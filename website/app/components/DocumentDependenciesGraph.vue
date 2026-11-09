@@ -31,13 +31,35 @@
       </li>
     </ul>
     <p class="mt-2">An arrow points from a document to its normative reference.</p>
+    <ul class="mt-2 flex flex-col gap-1">
+      <li v-for="arrow in arrowLegend" :key="arrow.label">
+        <svg
+          width="32"
+          height="12"
+          viewBox="0 0 32 12"
+          class="inline-block mr-1 align-middle"
+          aria-hidden="true">
+          <line x1="0" y1="6" x2="22" y2="6" :stroke="arrow.color" stroke-width="3" />
+          <path d="M22,0L32,6L22,12" :fill="arrow.color" />
+        </svg>
+        <b>{{ arrow.label }}</b> &ndash; {{ arrow.description }}
+      </li>
+    </ul>
   </div>
 </template>
 
 <script setup lang="ts">
 import { clamp } from 'es-toolkit';
 import { drawGraph, type DrawGraphParameters, type SetTooltip } from '~/utils/document_relations';
-import { blue, getClusterGraphData, green, orange, pink } from '~/utils/document_relations-utils'
+import {
+  blue,
+  getClusterGraphData,
+  green,
+  orange,
+  pink,
+  red,
+  teal
+} from '~/utils/document_relations-utils'
 import { ANCHOR_TAILWIND_STYLE } from '~/utils/theme'
 import { type ClusterPackageCommon } from '../utils/validators'
 
@@ -133,6 +155,21 @@ const legend = [
     label: 'Orange',
     description:
       'a referenced doc that is not in the queue. This doc needs to be in the queue for blocked docs in the cluster to move.'
+  }
+]
+
+const arrowLegend = [
+  { color: green, label: 'Green', description: 'the reference is in the queue' },
+  { color: red, label: 'Red', description: 'the reference is not in the queue' },
+  {
+    color: orange,
+    label: 'Orange',
+    description: 'a reference of a reference (2nd generation) is not in the queue'
+  },
+  {
+    color: teal,
+    label: 'Teal',
+    description: 'a reference of a reference of a reference (3rd generation) is not in the queue'
   }
 ]
 
