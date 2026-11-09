@@ -104,7 +104,15 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
 
       const clusterNumber: number | undefined = cluster?.number ?? undefined
 
-      const finalApprovalCounts = finalApprovalCountsByQueueItemName[name]
+      // Only cluster members get counts from the cluster API
+      const finalApprovalCounts: FinalApprovalCounts =
+        finalApprovalCountsByQueueItemName[name] ??
+        (finalApprovals?.length
+          ? {
+              approved: finalApprovals.filter((finalApproval) => finalApproval.approved).length,
+              total: finalApprovals.length
+            }
+          : undefined)
 
       const publicAssignments = assignmentSet ?? []
 
