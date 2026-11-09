@@ -235,7 +235,7 @@ const columns = [
   ...(props.showFinalApprovalCounts
     ? [
         columnHelper.accessor('finalApprovalCounts', {
-          header: 'Approvals Received',
+          header: 'Author Approvals Received',
           cell: (data) => {
             const value = data.getValue()
             if (!value) {

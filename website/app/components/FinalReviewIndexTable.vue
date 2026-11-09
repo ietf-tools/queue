@@ -138,7 +138,7 @@ const columns = [
     },
   }),
   columnHelper.accessor('finalApprovalCounts', {
-    header: 'Approvals Received',
+    header: 'Author Approvals Received',
     cell: data => {
       const value = data.getValue()
       return value ? h('span', `${value.approved}/${value.total}`) : undefined
