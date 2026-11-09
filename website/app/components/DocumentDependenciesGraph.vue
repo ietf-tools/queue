@@ -21,8 +21,7 @@
       <li v-for="item in legend" :key="item.label">
         <span
           class="inline-block size-3 rounded-full mr-1 align-middle"
-          :style="{ backgroundColor: item.color }"
-          aria-hidden="true" />
+          :style="{ backgroundColor: item.color }" />
         <b>{{ item.label }}</b> &ndash; {{ item.description }}
         <template v-if="item.blockingConditionsLink">
           For a list of blocking conditions, see
