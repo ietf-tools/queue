@@ -253,6 +253,28 @@ export const sortClusters = (
   return aClusters.length - bClusters.length
 }
 
+// Received documents first; within each group RFCs-to-be by RFC number, then drafts by name
+export const sortClusterDocuments = (
+  a: { name: string; rfcNumber?: number; isReceived?: boolean },
+  b: { name: string; rfcNumber?: number; isReceived?: boolean }
+): number => {
+  const aReceived = a.isReceived !== false
+  const bReceived = b.isReceived !== false
+  if (aReceived !== bReceived) {
+    return aReceived ? -1 : 1
+  }
+  if (a.rfcNumber !== undefined && b.rfcNumber !== undefined) {
+    return a.rfcNumber - b.rfcNumber
+  }
+  if (a.rfcNumber !== undefined) {
+    return -1
+  }
+  if (b.rfcNumber !== undefined) {
+    return 1
+  }
+  return a.name.localeCompare(b.name)
+}
+
 export const renderIsoDateComponent = (isoDate?: string) => {
   if (!isoDate) {
     return

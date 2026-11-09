@@ -155,7 +155,9 @@ const columns = [
       if (data.row.original.allPublished && notReceivedClusterDocuments.length === 0) {
         return h('span', 'All published')
       }
-      const allClusterDocuments = [...clusterDocuments, ...notReceivedClusterDocuments]
+      const allClusterDocuments = [...clusterDocuments, ...notReceivedClusterDocuments].sort(
+        sortClusterDocuments
+      )
       return h(
         'ul',
         { class: 'flex flex-col gap-2' },
