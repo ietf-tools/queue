@@ -5,7 +5,7 @@ As streams approve documents for publication, they enter the [publication queue]
 ## Status
 
 * **In Progress**: The document is either being worked on by the RFC Production Center (RPC) or is waiting to be worked on by the RPC. 
-  - **Awaiting [Assignment]**: The document is waiting to be assigned to an editor for formatting, reference checking, first edit, or second edit.
+  - **Awaiting \[Assignment\]**: The document is waiting to be assigned to a reference checker, first editor, or second editor.
   - **In Progress (Formatting)**: The document formatting (e.g., lists, tables, artwork) is being updated. See [RFCXML editing](https://authors.ietf.org/en/rfc-publication-process#rfcxml-editing) for details.
   - **In Progress (Reference Checker)**: The references are being checked for accuracy and stability.
   - **In Progress (First Editor)**: The document is being copyedited.
