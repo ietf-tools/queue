@@ -1,33 +1,90 @@
 <template>
-  <footer class="bg-blue-900 text-white dark:bg-blue-950 relative print:hidden">
-    <div class="container mx-auto flex flex-col md:flex-row py-4 lg:py-8 gap-4">
+  <footer
+    class="bg-blue-900 text-white dark:bg-blue-950 border-t border-t-white dark:border-t-blue-900 relative print:hidden">
+    <h2 class="sr-only">Footer</h2>
+    <nav aria-label="Footer" class="container mx-auto flex flex-col md:flex-row py-4 lg:py-8 gap-4">
       <div class="flex-1 flex flex-col gap-5 pr-4">
         <p class="text-base pl-3">
           queue.rfc-editor.org is maintained by the
           <Anchor
             :href="IETF_URL_ORIGIN"
-            class="underline text-blue-100 font-semibold md:text-nowrap"
-          >
+            class="underline text-blue-100 font-semibold md:text-nowrap">
             Internet Engineering Task Force
           </Anchor>
         </p>
         <div class="flex gap-7 items-center mt-2 pl-3 lg:mt-5">
-          <Anchor :href="IETF_URL_ORIGIN">
-            <GraphicsIETFLogo
-              width="105"
-              height="60"
-            />
+          <Anchor
+            :href="IETF_URL_ORIGIN"
+            class="bg-blue-900 dark:bg-blue-950 px-2 py-1 rounded forced-color-adjust-none">
+            <GraphicsIETFLogo width="105" height="60" />
           </Anchor>
+        </div>
+        <div class="flex gap-2 items-center mt-2 pl-3 lg:mt-5 text-sm">
+          <ul class="inline">
+            <li class="inline">
+              <Anchor href="https://status.ietf.org">System Status</Anchor>
+            </li>
+            <li class="inline">
+              <span class="text-white inline-block px-2" aria-hidden>&middot;</span>
+              <Anchor href="https://github.com/ietf-tools/queue/issues">Report a Bug</Anchor>
+            </li>
+          </ul>
         </div>
       </div>
       <div class="flex-1 flex flex-col lg:flex-row gap-10 p-3 lg:p-0">
-       
+        <div v-for="(menuItem, index) in footerMenu" :key="index">
+          <Heading level="3" style-level="4" class="text-base text-white" :id="makeDomId(index)">
+            {{ menuItem.label }}
+          </Heading>
+          <ul class="mt-3 flex flex-col gap-2" :aria-describedby="makeDomId(index)">
+            <li
+              v-for="(child, childIndex) in menuItem.children"
+              :key="childIndex"
+              class="text-base">
+              <Anchor :href="child.href" class="underline text-white md:text-nowrap">
+                {{ child.label }}
+              </Anchor>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+    </nav>
     <ScrollToTop />
   </footer>
 </template>
 
 <script setup lang="ts">
 import { IETF_URL_ORIGIN } from '../utils/url'
+
+const makeDomId = (index: number) => `footer-${index}`
+
+const datatrackerUrlOrigin = useDatatrackerSiteUrlOrigin()
+const redUrlOrigin = useRedSiteUrlOrigin()
+
+const footerMenu = [
+  {
+    label: 'Useful links',
+    children: [
+      { label: 'IETF.org', href: IETF_URL_ORIGIN },
+      { label: 'IRTF.org', href: 'https://www.irtf.org' },
+      { label: 'IAB.org', href: 'https://www.iab.org' },
+      { label: 'Datatracker', href: datatrackerUrlOrigin },
+      { label: 'Author Resources', href: 'https://authors.ietf.org' }
+    ]
+  },
+  {
+    label: 'Contact Us',
+    children: [
+      { label: 'RFC Editor', href: `${redUrlOrigin}/about/contact/` },
+      {
+        label: 'rfc-dist Info Page',
+        href: 'https://mailman.rfc-editor.org/mailman/listinfo/rfc-dist'
+      },
+      {
+        label: 'rfc-interest Info Page',
+        href: 'https://mailman.rfc-editor.org/mailman/listinfo/rfc-interest'
+      }
+    ]
+  }
+]
 </script>
