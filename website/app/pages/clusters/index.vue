@@ -22,6 +22,7 @@ definePageMeta({
 useQueueRfcEditorHead({
   title: 'Clusters of upcoming RFCs',
   canonicalPath: CLUSTERS_PATH,
-  contentType: 'article'
+  contentType: 'article',
+  noIndex: true
 })
 </script>

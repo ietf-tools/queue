@@ -37,6 +37,7 @@ useQueueRfcEditorHead({
     ? `Cluster ${clusterNumber.value}`
     : `Cluster of upcoming RFCs`,
   canonicalPath: canonicalPath.value,
-  contentType: 'article'
+  contentType: 'article',
+  noIndex: true
 })
 </script>
