@@ -4,7 +4,6 @@ import { WriteStream } from 'node:fs'
 import { PassThrough, Readable } from 'node:stream'
 import { type SitemapItemLoose, EnumChangefreq, SitemapAndIndexStream, SitemapStream, streamToPromise } from 'sitemap'
 import { type ClusterIndexCommon, type QueueCommon } from '../../../website/app/utils/validators.ts'
-import { clusterPathBuilder, CLUSTERS_INDEX_PATH, FINAL_REVIEW_INDEX_PATH, finalReviewClusterPathBuilder, finalReviewDraftPathBuilder, finalReviewRfcPathBuilder } from '../utils/url.ts'
 import { type S3UploadTask, siteMapXmlFilenameBuilder, siteMapXmlPathPrefixBuilder } from '../utils/s3.ts'
 
 const precomputerRoot = path.resolve(import.meta.dirname, '..', '..')
@@ -17,7 +16,7 @@ type Props = {
   finalReviewIndexPendingFinalReview: QueueCommon['items']
 }
 
-export const getSiteMapXmls = async ({ websiteOrigin, clusterIndex, finalReviewIndexPendingFinalReview }: Props): Promise<S3UploadTask[]> => {
+export const getSiteMapXmls = async ({ websiteOrigin }: Props): Promise<S3UploadTask[]> => {
   const markdownPathsJson = await markdownPathsJsonPromise;
   const markdownPaths = JSON.parse(markdownPathsJson);
   if (!Array.isArray(markdownPaths) || !markdownPaths.every(markdownPath => typeof markdownPath === 'string')) {
@@ -25,31 +24,12 @@ export const getSiteMapXmls = async ({ websiteOrigin, clusterIndex, finalReviewI
   }
 
   const rfcSitemapItems: SitemapItemLoose[] = [
-    {
-      url: `${websiteOrigin}/`,
-      changefreq: EnumChangefreq.DAILY,
-      priority: 0.3
-    },
-    {
-      url: `${websiteOrigin}${CLUSTERS_INDEX_PATH}`,
-      changefreq: EnumChangefreq.DAILY,
-      priority: 0.3
-    },
     ...markdownPaths.map((markdownPath): SitemapItemLoose => {
       return {
         url: `${websiteOrigin}${markdownPath}`,
         changefreq: EnumChangefreq.WEEKLY,
         priority: 0.4
       };
-    }),
-    ...clusterIndex.list.flatMap((clusterItem): SitemapItemLoose[] => {
-      return [
-        {
-          url: `${websiteOrigin}${clusterPathBuilder(clusterItem.number)}`,
-          changefreq: EnumChangefreq.WEEKLY,
-          priority: 0.3
-        }
-      ]
     }),
   ];
 
