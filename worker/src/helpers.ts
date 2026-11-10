@@ -34,7 +34,7 @@ function formatCanonicalHeader(url: string) {
       .replace(/>/g, '%3E')
 
     return `<${encodedUrl}>; rel="canonical"`;
-  } catch (e) {
+  } catch {
     return undefined
   }
 }
