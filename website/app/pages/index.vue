@@ -35,6 +35,7 @@ const redSiteUrlOrigin = useRedSiteUrlOrigin()
 useQueueRfcEditorHead({
   title: 'Official queue of upcoming RFCs',
   canonicalPath: '/',
-  contentType: 'article'
+  contentType: 'article',
+  noIndex: true
 })
 </script>
