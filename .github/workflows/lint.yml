@@ -1,0 +1,80 @@
+name: TypeScript lint (oxlint)
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  website:
+    name: Lint website
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./website
+
+      - name: Lint
+        run: npm run test:lint
+        working-directory: ./website
+
+  precomputer:
+    name: Lint precomputer
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+
+      # precomputer imports types from website/app/utils
+      - name: Install dependencies (website)
+        run: npm ci
+        working-directory: ./website
+
+      - name: Install dependencies (precomputer)
+        run: npm ci
+        working-directory: ./precomputer
+
+      - name: Lint
+        run: npm run test:lint
+        working-directory: ./precomputer
+
+  worker:
+    name: Lint worker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./worker
+
+      - name: Lint
+        run: npm run test:lint
+        working-directory: ./worker

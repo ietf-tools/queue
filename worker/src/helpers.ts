@@ -1,7 +1,11 @@
 /**
  * Create blob object response
  */
-export function createBlobResponse(object: R2ObjectBody, contentType: string, canonicalUrl?: string) {
+export function createBlobResponse(
+  object: R2ObjectBody,
+  contentType: string,
+  canonicalUrl?: string
+) {
   const headers = new Headers()
   object.writeHttpMetadata(headers)
   headers.set('etag', object.httpEtag)
@@ -33,8 +37,8 @@ function formatCanonicalHeader(url: string) {
       .replace(/</g, '%3C') // manually replace < and > just in case they are in the URL string
       .replace(/>/g, '%3E')
 
-    return `<${encodedUrl}>; rel="canonical"`;
-  } catch (e) {
+    return `<${encodedUrl}>; rel="canonical"`
+  } catch {
     return undefined
   }
 }

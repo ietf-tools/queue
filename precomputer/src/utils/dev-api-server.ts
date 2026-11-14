@@ -43,12 +43,12 @@ fastify.get('/api/v1/clusters/:number.json', async (request, reply) => {
   throw Error(`bad param? ${JSON.stringify(request.params)}`)
 })
 
-fastify.get('/api/v1/clusters/index.json', async (request) => {
+fastify.get('/api/v1/clusters/index.json', async () => {
   const api = getApiClient('dev')
   return getClusterIndex({ api })
 })
 
-fastify.get('/api/v1/final-review/index.json', async (request) => {
+fastify.get('/api/v1/final-review/index.json', async () => {
   const api = getApiClient('dev')
   return getFinalReviewIndex({ api })
 })
