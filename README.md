@@ -34,6 +34,20 @@ Website content from markdown files can be found in `/website/content/`.
 
 Markdown Frontmatter (metadata) fields supported are listed in [content.config.js](https://github.com/ietf-tools/queue/blob/main/website/content.config.ts#L8).
 
+#### Website local dev settings
+
+`npm run dev` reads environment variables from `/website/.env` (not tracked by git):
+
+```
+# Where /api/v1/** is proxied to. Defaults to https://queue.demo.rfc-editor.org
+QUEUE_DEV_API_PROXY=http://localhost:3001
+# Origin the pages fetch API data from. Defaults to https://queue.staging.rfc-editor.org
+# To use local data, set it to the address you open in the browser.
+NUXT_PUBLIC_SITE_BASE=http://localhost:3000
+```
+
+`http://localhost:3001` is the precomputer local dev API server (see below).
+
 #### Website testing
 
 In `/website/` run `npm run test`
@@ -52,6 +66,18 @@ We precompute the result of many APIs used by the website and upload them to an 
 This is done for performance reasons (some these APIs can take minutes to compute) and it improves resilience.
 
 The `/precomputer/` code is intentionally separate from the website/Nuxt. It has its own `package.json` etc.
+
+#### Precomputer local dev API server
+
+In `/precomputer/` run `npm run dev-api-server` to serve the API responses on port 3001, computed on each request from a local Purple.
+
+Purple is expected at `http://localhost:8088`. To use a different address, set `PURPLE_PUBQ_API_BASE`:
+
+```
+PURPLE_PUBQ_API_BASE=http://localhost:8090 npm run dev-api-server
+```
+
+The server does not reload on code changes; restart it to pick them up.
 
 #### Precomputer tests
 

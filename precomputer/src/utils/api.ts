@@ -49,7 +49,10 @@ const readResponseBodyText = async (body: ReadableStream<Uint8Array<ArrayBuffer>
 
 export const getApiClient = (mode?: ApiMode) => {
   const PURPLE_PUBQ_API_BASE = process.env.PURPLE_PUBQ_API_BASE
-  const basePath = mode === 'dev' ? 'http://localhost:8088' : (PURPLE_PUBQ_API_BASE ?? undefined)
+  const basePath =
+    mode === 'dev'
+      ? (PURPLE_PUBQ_API_BASE ?? 'http://localhost:8088')
+      : (PURPLE_PUBQ_API_BASE ?? undefined)
 
   if (basePath) {
     console.log('[api client] custom base env', basePath)
