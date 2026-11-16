@@ -74,7 +74,19 @@ const columns = [
     header: 'Approver Name',
     cell: (data) => {
       const value = data.getValue()
-      return value ?? h('i', '(no name)')
+      const name = value ?? h('i', '(no name)')
+      const { overridingApproverName } = data.row.original
+      if (!overridingApproverName) {
+        return name
+      }
+      return h('div', [
+        name,
+        h(
+          'div',
+          { class: 'text-sm italic' },
+          `Approved on their behalf by ${overridingApproverName}`
+        )
+      ])
     },
     sortingFn: 'alphanumeric'
   }),
