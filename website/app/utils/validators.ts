@@ -122,6 +122,7 @@ const AuthorCommonSchema = z.object({
 const FinalApprovalSchema = z.object({
   approverName: z.string(),
   approvedAtIso: z.string().optional(),
+  overridingApproverName: z.string().optional(),
   comment: z.string().optional()
 })
 

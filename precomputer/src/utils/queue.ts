@@ -182,7 +182,7 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
         pendingActivities: parsePendingActivities(pendingActivities),
         approvalLogMessages: parseApprovalLogMessages(approvalLogMessages),
         finalApprovals: finalApprovals?.map((finalApproval): FinalApproval => {
-          const { comment, approver, approved } = finalApproval
+          const { comment, approver, approved, overridingApprover } = finalApproval
           const approverName = approver?.name
           if (!approverName) {
             throw Error('Expected approver name')
@@ -195,6 +195,7 @@ export const getQueueCommon = async ({ api, params }: Props): Promise<QueueCommo
           return {
             approverName,
             approvedAtIso: approvedAtIso ?? undefined,
+            overridingApproverName: overridingApprover?.name ?? undefined,
             comment
           }
         }),
