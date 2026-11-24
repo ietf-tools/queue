@@ -80,11 +80,10 @@ export default defineNuxtConfig({
       /**
        * In development mode (`npm run dev`) the website fetches API data from either a local dev api or some
        * staging / prod environment.
-       * Uncomment/comment out the lines to adjust the config.
+       * Set QUEUE_DEV_API_PROXY (e.g. http://localhost:3001) to use another API than demo.
        */
       '/api/v1/**': {
-        // proxy: 'http://localhost:3001/api/v1/**'
-        proxy: 'https://queue.demo.rfc-editor.org/api/v1/**'
+        proxy: `${process.env.QUEUE_DEV_API_PROXY ?? 'https://queue.demo.rfc-editor.org'}/api/v1/**`
       }
     }
   }
